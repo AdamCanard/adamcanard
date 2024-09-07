@@ -3,25 +3,150 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+
+  --window-frame: #0a0a0a
+  --button-highlight: #ffffff 
+  --button-shadow: #969696
+  --button-face: #c8c8c8
+
+  --border-raised-outer: inset 1px -1px var(--window-frame),
+    inset -1px 1px var(--button-highlight);
+  --border-raised-inner: inset 2px -2px var(--button-shadow),
+    inset -2px 2px var(--button-face);
+
+  /* --border-sunken-outer: inset -1px -1px var(--button-highlight),
+    inset 1px 1px var(--window-frame);
+  --border-sunken-inner: inset -2px -2px var(--button-face),
+    inset 2px 2px var(--button-shadow); */
+
+
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+#header {
+  background-color: #245dda;
+  border-top: 2px solid #3871ee;
+  border-right: 2px solid #3871ee;
+  border-left: 4px solid #1049c6;
+  border-bottom: 4px solid #1049c6;
+  color: white;
+  padding: 2px;
+}
+
+#border {
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #ffffff,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  padding: 4px;
+  background-color: #bababa;
+}
+
+#border a:focus {
+  border-left: 4px solid #c8c8c8;
+  border-top: 4px solid #969696;
+  border-right: 4px solid #969696;
+  border-bottom: 4px solid #c8c8c8;
+  padding: 4px;
+  background-color: #bababa;
+}
+
+#border-np {
+  border-left: 4px solid #969696;
+  border-top: 4px solid #c8c8c8;
+  border-right: 4px solid #c8c8c8;
+  border-bottom: 4px solid #969696;
+  background-color: #bababa;
+}
+
+#border-s {
+  border-left: 2px solid #969696;
+  border-top: 2px solid #c8c8c8;
+  border-right: 2px solid #c8c8c8;
+  border-bottom: 2px solid #969696;
+  padding: 2px;
+  background-color: #bababa;
+}
+
+#border-s-np {
+  border-left: 2px solid #969696;
+  border-top: 2px solid #c8c8c8;
+  border-right: 2px solid #c8c8c8;
+  border-bottom: 2px solid #969696;
+  background-color: #bababa;
+}
+
+html,
+body {
+  overflow-y: hidden;
+  height: 100%;
+}
+@keyframes roll {
+  from {
+    transform: translate(-100px, 0px);
+  }
+  to {
+    transform: translate(0px, 0px);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+}
+::-webkit-scrollbar:horizontal {
+  height: 17px;
+}
+
+::-webkit-scrollbar-corner {
+  background: #dfdfdf;
+}
+
+::-webkit-scrollbar-track {
+  background-image: url("./scrollbar/scrollbar-background.svg");
+}
+
+
+
+::-webkit-scrollbar-thumb {
+  background-color: #bababa;
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #ffffff,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+}
+
+::-webkit-scrollbar-button:horizontal:start:decrement,
+::-webkit-scrollbar-button:horizontal:end:increment,
+::-webkit-scrollbar-button:vertical:start:decrement,
+::-webkit-scrollbar-button:vertical:end:increment {
+  display: none;
+}
+
+::-webkit-scrollbar-button:vertical:start {
+  height: 17px;
+  background-image: url("./scrollbar/button-up.svg");
+}
+::-webkit-scrollbar-button:vertical:end {
+  height: 17px;
+  background-image: url("./scrollbar/button-down.svg");
+}
+::-webkit-scrollbar-button:horizontal:start {
+  width: 16px;
+  background-image: url("./scrollbar/button-left.svg");
+}
+::-webkit-scrollbar-button:horizontal:end {
+  width: 16px;
+  background-image: url("./scrollbar/button-right.svg");
 }
