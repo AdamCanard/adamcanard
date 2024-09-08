@@ -4,23 +4,15 @@ export default function Window(props: {
   close?: () => void;
 }) {
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      {props.close ? (
-        <div className="flex justify-between w-full">
-          <h1 id="title" className="w-full">
-            {props.title}
-            <div id="close" onClick={props.close}></div>
-          </h1>
-        </div>
-      ) : (
-        <h1 id="title" className="w-full">
+    <div className="flex flex-col justify-center items-center w-full h-full">
+      <div className="flex justify-between w-full">
+        <h1 id="title">
           {props.title}
+          {props.close && <div id="close" onClick={props.close}></div>}
         </h1>
-      )}
-
-      <div id="window" className="w-full">
-        {props.children}
       </div>
+
+      <div id="window">{props.children}</div>
     </div>
   );
 }

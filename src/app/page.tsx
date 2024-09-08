@@ -1,4 +1,3 @@
-"use client";
 import Frontpage from "./components/frontpage";
 
 export default function Page() {

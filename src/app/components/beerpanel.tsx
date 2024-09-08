@@ -28,7 +28,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
   const [drinkTrigger, setDrinkTrigger] = useState(false);
 
   return (
-    <div className="w-full h-screen flex justify-center ">
+    <div className="w-full h-full flex justify-center">
       <PopupContext.Provider
         value={{
           rating,

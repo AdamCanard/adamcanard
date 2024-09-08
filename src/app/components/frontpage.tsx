@@ -1,4 +1,5 @@
-import { SetStateAction, useEffect, useState } from "react";
+"use client";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 import Body from "./body";
 import Window from "./window";
 import BeerPanel from "./beerpanel";
@@ -17,13 +18,7 @@ export default function Frontpage() {
   const [beerFlag, setBeerFlag] = useState<boolean>(false);
   const [beer, setBeer] = useState<BeerData>({} as BeerData);
 
-  useEffect(() => {
-    if (id != "") {
-      getData();
-    }
-  }, [id]);
-
-  const getData = async () => {
+  const getData = useCallback(async () => {
     const formData = new FormData();
     formData.append("id", id);
     try {
@@ -44,37 +39,39 @@ export default function Frontpage() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    if (id != "") {
+      getData();
+    }
+  }, [getData, id]);
 
   return (
     <>
       <IdContext.Provider value={{ setId }}>
-        {beerFlag ? (
-          <div className="w-full h-full flex flex-row justify-around">
-            <div>
-              <Window title="ADAM DRINKS BEER">
-                <Body />
-              </Window>
-            </div>
-            <div className="w-1/3">
-              <Window
-                title="Beer Viewer"
-                close={() => {
-                  setBeerFlag(false);
-                  setId("");
-                }}
-              >
-                <BeerPanel beer={beer} />
-              </Window>
-            </div>
-          </div>
-        ) : (
-          <div>
+        <div className="w-full h-full flex flex-row justify-around">
+          <div className="w-2/3">
             <Window title="ADAM DRINKS BEER">
               <Body />
             </Window>
           </div>
-        )}
+          {beerFlag && (
+            <div className="w-1/3 h-full">
+              <div>
+                <Window
+                  title="Beer Viewer"
+                  close={() => {
+                    setBeerFlag(false);
+                    setId("");
+                  }}
+                >
+                  <BeerPanel beer={beer} />
+                </Window>
+              </div>
+            </div>
+          )}
+        </div>
       </IdContext.Provider>
     </>
   );
