@@ -1,11 +1,17 @@
-import { useRouter } from "next/navigation";
 import { BeerData } from "../types";
+import { IdContext } from "./frontpage";
+import { useContext } from "react";
 
 export default function ListElement(props: { data: BeerData }) {
-  const router = useRouter();
+  const idContext = useContext(IdContext);
+
   //On click pass the beers database id to the router
+
   const handleClick = () => {
-    router.push("/beer/" + props.data.id);
+    console.log(props.data.id);
+    if (props.data.id) {
+      idContext.setId(props.data.id);
+    }
   };
   return (
     <>

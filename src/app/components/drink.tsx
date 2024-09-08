@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useContext } from "react";
-import { BeerContext } from "./beerdisplay";
-import { PopupContext } from "./beerviewer";
 
-export function Drink() {
-  const beerData = useContext(BeerContext);
+import { BeerData } from "../types";
+import { PopupContext } from "./beerpanel";
+
+export function Drink(props: { beer: BeerData }) {
   const popupData = useContext(PopupContext);
 
   //call for changing drank value of database object
@@ -28,7 +28,7 @@ export function Drink() {
 
   //On click enable popup if rating or brewery are empty
   const handleClick = async () => {
-    if (beerData.Rating == 0 || beerData.Brewery == "") {
+    if (props.beer.Rating == 0 || props.beer.Brewery == "") {
       popupData.setDrinkTrigger(true);
     }
   };
@@ -44,21 +44,18 @@ export function Drink() {
     ) {
       //create formdata and post
       const formData = new FormData();
-      formData.append("id", beerData.id);
-      formData.append("Beer", beerData.Beer);
+      formData.append("id", props.beer.id);
+      formData.append("Beer", props.beer.Beer);
       formData.append("Brewery", popupData.brewery);
-      formData.append("By", beerData.By);
+      formData.append("By", props.beer.By);
       formData.append("Rating", popupData.rating);
       formData.append("Drank", true);
       drinkBeer(formData);
     }
-  }, [popupData, beerData]);
+  }, [popupData, props.beer]);
 
   return (
-    <div
-      onClick={handleClick}
-      className="flex w-12 h-12 border-2 border-black bg-white hover:cursor-pointer"
-    >
+    <div id="border" onClick={handleClick}>
       Drink Me!
     </div>
   );

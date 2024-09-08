@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PopupContext } from "./beerviewer";
+import { PopupContext } from "./beerpanel";
 
 export default function Popup(props: { children?: React.ReactNode }) {
   const popupData = useContext(PopupContext);
