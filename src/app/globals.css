@@ -39,19 +39,58 @@
   }
 }
 
-#header {
-  background-color: #245dda;
-  border-top: 2px solid #3871ee;
-  border-right: 2px solid #3871ee;
-  border-left: 4px solid #1049c6;
-  border-bottom: 4px solid #1049c6;
+#title {
   color: white;
   padding: 2px;
+  background: linear-gradient(
+  90deg,
+  #000080,
+  #1084d0
+  );
+  padding: 3px 2px 3px 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 0;
 }
 
-#border {
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #ffffff,
+#window{
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
     inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  padding: 8px;
+  background-color: #bababa;
+}
+
+#window-i{
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  border: 2px #bababa solid ;
+  padding: 4px;
+}
+
+#button{
+  box-sizing: border-box;
+  border: none;
+  color: transparent;
+  text-shadow: 0 0 #222222;
+  background: #c0c0c0;
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  border-radius: 0;
+  min-width: 75px;
+  min-height: 23px;
+  max-width: 90px;
+  max-height: 30px;
+  margin-top: 4px;
+  padding: 0 12px;
+}
+
+
+
+#border {
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  border: 2px #bababa solid ;
   padding: 4px;
   background-color: #bababa;
 }
@@ -65,36 +104,32 @@
   background-color: #bababa;
 }
 
-#border-np {
-  border-left: 4px solid #969696;
-  border-top: 4px solid #c8c8c8;
-  border-right: 4px solid #c8c8c8;
-  border-bottom: 4px solid #969696;
+#border-np{
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
   background-color: #bababa;
 }
 
 #border-s {
-  border-left: 2px solid #969696;
-  border-top: 2px solid #c8c8c8;
-  border-right: 2px solid #c8c8c8;
-  border-bottom: 2px solid #969696;
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
   padding: 2px;
   background-color: #bababa;
 }
 
-#border-s-np {
-  border-left: 2px solid #969696;
-  border-top: 2px solid #c8c8c8;
-  border-right: 2px solid #c8c8c8;
-  border-bottom: 2px solid #969696;
-  background-color: #bababa;
-}
 
 html,
 body {
   overflow-y: hidden;
   height: 100%;
 }
+
+body{
+  min-height: 100vh;
+  width: 100%;
+  background-color: #bababa;
+}
+
 @keyframes roll {
   from {
     transform: translate(-100px, 0px);

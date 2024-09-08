@@ -1,11 +1,12 @@
-import Header from "./header";
 import Body from "./body";
+import Window from "./window";
 
 export default function Frontpage() {
   return (
-    <div className="flex flex-col w-full h-full justify-center items-center">
-      <Header />
-      <Body />
+    <div>
+      <Window title="ADAM DRINKS BEER">
+        <Body />
+      </Window>
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import { BeerData } from "../types";
 import ListElement from "./listelement";
 import { useState, useEffect } from "react";
+import Window from "./window";
+import WindowInternal from "./windowinternal";
+import WindowButton from "./windowbutton";
 
 export default function List(props: { Title: string }) {
   const [listElements, setListElements] = useState<BeerData[]>([]);
@@ -28,28 +31,31 @@ export default function List(props: { Title: string }) {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 id="header" className=" w-1/2 text-center text-3xl">
-        {props.Title}
-      </h1>
-      <div id="border-s" className="w-96 flex flex-col  h-64 overflow-y-scroll">
-        {/* For each database object in list elements */}
-        {listElements.map((listElement, index) => {
-          //if List title is Drank, add database elements whos drank value is true
-          if (props.Title == "Drank" && listElement.Drank)
-            return <ListElement data={listElement} key={index} />;
-          //if List title is Drink, add database elements whos drank value is false
-          else if (props.Title == "Drink" && !listElement.Drank) {
-            return <ListElement data={listElement} key={index} />;
-          }
-        })}
-      </div>
-      <div
-        id="border"
-        onClick={refreshData}
-        className="w-1/2 hover:cursor-pointer text-center"
-      >
-        Refresh!
-      </div>
+      <Window title={props.Title}>
+        <WindowInternal>
+          <div className="w-96 flex flex-col h-72 overflow-y-scroll">
+            {/* For each database object in list elements */}
+            {listElements.map((listElement, index) => {
+              //if List title is Drank, add database elements whos drank value is true
+              if (props.Title == "Drank" && listElement.Drank)
+                return <ListElement data={listElement} key={index} />;
+              //if List title is Drink, add database elements whos drank value is false
+              else if (props.Title == "Drink" && !listElement.Drank) {
+                return <ListElement data={listElement} key={index} />;
+              }
+            })}
+          </div>
+        </WindowInternal>
+        <WindowButton>
+          <div
+            id="button"
+            onClick={refreshData}
+            className="hover:cursor-pointer text-center"
+          >
+            Refresh!
+          </div>
+        </WindowButton>
+      </Window>
     </div>
   );
 }

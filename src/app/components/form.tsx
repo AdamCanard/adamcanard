@@ -1,4 +1,7 @@
 import InputBox from "./inputbox";
+import Window from "./window";
+import WindowButton from "./windowbutton";
+import WindowInternal from "./windowinternal";
 
 export default function Form(props: { Title: string; Fields: string[] }) {
   //add new Beer from formData
@@ -35,23 +38,22 @@ export default function Form(props: { Title: string; Fields: string[] }) {
   };
 
   return (
-    <div id="border-s" className="">
-      <h1 id="header" className="text-center">
-        New {props.Title}:
-      </h1>
+    <Window title={"New " + props.Title}>
       <form
         className="flex flex-col"
         onSubmit={handleSubmit}
         autoComplete="off"
       >
-        <div id="border-s">
+        <WindowInternal>
           {props.Fields.map((title: string, index: number) => {
             // For every string in fields, generate an InputBox for the value
             return <InputBox title={title} key={index} />;
           })}
-        </div>
-        <input id="border" type="submit" />
+        </WindowInternal>
+        <WindowButton>
+          <input id="button" type="submit" />
+        </WindowButton>
       </form>
-    </div>
+    </Window>
   );
 }
