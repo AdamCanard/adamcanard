@@ -57,6 +57,7 @@
 
 #window{
   width: 100%;
+  height: 100%;
   box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
     inset 2px -2px #969696, inset -2px 2px #c8c8c8;
   padding: 8px;
@@ -64,10 +65,20 @@
 }
 
 #window-i{
+  height: 90%;
+  align-items: center;
   box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
     inset 2px -2px #969696, inset -2px 2px #c8c8c8;
   border: 2px #bababa solid ;
   padding: 4px;
+}
+
+#button-i{
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  align-items: center;
+  height: 10%;
 }
 
 #button{
@@ -80,9 +91,9 @@
     inset 2px -2px #969696, inset -2px 2px #c8c8c8;
   border-radius: 0;
   min-width: 75px;
-  min-height: 23px;
+  height: 25px;
   max-width: 90px;
-  max-height: 30px;
+  margin-right: 2px;
   margin-top: 4px;
   padding: 0 12px;
 }

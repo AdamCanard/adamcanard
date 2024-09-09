@@ -1,5 +1,5 @@
 import { BeerData } from "../types";
-import { IdContext } from "./frontpage";
+import { IdContext } from "./beersheet";
 import { useContext } from "react";
 
 export default function ListElement(props: { data: BeerData }) {

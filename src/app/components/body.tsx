@@ -12,6 +12,7 @@ export default function Body() {
       <div className="col-span-1 row-span-2">
         <List Title="Drink" />
       </div>
+
       <div className="row-span-1 col-span-1">
         <Form Title="Drank" Fields={["Beer", "Brewery", "Rating"]} />
       </div>
