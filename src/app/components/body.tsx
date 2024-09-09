@@ -1,5 +1,3 @@
-"use client";
-
 import Form from "./form";
 import List from "./list";
 

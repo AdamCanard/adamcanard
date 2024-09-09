@@ -28,7 +28,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
   const [drinkTrigger, setDrinkTrigger] = useState(false);
 
   return (
-    <div className="w-full h-full flex justify-center">
+    <div className="w-full h-full flex justify-center items-center">
       <PopupContext.Provider
         value={{
           rating,
@@ -40,7 +40,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
         }}
       >
         <Popup>
-          <div className="w-96 ">
+          <div className="w-96">
             <Window title={props.beer.Beer}>
               <div className="flex flex-col gap-4 justify-center items-center">
                 <div className="w-64 h-64 border-2"></div>

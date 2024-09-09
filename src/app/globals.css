@@ -90,9 +90,8 @@
   box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
     inset 2px -2px #969696, inset -2px 2px #c8c8c8;
   border-radius: 0;
-  min-width: 75px;
+  width: 75px;
   height: 25px;
-  max-width: 90px;
   margin-right: 2px;
   margin-top: 4px;
   padding: 0 12px;
