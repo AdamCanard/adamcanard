@@ -5,7 +5,6 @@ export interface BeerData {
   Brewery?: string;
   Rating?: number;
   By?: string;
-  Image?: any;
   Drank: boolean;
 }
 

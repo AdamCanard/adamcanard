@@ -15,14 +15,16 @@ export function Drink(props: { beer: BeerData }) {
         body: formData,
       });
       console.log(await response.json());
-    } catch (err: any) {
-      return new Response(
-        JSON.stringify({ error: err.message || err.toString() }),
-        {
-          status: 500,
-          headers: {},
-        }
-      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          }
+        );
+      }
     }
   };
 

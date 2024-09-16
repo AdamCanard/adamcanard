@@ -1,14 +1,14 @@
 import db from "../../server/pb";
 import { BeerData } from "../../types";
 
-export async function POST(req: any, res: any) {
+export async function POST(req: Request) {
   const formData = await req.formData();
   const data: BeerData = {
-    Beer: formData.get("Beer"),
-    Brewery: formData.get("Brewery"),
-    By: formData.get("By"),
-    Rating: formData.get("Rating"),
-    Drank: formData.get("Drank"),
+    Beer: formData.get("Beer") as string,
+    Brewery: formData.get("Brewery") as string,
+    By: formData.get("By") as string,
+    Rating: +(formData.get("Rating") as string),
+    Drank: (formData.get("Drank") as string) === "true",
   };
   db.addBeer(data);
   return new Response(JSON.stringify({ data: data }), {

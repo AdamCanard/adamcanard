@@ -14,20 +14,22 @@ export default function Form(props: { Title: string; Fields: string[] }) {
       });
       console.log(await response.json());
     } catch (err: unknown) {
-      return new Response(
-        JSON.stringify({ error: err.message || err.toString() }),
-        {
-          status: 500,
-          headers: {},
-        }
-      );
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          }
+        );
+      }
     }
   };
 
   //On submit grab data from form, add the appropriate Drank value based on Form Title
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.target;
+    const form = event.currentTarget;
     const formData = new FormData(form);
     if (props.Title == "Drank") {
       formData.append("Drank", true);
