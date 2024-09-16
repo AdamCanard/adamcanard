@@ -1,3 +1,4 @@
+"use client";
 import { BeerData } from "../types";
 import ListElement from "./listelement";
 import { useState, useEffect } from "react";

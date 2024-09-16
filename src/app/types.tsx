@@ -8,3 +8,9 @@ export interface BeerData {
   Image?: any;
   Drank: boolean;
 }
+
+export interface ISuggestion {
+  Beer: string;
+  Brewery: string;
+  Name: string;
+}

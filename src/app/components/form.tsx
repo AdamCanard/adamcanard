@@ -1,3 +1,4 @@
+"use client";
 import InputBox from "./inputbox";
 import Window from "./window";
 import WindowButton from "./windowbutton";
