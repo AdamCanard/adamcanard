@@ -1,5 +1,5 @@
 import ClientBody from "./clientbody";
-import Window from "./window";
+import Window from "../semantics/window";
 
 export default function ClientSheet() {
   return (

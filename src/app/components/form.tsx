@@ -1,8 +1,8 @@
 "use client";
 import InputBox from "./inputbox";
-import Window from "./window";
-import WindowButton from "./windowbutton";
-import WindowInternal from "./windowinternal";
+import Window from "../semantics/window";
+import WindowButton from "../semantics/windowbutton";
+import WindowInternal from "../semantics/windowinternal";
 
 export default function Form(props: { Title: string; Fields: string[] }) {
   //add new Beer from formData

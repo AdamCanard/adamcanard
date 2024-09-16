@@ -1,8 +1,8 @@
 "use client";
 import LabeledInput from "@/app/components/labeledinput";
-import Window from "@/app/components/window";
-import WindowButton from "@/app/components/windowbutton";
-import WindowInternal from "@/app/components/windowinternal";
+import Window from "@/app/semantics/window";
+import WindowButton from "@/app/semantics/windowbutton";
+import WindowInternal from "@/app/semantics/windowinternal";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

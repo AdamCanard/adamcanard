@@ -2,9 +2,9 @@
 import { BeerData } from "../types";
 import ListElement from "./listelement";
 import { useState, useEffect } from "react";
-import Window from "./window";
-import WindowInternal from "./windowinternal";
-import WindowButton from "./windowbutton";
+import Window from "../semantics/window";
+import WindowInternal from "../semantics/windowinternal";
+import WindowButton from "../semantics/windowbutton";
 
 export default function List(props: { Title: string }) {
   const [listElements, setListElements] = useState<BeerData[]>([]);

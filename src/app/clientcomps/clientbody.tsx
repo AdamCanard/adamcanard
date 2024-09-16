@@ -1,4 +1,4 @@
-import List from "./list";
+import List from "../components/list";
 import Suggestion from "./suggestion";
 
 export default function ClientBody() {

@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { PopupContext } from "./beerpanel";
-import Window from "./window";
-import WindowInternal from "./windowinternal";
-import WindowButton from "./windowbutton";
+import Window from "../semantics/window";
+import WindowInternal from "../semantics/windowinternal";
+import WindowButton from "../semantics/windowbutton";
 
 export default function Popup(props: { children?: React.ReactNode }) {
   const popupData = useContext(PopupContext);

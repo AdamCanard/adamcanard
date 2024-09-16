@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ClientSheet from "./clientsheet";
 import { useRouter } from "next/navigation";
 
 export default function ClientPage() {
-  const [cookie, setCookie] = useState();
   const router = useRouter();
 
   useEffect(() => {

@@ -1,9 +1,9 @@
 import { createContext, SetStateAction, useState } from "react";
 import { BeerData } from "../types";
 import Popup from "./popup";
-import Window from "./window";
-import WindowInternal from "./windowinternal";
-import WindowButton from "./windowbutton";
+import Window from "../semantics/window";
+import WindowInternal from "../semantics/windowinternal";
+import WindowButton from "../semantics/windowbutton";
 import BeerLabel from "./beerlabel";
 import { Drink } from "./drink";
 

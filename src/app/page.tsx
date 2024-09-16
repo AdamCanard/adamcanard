@@ -1,4 +1,4 @@
-import ClientPage from "./components/clientpage";
+import ClientPage from "./clientcomps/clientpage";
 
 export default function Page() {
   return (

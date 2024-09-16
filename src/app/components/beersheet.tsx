@@ -1,7 +1,7 @@
 "use client";
 import { SetStateAction, useCallback, useEffect, useState } from "react";
 import Body from "./body";
-import Window from "./window";
+import Window from "../semantics/window";
 import BeerPanel from "./beerpanel";
 import { BeerData } from "../types";
 import { createContext } from "react";
