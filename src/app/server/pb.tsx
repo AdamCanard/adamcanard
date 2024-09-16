@@ -20,7 +20,9 @@ export class DatabaseClient {
         passwordConfirm: password,
       });
       return result;
-    } catch (err: unknown) {}
+    } catch (err: unknown) {
+      return err;
+    }
   }
 
   async authenticate(email: string, password: string) {
@@ -34,7 +36,7 @@ export class DatabaseClient {
 
       return result;
     } catch (err: unknown) {
-      console.log(err);
+      return err;
     }
   }
 

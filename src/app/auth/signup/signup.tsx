@@ -8,9 +8,9 @@ import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function SignUp() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<IError>();
   const [popup, setPopup] = useState<boolean>(false);
 
@@ -18,7 +18,7 @@ export default function Login() {
 
   const postData = async (formData: FormData) => {
     try {
-      const response = await fetch("/api/login/", {
+      const response = await fetch("/api/signup/", {
         method: "POST",
         body: formData,
       });
@@ -42,52 +42,26 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    let formData = new FormData(form);
-    let data = await postData(formData);
+    const formData = new FormData(form);
+    const data = await postData(formData);
 
     if (data.data.status === undefined) {
-      //api returned user data
-      formData = new FormData();
-      formData.append("authToken", data.data.token);
-      formData.append("userId", data.data.record.id);
-      data = await createCookie(formData);
-      if (data.ok) router.push("/");
+      //api returned new user data
+      router.push("/auth/login");
     } else if (data.data.status === 400) {
-      setError(data.data);
+      setError(data.data.response.data);
       setPopup(true);
     }
   };
 
-  const createCookie = async (formData: FormData) => {
-    try {
-      const response = await fetch("/api/setcookie", {
-        method: "POST",
-        body: formData,
-      });
-      return response;
-    } catch (err: unknown) {
-      if (typeof err === "string") {
-        console.log(err);
-      } else if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          }
-        );
-      }
-    }
-  };
-
   const handleClick = () => {
-    router.push("/auth/signup");
+    router.push("/auth/login");
   };
 
   return (
     <>
       <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
-        <Window title="Login">
+        <Window title="SignUp">
           <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
             <WindowInternal>
               <LabeledInput
@@ -112,7 +86,7 @@ export default function Login() {
           onClick={handleClick}
           className="hover:cursor-pointer text-xs w-full justify-center flex pt-1 text-[#1084d0]"
         >
-          Try signup
+          Try login
         </div>
       </ErrorPopup>
     </>

@@ -8,7 +8,7 @@ export default function LabeledInput(props: {
 }) {
   return (
     <>
-      <label id="border" className="flex justify-between">
+      <label id="border" className="flex justify-between w-full text-sm">
         Enter {props.title}:
         {props.required ? (
           <input
