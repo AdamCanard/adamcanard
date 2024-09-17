@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:8080"
+  pocketbase:
+    image: adamcanard/pocketbase:latest
+    restart: unless-stopped
+    ports:
+      - 8080:8090
+    volumes:
+      - pocketbase-data:/pb_data
+volumes:
+  pocketbase-data:
