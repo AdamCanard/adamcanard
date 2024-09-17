@@ -28,6 +28,7 @@ export default function Suggestion() {
       if (typeof err === "string") {
         console.log(err);
       } else if (err instanceof Error) {
+        console.log(err);
         return new Response(
           JSON.stringify({ error: err.message || err.toString() }),
           {

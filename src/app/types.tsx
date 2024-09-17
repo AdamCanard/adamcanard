@@ -12,6 +12,7 @@ export interface ISuggestion {
   Beer: string;
   Brewery: string;
   Name: string;
+  userId?: string;
 }
 
 export interface IError {

@@ -12,15 +12,17 @@ export class DatabaseClient {
     this.client.autoCancellation(false);
   }
 
-  async register(email: string, password: string) {
+  async register(username: string, email: string, password: string) {
     try {
       const result = await this.client.collection("users").create({
+        username,
         email,
         password,
         passwordConfirm: password,
       });
       return result;
     } catch (err: unknown) {
+      console.log(err);
       return err;
     }
   }
@@ -30,45 +32,37 @@ export class DatabaseClient {
       const result = await this.client
         .collection("users")
         .authWithPassword(email, password);
-      // If there is no token in the result, it means something went wrong
-      // console.log(this.client.authStore.isValid);
-      // console.log(this.client.authStore.token);
-
       return result;
     } catch (err: unknown) {
       return err;
     }
   }
 
-  async getUserFromId(userId: string) {
+  async getUsername(record_id: string) {
     try {
-      const result = await this.client
-        .collection("users")
-        .getOne(`userId="${userId}"`);
-      console.log(result);
+      const record = await this.client.collection("users").getOne(record_id);
+      return record;
+    } catch (err: unknown) {
+      return err;
+    }
+  }
+
+  async isBanned(userId: string) {
+    try {
+      const resultList = await this.client.collection("Banned").getList(1, 50, {
+        sort: "-created",
+      });
+
+      for (let i = 0; i < resultList.items.length; i++) {
+        if (userId === resultList.items[i].userId) {
+          return true;
+        }
+      }
+      return false;
     } catch (e) {
       console.error("Error getting user: ", e);
     }
   }
-
-  // async authAsClient() {
-  //   const authData = await this.client
-  //     .collection("users")
-  //     .authWithOAuth2({ provider: "google" });
-
-  //   return authData;
-  // }
-
-  // async authMethods() {
-  //   const authMethods = await this.client
-  //     .collection("users")
-  //     .listAuthMethods()
-  //     .then((methods) => methods)
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  //   return authMethods;
-  // }
 
   async authAsAdmin() {
     if (process.env.PB_ADMIN_EMAIL && process.env.PB_ADMIN_PASS) {
@@ -85,9 +79,14 @@ export class DatabaseClient {
   }
 
   async addSuggestion(data: ISuggestion) {
-    await this.authAsAdmin();
-    const result = await this.client.collection("Suggestion").create(data);
-    return result;
+    try {
+      const result = await this.client.collection("Suggestion").create(data);
+      return result;
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        return e;
+      }
+    }
   }
 
   async addBeer(data: BeerData) {
@@ -109,32 +108,6 @@ export class DatabaseClient {
     const result = await this.client.collection("Beer").update(id, data);
     return result;
   }
-
-  // async addDrank(data: { Beer: string; Brewery: string; Rating: number }) {
-  //   await this.authAsAdmin();
-  //   const result = await this.client.collection("Drank").create(data);
-  // }
-
-  // async addDrink(data: { Beer: string; Brewery: string; By: string }) {
-  //   await this.authAsAdmin();
-  //   const result = await this.client.collection("Drink").create(data);
-  // }
-
-  // async getDrank() {
-  //   await this.authAsAdmin();
-  //   const DrankList = await this.client.collection("Drank").getList(1, 50, {
-  //     sort: "-created",
-  //   });
-  //   return DrankList;
-  // }
-
-  // async getDrink() {
-  //   await this.authAsAdmin();
-  //   const DrankList = await this.client.collection("Drink").getList(1, 50, {
-  //     sort: "-created",
-  //   });
-  //   return DrankList;
-  // }
 
   async getById(collection: string, id: string) {
     await this.authAsAdmin();

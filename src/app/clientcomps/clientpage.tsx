@@ -7,12 +7,17 @@ export default function ClientPage() {
   const router = useRouter();
 
   useEffect(() => {
-    getCookie();
+    const formData = new FormData();
+    formData.append("cookie", "authToken");
+    getCookie(formData);
   });
 
-  const getCookie = async () => {
+  const getCookie = async (formData: FormData) => {
     try {
-      const response = await fetch("/api/getcookie/", { method: "GET" });
+      const response = await fetch("/api/getcookie/", {
+        method: "POST",
+        body: formData,
+      });
       const cookie = await response.json();
       if (cookie.data === undefined) {
         router.push("/auth/login");
