@@ -100,6 +100,7 @@ export class DatabaseClient {
     const BeerList = await this.client.collection("Beer").getList(1, 50, {
       sort: "-created",
     });
+
     return BeerList;
   }
 
