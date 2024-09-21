@@ -5,7 +5,6 @@ import { IdContext } from "./beersheet";
 
 export default function ListElement(props: { data: BeerData }) {
   const idContext = useContext(IdContext);
-  console.log(idContext);
   //On click pass the beers database id to the router
 
   const handleClick = () => {

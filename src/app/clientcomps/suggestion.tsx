@@ -25,10 +25,7 @@ export default function Suggestion() {
       });
       return response;
     } catch (err: unknown) {
-      if (typeof err === "string") {
-        console.log(err);
-      } else if (err instanceof Error) {
-        console.log(err);
+      if (err instanceof Error) {
         return new Response(
           JSON.stringify({ error: err.message || err.toString() }),
           {
@@ -36,6 +33,8 @@ export default function Suggestion() {
             headers: {},
           }
         );
+      } else {
+        console.log(err);
       }
     }
   };

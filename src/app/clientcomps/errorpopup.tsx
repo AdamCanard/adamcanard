@@ -15,7 +15,7 @@ export default function ErrorPopup(props: {
       {/* popup enabled by drink button */}
       {props.trigger ? (
         <>
-          <div className=" flex justify-center items-center">
+          <div className="flex justify-center items-center">
             <Window
               title="Error"
               close={() => {

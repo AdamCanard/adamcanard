@@ -24,8 +24,18 @@ export default function ClientPage() {
       } else {
       }
       return cookie;
-    } catch {
-      //dont throw error
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          }
+        );
+      } else {
+        console.log(err);
+      }
     }
   };
 

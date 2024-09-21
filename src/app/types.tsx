@@ -18,4 +18,5 @@ export interface ISuggestion {
 export interface IError {
   email?: { code: string; message: string };
   password?: { code: string; message: string };
+  admin?: { code: string; message: string };
 }

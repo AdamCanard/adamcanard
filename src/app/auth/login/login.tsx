@@ -66,9 +66,7 @@ export default function Login() {
       });
       return response;
     } catch (err: unknown) {
-      if (typeof err === "string") {
-        console.log(err);
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         return new Response(
           JSON.stringify({ error: err.message || err.toString() }),
           {
@@ -76,6 +74,8 @@ export default function Login() {
             headers: {},
           }
         );
+      } else {
+        console.log(err);
       }
     }
   };
