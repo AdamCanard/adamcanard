@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PopupContext } from "./beerpanel";
+import { PopupContext } from "../beerviewcomps/beerpanel";
 import Window from "../semantics/window";
 import WindowInternal from "../semantics/windowinternal";
 import WindowButton from "../semantics/windowbutton";

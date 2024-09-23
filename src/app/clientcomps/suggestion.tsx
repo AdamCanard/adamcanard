@@ -4,13 +4,7 @@ import { useState } from "react";
 import Window from "../semantics/window";
 import WindowButton from "../semantics/windowbutton";
 import WindowInternal from "../semantics/windowinternal";
-import LabeledInput from "./labeledinput";
-
-export interface IInputs {
-  Beer: string;
-  Brewery: string;
-  Name: string;
-}
+import { LabeledInputStr } from "./labeledinputs";
 
 export default function Suggestion() {
   const [beer, setBeer] = useState("");
@@ -57,19 +51,19 @@ export default function Suggestion() {
         autoComplete="off"
       >
         <WindowInternal>
-          <LabeledInput
+          <LabeledInputStr
             title="Beer"
             state={beer}
             setState={setBeer}
             required={true}
           />
-          <LabeledInput
+          <LabeledInputStr
             title="Brewery"
             state={brewery}
             setState={setBrewery}
             required={false}
           />
-          <LabeledInput
+          <LabeledInputStr
             title="Name"
             state={name}
             setState={setName}

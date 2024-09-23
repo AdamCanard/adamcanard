@@ -98,7 +98,7 @@
   text-align: center;
 }
 
-#button-nm{
+#button-taskbar{
   box-sizing: border-box;
   border: none;
   color: transparent;
@@ -107,11 +107,16 @@
   box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
     inset 2px -2px #969696, inset -2px 2px #c8c8c8;
   border-radius: 0;
-  width: 75px;
+  min-width: 75px;
+  max-width: 125px;
   height: 32px;
-
+  line-height: 2rem;
   padding: 0 12px;
   text-align: center;
+}
+#button-taskbar:hover{
+cursor: pointer;
+
 }
 
 
@@ -175,23 +180,7 @@
   background-color: #bababa;
 }
 
-#username {
-  position: relative;
-  display: inline-block;
-}
 
-#username-content {
-  display: none;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
-  z-index: 1;
-}
-
-#username:hover ~ #username-content{
-  display: block;
-}
 
 
 html,

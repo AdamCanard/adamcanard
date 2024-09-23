@@ -1,4 +1,4 @@
-import TopLevel from "./clientcomps/toplevel";
+import TopLevel from "./sitecomps/toplevel";
 
 export default function Page() {
   return (

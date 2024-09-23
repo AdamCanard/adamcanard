@@ -1,14 +1,13 @@
 "use client";
 import { BeerData } from "../types";
 import { useContext } from "react";
-import { IdContext } from "./beersheet";
+import { IdContext } from "../beerviewcomps/beersheet";
 
 export default function ListElement(props: { data: BeerData }) {
   const idContext = useContext(IdContext);
   //On click pass the beers database id to the router
 
   const handleClick = () => {
-    console.log(props.data.id);
     if (props.data.id) {
       idContext.setId(props.data.id);
     }
