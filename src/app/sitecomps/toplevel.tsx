@@ -1,11 +1,11 @@
 "use client";
 
 import { createContext, useState } from "react";
-import ClientPage from "./clientpage";
-import Body from "../components/body";
+import ClientPage from "../clientcomps/clientpage";
 import { IError } from "../types";
-import ErrorPopup from "./errorpopup";
+import ErrorPopup from "../clientcomps/errorpopup";
 import { Taskbar } from "./taskbar";
+import AdminPage from "../admincomps/adminpage";
 
 interface TaskbarContextType {
   username: string;
@@ -19,7 +19,7 @@ export const TaskbarContext = createContext<TaskbarContextType>(
 );
 
 export default function TopLevel() {
-  const [admin, setAdmin] = useState(false);
+  const [admin, setAdmin] = useState(true);
   const [username, setUsername] = useState("");
   const [error, setError] = useState<IError>();
   const [popup, setPopup] = useState<boolean>(false);
@@ -119,17 +119,19 @@ export default function TopLevel() {
     <>
       <TaskbarContext.Provider value={{ username, admin, adminCheck }}>
         <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
-          {!admin ? (
-            <>
-              <ClientPage />
-            </>
-          ) : (
-            <>
-              <Body />
-            </>
-          )}
+          <div className="h-full w-full flex flex-col">
+            {!admin ? (
+              <>
+                <ClientPage />
+              </>
+            ) : (
+              <>
+                <AdminPage />
+              </>
+            )}
 
-          <Taskbar />
+            <Taskbar />
+          </div>
         </ErrorPopup>
       </TaskbarContext.Provider>
     </>

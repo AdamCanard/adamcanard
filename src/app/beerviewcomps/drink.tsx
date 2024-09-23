@@ -2,7 +2,7 @@
 import { useEffect, useContext } from "react";
 
 import { BeerData } from "../types";
-import { PopupContext } from "./beerpanel";
+import { PopupContext } from "../beerviewcomps/beerpanel";
 
 export function Drink(props: { beer: BeerData }) {
   const popupData = useContext(PopupContext);

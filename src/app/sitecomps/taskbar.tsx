@@ -18,17 +18,16 @@ export function Taskbar() {
           <Image src={Mob} width={64} height={64} alt="Mob charater" />
         </div>
         <div id="border-b" className=" z-0 w-full h-8 ">
-          <div className="flex h-full justify-end items-center gap-2">
-            {!taskbarContext.admin && (
-              <div onClick={RouteSuggestion}>Suggestion Manager</div>
+          <div className="flex h-full justify-end items-center ">
+            {taskbarContext.admin && (
+              <div id="button-taskbar" onClick={RouteSuggestion}>
+                Suggestions
+              </div>
             )}
-            <div id="username-content">
-              <div>apple</div>
-            </div>
-            <div id="username">{taskbarContext.username}</div>
+
+            <div id="button-taskbar">{taskbarContext.username}</div>
             <div
-              id="button-nm"
-              className="leading-8 hover:cursor-pointer"
+              id="button-taskbar"
               onClick={() => taskbarContext.adminCheck()}
             >
               Admin

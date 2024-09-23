@@ -1,6 +1,6 @@
 import { createContext, SetStateAction, useState } from "react";
 import { BeerData } from "../types";
-import Popup from "./popup";
+import Popup from "../components/popup";
 import Window from "../semantics/window";
 import WindowInternal from "../semantics/windowinternal";
 import WindowButton from "../semantics/windowbutton";
@@ -75,6 +75,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
                   )}
                 </WindowInternal>
                 <WindowButton>
+                  <Delete beer={props.beer} />
                   {!props.beer.Drank && <Drink beer={props.beer} />}
                 </WindowButton>
               </div>
@@ -82,6 +83,15 @@ export default function BeerPanel(props: { beer: BeerData }) {
           </div>
         </Popup>
       </PopupContext.Provider>
+    </div>
+  );
+}
+
+function Delete(props: { beer: BeerData }) {
+  const handleClick = async () => {};
+  return (
+    <div id="border" onClick={handleClick}>
+      Delete
     </div>
   );
 }

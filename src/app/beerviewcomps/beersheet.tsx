@@ -1,6 +1,6 @@
 "use client";
 import { SetStateAction, useCallback, useEffect, useState } from "react";
-import Body from "./body";
+import Body from "../admincomps/body";
 import Window from "../semantics/window";
 import BeerPanel from "./beerpanel";
 import { BeerData } from "../types";
@@ -25,19 +25,23 @@ export function BeerSheet() {
       const response = await fetch("/api/getbeerbyid/", {
         method: "POST",
         body: formData,
-      })
-        .then((res) => {
-          console.log(res);
-          return res.json();
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      });
 
-      setBeer(response);
+      const beerData = await response.json();
+      setBeer(beerData);
       setBeerFlag(true);
-    } catch (error) {
-      console.log(error);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          }
+        );
+      } else {
+        console.log(err);
+      }
     }
   }, [id]);
 
@@ -50,14 +54,19 @@ export function BeerSheet() {
   return (
     <>
       <IdContext.Provider value={{ setId }}>
-        <div className="w-full h-full flex flex-row justify-around">
-          <div className="w-2/3">
-            <Window title="ADAM DRINKS BEER">
-              <Body />
-            </Window>
-          </div>
-          {beerFlag && (
-            <div className="w-1/3 h-full">
+        {!beerFlag ? (
+          <Window title="ADAM DRINKS BEER">
+            <Body />
+          </Window>
+        ) : (
+          <div className=" h-full flex flex-row justify-around">
+            <div className="w-2/3">
+              <Window title="ADAM DRINKS BEER">
+                <Body />
+              </Window>
+            </div>
+
+            <div className="flex w-1/3 h-full items-center justify-center">
               <div>
                 <Window
                   title="Beer Viewer"
@@ -70,8 +79,8 @@ export function BeerSheet() {
                 </Window>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </IdContext.Provider>
     </>
   );
