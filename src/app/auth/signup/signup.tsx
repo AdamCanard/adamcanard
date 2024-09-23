@@ -1,6 +1,6 @@
 "use client";
 import ErrorPopup from "@/app/clientcomps/errorpopup";
-import LabeledInput from "@/app/clientcomps/labeledinput";
+import { LabeledInputStr } from "@/app/clientcomps/labeledinputs";
 import Window from "@/app/semantics/window";
 import WindowButton from "@/app/semantics/windowbutton";
 import WindowInternal from "@/app/semantics/windowinternal";
@@ -64,13 +64,13 @@ export default function SignUp() {
         <Window title="SignUp">
           <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
             <WindowInternal>
-              <LabeledInput
+              <LabeledInputStr
                 title="email"
                 state={email}
                 setState={setEmail}
                 required={true}
               />
-              <LabeledInput
+              <LabeledInputStr
                 title="password"
                 state={password}
                 setState={setPassword}

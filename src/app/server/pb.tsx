@@ -78,6 +78,16 @@ export class DatabaseClient {
     }
   }
 
+  async authAsAdminPanel(email: string, password: string) {
+    try {
+      const result = await this.client.admins.authWithPassword(email, password);
+      console.log(result);
+      return result;
+    } catch (e) {
+      console.error("Error authenticating as admin: ", e);
+    }
+  }
+
   async deleteBeer(id: string) {
     try {
       const result = await this.client.collection("Beer").delete(id);

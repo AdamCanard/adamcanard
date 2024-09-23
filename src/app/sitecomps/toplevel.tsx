@@ -6,6 +6,7 @@ import { IError } from "../types";
 import ErrorPopup from "../clientcomps/errorpopup";
 import { Taskbar } from "./taskbar";
 import AdminPage from "../admincomps/adminpage";
+import { useRouter } from "next/navigation";
 
 interface TaskbarContextType {
   username: string;
@@ -27,8 +28,12 @@ export default function TopLevel() {
   const [window, setWindow] = useState<string>("");
   const [admin, setAdmin] = useState(false);
   const [username, setUsername] = useState("");
-  const [error, setError] = useState<IError>();
+  const [error, setError] = useState<IError>({
+    admin: { code: "123", message: "You are not Admin" },
+  });
   const [popup, setPopup] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const loadUser = async () => {
     let formData = new FormData();
@@ -46,8 +51,7 @@ export default function TopLevel() {
     if (auth.admin) {
       setAdmin(!admin);
     } else {
-      setError({ admin: { code: "123", message: "You are not Admin" } });
-      setPopup(true);
+      router.push("auth/admin");
     }
   };
 
