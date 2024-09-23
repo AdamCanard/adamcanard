@@ -3,7 +3,7 @@ import { BeerData } from "../types";
 import { useContext } from "react";
 import { IdContext } from "../beerviewcomps/beersheet";
 
-export default function ListElement(props: { data: BeerData }) {
+export default function BeerListElement(props: { data: BeerData }) {
   const idContext = useContext(IdContext);
   //On click pass the beers database id to the router
 

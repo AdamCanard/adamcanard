@@ -17,12 +17,6 @@
   --border-raised-inner: inset 2px -2px var(--button-shadow),
     inset -2px 2px var(--button-face);
 
-  /* --border-sunken-outer: inset -1px -1px var(--button-highlight),
-    inset 1px 1px var(--window-frame);
-  --border-sunken-inner: inset -2px -2px var(--button-face),
-    inset 2px 2px var(--button-shadow); */
-
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -132,6 +126,32 @@ cursor: pointer;
   background-position: top 3px left 4px;
   box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
     inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+}
+
+#accept{
+  background-image: url("../../public/Windows/accept.svg");
+  background-repeat: no-repeat;
+  background-position: top 3px left 4px;
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  width: 2rem;
+  height: 2rem;
+}
+#deny{
+  background-image: url("../../public/Windows/deny.svg");
+  background-repeat: no-repeat;
+  background-position: top 3px left 4px;
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  width: 2rem;
+  height: 2rem;
+}
+#accept:hover{
+  cursor: pointer;
+}
+
+#deny:hover{
+  cursor: pointer;
 }
 
 

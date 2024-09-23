@@ -9,7 +9,7 @@ export function Taskbar() {
   const taskbarContext = useContext(TaskbarContext);
 
   const RouteSuggestion = async () => {
-    router.push("admin/suggestions");
+    router.push("suggestions");
   };
   return (
     <div className="absolute bottom-0 left-0 w-full">

@@ -100,6 +100,17 @@ export class DatabaseClient {
     }
   }
 
+  async getSuggestion() {
+    await this.authAsAdmin();
+    const SuggestionList = await this.client
+      .collection("Suggestion")
+      .getList(1, 50, {
+        sort: "-created",
+      });
+
+    return SuggestionList;
+  }
+
   async addBeer(data: BeerData) {
     await this.authAsAdmin();
     const result = await this.client.collection("Beer").create(data);
