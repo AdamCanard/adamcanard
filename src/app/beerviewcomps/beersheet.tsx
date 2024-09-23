@@ -8,6 +8,7 @@ import { createContext } from "react";
 
 interface IdContextType {
   setId: React.Dispatch<SetStateAction<string>>;
+  setBeerFlag: React.Dispatch<SetStateAction<boolean>>;
 }
 
 //cast empty object to contexttype
@@ -53,7 +54,7 @@ export function BeerSheet() {
 
   return (
     <>
-      <IdContext.Provider value={{ setId }}>
+      <IdContext.Provider value={{ setId, setBeerFlag }}>
         {!beerFlag ? (
           <Window title="ADAM DRINKS BEER">
             <Body />

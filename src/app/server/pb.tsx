@@ -78,6 +78,17 @@ export class DatabaseClient {
     }
   }
 
+  async deleteBeer(id: string) {
+    try {
+      const result = await this.client.collection("Beer").delete(id);
+      return result;
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        return e;
+      }
+    }
+  }
+
   async addSuggestion(data: ISuggestion) {
     try {
       const result = await this.client.collection("Suggestion").create(data);

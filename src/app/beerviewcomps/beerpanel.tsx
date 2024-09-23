@@ -1,4 +1,4 @@
-import { createContext, SetStateAction, useState } from "react";
+import { createContext, SetStateAction, useContext, useState } from "react";
 import { BeerData } from "../types";
 import Popup from "../components/popup";
 import Window from "../semantics/window";
@@ -6,6 +6,7 @@ import WindowInternal from "../semantics/windowinternal";
 import WindowButton from "../semantics/windowbutton";
 import BeerLabel from "./beerlabel";
 import { Drink } from "./drink";
+import { IdContext } from "./beersheet";
 
 //type for Popup context
 interface PopupContextType {
@@ -75,7 +76,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
                   )}
                 </WindowInternal>
                 <WindowButton>
-                  {/* <Delete beer={props.beer} /> */}
+                  <Delete beer={props.beer} />
                   {!props.beer.Drank && <Drink beer={props.beer} />}
                 </WindowButton>
               </div>
@@ -87,11 +88,40 @@ export default function BeerPanel(props: { beer: BeerData }) {
   );
 }
 
-// function Delete(props: { beer: BeerData }) {
-//   const handleClick = async () => {};
-//   return (
-//     <div id="border" onClick={handleClick}>
-//       Delete
-//     </div>
-//   );
-// }
+function Delete(props: { beer: BeerData }) {
+  const idContext = useContext(IdContext);
+  const deleteBeer = async () => {
+    const formData = new FormData();
+    formData.append("id", props.beer.id);
+    try {
+      const response = await fetch("/api/deletebeer/", {
+        method: "POST",
+        body: formData,
+      });
+      const beerData = await response.json();
+      console.log(beerData);
+      idContext.setBeerFlag(false);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          }
+        );
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleClick = () => {
+    deleteBeer();
+  };
+  return (
+    <div id="border" onClick={handleClick}>
+      Delete
+    </div>
+  );
+}
