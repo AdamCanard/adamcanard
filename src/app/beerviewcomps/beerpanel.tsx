@@ -75,7 +75,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
                   )}
                 </WindowInternal>
                 <WindowButton>
-                  <Delete beer={props.beer} />
+                  {/* <Delete beer={props.beer} /> */}
                   {!props.beer.Drank && <Drink beer={props.beer} />}
                 </WindowButton>
               </div>
@@ -87,11 +87,11 @@ export default function BeerPanel(props: { beer: BeerData }) {
   );
 }
 
-function Delete(props: { beer: BeerData }) {
-  const handleClick = async () => {};
-  return (
-    <div id="border" onClick={handleClick}>
-      Delete
-    </div>
-  );
-}
+// function Delete(props: { beer: BeerData }) {
+//   const handleClick = async () => {};
+//   return (
+//     <div id="border" onClick={handleClick}>
+//       Delete
+//     </div>
+//   );
+// }
