@@ -1,15 +1,13 @@
-import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { TaskbarContext } from "./toplevel";
 import Mob from "../../../public/Windows/Mob.png";
 import Image from "next/image";
 
 export function Taskbar() {
-  const router = useRouter();
   const taskbarContext = useContext(TaskbarContext);
 
   const RouteSuggestion = async () => {
-    router.push("suggestions");
+    taskbarContext.setWindow("suggestion");
   };
   return (
     <div className="absolute bottom-0 left-0 w-full">

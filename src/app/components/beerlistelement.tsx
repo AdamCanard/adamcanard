@@ -1,15 +1,16 @@
 "use client";
+import { TaskbarContext } from "../sitecomps/toplevel";
 import { BeerData } from "../types";
 import { useContext } from "react";
-import { IdContext } from "../beerviewcomps/beersheet";
 
 export default function BeerListElement(props: { data: BeerData }) {
-  const idContext = useContext(IdContext);
+  const taskbarContext = useContext(TaskbarContext);
   //On click pass the beers database id to the router
 
   const handleClick = () => {
     if (props.data.id) {
-      idContext.setId(props.data.id);
+      taskbarContext.setId(props.data.id);
+      taskbarContext.setWindow("beer");
     }
   };
   return (

@@ -1,11 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import Window from "../semantics/window";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ISuggestion } from "../types";
+import WindowInternal from "../semantics/windowinternal";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
 export default function SuggestionManager() {
-  const router = useRouter();
+  const taskbarContext = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
   const getListElements = async () => {
     try {
@@ -33,13 +35,18 @@ export default function SuggestionManager() {
   }, []);
 
   return (
-    <div className="w-1/3">
-      <Window title="Suggestion Manager" close={() => router.push("/")}>
-        <div className="w-full flex flex-col h-72 overflow-y-scroll">
-          {listElements.map((data, index) => {
-            return <SuggestionListElement data={data} key={index} />;
-          })}
-        </div>
+    <div className="w-full">
+      <Window
+        title="Suggestion Manager"
+        close={() => taskbarContext.setWindow("")}
+      >
+        <WindowInternal>
+          <div className="w-full flex flex-col h-72 overflow-y-scroll">
+            {listElements.map((data, index) => {
+              return <SuggestionListElement data={data} key={index} />;
+            })}
+          </div>
+        </WindowInternal>
       </Window>
     </div>
   );

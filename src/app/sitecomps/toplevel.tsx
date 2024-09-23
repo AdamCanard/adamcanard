@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext, SetStateAction, useState } from "react";
 import ClientPage from "../clientcomps/clientpage";
 import { IError } from "../types";
 import ErrorPopup from "../clientcomps/errorpopup";
@@ -11,6 +11,10 @@ interface TaskbarContextType {
   username: string;
   admin: boolean;
   adminCheck: () => Promise<void>;
+  id: string;
+  setId: React.Dispatch<SetStateAction<string>>;
+  window: string;
+  setWindow: React.Dispatch<SetStateAction<string>>;
 }
 
 //cast empty object to contexttype
@@ -19,7 +23,9 @@ export const TaskbarContext = createContext<TaskbarContextType>(
 );
 
 export default function TopLevel() {
-  const [admin, setAdmin] = useState(true);
+  const [id, setId] = useState<string>("");
+  const [window, setWindow] = useState<string>("");
+  const [admin, setAdmin] = useState(false);
   const [username, setUsername] = useState("");
   const [error, setError] = useState<IError>();
   const [popup, setPopup] = useState<boolean>(false);
@@ -117,13 +123,13 @@ export default function TopLevel() {
 
   return (
     <>
-      <TaskbarContext.Provider value={{ username, admin, adminCheck }}>
+      <TaskbarContext.Provider
+        value={{ username, admin, adminCheck, id, setId, window, setWindow }}
+      >
         <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
-          <div className="h-full w-full flex flex-col">
+          <div className="h-full w-full flex flex-col justify-center items-center">
             {!admin ? (
-              <>
-                <ClientPage />
-              </>
+              <ClientPage />
             ) : (
               <>
                 <AdminPage />
