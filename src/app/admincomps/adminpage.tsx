@@ -1,93 +1,68 @@
-// import Body from "./body";
-// import Window from "../semantics/window";
-// import { BeerSheet } from "../beerviewcomps/beersheet";
-
 import { useCallback, useContext, useEffect, useState } from "react";
-import Window from "../semantics/window";
 import { BeerData } from "../types";
-
 import BeerPanel from "../beerviewcomps/beerpanel";
 import SuggestionManager from "./suggestionmanager";
 import { TaskbarContext } from "../sitecomps/toplevel";
 import AdminBody from "./adminbody";
 
 export default function AdminPage() {
-  return (
-    <MainMenu />
-    // <SuggestionManager />
-    // <BeerSheet />
-    // <Window title="ADAM DRINKS BEER">
-    //   <Body />
-    // </Window>
-  );
+  return <MainMenu />;
 }
 
 export function MainMenu() {
-  const taskbarContext = useContext(TaskbarContext);
-  const [beer, setBeer] = useState<BeerData>({} as BeerData);
+  const { ids } = useContext(TaskbarContext);
+  const [beers, setBeers] = useState<BeerData[]>([]);
 
-  const getData = useCallback(async () => {
-    const formData = new FormData();
-    formData.append("id", taskbarContext.id);
-    try {
-      const response = await fetch("/api/getbeerbyid/", {
-        method: "POST",
-        body: formData,
-      });
-
-      const beerData = await response.json();
-      setBeer(beerData);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          }
-        );
-      } else {
-        console.log(err);
+  const getData = useCallback(
+    async (id: string) => {
+      const formData = new FormData();
+      formData.append("id", id);
+      try {
+        const response = await fetch("/api/getbeerbyid/", {
+          method: "POST",
+          body: formData,
+        });
+        const beerData = await response.json();
+        const prevBeers = beers;
+        console.log(prevBeers, beerData);
+        setBeers([...prevBeers, beerData]);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          return new Response(
+            JSON.stringify({ error: err.message || err.toString() }),
+            {
+              status: 500,
+              headers: {},
+            }
+          );
+        } else {
+          console.log(err);
+        }
       }
-    }
-  }, [taskbarContext]);
+    },
+    [beers]
+  );
 
   useEffect(() => {
-    if (taskbarContext.id != "") {
-      getData();
+    if (ids.length != 0) {
+      getData(ids[ids.length - 1]);
     }
-  }, [getData, taskbarContext.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ids]);
 
   return (
     <>
       <div className="flex flex-row w-full h-full justify-center">
         <AdminBody />
-
-        {taskbarContext.window && (
-          <>
-            {taskbarContext.window === "beer" && (
-              <div className="flex w-1/3 h-full items-center justify-center">
-                <div>
-                  <Window
-                    title="Beer Viewer"
-                    close={() => {
-                      taskbarContext.setWindow("");
-                      taskbarContext.setId("");
-                    }}
-                  >
-                    <BeerPanel beer={beer} />
-                  </Window>
-                </div>
-              </div>
-            )}
-            {taskbarContext.window === "suggestion" && (
-              <div className="flex w-1/3 h-full items-center justify-center">
-                <SuggestionManager />
-              </div>
-            )}
-          </>
-        )}
+        <BeerScreen beers={beers} />
+        {/* <SuggestionManager /> */}
       </div>
     </>
   );
+}
+
+export function BeerScreen(props: { beers: BeerData[] }) {
+  return props.beers.map((beer, index) => {
+    return <BeerPanel beer={beer} key={index + beer.Beer} />;
+  });
 }

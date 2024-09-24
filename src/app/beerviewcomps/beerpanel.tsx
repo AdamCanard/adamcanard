@@ -1,12 +1,12 @@
 import { createContext, SetStateAction, useContext, useState } from "react";
 import { BeerData } from "../types";
 import Popup from "../components/popup";
-import Window from "../semantics/window";
 import WindowInternal from "../semantics/windowinternal";
 import WindowButton from "../semantics/windowbutton";
 import BeerLabel from "./beerlabel";
 import { Drink } from "./drink";
-import { IdContext } from "./beersheet";
+import { TaskbarContext } from "../sitecomps/toplevel";
+import DraggableWindow from "../semantics/draggablewindow";
 
 //type for Popup context
 interface PopupContextType {
@@ -29,23 +29,21 @@ export default function BeerPanel(props: { beer: BeerData }) {
   const [drinkTrigger, setDrinkTrigger] = useState(false);
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <PopupContext.Provider
-        value={{
-          rating,
-          setRating,
-          brewery,
-          setBrewery,
-          drinkTrigger,
-          setDrinkTrigger,
-        }}
-      >
-        <Popup>
-          <div className="w-96">
-            <Window title={props.beer.Beer}>
-              <div className="flex flex-col gap-4 justify-center items-center">
-                <div className="w-64 h-64 border-2"></div>
-                {/* <Image
+    <PopupContext.Provider
+      value={{
+        rating,
+        setRating,
+        brewery,
+        setBrewery,
+        drinkTrigger,
+        setDrinkTrigger,
+      }}
+    >
+      <Popup>
+        <DraggableWindow title={props.beer.Beer} width={"1/2"} heigth={"2/3"}>
+          <div className="flex flex-col gap-4 justify-center items-center">
+            <div className="w-64 h-64 border-2"></div>
+            {/* <Image
               src={
                 POCKET_BASE_URL +
                 "/api/files/" +
@@ -60,36 +58,29 @@ export default function BeerPanel(props: { beer: BeerData }) {
               alt="Picture of the Beer"
               onClick={handleClick}
             /> */}
-                <WindowInternal>
-                  <BeerLabel title={"Beer"} data={props.beer.Beer} />
-                  {props.beer.Brewery && (
-                    <BeerLabel
-                      title={"Brewery"}
-                      data={props.beer.Brewery + ""}
-                    />
-                  )}
-                  {props.beer.Rating != 0 && (
-                    <BeerLabel title={"Rating"} data={props.beer.Rating + ""} />
-                  )}
-                  {props.beer.By && (
-                    <BeerLabel title={"By"} data={props.beer.By} />
-                  )}
-                </WindowInternal>
-                <WindowButton>
-                  <Delete beer={props.beer} />
-                  {!props.beer.Drank && <Drink beer={props.beer} />}
-                </WindowButton>
-              </div>
-            </Window>
+            <WindowInternal>
+              <BeerLabel title={"Beer"} data={props.beer.Beer} />
+              {props.beer.Brewery && (
+                <BeerLabel title={"Brewery"} data={props.beer.Brewery + ""} />
+              )}
+              {props.beer.Rating != 0 && (
+                <BeerLabel title={"Rating"} data={props.beer.Rating + ""} />
+              )}
+              {props.beer.By && <BeerLabel title={"By"} data={props.beer.By} />}
+            </WindowInternal>
+            <WindowButton>
+              <Delete beer={props.beer} />
+              {!props.beer.Drank && <Drink beer={props.beer} />}
+            </WindowButton>
           </div>
-        </Popup>
-      </PopupContext.Provider>
-    </div>
+        </DraggableWindow>
+      </Popup>
+    </PopupContext.Provider>
   );
 }
 
 function Delete(props: { beer: BeerData }) {
-  const idContext = useContext(IdContext);
+  // const taskbarContext = useContext(TaskbarContext);
   const deleteBeer = async () => {
     const formData = new FormData();
     formData.append("id", props.beer.id);
@@ -100,7 +91,6 @@ function Delete(props: { beer: BeerData }) {
       });
       const beerData = await response.json();
       console.log(beerData);
-      idContext.setBeerFlag(false);
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(

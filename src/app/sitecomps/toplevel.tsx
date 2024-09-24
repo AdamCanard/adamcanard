@@ -12,8 +12,8 @@ interface TaskbarContextType {
   username: string;
   admin: boolean;
   adminCheck: () => Promise<void>;
-  id: string;
-  setId: React.Dispatch<SetStateAction<string>>;
+  ids: string[];
+  setIds: React.Dispatch<SetStateAction<string[]>>;
   window: string;
   setWindow: React.Dispatch<SetStateAction<string>>;
 }
@@ -24,7 +24,7 @@ export const TaskbarContext = createContext<TaskbarContextType>(
 );
 
 export default function TopLevel() {
-  const [id, setId] = useState<string>("");
+  const [ids, setIds] = useState<string[]>([]);
   const [window, setWindow] = useState<string>("");
   const [admin, setAdmin] = useState(true);
   const [username, setUsername] = useState("");
@@ -128,7 +128,7 @@ export default function TopLevel() {
   return (
     <>
       <TaskbarContext.Provider
-        value={{ username, admin, adminCheck, id, setId, window, setWindow }}
+        value={{ username, admin, adminCheck, ids, setIds, window, setWindow }}
       >
         <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
           <div
