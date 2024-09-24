@@ -28,9 +28,9 @@ export default function TopLevel() {
   const [window, setWindow] = useState<string>("");
   const [admin, setAdmin] = useState(false);
   const [username, setUsername] = useState("");
-  const [error, setError] = useState<IError>({
+  const error: IError = {
     admin: { code: "123", message: "You are not Admin" },
-  });
+  };
   const [popup, setPopup] = useState<boolean>(false);
 
   const router = useRouter();
