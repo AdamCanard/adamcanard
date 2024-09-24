@@ -43,7 +43,7 @@ export default function DrinkForm() {
   };
 
   return (
-    <DraggableWindow title={"New Drank"} width={"1/3"} heigth={"1/3"}>
+    <DraggableWindow title={"New Drink"} width={"1/3"} heigth={"1/3"}>
       <form
         className="flex flex-col"
         onSubmit={(e) => handleSubmit(e)}

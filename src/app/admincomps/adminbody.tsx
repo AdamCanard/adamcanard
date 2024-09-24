@@ -41,7 +41,7 @@ export default function AdminBody() {
       />
       <AdminList
         Title="Drink"
-        listElements={listElements.filter((element) => element.Drank == true)}
+        listElements={listElements.filter((element) => element.Drank == false)}
       />
 
       <DrankForm />

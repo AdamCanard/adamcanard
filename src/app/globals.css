@@ -127,6 +127,21 @@ cursor: pointer;
   box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
     inset 2px -2px #969696, inset -2px 2px #c8c8c8;
 }
+#close-dr{
+  padding: 0;
+  display: block;
+  min-width: 16px;
+  min-height: 14px;
+  margin-right: 3px;
+  right: 5px;
+  top: 25%;
+  background-color: #bababa;
+  background-image: url("../../public/Windows/close.svg");
+  background-repeat: no-repeat;
+  background-position: top 3px left 4px;
+  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
+    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+}
 
 #accept{
   background-image: url("../../public/Windows/accept.svg");
@@ -205,7 +220,7 @@ cursor: pointer;
 
 html,
 body {
-  overflow-y: hidden;   
+  overflow: hidden;   
   height: 100vh;
 
   width: 100%;

@@ -72,19 +72,22 @@ export default function DraggableWindow(props: {
   return (
     <>
       <div
+        unselectable="on"
         className={`flex flex-col justify-center items-center w-${props.width} h-${props.heigth} absolute`}
         ref={boxRef}
         style={point}
       >
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full relative">
           <h1
             id="title"
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer w-full"
             onMouseDown={handleMouseDown}
           >
             {props.title}
-            {props.close && <div id="close" onClick={props.close}></div>}
           </h1>
+          {props.close && (
+            <div id="close-dr" className="absolute" onClick={props.close}></div>
+          )}
         </div>
 
         <div id="window">{props.children}</div>
