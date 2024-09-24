@@ -1,6 +1,6 @@
 "use client";
 import { SetStateAction, useCallback, useEffect, useState } from "react";
-import Body from "../admincomps/body";
+import Body from "../admincomps/adminbody";
 import Window from "../semantics/window";
 import BeerPanel from "./beerpanel";
 import { BeerData } from "../types";

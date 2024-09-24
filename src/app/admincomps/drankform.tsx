@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Window from "../semantics/window";
 import WindowInternal from "../semantics/windowinternal";
 import WindowButton from "../semantics/windowbutton";
 import { LabeledInputNum, LabeledInputStr } from "../clientcomps/labeledinputs";
+import DraggableWindow from "../semantics/draggablewindow";
 
 export default function DrankForm() {
   const [beer, setBeer] = useState("");
@@ -43,7 +43,7 @@ export default function DrankForm() {
   };
 
   return (
-    <Window title={"New Drank"}>
+    <DraggableWindow title={"New Drank"} width={"1/3"} heigth={"1/3"}>
       <form
         className="flex flex-col"
         onSubmit={(e) => handleSubmit(e)}
@@ -73,6 +73,6 @@ export default function DrankForm() {
           <input id="button" type="submit" />
         </WindowButton>
       </form>
-    </Window>
+    </DraggableWindow>
   );
 }

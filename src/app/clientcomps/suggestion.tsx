@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Window from "../semantics/window";
 import WindowButton from "../semantics/windowbutton";
 import WindowInternal from "../semantics/windowinternal";
 import { LabeledInputStr } from "./labeledinputs";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
 export default function Suggestion() {
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
-  const [name, setName] = useState("");
+
+  const taskbarContext = useContext(TaskbarContext);
 
   const postData = async (formData: FormData) => {
     try {
@@ -37,10 +39,10 @@ export default function Suggestion() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
+    formData.append("Name", taskbarContext.username);
     postData(formData);
     setBeer("");
     setBrewery("");
-    setName("");
   };
 
   return (
@@ -62,12 +64,6 @@ export default function Suggestion() {
             state={brewery}
             setState={setBrewery}
             required={false}
-          />
-          <LabeledInputStr
-            title="Name"
-            state={name}
-            setState={setName}
-            required={true}
           />
         </WindowInternal>
         <WindowButton>

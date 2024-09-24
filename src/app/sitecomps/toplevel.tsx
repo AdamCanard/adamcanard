@@ -26,7 +26,7 @@ export const TaskbarContext = createContext<TaskbarContextType>(
 export default function TopLevel() {
   const [id, setId] = useState<string>("");
   const [window, setWindow] = useState<string>("");
-  const [admin, setAdmin] = useState(false);
+  const [admin, setAdmin] = useState(true);
   const [username, setUsername] = useState("");
   const error: IError = {
     admin: { code: "123", message: "You are not Admin" },
@@ -131,7 +131,10 @@ export default function TopLevel() {
         value={{ username, admin, adminCheck, id, setId, window, setWindow }}
       >
         <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
-          <div className="h-full w-full flex flex-col justify-center items-center">
+          <div
+            unselectable="on"
+            className="h-full w-full flex flex-col justify-center items-center"
+          >
             {!admin ? (
               <ClientPage />
             ) : (

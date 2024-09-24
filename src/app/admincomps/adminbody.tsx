@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import DrankForm from "./drankform";
 import DrinkForm from "./drinkform";
 import { BeerData } from "../types";
-import BeerLists from "../components/beerlists";
 
-export default function Body() {
+import AdminList from "./adminlist";
+
+export default function AdminBody() {
   const [listElements, setListElements] = useState<BeerData[]>([]);
   const getListElements = async () => {
     try {
@@ -33,14 +34,18 @@ export default function Body() {
   }, []);
 
   return (
-    <div className="grid grid-cols-2 grid-rows-3 w-full h-full gap-x-2">
-      <BeerLists listData={listElements} />
-      <div className="row-span-1 col-span-1">
-        <DrankForm />
-      </div>
-      <div className="row-span-1 col-span-1">
-        <DrinkForm />
-      </div>
+    <div className="w-full h-full">
+      <AdminList
+        Title="Drank"
+        listElements={listElements.filter((element) => element.Drank == true)}
+      />
+      <AdminList
+        Title="Drink"
+        listElements={listElements.filter((element) => element.Drank == true)}
+      />
+
+      <DrankForm />
+      <DrinkForm />
     </div>
   );
 }

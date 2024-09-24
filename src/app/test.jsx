@@ -1,13 +1,14 @@
 "use client";
-import { Draggable } from "./semantics/draggable";
-import Window from "./semantics/window";
+// import { Draggable } from "./semantics/draggable";
+import DraggableWindow from "./semantics/draggablewindow";
+// import Window from "./semantics/window";
 
 export default function Test() {
   return (
-    <Draggable>
-      <Window title="Test">
+    <div className="w-full h-full">
+      <DraggableWindow title="Test Window" size={"s"}>
         <></>
-      </Window>
-    </Draggable>
+      </DraggableWindow>
+    </div>
   );
 }

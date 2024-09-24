@@ -2,18 +2,21 @@
 
 import Window from "../semantics/window";
 import { useContext, useEffect, useState } from "react";
-import { ISuggestion } from "../types";
+
 import WindowInternal from "../semantics/windowinternal";
 import { TaskbarContext } from "../sitecomps/toplevel";
+import SuggestionListElement from "./suggestionlistelement";
 
 export default function SuggestionManager() {
-  const taskbarContext = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
+
+  const taskbarContext = useContext(TaskbarContext);
+
   const getListElements = async () => {
     try {
       const response = await fetch("/api/getsuggestions/", { method: "GET" });
       const suggestionsListResponse = await response.json();
-
+      console.log(suggestionsListResponse.items);
       setListElements(suggestionsListResponse.items);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -48,29 +51,6 @@ export default function SuggestionManager() {
           </div>
         </WindowInternal>
       </Window>
-    </div>
-  );
-}
-
-export function SuggestionListElement(props: { data: ISuggestion }) {
-  const Accept = async () => {};
-  const Deny = async () => {};
-  return (
-    <div className="flex flex-row pr-1">
-      <div
-        id="border"
-        className="flex w-full h-8 justify-between items-center p-2 gap-2 "
-      >
-        <>
-          <div>{props.data.Beer}</div>
-          <div>{props.data.Brewery}</div>
-          <div>{props.data.Name}</div>
-        </>
-      </div>
-      <div className="flex flex-row w-20 h-8 gap-1">
-        <div id="accept" onClick={Accept}></div>
-        <div id="deny" onClick={Deny}></div>
-      </div>
     </div>
   );
 }

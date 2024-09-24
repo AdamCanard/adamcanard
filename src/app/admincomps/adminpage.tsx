@@ -5,10 +5,11 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import Window from "../semantics/window";
 import { BeerData } from "../types";
-import Body from "./body";
+
 import BeerPanel from "../beerviewcomps/beerpanel";
 import SuggestionManager from "./suggestionmanager";
 import { TaskbarContext } from "../sitecomps/toplevel";
+import AdminBody from "./adminbody";
 
 export default function AdminPage() {
   return (
@@ -60,11 +61,8 @@ export function MainMenu() {
   return (
     <>
       <div className="flex flex-row w-full h-full justify-center">
-        <div className="w-2/3">
-          <Window title="ADAM DRINKS BEER">
-            <Body />
-          </Window>
-        </div>
+        <AdminBody />
+
         {taskbarContext.window && (
           <>
             {taskbarContext.window === "beer" && (

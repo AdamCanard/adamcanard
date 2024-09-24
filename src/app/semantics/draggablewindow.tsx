@@ -1,17 +1,22 @@
+"use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface IPoint {
   top: number;
   left: number;
 }
-
-export function Draggable(props: { children: React.ReactNode }) {
-  const [point, setPoint] = useState<IPoint>({ top: 0, left: 0 });
+export default function DraggableWindow(props: {
+  title: string;
+  children: React.ReactNode;
+  width: string;
+  heigth: string;
+  close?: () => void;
+}) {
+  const [point, setPoint] = useState<IPoint>({ top: 50, left: 50 });
   const [pointOffset, setPointOffset] = useState<IPoint>({
     top: 0,
     left: 0,
   });
-
   const boxRef = useRef(null);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
@@ -67,20 +72,22 @@ export function Draggable(props: { children: React.ReactNode }) {
   return (
     <>
       <div
+        className={`flex flex-col justify-center items-center w-${props.width} h-${props.heigth} absolute`}
         ref={boxRef}
-        className={
-          "absolute border border-black bg-white select-none transition:w"
-        }
         style={point}
       >
-        <div
-          className={
-            "w-full border-b bg-gray-300 border-black select-none flex justify-end resize ltr:resize"
-          }
-          onMouseDown={handleMouseDown}
-        >
-          {props.children}
+        <div className="flex justify-between w-full">
+          <h1
+            id="title"
+            className="hover:cursor-pointer"
+            onMouseDown={handleMouseDown}
+          >
+            {props.title}
+            {props.close && <div id="close" onClick={props.close}></div>}
+          </h1>
         </div>
+
+        <div id="window">{props.children}</div>
       </div>
     </>
   );
