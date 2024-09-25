@@ -8,7 +8,7 @@ export class DatabaseClient {
 
   constructor() {
     // instantiate PocketBase
-    this.client = new PocketBase(process.env.PB_DOMAIN);
+    this.client = new PocketBase(POCKET_BASE_URL);
     this.client.autoCancellation(false);
   }
 
