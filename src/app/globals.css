@@ -235,6 +235,8 @@ body {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  background-image: url("../../public/Windows/Desktop.jpg");
+  background-size: cover;
 }
 
 @keyframes roll {

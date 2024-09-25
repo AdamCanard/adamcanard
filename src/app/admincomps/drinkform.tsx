@@ -1,8 +1,6 @@
 import { useState } from "react";
-import WindowInternal from "../semantics/windowinternal";
 import WindowButton from "../semantics/windowbutton";
 import { LabeledInputStr } from "../clientcomps/labeledinputs";
-import DraggableWindow from "../semantics/draggablewindow";
 
 export default function DrinkForm() {
   const [beer, setBeer] = useState("");
@@ -43,36 +41,33 @@ export default function DrinkForm() {
   };
 
   return (
-    <DraggableWindow title={"New Drink"} width={"1/3"} heigth={"1/3"}>
-      <form
-        className="flex flex-col"
-        onSubmit={(e) => handleSubmit(e)}
-        autoComplete="off"
-      >
-        <WindowInternal>
-          <LabeledInputStr
-            title="Beer"
-            state={beer}
-            setState={setBeer}
-            required={true}
-          />
-          <LabeledInputStr
-            title="Brewery"
-            state={brewery}
-            setState={setBrewery}
-            required={false}
-          />
-          <LabeledInputStr
-            title="Rating"
-            state={by}
-            setState={setBy}
-            required={true}
-          />
-        </WindowInternal>
-        <WindowButton>
-          <input id="button" type="submit" />
-        </WindowButton>
-      </form>
-    </DraggableWindow>
+    <form
+      className="flex flex-col"
+      onSubmit={(e) => handleSubmit(e)}
+      autoComplete="off"
+    >
+      <LabeledInputStr
+        title="Beer"
+        state={beer}
+        setState={setBeer}
+        required={true}
+      />
+      <LabeledInputStr
+        title="Brewery"
+        state={brewery}
+        setState={setBrewery}
+        required={false}
+      />
+      <LabeledInputStr
+        title="Rating"
+        state={by}
+        setState={setBy}
+        required={true}
+      />
+
+      <WindowButton>
+        <input id="button" type="submit" />
+      </WindowButton>
+    </form>
   );
 }

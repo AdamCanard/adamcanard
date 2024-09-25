@@ -4,6 +4,7 @@ import AdminList from "../admincomps/adminlist";
 import { BeerScreen } from "../admincomps/adminpage";
 import DrinkForm from "../admincomps/drinkform";
 import DrankForm from "../admincomps/drankform";
+import DraggableWindow from "../semantics/draggablewindow";
 
 export default function TaskbarTabs() {
   const { setWindows, windows, beers } = useContext(TaskbarContext);
@@ -53,24 +54,22 @@ export default function TaskbarTabs() {
 function Drank() {
   const { listElements } = useContext(TaskbarContext);
   return (
-    <>
+    <DraggableWindow title="Drank" width={"72"} heigth={"2/3"}>
       <AdminList
-        Title="Drank"
         listElements={listElements.filter((element) => element.Drank == true)}
       />
       <DrankForm />
-    </>
+    </DraggableWindow>
   );
 }
 function Drink() {
   const { listElements } = useContext(TaskbarContext);
   return (
-    <>
+    <DraggableWindow title="Drink" width={"72"} heigth={"2/3"}>
       <AdminList
-        Title="Drink"
         listElements={listElements.filter((element) => element.Drank == false)}
       />
       <DrinkForm />
-    </>
+    </DraggableWindow>
   );
 }
