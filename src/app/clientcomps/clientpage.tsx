@@ -1,43 +1,15 @@
 "use client";
-import { useEffect } from "react";
-import ClientSheet from "./clientsheet";
-import { useRouter } from "next/navigation";
+import DraggableWindow from "../semantics/draggablewindow";
+import ClientBody from "./clientbody";
 
 export default function ClientPage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const formData = new FormData();
-    formData.append("cookie", "authToken");
-    getCookie(formData);
-  });
-
-  const getCookie = async (formData: FormData) => {
-    try {
-      const response = await fetch("/api/getcookie/", {
-        method: "POST",
-        body: formData,
-      });
-      const cookie = await response.json();
-      if (cookie.data === undefined) {
-        router.push("/auth/login");
-      } else {
-      }
-      return cookie;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          }
-        );
-      } else {
-        console.log(err);
-      }
-    }
-  };
-
-  return <ClientSheet />;
+  return (
+    <div className="flex flex-row w-full h-full justify-center">
+      <div className="w-2/3">
+        <DraggableWindow title="ADAM DRINKS BEER" width={"2/3"} heigth={"2/3"}>
+          <ClientBody />
+        </DraggableWindow>
+      </div>
+    </div>
+  );
 }

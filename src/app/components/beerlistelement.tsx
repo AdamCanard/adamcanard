@@ -4,13 +4,12 @@ import { BeerData } from "../types";
 import { useContext } from "react";
 
 export default function BeerListElement(props: { data: BeerData }) {
-  const { setIds, ids, setWindow } = useContext(TaskbarContext);
+  const { setIds, ids } = useContext(TaskbarContext);
   //On click pass the beers database id to the router
 
   const handleClick = () => {
     if (props.data.id) {
       setIds([...ids, props.data.id]);
-      setWindow("beer");
     }
   };
   return (

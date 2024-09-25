@@ -1,17 +1,15 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { BeerData } from "../types";
 import BeerPanel from "../beerviewcomps/beerpanel";
-import SuggestionManager from "./suggestionmanager";
+
 import { TaskbarContext } from "../sitecomps/toplevel";
-import AdminBody from "./adminbody";
 
 export default function AdminPage() {
   return <MainMenu />;
 }
 
 export function MainMenu() {
-  const { ids } = useContext(TaskbarContext);
-  const [beers, setBeers] = useState<BeerData[]>([]);
+  const { ids, windows, beers, setBeers } = useContext(TaskbarContext);
 
   const getData = useCallback(
     async (id: string) => {
@@ -40,7 +38,7 @@ export function MainMenu() {
         }
       }
     },
-    [beers]
+    [beers, setBeers]
   );
 
   useEffect(() => {
@@ -53,9 +51,9 @@ export function MainMenu() {
   return (
     <>
       <div className="flex flex-row w-full h-full justify-center">
-        <AdminBody />
-        <BeerScreen beers={beers} />
-        {/* <SuggestionManager /> */}
+        {windows.map((tab) => {
+          return <div key={tab.key}>{tab}</div>;
+        })}
       </div>
     </>
   );
