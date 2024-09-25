@@ -19,6 +19,8 @@ interface TaskbarContextType {
   beers: BeerData[];
   setBeers: React.Dispatch<SetStateAction<BeerData[]>>;
   listElements: BeerData[];
+  setError: React.Dispatch<SetStateAction<IError>>;
+  setErrorTrigger: React.Dispatch<SetStateAction<boolean>>;
 }
 
 //cast empty object to contexttype
@@ -32,10 +34,10 @@ export default function TopLevel() {
   const [admin, setAdmin] = useState(true);
   const [username, setUsername] = useState("");
   const [beers, setBeers] = useState<BeerData[]>([]);
-  const error: IError = {
+  const [error, setError] = useState<IError>({
     admin: { code: "123", message: "You are not Admin" },
-  };
-  const [popup, setPopup] = useState<boolean>(false);
+  });
+  const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
   const [listElements, setListElements] = useState<BeerData[]>([]);
 
   const router = useRouter();
@@ -203,15 +205,20 @@ export default function TopLevel() {
           beers,
           setBeers,
           listElements,
+          setErrorTrigger,
+          setError,
         }}
       >
-        <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
+        <ErrorPopup
+          error={error}
+          trigger={errorTrigger}
+          setTrigger={setErrorTrigger}
+        >
           <div
             unselectable="on"
             className="h-full w-full flex flex-col justify-center items-center"
           >
             {!admin ? <ClientPage /> : <AdminPage />}
-
             <Taskbar />
           </div>
         </ErrorPopup>

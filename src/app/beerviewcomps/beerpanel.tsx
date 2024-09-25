@@ -1,11 +1,11 @@
-import { createContext, SetStateAction, useContext, useState } from "react";
+import { createContext, SetStateAction, useState } from "react";
 import { BeerData } from "../types";
 import Popup from "../components/popup";
 import WindowInternal from "../semantics/windowinternal";
 import WindowButton from "../semantics/windowbutton";
 import BeerLabel from "./beerlabel";
 import { Drink } from "./drink";
-import { TaskbarContext } from "../sitecomps/toplevel";
+
 import DraggableWindow from "../semantics/draggablewindow";
 import Delete from "./delete";
 

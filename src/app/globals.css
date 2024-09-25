@@ -154,6 +154,7 @@ label {
   background-position: top 3px left 4px;
   box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
     inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  cursor: pointer;
 }
 
 #accept {

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface IPoint {
   top: number;
   left: number;
+  cursor?: string;
 }
 export default function DraggableWindow(props: {
   title: string;
@@ -17,6 +18,7 @@ export default function DraggableWindow(props: {
     top: 0,
     left: 0,
   });
+  const [cursor, setCursor] = useState<string>("grab");
   const boxRef = useRef(null);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
@@ -25,9 +27,10 @@ export default function DraggableWindow(props: {
       left: e.nativeEvent.offsetX,
     });
     setPoint({
-      top: e.pageY - (e.nativeEvent.offsetY + 1),
-      left: e.pageX - (e.nativeEvent.offsetX + 1),
+      top: e.pageY - (e.nativeEvent.offsetY + 2),
+      left: e.pageX - (e.nativeEvent.offsetX + 2),
     });
+    setCursor("grabbing");
   };
 
   const movePoint = useCallback(
@@ -45,29 +48,25 @@ export default function DraggableWindow(props: {
       top: 0,
       left: 0,
     });
+    setCursor("grab");
   };
 
   useEffect(() => {
     if (pointOffset.top != 0) {
       addEventListener("mousemove", movePoint);
       addEventListener("mouseup", resetPoint);
-      addEventListener("keypress", (e) => {
-        if (e.key === "x") {
-          // This is optional, recommended if the close button is able to leave window bounds.
-          resetPoint();
-        }
-      });
     }
     return () => {
       removeEventListener("mousemove", movePoint);
       removeEventListener("mouseup", resetPoint);
-      removeEventListener("keypress", (e) => {
-        if (e.key === "x") {
-          resetPoint();
-        }
-      });
     };
   }, [movePoint, pointOffset]);
+
+  const handleClick = () => {
+    {
+      props.close && props.close();
+    }
+  };
 
   return (
     <>
@@ -81,7 +80,7 @@ export default function DraggableWindow(props: {
           <div className="flex justify-between w-full relative">
             <h1
               id="title"
-              className="hover:cursor-pointer w-full"
+              className={`hover:cursor-${cursor} w-full`}
               onMouseDown={handleMouseDown}
             >
               {props.title}
@@ -90,7 +89,7 @@ export default function DraggableWindow(props: {
               <div
                 id="close-dr"
                 className="absolute"
-                onClick={props.close}
+                onClick={handleClick}
               ></div>
             )}
           </div>

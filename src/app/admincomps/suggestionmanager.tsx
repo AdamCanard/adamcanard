@@ -9,7 +9,7 @@ import SuggestionListElement from "./suggestionlistelement";
 export default function SuggestionManager() {
   const [listElements, setListElements] = useState([]);
 
-  const taskbarContext = useContext(TaskbarContext);
+  const { windows, setWindows } = useContext(TaskbarContext);
 
   const getListElements = async () => {
     try {
@@ -36,13 +36,22 @@ export default function SuggestionManager() {
     getListElements();
   }, []);
 
+  const handleClose = () => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == "SuggestionManager") {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+      }
+    }
+  };
+
   return (
     <div className="w-full">
       <DraggableWindow
         title="Suggestion Manager"
-        close={() => taskbarContext.setWindow("")}
         width={"1/3"}
         heigth={"2/3"}
+        close={() => handleClose()}
       >
         <WindowInternal>
           <div className="w-full flex flex-col h-72 overflow-y-scroll">

@@ -3,9 +3,22 @@ import { TaskbarContext } from "./toplevel";
 import Windows from "../../../public/Windows/Windows.png";
 import Image from "next/image";
 import TaskbarTabs from "./taskbartabs";
+import SuggestionManager from "../admincomps/suggestionmanager";
 
 export function Taskbar() {
-  const taskbarContext = useContext(TaskbarContext);
+  const { windows, setWindows, admin, adminCheck, username } =
+    useContext(TaskbarContext);
+
+  const handleClick = (window: JSX.Element) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == window.key) {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+        return;
+      }
+    }
+    setWindows([...windows, window]);
+  };
 
   return (
     <div className="absolute bottom-0 left-0 w-full">
@@ -19,13 +32,19 @@ export function Taskbar() {
             <TaskbarTabs />
           </div>
           <div className="flex h-full justify-end items-center ">
-            {taskbarContext.admin && <div id="button-taskbar">Suggestions</div>}
+            {admin && (
+              <div
+                id="button-taskbar"
+                onClick={() => {
+                  handleClick(<SuggestionManager key={"SuggestionManager"} />);
+                }}
+              >
+                Suggestions
+              </div>
+            )}
 
-            <div id="button-taskbar">{taskbarContext.username}</div>
-            <div
-              id="button-taskbar"
-              onClick={() => taskbarContext.adminCheck()}
-            >
+            <div id="button-taskbar">{username}</div>
+            <div id="button-taskbar" onClick={() => adminCheck()}>
               Admin
             </div>
           </div>

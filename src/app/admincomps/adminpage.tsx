@@ -9,7 +9,8 @@ export default function AdminPage() {
 }
 
 export function MainMenu() {
-  const { ids, windows, beers, setBeers } = useContext(TaskbarContext);
+  const { ids, windows, setWindows, beers, setBeers } =
+    useContext(TaskbarContext);
 
   const getData = useCallback(
     async (id: string) => {
@@ -22,7 +23,6 @@ export function MainMenu() {
         });
         const beerData = await response.json();
         const prevBeers = beers;
-        console.log(prevBeers, beerData);
         setBeers([...prevBeers, beerData]);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -47,6 +47,28 @@ export function MainMenu() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ids]);
+
+  const BeerRendered = (windows: JSX.Element[], beer: BeerData) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == beer.Beer) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    for (let i = 0; i < beers.length; i++) {
+      if (!BeerRendered(windows, beers[i])) {
+        setWindows([
+          ...windows,
+          <BeerPanel beer={beers[i]} key={beers[i].Beer} />,
+        ]);
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [beers]);
 
   return (
     <>
