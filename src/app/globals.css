@@ -263,11 +263,14 @@ body {
 ::-webkit-scrollbar-track {
   background-image: url("../../public/Windows/scrollbar-background.svg");
 }
-
+/* -border-raised-outer: inset -1px -1px var(--window-frame),
+    inset 1px 1px var(--button-highlight);
+  --border-raised-inner: inset -2px -2px var(--button-shadow),
+    inset 2px 2px var(--button-face); */
 ::-webkit-scrollbar-thumb {
   background-color: #c0c0c0;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #ffffff,
-    inset 2px -2px #808080, inset -2px 2px #dfdfdf;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
 }
 
 ::-webkit-scrollbar-button:horizontal:start:decrement,
@@ -277,7 +280,7 @@ body {
   display: none;
 }
 
-::-webkit-scrollbar-button:vertical:start {
+::moz ::-webkit-scrollbar-button:vertical:start {
   height: 17px;
   background-image: url("../../public/Windows/button-up.svg");
 }
