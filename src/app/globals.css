@@ -6,17 +6,6 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-
-  --window-frame: #0a0a0a
-  --button-highlight: #ffffff 
-  --button-shadow: #969696
-  --button-face: #c8c8c8
-
-  --border-raised-outer: inset 1px -1px var(--window-frame),
-    inset -1px 1px var(--button-highlight);
-  --border-raised-inner: inset 2px -2px var(--button-shadow),
-    inset -2px 2px var(--button-face);
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,11 +26,7 @@
   height: 30px;
   width: 100%;
   color: white;
-  background: linear-gradient(
-  90deg,
-  #000080,
-  #1084d0
-  );
+  background: linear-gradient(90deg, #000080, #1084d0);
   padding: 3px 2px 3px 3px;
   display: flex;
   justify-content: space-between;
@@ -49,25 +34,16 @@
   letter-spacing: 0;
 }
 
-#window{
+#window {
   width: 100%;
   height: 100%;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
-  padding: 8px;
-  background-color: #bababa;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf,
+    inset -2px -2px #808080, inset 2px 2px #fafafa;
+  padding: 3px;
+  background-color: #c0c0c0;
 }
 
-#window-i{
-  height: 90%;
-  align-items: center;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
-  border: 2px #bababa solid ;
-  padding: 4px;
-}
-
-#button-i{
+#button-i {
   display: flex;
   width: 100%;
   justify-content: end;
@@ -75,14 +51,14 @@
   height: 10%;
 }
 
-#button{
+#button {
   box-sizing: border-box;
   border: none;
   color: transparent;
   text-shadow: 0 0 #222222;
   background: #c0c0c0;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
   border-radius: 0;
   width: 75px;
   height: 25px;
@@ -91,15 +67,49 @@
   padding: 0 12px;
   text-align: center;
 }
+button:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
 
-#button-taskbar{
+input[type="submit"]:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+select,
+textarea {
+  padding: 3px 4px;
+  border: none;
+  box-shadow: inset -1px -1px #fafafa, inset 1px 1px #808080,
+    inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+}
+
+#button-taskbar {
   box-sizing: border-box;
   border: none;
   color: transparent;
   text-shadow: 0 0 #222222;
   background: #c0c0c0;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
   border-radius: 0;
   min-width: 75px;
   max-width: 125px;
@@ -108,26 +118,29 @@
   padding: 0 12px;
   text-align: center;
 }
-#button-taskbar:hover{
-cursor: pointer;
-
+#button-taskbar:hover {
+  cursor: pointer;
+}
+#button-taskbar:active {
+  box-shadow: inset -1px -1px #fafafa, inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+  text-shadow: 1px 1px #222222;
 }
 
-
-#close{
+#close {
   padding: 0;
   display: block;
   min-width: 16px;
   min-height: 14px;
   margin-right: 3px;
-  background-color: #bababa;
+  background-color: #c0c0c0;
   background-image: url("../../public/Windows/close.svg");
   background-repeat: no-repeat;
   background-position: top 3px left 4px;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
 }
-#close-dr{
+#close-dr {
   padding: 0;
   display: block;
   min-width: 16px;
@@ -135,98 +148,94 @@ cursor: pointer;
   margin-right: 3px;
   right: 5px;
   top: 25%;
-  background-color: #bababa;
+  background-color: #c0c0c0;
   background-image: url("../../public/Windows/close.svg");
   background-repeat: no-repeat;
   background-position: top 3px left 4px;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
 }
 
-#accept{
+#accept {
   background-image: url("../../public/Windows/accept.svg");
   background-repeat: no-repeat;
   background-position: top 3px left 4px;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
   width: 2rem;
   height: 2rem;
 }
-#deny{
+#deny {
   background-image: url("../../public/Windows/deny.svg");
   background-repeat: no-repeat;
   background-position: top 3px left 4px;
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
   width: 2rem;
   height: 2rem;
 }
-#accept:hover{
+#accept:hover {
   cursor: pointer;
 }
 
-#deny:hover{
+#deny:hover {
   cursor: pointer;
 }
-
 
 #border {
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
-  border: 2px #bababa solid ;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  border: 2px #c0c0c0 solid;
   padding: 4px;
-  background-color: #bababa;
+  background-color: #c0c0c0;
 }
 
-#border a:focus {
-  border-left: 4px solid #c8c8c8;
-  border-top: 4px solid #969696;
-  border-right: 4px solid #969696;
-  border-bottom: 4px solid #c8c8c8;
+#border:focus {
+  border-left: 4px solid #dfdfdf;
+  border-top: 4px solid #808080;
+  border-right: 4px solid #808080;
+  border-bottom: 4px solid #dfdfdf;
   padding: 4px;
-  background-color: #bababa;
+  background-color: #c0c0c0;
 }
 
-#border-np{
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
-  border: 2px #bababa solid ;
-  background-color: #bababa;
+#border-np {
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  border: 2px #c0c0c0 solid;
+  background-color: #c0c0c0;
 }
 
-#border-nb{
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+#border-nb {
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
   padding: 4px;
-  background-color: #bababa;
+  background-color: #c0c0c0;
 }
 
-#border-b{
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
-    
-  background-color: #bababa;
+#border-b {
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  background-color: #c0c0c0;
 }
 
 #border-s {
-  box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #fafafa,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fafafa,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
   padding: 2px;
-  background-color: #bababa;
+  background-color: #c0c0c0;
 }
-
-
-
 
 html,
 body {
-  overflow: hidden;   
+  overflow: hidden;
   height: 100vh;
-
   width: 100%;
-  background-color: #bababa;
+  background-color: #c0c0c0;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
-
 
 @keyframes roll {
   from {
@@ -252,12 +261,10 @@ body {
   background-image: url("../../public/Windows/scrollbar-background.svg");
 }
 
-
-
 ::-webkit-scrollbar-thumb {
-  background-color: #bababa;
+  background-color: #c0c0c0;
   box-shadow: inset 1px -1px #0a0a0a, inset -1px 1px #ffffff,
-    inset 2px -2px #969696, inset -2px 2px #c8c8c8;
+    inset 2px -2px #808080, inset -2px 2px #dfdfdf;
 }
 
 ::-webkit-scrollbar-button:horizontal:start:decrement,
