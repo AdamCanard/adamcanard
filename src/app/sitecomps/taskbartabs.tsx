@@ -5,6 +5,7 @@ import AdminList from "../admincomps/adminlist";
 import DrinkForm from "../admincomps/drinkform";
 import DrankForm from "../admincomps/drankform";
 import DraggableWindow from "../semantics/draggablewindow";
+import BlackJack from "../blackjackcomps/blackjackgame";
 
 export default function TaskbarTabs() {
   const { setWindows, windows } = useContext(TaskbarContext);
@@ -33,6 +34,12 @@ export default function TaskbarTabs() {
         onClick={() => handleClick(<Drink key={"Drink"} />)}
       >
         Drink
+      </div>
+      <div
+        id="button-taskbar"
+        onClick={() => handleClick(<BlackJack key={"BlackJack"} />)}
+      >
+        BJ
       </div>
     </>
   );
