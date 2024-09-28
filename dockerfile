@@ -1,34 +1,34 @@
-FROM node:20-alpine
+FROM node:20-alpine as base
+
+USER root
 
 WORKDIR /app
-
 COPY package*.json ./
 
-RUN npm install
-
+FROM base as builder
+WORKDIR /app
 COPY . .
+RUN npm ci
+RUN npm run build
+
+FROM base as production
+WORKDIR /app
+
+#RUN #npm install
+
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+USER nextjs
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/public ./public
 
 ENV PORT=8080
 
 EXPOSE 8080
 
-RUN npm run build
+CMD npm start
 
-CMD [ "npm","start" ]
 
-# FROM alpine:latest
-
-# ARG PB_VERSION=0.22.17
-
-# RUN apk add --no-cache \
-#     unzip \
-#     ca-certificates
-
-# # download and unzip PocketBase
-# ADD https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip /tmp/pb.zip
-# RUN unzip /tmp/pb.zip -d /pb/
-
-# EXPOSE 8090
-
-# # start PocketBase
-# CMD ["/pb/pocketbase", "serve", "--http=0.0.0.0:8090"]
