@@ -14,7 +14,7 @@ import CardBack from "../../../public/Cards/CardBack.png";
 import Image from "next/image";
 import DraggableWindow from "../semantics/draggablewindow";
 import WindowButton from "../semantics/windowbutton";
-import { BJEvaluateHand, Draw, Shuffle } from "./deckfunctions";
+import { BJEvaluateHand, Shuffle } from "./deckfunctions";
 
 export interface IBlackJackContext {
   DeckKeys: string[];
@@ -42,10 +42,11 @@ export default function BlackJack() {
 
   function StartRound() {
     Shuffle(DeckKeys, setDeckKeys);
-    Draw(DeckKeys, setDeckKeys, dealer, setDealer);
-    Draw(DeckKeys, setDeckKeys, player, setPlayer);
-    Draw(DeckKeys, setDeckKeys, dealer, setDealer);
-    Draw(DeckKeys, setDeckKeys, player, setPlayer);
+
+    const draw = DeckKeys.splice(0, 4);
+    setDealer([draw[0], draw[2]]);
+    setPlayer([draw[1], draw[3]]);
+    setDeckKeys(DeckKeys);
     setGameTrigger(true);
   }
 
@@ -113,6 +114,19 @@ export function BlackJackGame() {
   const [reveal, setReveal] = useState<boolean>(false);
   const [winner, setWinner] = useState<string>("");
 
+  const drawPlayer = () => {
+    const draw = DeckKeys.splice(0, 1);
+    setPlayer([...player, draw[0]]);
+    setDeckKeys(DeckKeys);
+  };
+  const drawDealer = useCallback(() => {
+    const draw = DeckKeys.splice(0, 1);
+    const newDealer = dealer;
+    newDealer.push(draw[0]);
+    setDealer(newDealer);
+    setDeckKeys(DeckKeys);
+  }, [DeckKeys, dealer, setDealer, setDeckKeys]);
+
   const EndRound = useCallback(() => {
     //dealer hits on 16 and soft 17
     setReveal(true);
@@ -130,9 +144,8 @@ export function BlackJackGame() {
       }
       return false;
     };
-
     while (dealerHit()) {
-      Draw(DeckKeys, setDeckKeys, dealer, setDealer);
+      drawDealer();
     }
 
     if (DeckKeys.length < 20) {
@@ -169,7 +182,7 @@ export function BlackJackGame() {
       setWinner("Dealer");
       //womp womp
     }
-  }, [DeckKeys, dealer, player, setDealer, setDeckKeys]);
+  }, [DeckKeys.length, dealer, drawDealer, player, setDeckKeys]);
 
   const reset = () => {
     setPlayer([]);
@@ -195,12 +208,12 @@ export function BlackJackGame() {
     <>
       <div className="flex flex-col w-full ">
         {reveal ? (
-          <div className="flex flex-row w-full justify-between items-center">
+          <div className="flex flex-col w-full justify-between items-center">
             <div className="flex flex-col ">
               <CardRow hand={player} cover={false} />
               <CardRow hand={dealer} cover={false} />
             </div>
-            <div className="flex flex-col justify-end items-center text-center gap-2">
+            <div className="flex flex-row justify-end items-center text-center gap-2">
               <div>{winner + " \nWINS!"}</div>
 
               <div id="button" onClick={() => reset()}>
@@ -213,14 +226,8 @@ export function BlackJackGame() {
             <CardRow hand={player} cover={false} />
             <CardRow hand={dealer} cover={true} />
             <WindowButton>
-              <div
-                id="button"
-                onClick={() => Draw(DeckKeys, setDeckKeys, player, setPlayer)}
-              >
+              <div id="button" onClick={drawPlayer}>
                 Hit
-              </div>
-              <div id="button" onClick={() => console.log(player)}>
-                Show
               </div>
               <div id="button" onClick={() => EndRound()}>
                 Stand
@@ -230,18 +237,6 @@ export function BlackJackGame() {
         )}
       </div>
     </>
-  );
-}
-
-export function Button(props: { title: string; func: () => void }) {
-  return (
-    <div
-      id="border"
-      className="w-16 h-10 hover:cursor-pointer text-center leading-5"
-      onClick={props.func}
-    >
-      {props.title}
-    </div>
   );
 }
 

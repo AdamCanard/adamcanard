@@ -1,3 +1,4 @@
+"use client";
 import { SetStateAction } from "react";
 
 export function Shuffle(
@@ -29,10 +30,10 @@ export function Draw(
   HandSet: React.Dispatch<SetStateAction<string[]>>
 ) {
   const newDeck = Deck;
-  const draw = newDeck.splice(0, 1);
-  const newHand = Hand;
-  newHand.push(draw[0]);
-  HandSet(newHand);
+  console.log(newDeck);
+  const draw = newDeck.splice(0, 1)[0];
+  console.log(newDeck);
+  HandSet([...Hand, draw]);
   DeckSet(newDeck);
 }
 
