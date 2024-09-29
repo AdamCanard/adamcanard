@@ -1,8 +1,10 @@
 "use client";
 import {
   ChangeEvent,
+  createContext,
   SetStateAction,
   useCallback,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -12,23 +14,38 @@ import CardBack from "../../../public/Cards/CardBack.png";
 import Image from "next/image";
 import DraggableWindow from "../semantics/draggablewindow";
 import WindowButton from "../semantics/windowbutton";
-import { BJEvaluateHand, Shuffle } from "./deckfunctions";
+import { BJEvaluateHand, Draw, Shuffle } from "./deckfunctions";
+
+export interface IBlackJackContext {
+  DeckKeys: string[];
+  setDeckKeys: React.Dispatch<SetStateAction<string[]>>;
+  player: string[];
+  setPlayer: React.Dispatch<SetStateAction<string[]>>;
+  dealer: string[];
+  setDealer: React.Dispatch<SetStateAction<string[]>>;
+  setGameTrigger: React.Dispatch<SetStateAction<boolean>>;
+}
+
+//cast empty object to contexttype
+export const BlackJackContext = createContext<IBlackJackContext>(
+  {} as IBlackJackContext
+);
 
 export default function BlackJack() {
+  //create state for deck
+
   const [DeckKeys, setDeckKeys] = useState<string[]>(Object.keys(Deck));
   const [dealer, setDealer] = useState<string[]>([]);
   const [player, setPlayer] = useState<string[]>([]);
   const [gameTrigger, setGameTrigger] = useState<boolean>(false);
   const [wager, setWager] = useState<number>(0);
-  const [reveal, setReveal] = useState<boolean>(false);
-  const [winner, setWinner] = useState<string>("");
 
   function StartRound() {
     Shuffle(DeckKeys, setDeckKeys);
-    Draw(dealer, setDealer);
-    Draw(player, setPlayer);
-    Draw(dealer, setDealer);
-    Draw(player, setPlayer);
+    Draw(DeckKeys, setDeckKeys, dealer, setDealer);
+    Draw(DeckKeys, setDeckKeys, player, setPlayer);
+    Draw(DeckKeys, setDeckKeys, dealer, setDealer);
+    Draw(DeckKeys, setDeckKeys, player, setPlayer);
     setGameTrigger(true);
   }
 
@@ -41,23 +58,60 @@ export default function BlackJack() {
     setWager(+wager);
   };
 
-  const reset = () => {
-    setPlayer([]);
-    setDealer([]);
-    setGameTrigger(false);
-  };
-
-  const Draw = useCallback(
-    (Hand: string[], HandSet: React.Dispatch<SetStateAction<string[]>>) => {
-      const newDeck = DeckKeys;
-      const draw = newDeck.splice(0, 1);
-      const newHand = Hand;
-      newHand.push(draw[0]);
-      HandSet(newHand);
-      setDeckKeys(newDeck);
-    },
-    [DeckKeys]
+  return (
+    <DraggableWindow title={"BlackJack"} width={"60"} heigth={"96"}>
+      {!gameTrigger ? (
+        <>
+          <label className="flex justify-between gap-1">
+            Wager:
+            <input
+              type="number"
+              name="wager"
+              value={wager}
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+          <WindowButton>
+            <button
+              id="button"
+              className="hover:cursor-pointer"
+              onClick={handleClick}
+            >
+              Start
+            </button>
+          </WindowButton>
+        </>
+      ) : (
+        <BlackJackContext.Provider
+          value={{
+            DeckKeys,
+            setDeckKeys,
+            player,
+            setPlayer,
+            dealer,
+            setDealer,
+            setGameTrigger,
+          }}
+        >
+          <BlackJackGame />
+        </BlackJackContext.Provider>
+      )}
+    </DraggableWindow>
   );
+}
+
+export function BlackJackGame() {
+  const {
+    dealer,
+    setDealer,
+    player,
+    setPlayer,
+    DeckKeys,
+    setDeckKeys,
+    setGameTrigger,
+  } = useContext(BlackJackContext);
+  const [reveal, setReveal] = useState<boolean>(false);
+  const [winner, setWinner] = useState<string>("");
 
   const EndRound = useCallback(() => {
     //dealer hits on 16 and soft 17
@@ -78,7 +132,7 @@ export default function BlackJack() {
     };
 
     while (dealerHit()) {
-      Draw(dealer, setDealer);
+      Draw(DeckKeys, setDeckKeys, dealer, setDealer);
     }
 
     if (DeckKeys.length < 20) {
@@ -115,7 +169,13 @@ export default function BlackJack() {
       setWinner("Dealer");
       //womp womp
     }
-  }, [DeckKeys, Draw, dealer, player]);
+  }, [DeckKeys, dealer, player, setDealer, setDeckKeys]);
+
+  const reset = () => {
+    setPlayer([]);
+    setDealer([]);
+    setGameTrigger(false);
+  };
 
   useEffect(() => {
     const evaluatedHand = BJEvaluateHand(player);
@@ -132,65 +192,44 @@ export default function BlackJack() {
   }, [EndRound, player]);
 
   return (
-    <DraggableWindow title={"BlackJack"} width={"60"} heigth={"96"}>
-      {!gameTrigger ? (
-        <>
-          <label className="flex justify-between gap-1">
-            Wager:
-            <input
-              type="number"
-              name="wager"
-              value={wager}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-          <WindowButton>
-            <button
-              id="button"
-              className="hover:cursor-pointer"
-              onClick={handleClick}
-            >
-              Start
-            </button>
-          </WindowButton>
-        </>
-      ) : (
-        <div className="flex flex-col w-full ">
-          {reveal ? (
-            <div className="flex flex-row w-full justify-between items-center">
-              <div className="flex flex-col ">
-                <CardRow hand={player} cover={false} />
-                <CardRow hand={dealer} cover={false} />
-              </div>
-              <div className="flex flex-col justify-end items-center text-center gap-2">
-                <div>{winner + " \nWINS!"}</div>
+    <>
+      <div className="flex flex-col w-full ">
+        {reveal ? (
+          <div className="flex flex-row w-full justify-between items-center">
+            <div className="flex flex-col ">
+              <CardRow hand={player} cover={false} />
+              <CardRow hand={dealer} cover={false} />
+            </div>
+            <div className="flex flex-col justify-end items-center text-center gap-2">
+              <div>{winner + " \nWINS!"}</div>
 
-                <div id="button" onClick={() => reset()}>
-                  Again
-                </div>
+              <div id="button" onClick={() => reset()}>
+                Again
               </div>
             </div>
-          ) : (
-            <>
-              <div className="flex flex-col ">
-                <CardRow hand={player} cover={false} />
-
-                <CardRow hand={dealer} cover={true} />
-                <WindowButton>
-                  <div id="button" onClick={() => Draw(player, setPlayer)}>
-                    Hit
-                  </div>
-                  <div id="button" onClick={() => EndRound()}>
-                    Stand
-                  </div>
-                </WindowButton>
+          </div>
+        ) : (
+          <div className="flex flex-col ">
+            <CardRow hand={player} cover={false} />
+            <CardRow hand={dealer} cover={true} />
+            <WindowButton>
+              <div
+                id="button"
+                onClick={() => Draw(DeckKeys, setDeckKeys, player, setPlayer)}
+              >
+                Hit
               </div>
-            </>
-          )}
-        </div>
-      )}
-      ;
-    </DraggableWindow>
+              <div id="button" onClick={() => console.log(player)}>
+                Show
+              </div>
+              <div id="button" onClick={() => EndRound()}>
+                Stand
+              </div>
+            </WindowButton>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
