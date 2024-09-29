@@ -31,12 +31,12 @@ export default function DrankForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     formData.append("Drank", true);
-    postData(formData);
+    await postData(formData);
     setBeer("");
     setBrewery("");
     setRating(0);

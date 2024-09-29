@@ -3,7 +3,8 @@ import db from "../../server/pb";
 export async function POST(req: Request) {
   const formData = await req.formData();
   const id = formData.get("id") as string;
-  const data = db.deleteBeer(id);
+  const data = await db.deleteBeer(id);
+  console.log(data);
   return new Response(JSON.stringify({ data: data }), {
     status: 200,
   });

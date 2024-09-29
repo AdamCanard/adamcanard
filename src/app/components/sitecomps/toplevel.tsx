@@ -188,7 +188,6 @@ export default function TopLevel() {
   };
 
   useEffect(() => {
-    console.log(refreshBeers);
     loadUser();
     if (refreshBeers) {
       getListElements();

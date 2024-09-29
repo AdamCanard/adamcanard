@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import { BeerData } from "../../types";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
-export default function Delete(props: { beer: BeerData }) {
-  // const taskbarContext = useContext(TaskbarContext);
+export default function Delete(props: { beer: BeerData; close: () => void }) {
+  const { setRefreshBeers } = useContext(TaskbarContext);
   const deleteBeer = async () => {
     const formData = new FormData();
     formData.append("id", props.beer.id);
@@ -11,7 +13,7 @@ export default function Delete(props: { beer: BeerData }) {
         body: formData,
       });
       const beerData = await response.json();
-      console.log(beerData);
+      return beerData;
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -27,9 +29,12 @@ export default function Delete(props: { beer: BeerData }) {
     }
   };
 
-  const handleClick = () => {
-    deleteBeer();
+  const handleClick = async () => {
+    await deleteBeer();
+    props.close();
+    setRefreshBeers(true);
   };
+
   return (
     <div id="border" onClick={handleClick}>
       Delete

@@ -88,9 +88,9 @@ export class DatabaseClient {
     }
   }
 
-  async deleteBeer(id: string) {
+  async addSuggestion(data: ISuggestion) {
     try {
-      const result = await this.client.collection("Beer").delete(id);
+      const result = await this.client.collection("Suggestion").create(data);
       return result;
     } catch (e: unknown) {
       if (e instanceof Error) {
@@ -99,9 +99,10 @@ export class DatabaseClient {
     }
   }
 
-  async addSuggestion(data: ISuggestion) {
+  async deleteBeer(id: string) {
+    await this.authAsAdmin();
     try {
-      const result = await this.client.collection("Suggestion").create(data);
+      const result = await this.client.collection("Beer").delete(id);
       return result;
     } catch (e: unknown) {
       if (e instanceof Error) {

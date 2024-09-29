@@ -1,6 +1,6 @@
 import { createContext, SetStateAction, useContext, useState } from "react";
 import { BeerData } from "../../types";
-import Popup from "../popup";
+import Popup from "./popup";
 import WindowInternal from "../semanticcomps/windowinternal";
 import WindowButton from "../semanticcomps/windowbutton";
 import BeerLabel from "./beerlabel";
@@ -29,7 +29,6 @@ export default function BeerPanel(props: { beer: BeerData }) {
   const [rating, setRating] = useState(0);
   const [brewery, setBrewery] = useState("");
   const [drinkTrigger, setDrinkTrigger] = useState(false);
-
   const { windows, setWindows, beers, setBeers } = useContext(TaskbarContext);
 
   const handleClose = () => {
@@ -93,7 +92,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
               {props.beer.By && <BeerLabel title={"By"} data={props.beer.By} />}
             </WindowInternal>
             <WindowButton>
-              <Delete beer={props.beer} />
+              <Delete beer={props.beer} close={handleClose} />
               {!props.beer.Drank && <Drink beer={props.beer} />}
             </WindowButton>
           </div>
