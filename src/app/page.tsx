@@ -1,4 +1,4 @@
-import TopLevel from "./sitecomps/toplevel";
+import TopLevel from "./components/sitecomps/toplevel";
 // import Test from "./test";
 
 export default function Page() {
