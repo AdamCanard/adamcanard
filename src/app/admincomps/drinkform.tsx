@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import WindowButton from "../semantics/windowbutton";
 import { LabeledInputStr } from "../clientcomps/labeledinputs";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
 export default function DrinkForm() {
+  const { setRefreshBeers } = useContext(TaskbarContext);
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
   const [by, setBy] = useState("");
@@ -38,6 +40,7 @@ export default function DrinkForm() {
     setBeer("");
     setBrewery("");
     setBy("");
+    setRefreshBeers(true);
   };
 
   return (
@@ -58,12 +61,7 @@ export default function DrinkForm() {
         setState={setBrewery}
         required={false}
       />
-      <LabeledInputStr
-        title="Rating"
-        state={by}
-        setState={setBy}
-        required={true}
-      />
+      <LabeledInputStr title="By" state={by} setState={setBy} required={true} />
 
       <WindowButton>
         <input id="button" type="submit" />

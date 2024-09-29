@@ -1,10 +1,11 @@
-import { createContext, SetStateAction, useState } from "react";
+import { createContext, SetStateAction, useContext, useState } from "react";
 import { BeerData } from "../types";
 import Popup from "../components/popup";
 import WindowInternal from "../semantics/windowinternal";
 import WindowButton from "../semantics/windowbutton";
 import BeerLabel from "./beerlabel";
 import { Drink } from "./drink";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
 import DraggableWindow from "../semantics/draggablewindow";
 import Delete from "./delete";
@@ -29,6 +30,23 @@ export default function BeerPanel(props: { beer: BeerData }) {
   const [brewery, setBrewery] = useState("");
   const [drinkTrigger, setDrinkTrigger] = useState(false);
 
+  const { windows, setWindows, beers, setBeers } = useContext(TaskbarContext);
+
+  const handleClose = () => {
+    for (let i = 0; i < beers.length; i++) {
+      if (beers[i].Beer == props.beer.Beer) {
+        const newBeers = beers.toSpliced(i, 1);
+        setBeers(newBeers);
+      }
+    }
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == props.beer.Beer) {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+      }
+    }
+  };
+
   return (
     <PopupContext.Provider
       value={{
@@ -41,7 +59,12 @@ export default function BeerPanel(props: { beer: BeerData }) {
       }}
     >
       <Popup>
-        <DraggableWindow title={props.beer.Beer} width={"1/2"} heigth={"2/3"}>
+        <DraggableWindow
+          title={props.beer.Beer}
+          width={"1/2"}
+          heigth={"2/3"}
+          close={handleClose}
+        >
           <div className="flex flex-col gap-4 justify-center items-center">
             <div className="w-64 h-64 border-2"></div>
             {/* <Image

@@ -22,6 +22,11 @@ export function MainMenu() {
           body: formData,
         });
         const beerData = await response.json();
+        for (let i = 0; i < beers.length; i++) {
+          if (beerData.Beer === beers[i].Beer) {
+            return;
+          }
+        }
         const prevBeers = beers;
         setBeers([...prevBeers, beerData]);
       } catch (err: unknown) {

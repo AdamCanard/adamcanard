@@ -15,6 +15,7 @@ import Image from "next/image";
 import DraggableWindow from "../semantics/draggablewindow";
 import WindowButton from "../semantics/windowbutton";
 import { BJEvaluateHand, Shuffle } from "./deckfunctions";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
 export interface IBlackJackContext {
   DeckKeys: string[];
@@ -33,7 +34,7 @@ export const BlackJackContext = createContext<IBlackJackContext>(
 
 export default function BlackJack() {
   //create state for deck
-
+  const { windows, setWindows } = useContext(TaskbarContext);
   const [DeckKeys, setDeckKeys] = useState<string[]>(Object.keys(Deck));
   const [dealer, setDealer] = useState<string[]>([]);
   const [player, setPlayer] = useState<string[]>([]);
@@ -58,9 +59,22 @@ export default function BlackJack() {
     const wager = e.target.value;
     setWager(+wager);
   };
+  const handleClose = () => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == "BlackJack") {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+      }
+    }
+  };
 
   return (
-    <DraggableWindow title={"BlackJack"} width={"60"} heigth={"96"}>
+    <DraggableWindow
+      title={"BlackJack"}
+      width={"60"}
+      heigth={"96"}
+      close={handleClose}
+    >
       {!gameTrigger ? (
         <>
           <label className="flex justify-between gap-1">

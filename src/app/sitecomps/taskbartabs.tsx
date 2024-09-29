@@ -6,6 +6,7 @@ import DrinkForm from "../admincomps/drinkform";
 import DrankForm from "../admincomps/drankform";
 import DraggableWindow from "../semantics/draggablewindow";
 import BlackJack from "../blackjackcomps/blackjackgame";
+import Suggestion from "../clientcomps/suggestion";
 
 export default function TaskbarTabs() {
   const { setWindows, windows } = useContext(TaskbarContext);
@@ -37,16 +38,23 @@ export default function TaskbarTabs() {
       </div>
       <div
         id="button-taskbar"
+        onClick={() => handleClick(<Suggestion key={"Suggestion"} />)}
+      >
+        Suggestion
+      </div>
+      <div
+        id="button-taskbar"
         onClick={() => handleClick(<BlackJack key={"BlackJack"} />)}
       >
-        BJ
+        BlackJack
       </div>
     </>
   );
 }
 
 function Drank() {
-  const { listElements, windows, setWindows } = useContext(TaskbarContext);
+  const { listElements, windows, setWindows, admin } =
+    useContext(TaskbarContext);
   const handleClose = () => {
     for (let i = 0; i < windows.length; i++) {
       if (windows[i].key == "Drank") {
@@ -65,12 +73,14 @@ function Drank() {
       <AdminList
         listElements={listElements.filter((element) => element.Drank == true)}
       />
-      <DrankForm />
+      {admin && <DrankForm />}
     </DraggableWindow>
   );
 }
+
 function Drink() {
-  const { listElements, windows, setWindows } = useContext(TaskbarContext);
+  const { listElements, windows, setWindows, admin } =
+    useContext(TaskbarContext);
   const handleClose = () => {
     for (let i = 0; i < windows.length; i++) {
       if (windows[i].key == "Drink") {
@@ -89,7 +99,7 @@ function Drink() {
       <AdminList
         listElements={listElements.filter((element) => element.Drank == false)}
       />
-      <DrinkForm />
+      {admin && <DrinkForm />}
     </DraggableWindow>
   );
 }

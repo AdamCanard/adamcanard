@@ -1,17 +1,18 @@
 "use client";
 
 import { useContext, useState } from "react";
-import Window from "../semantics/window";
+
 import WindowButton from "../semantics/windowbutton";
 import WindowInternal from "../semantics/windowinternal";
 import { LabeledInputStr } from "./labeledinputs";
 import { TaskbarContext } from "../sitecomps/toplevel";
+import DraggableWindow from "../semantics/draggablewindow";
 
 export default function Suggestion() {
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
 
-  const taskbarContext = useContext(TaskbarContext);
+  const { username, windows, setWindows } = useContext(TaskbarContext);
 
   const postData = async (formData: FormData) => {
     try {
@@ -39,14 +40,28 @@ export default function Suggestion() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    formData.append("Name", taskbarContext.username);
+    formData.append("Name", username);
     postData(formData);
     setBeer("");
     setBrewery("");
   };
 
+  const handleClose = () => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == "Suggestion") {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+      }
+    }
+  };
+
   return (
-    <Window title={"New Suggestion"}>
+    <DraggableWindow
+      title={"New Suggestion"}
+      width={"72"}
+      heigth={"2/3"}
+      close={handleClose}
+    >
       <form
         className="flex flex-col"
         onSubmit={(e) => handleSubmit(e)}
@@ -70,6 +85,6 @@ export default function Suggestion() {
           <input id="button" type="submit" />
         </WindowButton>
       </form>
-    </Window>
+    </DraggableWindow>
   );
 }

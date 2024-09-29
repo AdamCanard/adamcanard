@@ -21,6 +21,7 @@ interface TaskbarContextType {
   listElements: BeerData[];
   setError: React.Dispatch<SetStateAction<IError>>;
   setErrorTrigger: React.Dispatch<SetStateAction<boolean>>;
+  setRefreshBeers: React.Dispatch<SetStateAction<boolean>>;
 }
 
 //cast empty object to contexttype
@@ -31,7 +32,7 @@ export const TaskbarContext = createContext<TaskbarContextType>(
 export default function TopLevel() {
   const [ids, setIds] = useState<string[]>([]);
   const [windows, setWindows] = useState<JSX.Element[]>([]);
-  const [admin, setAdmin] = useState(true);
+  const [admin, setAdmin] = useState(false);
   const [username, setUsername] = useState("");
   const [beers, setBeers] = useState<BeerData[]>([]);
   const [error, setError] = useState<IError>({
@@ -39,6 +40,7 @@ export default function TopLevel() {
   });
   const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
   const [listElements, setListElements] = useState<BeerData[]>([]);
+  const [refreshBeers, setRefreshBeers] = useState<boolean>(true);
 
   const router = useRouter();
 
@@ -186,10 +188,15 @@ export default function TopLevel() {
   };
 
   useEffect(() => {
+    console.log(refreshBeers);
     loadUser();
-    getListElements();
+    if (refreshBeers) {
+      getListElements();
+      setRefreshBeers(false);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [refreshBeers]);
 
   return (
     <>
@@ -207,6 +214,8 @@ export default function TopLevel() {
           listElements,
           setErrorTrigger,
           setError,
+
+          setRefreshBeers,
         }}
       >
         <ErrorPopup

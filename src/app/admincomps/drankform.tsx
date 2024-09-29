@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import WindowButton from "../semantics/windowbutton";
 import { LabeledInputNum, LabeledInputStr } from "../clientcomps/labeledinputs";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
 export default function DrankForm() {
+  const { setRefreshBeers } = useContext(TaskbarContext);
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
   const [rating, setRating] = useState(0);
@@ -38,6 +40,7 @@ export default function DrankForm() {
     setBeer("");
     setBrewery("");
     setRating(0);
+    setRefreshBeers(true);
   };
 
   return (

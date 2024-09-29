@@ -1,15 +1,16 @@
 "use client";
-import DraggableWindow from "../semantics/draggablewindow";
-import ClientBody from "./clientbody";
+import { useContext } from "react";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
 export default function ClientPage() {
+  const { windows } = useContext(TaskbarContext);
   return (
-    <div className="flex flex-row w-full h-full justify-center">
-      <div className="w-2/3">
-        <DraggableWindow title="ADAM DRINKS BEER" width={"2/3"} heigth={"2/3"}>
-          <ClientBody />
-        </DraggableWindow>
+    <>
+      <div className="flex flex-row w-full h-full justify-center">
+        {windows.map((tab) => {
+          return <div key={tab.key}>{tab}</div>;
+        })}
       </div>
-    </div>
+    </>
   );
 }
