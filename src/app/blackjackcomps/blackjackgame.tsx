@@ -1,10 +1,8 @@
 "use client";
 import {
   ChangeEvent,
-  createContext,
   SetStateAction,
   useCallback,
-  useContext,
   useEffect,
   useState,
 } from "react";
@@ -14,37 +12,23 @@ import CardBack from "../../../public/Cards/CardBack.png";
 import Image from "next/image";
 import DraggableWindow from "../semantics/draggablewindow";
 import WindowButton from "../semantics/windowbutton";
-
-export interface IBlackJackContext {
-  DeckKeys: string[];
-  setDeckKeys: React.Dispatch<SetStateAction<string[]>>;
-  player: string[];
-  setPlayer: React.Dispatch<SetStateAction<string[]>>;
-  dealer: string[];
-  setDealer: React.Dispatch<SetStateAction<string[]>>;
-  setGameTrigger: React.Dispatch<SetStateAction<boolean>>;
-}
-
-//cast empty object to contexttype
-export const BlackJackContext = createContext<IBlackJackContext>(
-  {} as IBlackJackContext
-);
+import { BJEvaluateHand, Shuffle } from "./deckfunctions";
 
 export default function BlackJack() {
-  //create state for deck
-
   const [DeckKeys, setDeckKeys] = useState<string[]>(Object.keys(Deck));
   const [dealer, setDealer] = useState<string[]>([]);
   const [player, setPlayer] = useState<string[]>([]);
   const [gameTrigger, setGameTrigger] = useState<boolean>(false);
   const [wager, setWager] = useState<number>(0);
+  const [reveal, setReveal] = useState<boolean>(false);
+  const [winner, setWinner] = useState<string>("");
 
   function StartRound() {
     Shuffle(DeckKeys, setDeckKeys);
-    Draw(DeckKeys, setDeckKeys, dealer, setDealer);
-    Draw(DeckKeys, setDeckKeys, player, setPlayer);
-    Draw(DeckKeys, setDeckKeys, dealer, setDealer);
-    Draw(DeckKeys, setDeckKeys, player, setPlayer);
+    Draw(dealer, setDealer);
+    Draw(player, setPlayer);
+    Draw(dealer, setDealer);
+    Draw(player, setPlayer);
     setGameTrigger(true);
   }
 
@@ -57,58 +41,29 @@ export default function BlackJack() {
     setWager(+wager);
   };
 
-  return (
-    <DraggableWindow title={"BlackJack"} width={"60"} heigth={"96"}>
-      {!gameTrigger ? (
-        <>
-          <label className="flex justify-between gap-1">
-            Wager:
-            <input
-              type="number"
-              name="wager"
-              value={wager}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
-          <WindowButton>
-            <button
-              id="button"
-              className="hover:cursor-pointer"
-              onClick={handleClick}
-            >
-              Start
-            </button>
-          </WindowButton>
-        </>
-      ) : (
-        <BlackJackContext.Provider
-          value={{
-            DeckKeys,
-            setDeckKeys,
-            player,
-            setPlayer,
-            dealer,
-            setDealer,
-            setGameTrigger,
-          }}
-        >
-          <BlackJackGame />
-        </BlackJackContext.Provider>
-      )}
-    </DraggableWindow>
-  );
-}
+  const reset = () => {
+    setPlayer([]);
+    setDealer([]);
+    setGameTrigger(false);
+  };
 
-export function BlackJackGame() {
-  const blackJackContext = useContext(BlackJackContext);
-  const [reveal, setReveal] = useState<boolean>(false);
-  const [winner, setWinner] = useState<string>("");
+  const Draw = useCallback(
+    (Hand: string[], HandSet: React.Dispatch<SetStateAction<string[]>>) => {
+      const newDeck = DeckKeys;
+      const draw = newDeck.splice(0, 1);
+      const newHand = Hand;
+      newHand.push(draw[0]);
+      HandSet(newHand);
+      setDeckKeys(newDeck);
+    },
+    [DeckKeys]
+  );
 
   const EndRound = useCallback(() => {
     //dealer hits on 16 and soft 17
     setReveal(true);
     const dealerHit = () => {
-      const evaluatedHand = BJEvaluateHand(blackJackContext.dealer);
+      const evaluatedHand = BJEvaluateHand(dealer);
       if (evaluatedHand.includes("/")) {
         const soft = +evaluatedHand.split("/")[1];
         if (soft <= 17) {
@@ -123,21 +78,16 @@ export function BlackJackGame() {
     };
 
     while (dealerHit()) {
-      Draw(
-        blackJackContext.DeckKeys,
-        blackJackContext.setDeckKeys,
-        blackJackContext.dealer,
-        blackJackContext.setDealer
-      );
+      Draw(dealer, setDealer);
     }
 
-    if (blackJackContext.DeckKeys.length < 20) {
-      blackJackContext.setDeckKeys(Object.keys(Deck));
+    if (DeckKeys.length < 20) {
+      setDeckKeys(Object.keys(Deck));
     }
 
-    const playerEvaluatedHand = BJEvaluateHand(blackJackContext.player);
+    const playerEvaluatedHand = BJEvaluateHand(player);
     let playervalue;
-    const dealerEvaluatedHand = BJEvaluateHand(blackJackContext.dealer);
+    const dealerEvaluatedHand = BJEvaluateHand(dealer);
     let dealervalue;
 
     if (playerEvaluatedHand.includes("/")) {
@@ -165,10 +115,10 @@ export function BlackJackGame() {
       setWinner("Dealer");
       //womp womp
     }
-  }, [blackJackContext]);
+  }, [DeckKeys, Draw, dealer, player]);
 
   useEffect(() => {
-    const evaluatedHand = BJEvaluateHand(blackJackContext.player);
+    const evaluatedHand = BJEvaluateHand(player);
     let handvalue;
 
     if (evaluatedHand.includes("/")) {
@@ -179,58 +129,68 @@ export function BlackJackGame() {
     if (handvalue > 21) {
       EndRound();
     }
-  }, [EndRound, blackJackContext.player]);
-
-  const reset = () => {
-    blackJackContext.setPlayer([]);
-    blackJackContext.setDealer([]);
-    blackJackContext.setGameTrigger(false);
-  };
-
-  const Hit = () => {
-    Draw(
-      blackJackContext.DeckKeys,
-      blackJackContext.setDeckKeys,
-      blackJackContext.player,
-      blackJackContext.setPlayer
-    );
-  };
-
-  useEffect(() => {
-    console.log(blackJackContext.player);
-  }, [blackJackContext.player]);
+  }, [EndRound, player]);
 
   return (
-    <>
-      <div className="flex flex-col w-full ">
-        {reveal ? (
-          <div className="flex flex-row w-full justify-between items-center">
-            <div className="flex flex-col ">
-              <CardRow hand={blackJackContext.player} cover={false} />
-              <CardRow hand={blackJackContext.dealer} cover={false} />
-            </div>
-            <div className="flex flex-col justify-end items-center text-center gap-2">
-              <div>{winner + " \nWINS!"}</div>
-              <Button title="END" func={() => reset()} />
-            </div>
-          </div>
-        ) : (
-          <>
-            <CardRow hand={blackJackContext.player} cover={false} />
+    <DraggableWindow title={"BlackJack"} width={"60"} heigth={"96"}>
+      {!gameTrigger ? (
+        <>
+          <label className="flex justify-between gap-1">
+            Wager:
+            <input
+              type="number"
+              name="wager"
+              value={wager}
+              onChange={(e) => handleChange(e)}
+            />
+          </label>
+          <WindowButton>
+            <button
+              id="button"
+              className="hover:cursor-pointer"
+              onClick={handleClick}
+            >
+              Start
+            </button>
+          </WindowButton>
+        </>
+      ) : (
+        <div className="flex flex-col w-full ">
+          {reveal ? (
+            <div className="flex flex-row w-full justify-between items-center">
+              <div className="flex flex-col ">
+                <CardRow hand={player} cover={false} />
+                <CardRow hand={dealer} cover={false} />
+              </div>
+              <div className="flex flex-col justify-end items-center text-center gap-2">
+                <div>{winner + " \nWINS!"}</div>
 
-            <CardRow hand={blackJackContext.dealer} cover={true} />
-            <WindowButton>
-              <div id="button" onClick={Hit}>
-                Hit
+                <div id="button" onClick={() => reset()}>
+                  Again
+                </div>
               </div>
-              <div id="button" onClick={() => EndRound()}>
-                Stand
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-col ">
+                <CardRow hand={player} cover={false} />
+
+                <CardRow hand={dealer} cover={true} />
+                <WindowButton>
+                  <div id="button" onClick={() => Draw(player, setPlayer)}>
+                    Hit
+                  </div>
+                  <div id="button" onClick={() => EndRound()}>
+                    Stand
+                  </div>
+                </WindowButton>
               </div>
-            </WindowButton>
-          </>
-        )}
-      </div>
-    </>
+            </>
+          )}
+        </div>
+      )}
+      ;
+    </DraggableWindow>
   );
 }
 
@@ -250,7 +210,7 @@ export function CardRow(props: { hand: string[]; cover: boolean }) {
   return (
     <div
       id="border-s"
-      className="flex h-full w-full justify-between items-center p-1 gap-1"
+      className="flex h-full w-64 justify-between items-center p-1 gap-1"
     >
       <div className="flex justify-start">
         {props.cover ? (
@@ -263,7 +223,7 @@ export function CardRow(props: { hand: string[]; cover: boolean }) {
                     height={40}
                     width={32}
                     alt="Playing Card"
-                    key={index}
+                    key={card}
                   />
                 );
               } else {
@@ -273,7 +233,7 @@ export function CardRow(props: { hand: string[]; cover: boolean }) {
                     height={40}
                     width={32}
                     alt="Playing Card"
-                    key={index}
+                    key={card}
                   />
                 );
               }
@@ -281,14 +241,14 @@ export function CardRow(props: { hand: string[]; cover: boolean }) {
           </>
         ) : (
           <>
-            {props.hand.map((card: string, index: number) => {
+            {props.hand.map((card: string) => {
               return (
                 <Image
                   src={Deck[card]}
                   height={40}
                   width={32}
                   alt="Playing Card"
-                  key={index}
+                  key={card}
                 />
               );
             })}
@@ -306,96 +266,4 @@ export function CardRow(props: { hand: string[]; cover: boolean }) {
       )}
     </div>
   );
-}
-
-export function Shuffle(
-  Deck: string[],
-  DeckSetter: React.Dispatch<SetStateAction<string[]>>
-) {
-  const newDeck = Deck;
-  let currentIndex = newDeck.length;
-
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-    // Pick a remaining element...
-    const randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [newDeck[currentIndex], newDeck[randomIndex]] = [
-      newDeck[randomIndex],
-      newDeck[currentIndex],
-    ];
-  }
-  DeckSetter(newDeck);
-}
-export function Draw(
-  Deck: string[],
-  DeckSet: React.Dispatch<SetStateAction<string[]>>,
-  Hand: string[],
-  HandSet: React.Dispatch<SetStateAction<string[]>>
-) {
-  const newDeck = Deck;
-  const draw = newDeck.splice(0, 1);
-  Hand.push(draw[0]);
-  HandSet(Hand);
-  DeckSet(newDeck);
-}
-
-export function BJEvaluateHand(Hand: string[]) {
-  let value = 0;
-  let ace = false;
-
-  for (let i = 0; i < Hand.length; i++) {
-    const element = Hand[i];
-    const temp = element.split(":")[0];
-
-    if (temp === "J" || temp === "Q" || temp === "K") {
-      value += 10;
-    } else if (temp === "A") {
-      value += 1;
-      ace = true;
-    } else {
-      value += +temp;
-    }
-  }
-
-  if (ace) {
-    if (value + 10 > 21) {
-      return value + "";
-    } else {
-      return value + "/" + (value + 10);
-    }
-  } else {
-    return value + "";
-  }
-}
-
-export function BJFinalHand(Hand: string[]) {
-  let value = 0;
-  let ace = false;
-
-  for (let i = 0; i < Hand.length; i++) {
-    const element = Hand[i];
-    const temp = element.split(":")[0];
-
-    if (temp === "J" || temp === "Q" || temp === "K") {
-      value += 10;
-    } else if (temp === "A") {
-      value += 1;
-      ace = true;
-    } else {
-      value += +temp;
-    }
-  }
-
-  if (ace) {
-    if (value + 10 > 21) {
-      return value + "";
-    } else {
-      return value + 10;
-    }
-  } else {
-    return value + "";
-  }
 }
