@@ -75,6 +75,10 @@ export class DatabaseClient {
     }
   }
 
+  async authAsAdminPanel(email: string, password: string) {
+    console.log(email, password);
+  }
+
   async authAsAdmin() {
     if (process.env.PB_ADMIN_EMAIL && process.env.PB_ADMIN_PASS) {
       try {
@@ -88,7 +92,6 @@ export class DatabaseClient {
       }
     }
   }
-
   async addSuggestion(data: ISuggestion) {
     try {
       const result = await this.client.collection("Suggestion").create(data);

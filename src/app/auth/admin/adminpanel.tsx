@@ -2,7 +2,8 @@
 
 import { LabeledInputStr } from "@/app/components/labeledinputs";
 import Window from "@/app/components/semanticcomps/window";
-import WindowButton from "@/app/semanticcomps/windowbutton";
+import WindowButton from "@/app/components/semanticcomps/windowbutton";
+
 import WindowInternal from "@/app/components/semanticcomps/windowinternal";
 
 import { useRouter } from "next/navigation";
