@@ -1,17 +1,17 @@
-FROM node:20-alpine as base
+FROM node:20-alpine AS base
 
 USER root
 
 WORKDIR /app
 COPY package*.json ./
 
-FROM base as builder
+FROM base AS builder
 WORKDIR /app
 COPY . .
 RUN npm ci
 RUN npm run build
 
-FROM base as production
+FROM base AS production
 WORKDIR /app
 
 #RUN #npm install
@@ -24,8 +24,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/public ./public
-
-ENV PORT=8080
 
 EXPOSE 8080
 
