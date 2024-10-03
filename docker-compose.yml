@@ -3,6 +3,10 @@ services:
     build: .
     ports:
       - "8080:3000"
+    environment: # ENV Variables that are listed in .env need to be set here. EX: VARNAME=${ENTRY_IN_ENV_FILE}
+      - PB_DOMAIN=http://pocketbase:8090/
+      - PB_ADMIN_EMAIL=${PB_ADMIN_EMAIL}
+      - PB_ADMIN_PASS=${PB_ADMIN_PASS}
   pocketbase:
     build: ./pocketbase
 #    image: adamcanard/pocketbase:latest
@@ -10,6 +14,4 @@ services:
     ports:
       - "8090:8090"
     volumes:
-      - pocketbase-data:/pb_data
-volumes:
-  pocketbase-data:
+      - ./pocketbase/pb_data:/pb/pb_data
