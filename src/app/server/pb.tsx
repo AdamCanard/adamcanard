@@ -2,13 +2,21 @@ import PocketBase from "pocketbase";
 import { BeerData, ISuggestion } from "../types";
 
 export const POCKET_BASE_URL = "http://127.0.0.1:8090";
+export const domain = process.env.PB_DOMAIN
+
+if(!domain){
+  throw new Error(
+      "PB_DOMAIN Environment Variable is currently undefined! Check .env file, or if thrown in Docker Runtime verify that compose environment variables are set correctly!",
+      {cause:"const domain (process.env.PB_DOMAIN) is undefined in src/app/server/pb.tsx"}
+  )
+}
 
 export class DatabaseClient {
   client: PocketBase;
 
   constructor() {
     // instantiate PocketBase
-    this.client = new PocketBase(process.env.PB_DOMAIN);
+    this.client = new PocketBase(domain);
     this.client.autoCancellation(false);
   }
 
