@@ -2,13 +2,16 @@ import PocketBase from "pocketbase";
 import { BeerData, ISuggestion } from "../types";
 
 export const POCKET_BASE_URL = "http://127.0.0.1:8090";
-export const domain = process.env.PB_DOMAIN
+export const domain = process.env.PB_DOMAIN;
 
-if(!domain){
+if (!domain) {
   throw new Error(
-      "PB_DOMAIN Environment Variable is currently undefined! Check .env file, or if thrown in Docker Runtime verify that compose environment variables are set correctly!",
-      {cause:"const domain (process.env.PB_DOMAIN) is undefined in src/app/server/pb.tsx"}
-  )
+    "PB_DOMAIN Environment Variable is currently undefined! Check .env file, or if thrown in Docker Runtime verify that compose environment variables are set correctly!",
+    {
+      cause:
+        "const domain (process.env.PB_DOMAIN) is undefined in src/app/server/pb.tsx",
+    }
+  );
 }
 
 export class DatabaseClient {
@@ -95,6 +98,21 @@ export class DatabaseClient {
         return e;
       }
     }
+  }
+
+  async getSuggestion() {
+    await this.authAsAdmin();
+    const BeerList = await this.client.collection("Suggestion").getList(1, 50, {
+      sort: "-created",
+    });
+
+    return BeerList;
+  }
+
+  async deleteBeer(id: string) {
+    await this.authAsAdmin();
+    const result = await this.client.collection("Beer").delete(id);
+    return result;
   }
 
   async addBeer(data: BeerData) {
