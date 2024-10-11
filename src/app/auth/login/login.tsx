@@ -49,15 +49,22 @@ export default function Login() {
     if (data.data.status === undefined) {
       //api returned user data
       formData = new FormData();
-      formData.append("authToken", data.data.token);
+      formData.append("cookieName","authToken");
+      formData.append("cookieData", data.data.token);
       formData.append("userId", data.data.record.id);
+      let resp = await createCookie(formData);
+      formData = new FormData();
+      formData.append("cookieName","userId");
+      formData.append("cookieData",data.data.record.id);
       data = await createCookie(formData);
-      if (data.ok) router.push("/");
-    } else if (data.data.status === 400) {
+      if (data.status === 400) {
       setError(data.data);
       setPopup(true);
-    }
-  };
+      }else{
+	router.push("/")
+      }
+	}
+    };
 
   const createCookie = async (formData: FormData) => {
     try {

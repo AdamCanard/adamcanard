@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "concurrently \"npm run dev\" \"cd pocketbase && ./pocketbase serve\"",
     "lint": "next lint"
   },
   "dependencies": {
+    "concurrently": "^9.0.1",
     "next": "^14.2.13",
     "pocketbase": "^0.21.5",
     "react": "^18",
