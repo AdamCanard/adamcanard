@@ -23,7 +23,7 @@ export default function DrinkForm() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
@@ -37,10 +37,10 @@ export default function DrinkForm() {
     const formData = new FormData(form);
     formData.append("Drank", false);
     await postData(formData);
+    setRefreshBeers(true);
     setBeer("");
     setBrewery("");
     setBy("");
-    setRefreshBeers(true);
   };
 
   return (

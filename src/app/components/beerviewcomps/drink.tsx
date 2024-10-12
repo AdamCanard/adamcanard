@@ -14,7 +14,7 @@ export function Drink(props: { beer: BeerData }) {
         method: "POST",
         body: formData,
       });
-      console.log(await response.json());
+      await response.json();
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -22,7 +22,7 @@ export function Drink(props: { beer: BeerData }) {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       }
     }

@@ -26,7 +26,7 @@ interface TaskbarContextType {
 
 //cast empty object to contexttype
 export const TaskbarContext = createContext<TaskbarContextType>(
-  {} as TaskbarContextType
+  {} as TaskbarContextType,
 );
 
 export default function TopLevel() {
@@ -87,7 +87,7 @@ export default function TopLevel() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
@@ -114,7 +114,7 @@ export default function TopLevel() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
@@ -137,7 +137,7 @@ export default function TopLevel() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
@@ -160,7 +160,7 @@ export default function TopLevel() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
@@ -171,7 +171,13 @@ export default function TopLevel() {
     try {
       const response = await fetch("/api/getbeer/", { method: "GET" });
       const beerListResponse = await response.json();
-      setListElements(beerListResponse.items);
+      console.log(listElements.length, "1");
+      console.log(beerListResponse.items.length, "2");
+      if (beerListResponse.items.length == listElements.length) {
+        await getListElements();
+      } else {
+        setListElements(beerListResponse.items);
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -179,7 +185,7 @@ export default function TopLevel() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
