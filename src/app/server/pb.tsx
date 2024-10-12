@@ -84,12 +84,22 @@ export class DatabaseClient {
     }
   }
 
-  async authAsAdmin() {
+  async authAsAdmin(email: string, password: string) {
     if (process.env.PB_ADMIN_EMAIL && process.env.PB_ADMIN_PASS) {
       try {
         const result = await this.client.admins.authWithPassword(
           process.env.PB_ADMIN_EMAIL,
           process.env.PB_ADMIN_PASS,
+        );
+        return result;
+      } catch (e) {
+        console.error("Error authenticating as admin: ", e);
+      }
+    } else {
+      try {
+        const result = await this.client.admins.authWithPassword(
+          email,
+          password,
         );
         return result;
       } catch (e) {
@@ -108,8 +118,8 @@ export class DatabaseClient {
     }
   }
 
-  async getSuggestion() {
-    await this.authAsAdmin();
+  async getSuggestion(email: string, password: string) {
+    await this.authAsAdmin(email, password);
     const BeerList = await this.client.collection("Suggestion").getList(1, 50, {
       sort: "-created",
     });
@@ -117,20 +127,19 @@ export class DatabaseClient {
     return BeerList;
   }
 
-  async deleteBeer(id: string) {
-    await this.authAsAdmin();
+  async deleteBeer(id: string, email: string, password: string) {
+    await this.authAsAdmin(email, password);
     const result = await this.client.collection("Beer").delete(id);
     return result;
   }
 
-  async addBeer(data: BeerData) {
-    await this.authAsAdmin();
+  async addBeer(data: BeerData, email: string, password: string) {
+    await this.authAsAdmin(email, password);
     const result = await this.client.collection("Beer").create(data);
     return result;
   }
 
   async getBeer() {
-    await this.authAsAdmin();
     const BeerList = await this.client.collection("Beer").getList(1, 50, {
       sort: "-created",
     });
@@ -138,14 +147,24 @@ export class DatabaseClient {
     return BeerList;
   }
 
-  async updateBeer(data: BeerData, id: string) {
-    await this.authAsAdmin();
+  async updateBeer(
+    data: BeerData,
+    id: string,
+    email: string,
+    password: string,
+  ) {
+    await this.authAsAdmin(email, password);
     const result = await this.client.collection("Beer").update(id, data);
     return result;
   }
 
-  async getById(collection: string, id: string) {
-    await this.authAsAdmin();
+  async getById(
+    collection: string,
+    id: string,
+    email: string,
+    password: string,
+  ) {
+    await this.authAsAdmin(email, password);
     const record = await this.client.collection(collection).getOne(id, {});
     return record;
   }

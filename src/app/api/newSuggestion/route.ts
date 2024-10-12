@@ -18,6 +18,7 @@ export async function POST(req: Request) {
       Name: formData.get("Name") as string,
       userId: userId as string,
     };
+
     db.addSuggestion(data);
     return new Response(JSON.stringify({ data: data }), {
       status: 200,
