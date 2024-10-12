@@ -10,7 +10,7 @@ if (!domain) {
     {
       cause:
         "const domain (process.env.PB_DOMAIN) is undefined in src/app/server/pb.tsx",
-    }
+    },
   );
 }
 
@@ -76,7 +76,12 @@ export class DatabaseClient {
   }
 
   async authAsAdminPanel(email: string, password: string) {
-    console.log(email, password);
+    try {
+      const result = await this.client.admins.authWithPassword(email, password);
+      return result;
+    } catch (e) {
+      console.error("Error authenticating as admin: ", e);
+    }
   }
 
   async authAsAdmin() {
@@ -84,7 +89,7 @@ export class DatabaseClient {
       try {
         const result = await this.client.admins.authWithPassword(
           process.env.PB_ADMIN_EMAIL,
-          process.env.PB_ADMIN_PASS
+          process.env.PB_ADMIN_PASS,
         );
         return result;
       } catch (e) {

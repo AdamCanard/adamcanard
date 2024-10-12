@@ -22,8 +22,38 @@ export default function AdminPanel() {
     const data = await postData(formData);
     console.log(data);
     try {
-      if (data.data.admin) router.push("/");
+      if (data.data.admin) {
+        console.log(data.data);
+        const cookieData = new FormData();
+        cookieData.append("cookieName", "adminCookie");
+        cookieData.append("cookieData", data.data.admin.id);
+        setCookie(cookieData);
+        router.push("/");
+      }
     } catch (error) {}
+  };
+
+  const setCookie = async (formData: FormData) => {
+    try {
+      const response = await fetch("/api/setcookie/", {
+        method: "POST",
+        body: formData,
+      });
+
+      return response.json();
+    } catch (err: unknown) {
+      if (typeof err === "string") {
+        console.log(err);
+      } else if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          },
+        );
+      }
+    }
   };
 
   const postData = async (formData: FormData) => {
@@ -43,7 +73,7 @@ export default function AdminPanel() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       }
     }
