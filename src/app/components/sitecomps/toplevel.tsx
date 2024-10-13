@@ -173,7 +173,7 @@ export default function TopLevel() {
       const beerListResponse = await response.json();
       console.log(listElements.length, "1");
       console.log(beerListResponse.items.length, "2");
-      if (beerListResponse.items.length == listElements.length) {
+      if (sameLists(listElements, beerListResponse.items)) {
         await getListElements();
       } else {
         setListElements(beerListResponse.items);
@@ -191,6 +191,21 @@ export default function TopLevel() {
         console.log(err);
       }
     }
+  };
+
+  const sameLists = (list1: BeerData[], list2: BeerData[]) => {
+    console.log(list1, " & ", list2);
+    if (list1.length == list2.length) {
+      for (let i = 0; i < list1.length; i++) {
+        if (list1[i].Drank === list2[i].Drank) {
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
+    return true;
   };
 
   useEffect(() => {

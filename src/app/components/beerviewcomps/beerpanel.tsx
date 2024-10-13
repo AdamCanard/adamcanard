@@ -22,7 +22,7 @@ interface PopupContextType {
 
 //cast empty object to contexttype
 export const PopupContext = createContext<PopupContextType>(
-  {} as PopupContextType
+  {} as PopupContextType,
 );
 
 export default function BeerPanel(props: { beer: BeerData }) {
@@ -30,7 +30,6 @@ export default function BeerPanel(props: { beer: BeerData }) {
   const [brewery, setBrewery] = useState("");
   const [drinkTrigger, setDrinkTrigger] = useState(false);
   const { windows, setWindows, beers, setBeers } = useContext(TaskbarContext);
-
   const handleClose = () => {
     for (let i = 0; i < beers.length; i++) {
       if (beers[i].Beer == props.beer.Beer) {
@@ -93,7 +92,9 @@ export default function BeerPanel(props: { beer: BeerData }) {
             </WindowInternal>
             <WindowButton>
               <Delete beer={props.beer} close={handleClose} />
-              {!props.beer.Drank && <Drink beer={props.beer} />}
+              {!props.beer.Drank && (
+                <Drink beer={props.beer} close={handleClose} />
+              )}
             </WindowButton>
           </div>
         </DraggableWindow>

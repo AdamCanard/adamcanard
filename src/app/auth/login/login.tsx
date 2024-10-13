@@ -34,7 +34,7 @@ export default function Login() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       }
     }
@@ -49,22 +49,22 @@ export default function Login() {
     if (data.data.status === undefined) {
       //api returned user data
       formData = new FormData();
-      formData.append("cookieName","authToken");
+      formData.append("cookieName", "authToken");
       formData.append("cookieData", data.data.token);
       formData.append("userId", data.data.record.id);
       let resp = await createCookie(formData);
       formData = new FormData();
-      formData.append("cookieName","userId");
-      formData.append("cookieData",data.data.record.id);
+      formData.append("cookieName", "userId");
+      formData.append("cookieData", data.data.record.id);
       data = await createCookie(formData);
       if (data.status === 400) {
-      setError(data.data);
-      setPopup(true);
-      }else{
-	router.push("/")
+        setError(data.data);
+        setPopup(true);
+      } else {
+        router.push("/");
       }
-	}
-    };
+    }
+  };
 
   const createCookie = async (formData: FormData) => {
     try {
@@ -80,7 +80,7 @@ export default function Login() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
@@ -112,7 +112,7 @@ export default function Login() {
               />
             </WindowInternal>
             <WindowButton>
-              <input id="button" type="submit" />
+              <input id="button" type="submit" name="Submit" />
             </WindowButton>
           </form>
         </Window>

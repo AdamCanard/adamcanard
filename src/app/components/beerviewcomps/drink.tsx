@@ -3,9 +3,11 @@ import { useEffect, useContext } from "react";
 
 import { BeerData } from "../../types";
 import { PopupContext } from "./beerpanel";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
-export function Drink(props: { beer: BeerData }) {
+export function Drink(props: { beer: BeerData; close: () => void }) {
   const popupData = useContext(PopupContext);
+  const { setRefreshBeers } = useContext(TaskbarContext);
 
   //call for changing drank value of database object
   const drinkBeer = async (formData: FormData) => {
@@ -15,6 +17,8 @@ export function Drink(props: { beer: BeerData }) {
         body: formData,
       });
       await response.json();
+      setRefreshBeers(true);
+      props.close();
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
