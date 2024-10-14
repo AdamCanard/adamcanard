@@ -171,8 +171,6 @@ export default function TopLevel() {
     try {
       const response = await fetch("/api/getbeer/", { method: "GET" });
       const beerListResponse = await response.json();
-      console.log(listElements.length, "1");
-      console.log(beerListResponse.items.length, "2");
       if (sameLists(listElements, beerListResponse.items)) {
         await getListElements();
       } else {
@@ -194,7 +192,6 @@ export default function TopLevel() {
   };
 
   const sameLists = (list1: BeerData[], list2: BeerData[]) => {
-    console.log(list1, " & ", list2);
     if (list1.length == list2.length) {
       for (let i = 0; i < list1.length; i++) {
         if (list1[i].Drank === list2[i].Drank) {
