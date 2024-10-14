@@ -24,7 +24,7 @@ export default function SuggestionManager() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
@@ -51,6 +51,7 @@ export default function SuggestionManager() {
         title="Suggestion Manager"
         width={"1/3"}
         heigth={"2/3"}
+        windowKey="SuggestionManager"
         close={() => handleClose()}
       >
         <WindowInternal>

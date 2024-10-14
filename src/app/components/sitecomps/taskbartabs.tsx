@@ -68,6 +68,7 @@ function Drank() {
       title="Drank"
       width={"72"}
       heigth={"2/3"}
+      windowKey="Drank"
       close={() => handleClose()}
     >
       <BeerList
@@ -94,6 +95,7 @@ function Drink() {
       title="Drink"
       width={"72"}
       heigth={"2/3"}
+      windowKey="Drink"
       close={() => handleClose()}
     >
       <BeerList

@@ -60,6 +60,7 @@ export default function Suggestion() {
       title={"New Suggestion"}
       width={"72"}
       heigth={"2/3"}
+      windowKey="Suggestion"
       close={handleClose}
     >
       <form

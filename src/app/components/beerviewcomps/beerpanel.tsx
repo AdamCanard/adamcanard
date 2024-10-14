@@ -61,6 +61,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
           title={props.beer.Beer}
           width={"1/2"}
           heigth={"2/3"}
+          windowKey={props.beer.Beer}
           close={handleClose}
         >
           <div className="flex flex-col gap-4 justify-center items-center">

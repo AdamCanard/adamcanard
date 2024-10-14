@@ -29,7 +29,7 @@ export interface IBlackJackContext {
 
 //cast empty object to contexttype
 export const BlackJackContext = createContext<IBlackJackContext>(
-  {} as IBlackJackContext
+  {} as IBlackJackContext,
 );
 
 export default function BlackJack() {
@@ -73,6 +73,7 @@ export default function BlackJack() {
       title={"BlackJack"}
       width={"60"}
       heigth={"96"}
+      windowKey="BlackJack"
       close={handleClose}
     >
       {!gameTrigger ? (
