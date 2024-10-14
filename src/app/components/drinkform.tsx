@@ -64,7 +64,7 @@ export default function DrinkForm() {
       <LabeledInputStr title="By" state={by} setState={setBy} required={true} />
 
       <WindowButton>
-        <input id="button" type="submit" />
+        <input id="button" type="submit" value="Submit" />
       </WindowButton>
     </form>
   );

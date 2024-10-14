@@ -69,7 +69,7 @@ export default function AdminPanel() {
             />
           </WindowInternal>
           <WindowButton>
-            <input id="button" type="submit" />
+            <input id="button" type="submit" value="Submit" />
           </WindowButton>
         </form>
       </Window>

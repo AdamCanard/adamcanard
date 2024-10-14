@@ -28,7 +28,7 @@ export default function Suggestion() {
           {
             status: 500,
             headers: {},
-          }
+          },
         );
       } else {
         console.log(err);
@@ -82,7 +82,7 @@ export default function Suggestion() {
           />
         </WindowInternal>
         <WindowButton>
-          <input id="button" type="submit" />
+          <input id="button" type="submit" value="Submit" />
         </WindowButton>
       </form>
     </DraggableWindow>

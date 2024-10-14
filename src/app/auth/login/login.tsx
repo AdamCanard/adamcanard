@@ -52,7 +52,7 @@ export default function Login() {
       formData.append("cookieName", "authToken");
       formData.append("cookieData", data.data.token);
       formData.append("userId", data.data.record.id);
-      let resp = await createCookie(formData);
+      await createCookie(formData);
       formData = new FormData();
       formData.append("cookieName", "userId");
       formData.append("cookieData", data.data.record.id);
@@ -112,7 +112,7 @@ export default function Login() {
               />
             </WindowInternal>
             <WindowButton>
-              <input id="button" type="submit" name="Submit" />
+              <input id="button" type="submit" value="Submit" />
             </WindowButton>
           </form>
         </Window>
