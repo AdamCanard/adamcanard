@@ -5,7 +5,7 @@ import MobileTop from "./mobile/mobileTop";
 export default function Page() {
   return (
     <>
-      <div id="mobile" className={"h-full"}>
+      <div id="mobile" className={"h-full flex-col"}>
         <MobileTop />
       </div>
       <div id="desktop">

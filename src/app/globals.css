@@ -23,7 +23,16 @@
 }
 
 @media (max-width: 1000px) {
+  body {
+    background-color: #008080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   #mobile {
+    width: 95%;
+    height: 95%;
     display: flex;
   }
   #desktop {
@@ -31,6 +40,10 @@
   }
 }
 @media (min-width: 1001px) {
+  body {
+    background-image: url("../../public/Windows/Desktop.jpg");
+    background-size: cover;
+  }
   #mobile {
     display: none;
   }
@@ -51,8 +64,6 @@
   letter-spacing: 0;
 }
 #Mwindow {
-  width: 100%;
-  height: 100%;
   box-shadow:
     inset -1px -1px #0a0a0a,
     inset 1px 1px #dfdfdf,
@@ -62,7 +73,15 @@
   background-color: #c0c0c0;
 }
 
-#MTopBar {
+#MTabButton {
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #dfdfdf,
+    inset -2px -2px #808080,
+    inset 2px 2px #fafafa;
+  background-color: #c0c0c0;
+  border-top-left-radius: 25%;
+  border-top-right-radius: 25%;
 }
 
 #window {
@@ -305,12 +324,9 @@ body {
   overflow: hidden;
   height: 100vh;
   width: 100%;
-  background-color: #c0c0c0;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
-  background-image: url("../../public/Windows/Desktop.jpg");
-  background-size: cover;
 }
 
 @keyframes roll {
