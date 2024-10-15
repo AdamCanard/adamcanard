@@ -1,10 +1,18 @@
+"use client";
 import TopLevel from "./components/sitecomps/toplevel";
-// import Test from "./test";
+import MobileTop from "./mobile/mobileTop";
 
 export default function Page() {
   return (
-    <div className="flex justify-center items-center w-full h-full">
-      <TopLevel />
-    </div>
+    <>
+      <div id="mobile" className={"h-full"}>
+        <MobileTop />
+      </div>
+      <div id="desktop">
+        <div className="flex justify-center items-center w-full h-full">
+          <TopLevel />
+        </div>
+      </div>
+    </>
   );
 }
