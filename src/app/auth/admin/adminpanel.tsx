@@ -66,6 +66,7 @@ export default function AdminPanel() {
               state={password}
               setState={setPassword}
               required={false}
+              password={true}
             />
           </WindowInternal>
           <WindowButton>

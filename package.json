@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "concurrently \"npx dotenvx run -- next dev\" \"cd pocketbase && ./pocketbase serve\"",
+    "dev": "npx dotenvx run -- next dev",
+    "build": "npx dotenvx run -- next build",
+    "start": "npx dotenvx run -- next start",
+    "apple": "concurrently \"npm run dev\" \"cd pocketbase && ./pocketbase serve \" ",
     "lint": "next lint"
   },
   "dependencies": {

@@ -40,10 +40,6 @@
   }
 }
 @media (min-width: 1001px) {
-  body {
-    background-image: url("../../public/Windows/Desktop.jpg");
-    background-size: cover;
-  }
   #mobile {
     display: none;
   }
@@ -71,6 +67,7 @@
     inset -2px -2px #808080,
     inset 2px 2px #fafafa;
   background-color: #c0c0c0;
+  padding: 4px;
 }
 
 #MTabButton {
@@ -321,6 +318,8 @@ label {
 
 html,
 body {
+  background-image: url("../../public/Windows/Desktop.jpg");
+  background-size: cover;
   overflow: hidden;
   height: 100vh;
   width: 100%;
