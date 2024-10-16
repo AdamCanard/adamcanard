@@ -64,12 +64,12 @@
   letter-spacing: 0;
 }
 #Mwindow {
+  overflow-y: scroll;
   box-shadow:
     inset -1px -1px #0a0a0a,
     inset 1px 1px #dfdfdf,
     inset -2px -2px #808080,
     inset 2px 2px #fafafa;
-  padding: 3px;
   background-color: #c0c0c0;
 }
 
