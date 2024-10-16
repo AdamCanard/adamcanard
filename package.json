@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "concurrently \"npm run dev\" \"cd pocketbase && ./pocketbase serve\"",
+    "start": "concurrently \"npx dotenvx run -- next dev\" \"cd pocketbase && ./pocketbase serve\"",
     "lint": "next lint"
   },
   "dependencies": {
