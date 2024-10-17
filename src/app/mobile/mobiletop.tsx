@@ -44,7 +44,6 @@ export default function MobileTop() {
       </div>
       <div id="Mwindow" className={"w-full h-full"}>
         <div className={"overflow-y-scroll w-full h-full"}>
-          {" "}
           {tab === "Info" ? (
             <></>
           ) : (
