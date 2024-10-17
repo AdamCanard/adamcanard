@@ -2,6 +2,7 @@ import TabButton from "./tabbutton";
 import { useEffect, useState } from "react";
 import { BeerData } from "../types";
 import MobileList from "./mobilelist";
+import InfoCard from "./infocard";
 
 export default function MobileTop() {
   const [listElements, setListElements] = useState<BeerData[]>([]);
@@ -44,7 +45,7 @@ export default function MobileTop() {
       </div>
       <div id="Mwindow" className={"w-full h-full"}>
         {tab === "Info" ? (
-          <></>
+          <InfoCard />
         ) : (
           <MobileList
             listElements={
