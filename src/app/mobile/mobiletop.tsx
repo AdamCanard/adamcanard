@@ -43,19 +43,17 @@ export default function MobileTop() {
         </div>
       </div>
       <div id="Mwindow" className={"w-full h-full"}>
-        <div className={"overflow-y-scroll w-full h-full"}>
-          {tab === "Info" ? (
-            <></>
-          ) : (
-            <MobileList
-              listElements={
-                tab === "Drank"
-                  ? listElements.filter((element) => element.Drank == true)
-                  : listElements.filter((element) => element.Drank == false)
-              }
-            />
-          )}
-        </div>
+        {tab === "Info" ? (
+          <></>
+        ) : (
+          <MobileList
+            listElements={
+              tab === "Drank"
+                ? listElements.filter((element) => element.Drank == true)
+                : listElements.filter((element) => element.Drank == false)
+            }
+          />
+        )}
       </div>
     </>
   );
