@@ -72,7 +72,7 @@ export default function BlackJack() {
     <DraggableWindow
       title={"BlackJack"}
       width={"60"}
-      heigth={"96"}
+      heigth={"32"}
       windowKey="BlackJack"
       close={handleClose}
     >
