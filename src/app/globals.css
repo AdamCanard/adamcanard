@@ -38,6 +38,12 @@
   #desktop {
     display: none;
   }
+  h1 {
+    color: white;
+    background: linear-gradient(90deg, #000080, #1084d0);
+    padding: 3px 2px 3px 3px;
+    letter-spacing: 0;
+  }
 }
 @media (min-width: 1001px) {
   #mobile {
@@ -61,6 +67,15 @@
 }
 #Mwindow {
   height: 90%;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #dfdfdf,
+    inset -2px -2px #808080,
+    inset 2px 2px #fafafa;
+  background-color: #c0c0c0;
+  padding: 4px;
+}
+#boxShadow {
   box-shadow:
     inset -1px -1px #0a0a0a,
     inset 1px 1px #dfdfdf,
