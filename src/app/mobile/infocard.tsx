@@ -5,7 +5,7 @@ export default function InfoCard() {
   return (
     <>
       <div id="boxshadow">
-        <h1 id="title">Information</h1>
+        <h1 id="title">Adam Cunard Website. Thats Me!</h1>
         <div className={"flex flex-row"}>
           <div className={"relative w-full h-64"}>
             <Image src={"/AdamBeer1.jpg"} alt="Photo of me" fill={true} />
