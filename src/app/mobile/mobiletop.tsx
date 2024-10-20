@@ -59,7 +59,7 @@ export default function MobileTop() {
             <TabButton title="Drink" set={setTab} />
           </div>
         </div>
-        <div id="Mwindow" className={"w-full h-full"}>
+        <div id="Mwindow" className={"w-full h-full relative flex flex-col"}>
           {tab === "Info" ? (
             <InfoCard />
           ) : (
