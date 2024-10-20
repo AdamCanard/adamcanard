@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import { Deck } from "./deck";
 import CardBack from "../../../../public/Cards/CardBack.png";
 import Image from "next/image";
-import WindowButton from "../semanticcomps/windowbutton";
 import { BJEvaluateHand, Shuffle } from "./deckfunctions";
 
 export default function MBlackJackGame() {
@@ -120,7 +119,7 @@ export default function MBlackJackGame() {
 
   return (
     <>
-      <div className="flex flex-col w-full ">
+      <div className="flex flex-col w-full h-full ">
         {reveal ? (
           <div className="flex flex-col w-full justify-between items-center">
             <div className="flex flex-col w-full">
@@ -136,17 +135,17 @@ export default function MBlackJackGame() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col ">
+          <div className="flex flex-col w-full">
             <MCardRow hand={player} cover={false} />
             <MCardRow hand={dealer} cover={true} />
-            <WindowButton>
+            <div className={"flex flex-row w-full justify-end items-end"}>
               <div id="button" onClick={drawPlayer}>
                 Hit
               </div>
               <div id="button" onClick={() => EndRound()}>
                 Stand
               </div>
-            </WindowButton>
+            </div>
           </div>
         )}
       </div>
