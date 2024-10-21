@@ -24,16 +24,16 @@
 
 @media (max-width: 1000px) {
   body {
-    background-color: #008080;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
   }
 
   #mobile {
     width: 95%;
-    height: 95%;
+    height: 85%;
     display: flex;
+    margin-top: 1rem;
   }
   #desktop {
     display: none;
