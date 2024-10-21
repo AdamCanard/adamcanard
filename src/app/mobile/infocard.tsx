@@ -5,9 +5,9 @@ export default function InfoCard() {
   return (
     <>
       <div id="boxshadow">
-        <h1 id="title">Adam Cunard Website. Thats Me!</h1>
+        <h1 id="title">Adam Cunard Website. Thats Me!</h1>
         <div className={"flex flex-row"}>
-          <div className={"relative w-full h-32"}>
+          <div className={"relative w-full h-48"}>
             <Image src={"/AdamBeer1.jpg"} alt="Photo of me" fill={true} />
           </div>
         </div>
@@ -23,9 +23,18 @@ export default function InfoCard() {
               links
             </div>
             <div className={"flex w-full gap-2 justify-end items-end pb-1"}>
-              <div id="button">Instagram</div>
-              <div id="button">LinkedIn</div>
-              <div id="button">GitHub</div>
+              <a href="https://www.instagram.com/adam_cunard/" id="button">
+                Instagram
+              </a>
+              <a
+                href="https://ca.linkedin.com/in/adam-cunard-3a4644287?trk=people-guest_people_search-card"
+                id="button"
+              >
+                LinkedIn
+              </a>
+              <a href="https://github.com/AdamCanard" id="button">
+                GitHub
+              </a>
             </div>
           </div>
         </div>
