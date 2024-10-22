@@ -1,5 +1,6 @@
 import PocketBase from "pocketbase";
 import { BeerData, ISuggestion } from "../types";
+import { use } from "react";
 
 export const POCKET_BASE_URL = "http://127.0.0.1:8090";
 export const domain = process.env.PB_DOMAIN;
@@ -23,13 +24,12 @@ export class DatabaseClient {
     this.client.autoCancellation(false);
   }
 
-  async register(username: string, email: string, password: string) {
+  async register(username: string) {
     try {
       const result = await this.client.collection("users").create({
-        username,
-        email,
-        password,
-        passwordConfirm: password,
+        username: username,
+        password: username,
+        passwordConfirm: username,
       });
       return result;
     } catch (err: unknown) {
@@ -38,11 +38,11 @@ export class DatabaseClient {
     }
   }
 
-  async authenticate(email: string, password: string) {
+  async authenticate(username: string) {
     try {
       const result = await this.client
         .collection("users")
-        .authWithPassword(email, password);
+        .authWithPassword(username, username);
       return result;
     } catch (err: unknown) {
       return err;

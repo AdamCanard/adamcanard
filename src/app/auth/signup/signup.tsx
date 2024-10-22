@@ -3,14 +3,12 @@ import ErrorPopup from "@/app/components/errorpopup";
 import { LabeledInputStr } from "@/app/components/labeledinputs";
 import Window from "@/app/components/semanticcomps/window";
 import WindowButton from "@/app/components/semanticcomps/windowbutton";
-import WindowInternal from "@/app/components/semanticcomps/windowinternal";
 import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function SignUp() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [error, setError] = useState<IError>();
   const [popup, setPopup] = useState<boolean>(false);
 
@@ -63,22 +61,13 @@ export default function SignUp() {
       <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
         <Window title="SignUp">
           <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
-            <WindowInternal>
-              <LabeledInputStr
-                title="email"
-                type="email"
-                state={email}
-                setState={setEmail}
-                required={true}
-              />
-              <LabeledInputStr
-                title="password"
-                type="password"
-                state={password}
-                setState={setPassword}
-                required={false}
-              />
-            </WindowInternal>
+            <LabeledInputStr
+              title="username"
+              type="text"
+              state={username}
+              setState={setUsername}
+              required={true}
+            />
             <WindowButton>
               <input id="button" type="submit" value="Submit" />
             </WindowButton>

@@ -6,7 +6,7 @@ import DrinkForm from "../drinkform";
 import DrankForm from "../drankform";
 import DraggableWindow from "../semanticcomps/draggablewindow";
 import BlackJack from "../blackjackcomps/blackjackgame";
-import Suggestion from "../suggestion";
+import Suggestion from "../suggestionWindow";
 
 export default function TaskbarTabs() {
   const { setWindows, windows } = useContext(TaskbarContext);
