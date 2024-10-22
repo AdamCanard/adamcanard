@@ -66,12 +66,14 @@ export default function SignUp() {
             <WindowInternal>
               <LabeledInputStr
                 title="email"
+                type="email"
                 state={email}
                 setState={setEmail}
                 required={true}
               />
               <LabeledInputStr
                 title="password"
+                type="password"
                 state={password}
                 setState={setPassword}
                 required={false}

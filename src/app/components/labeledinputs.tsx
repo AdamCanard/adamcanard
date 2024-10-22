@@ -5,7 +5,7 @@ export function LabeledInputStr(props: {
   title: string;
   state: string;
   setState: Dispatch<SetStateAction<string>>;
-  password?: boolean;
+  type: string;
 }) {
   return (
     <>
@@ -15,7 +15,7 @@ export function LabeledInputStr(props: {
           <input
             autoComplete="off"
             required
-            type={props.password ? "password" : "text"}
+            type={props.type}
             name={props.title}
             value={props.state}
             onChange={(e) => props.setState(e.target.value)}
@@ -23,7 +23,7 @@ export function LabeledInputStr(props: {
         ) : (
           <input
             autoComplete="off"
-            type={props.password ? "password" : "text"}
+            type={props.type}
             name={props.title}
             value={props.state}
             onChange={(e) => props.setState(e.target.value)}

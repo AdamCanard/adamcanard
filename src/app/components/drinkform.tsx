@@ -51,18 +51,25 @@ export default function DrinkForm() {
     >
       <LabeledInputStr
         title="Beer"
+        type="text"
         state={beer}
         setState={setBeer}
         required={true}
       />
       <LabeledInputStr
         title="Brewery"
+        type="text"
         state={brewery}
         setState={setBrewery}
         required={false}
       />
-      <LabeledInputStr title="By" state={by} setState={setBy} required={true} />
-
+      <LabeledInputStr
+        title="By"
+        type="text"
+        state={by}
+        setState={setBy}
+        required={true}
+      />
       <WindowButton>
         <input id="button" type="submit" value="Submit" />
       </WindowButton>

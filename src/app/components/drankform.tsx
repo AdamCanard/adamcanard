@@ -51,12 +51,14 @@ export default function DrankForm() {
     >
       <LabeledInputStr
         title="Beer"
+        type="text"
         state={beer}
         setState={setBeer}
         required={true}
       />
       <LabeledInputStr
         title="Brewery"
+        type="text"
         state={brewery}
         setState={setBrewery}
         required={false}
