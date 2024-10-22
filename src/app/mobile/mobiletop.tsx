@@ -1,4 +1,3 @@
-import TabButton from "./tabbutton";
 import {
   Dispatch,
   SetStateAction,
@@ -9,7 +8,8 @@ import {
 import { BeerData } from "../types";
 import MobileList from "./mobilelist";
 import InfoCard from "./infocard";
-
+import TabBar from "./tabbar";
+import Suggest from "./suggest";
 interface MobileContextType {
   tab: string;
   setTab: Dispatch<SetStateAction<string>>;
@@ -43,6 +43,33 @@ export default function MobileTop() {
     }
   };
 
+  const TabDecider = (tab: string) => {
+    switch (tab) {
+      case "Info":
+        return <InfoCard />;
+      case "Drank":
+        return (
+          <MobileList
+            listElements={listElements.filter(
+              (element) => element.Drank == true,
+            )}
+          />
+        );
+
+      case "Drink":
+        return (
+          <MobileList
+            listElements={listElements.filter(
+              (element) => element.Drank == false,
+            )}
+          />
+        );
+      case "Suggest":
+        return <Suggest />;
+      default:
+    }
+  };
+
   useEffect(() => {
     getListElements();
   }, []);
@@ -50,28 +77,8 @@ export default function MobileTop() {
   return (
     <>
       <MobileContext.Provider value={{ tab, setTab }}>
-        <div className={"flex flex-row justify-between"}>
-          <div className={"w-full h-8 flex flex-row"}>
-            <TabButton title="Info" set={setTab} />
-          </div>
-          <div className={"w-full h-8 flex flex-row justify-end"}>
-            <TabButton title="Drank" set={setTab} />
-            <TabButton title="Drink" set={setTab} />
-          </div>
-        </div>
-        <div id="Mwindow" className={"w-full h-full relative flex flex-col"}>
-          {tab === "Info" ? (
-            <InfoCard />
-          ) : (
-            <MobileList
-              listElements={
-                tab === "Drank"
-                  ? listElements.filter((element) => element.Drank == true)
-                  : listElements.filter((element) => element.Drank == false)
-              }
-            />
-          )}
-        </div>
+        <TabBar />
+        {TabDecider(tab)}
       </MobileContext.Provider>
     </>
   );
