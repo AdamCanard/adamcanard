@@ -117,8 +117,7 @@ export class DatabaseClient {
     }
   }
 
-  async getSuggestion(email: string, password: string) {
-    await this.authAsAdmin(email, password);
+  async getSuggestion() {
     const BeerList = await this.client.collection("Suggestion").getList(1, 50, {
       sort: "-created",
     });
@@ -126,14 +125,12 @@ export class DatabaseClient {
     return BeerList;
   }
 
-  async deleteBeer(id: string, email: string, password: string) {
-    await this.authAsAdmin(email, password);
+  async deleteBeer(id: string) {
     const result = await this.client.collection("Beer").delete(id);
     return result;
   }
 
-  async addBeer(data: BeerData, email: string, password: string) {
-    await this.authAsAdmin(email, password);
+  async addBeer(data: BeerData) {
     const result = await this.client.collection("Beer").create(data);
     return result;
   }
@@ -146,24 +143,12 @@ export class DatabaseClient {
     return BeerList;
   }
 
-  async updateBeer(
-    data: BeerData,
-    id: string,
-    email: string,
-    password: string,
-  ) {
-    await this.authAsAdmin(email, password);
+  async updateBeer(data: BeerData, id: string) {
     const result = await this.client.collection("Beer").update(id, data);
     return result;
   }
 
-  async getById(
-    collection: string,
-    id: string,
-    email: string,
-    password: string,
-  ) {
-    await this.authAsAdmin(email, password);
+  async getById(collection: string, id: string) {
     const record = await this.client.collection(collection).getOne(id, {});
     return record;
   }

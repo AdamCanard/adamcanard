@@ -1,6 +1,5 @@
 import db from "../../server/pb";
 import { BeerData } from "../../types";
-import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
   const formData = await req.formData();
@@ -11,11 +10,7 @@ export async function POST(req: Request) {
     Rating: +(formData.get("Rating") as string),
     Drank: (formData.get("Drank") as string) === "true",
   };
-  const email = cookies().get("adminEmail")?.value;
-  const password = cookies().get("adminPass")?.value;
-  if (email && password) {
-    db.addBeer(data, email, password);
-  }
+  db.addBeer(data);
   return new Response(JSON.stringify({ data: data }), {
     status: 200,
   });
