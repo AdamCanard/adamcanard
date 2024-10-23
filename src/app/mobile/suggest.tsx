@@ -1,7 +1,6 @@
 import { LabeledInputStr } from "../components/labeledinputs";
 import { useState } from "react";
 export default function Suggest() {
-  const [email, setEmail] = useState("");
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
 
@@ -32,7 +31,6 @@ export default function Suggest() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     postData(formData);
-    setEmail("");
     setBeer("");
     setBrewery("");
   };
@@ -40,13 +38,6 @@ export default function Suggest() {
   return (
     <div id="boxshadow" className={"w-full"}>
       <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
-        <LabeledInputStr
-          title="Email"
-          type="email"
-          state={email}
-          setState={setEmail}
-          required={true}
-        />
         <LabeledInputStr
           title="Beer"
           type="text"

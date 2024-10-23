@@ -1,6 +1,5 @@
 import PocketBase from "pocketbase";
 import { BeerData, ISuggestion } from "../types";
-import { use } from "react";
 
 export const POCKET_BASE_URL = "http://127.0.0.1:8090";
 export const domain = process.env.PB_DOMAIN;
