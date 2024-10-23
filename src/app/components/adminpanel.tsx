@@ -8,6 +8,7 @@ import WindowInternal from "@/app/components/semanticcomps/windowinternal";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import DraggableWindow from "./semanticcomps/draggablewindow";
 
 export default function AdminPanel() {
   const [email, setEmail] = useState("");
@@ -52,7 +53,7 @@ export default function AdminPanel() {
 
   return (
     <>
-      <Window title="Admin">
+      <DraggableWindow title="Admin" width="72" heigth="2/3" windowKey="admin">
         <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
           <WindowInternal>
             <LabeledInputStr
@@ -74,7 +75,7 @@ export default function AdminPanel() {
             <input id="button" type="submit" value="Submit" />
           </WindowButton>
         </form>
-      </Window>
+      </DraggableWindow>
     </>
   );
 }
