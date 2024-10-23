@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { LabeledInputStr } from "../components/labeledinputs";
+import SecretForms from "./secretforms";
 
 export default function Secret() {
   const [email, setEmail] = useState("");
@@ -43,7 +44,7 @@ export default function Secret() {
   return (
     <>
       {authenticated ? (
-        <></>
+        <SecretForms />
       ) : (
         <div id="boxshadow">
           <h1 id="title">You shouldnt be here</h1>
