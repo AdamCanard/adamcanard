@@ -12,7 +12,6 @@ export default function SuggestionListElement(props: { data: ISuggestion }) {
         <>
           <div>{props.data.Beer}</div>
           <div>{props.data.Brewery}</div>
-          <div>{props.data.Email}</div>
         </>
       </div>
       <div className="flex flex-row w-20 h-8 gap-1">
