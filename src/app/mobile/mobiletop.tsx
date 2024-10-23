@@ -10,6 +10,7 @@ import MobileList from "./mobilelist";
 import InfoCard from "./infocard";
 import TabBar from "./tabbar";
 import Suggest from "./suggest";
+import Secret from "./secret";
 interface MobileContextType {
   tab: string;
   setTab: Dispatch<SetStateAction<string>>;
@@ -67,6 +68,7 @@ export default function MobileTop() {
       case "Suggest":
         return <Suggest />;
       default:
+        return <Secret />;
     }
   };
 

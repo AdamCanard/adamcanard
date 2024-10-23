@@ -1,7 +1,10 @@
 import Image from "next/image";
 import MBlackJackGame from "../components/blackjackcomps/mobileblackjack";
+import { useContext } from "react";
+import { MobileContext } from "./mobiletop";
 
 export default function InfoCard() {
+  const { setTab } = useContext(MobileContext);
   return (
     <>
       <div className={"flex flex-col w-full h-full"}>
@@ -37,7 +40,15 @@ export default function InfoCard() {
           </div>
         </div>
         <div id="boxshadow" className={"w-full flex flex-col"}>
-          <h1 id="title"> BlackJack</h1>
+          <h1
+            id="title"
+            onClick={() => {
+              setTab("secret");
+            }}
+          >
+            {" "}
+            BlackJack
+          </h1>
           <MBlackJackGame />
         </div>
       </div>

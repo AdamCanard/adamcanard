@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 interface TaskbarContextType {
   username: string;
   admin: boolean;
-  adminCheck: () => Promise<void>;
+  setAdmin: React.Dispatch<SetStateAction<boolean>>;
   ids: string[];
   setIds: React.Dispatch<SetStateAction<string[]>>;
   windows: JSX.Element[];
@@ -60,39 +60,6 @@ export default function TopLevel() {
     formData.append("recordId", cookie.data.value);
     const username = await getUsername(formData);
     setUsername(username.data.username);
-  };
-
-  const adminCheck = async () => {
-    const auth = await authAdmin();
-
-    if (auth.admin) {
-      setAdmin(!admin);
-    } else {
-      router.push("auth/admin");
-    }
-  };
-
-  const authAdmin = async () => {
-    try {
-      const response = await fetch("/api/admin/", {
-        method: "GET",
-      });
-      const username = await response.json();
-
-      return username;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
   };
 
   const getAuthCookie = async (formData: FormData) => {
@@ -221,7 +188,7 @@ export default function TopLevel() {
         value={{
           username,
           admin,
-          adminCheck,
+          setAdmin,
           ids,
           setIds,
           windows,

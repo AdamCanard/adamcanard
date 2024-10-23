@@ -4,10 +4,10 @@ import Windows from "../../../../public/Windows/Windows.png";
 import Image from "next/image";
 import TaskbarTabs from "./taskbartabs";
 import SuggestionManager from "../suggestionmanager";
+import AdminPanel from "../adminpanel";
 
 export function Taskbar() {
-  const { windows, setWindows, admin, adminCheck, username } =
-    useContext(TaskbarContext);
+  const { windows, setWindows, admin, username } = useContext(TaskbarContext);
 
   const handleClick = (window: JSX.Element) => {
     for (let i = 0; i < windows.length; i++) {
@@ -44,7 +44,12 @@ export function Taskbar() {
             )}
 
             <div id="button-taskbar">{username}</div>
-            <div id="button-taskbar" onClick={() => adminCheck()}>
+            <div
+              id="button-taskbar"
+              onClick={() => {
+                handleClick(<AdminPanel key={"AdminPanel"} />);
+              }}
+            >
               Admin
             </div>
           </div>

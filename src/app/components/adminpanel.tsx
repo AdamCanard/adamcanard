@@ -1,29 +1,29 @@
 "use client";
 
 import { LabeledInputStr } from "@/app/components/labeledinputs";
-import Window from "@/app/components/semanticcomps/window";
 import WindowButton from "@/app/components/semanticcomps/windowbutton";
-
 import WindowInternal from "@/app/components/semanticcomps/windowinternal";
-
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DraggableWindow from "./semanticcomps/draggablewindow";
+import { TaskbarContext } from "./sitecomps/toplevel";
 
 export default function AdminPanel() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const router = useRouter();
+  const { setAdmin, windows, setWindows } = useContext(TaskbarContext);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = await postData(formData);
+    setEmail("");
+    setPassword("");
     try {
       if (data.data.admin) {
-        router.push("/");
+        setAdmin(true);
+        handleClose();
       }
     } catch (error) {}
   };
@@ -50,10 +50,24 @@ export default function AdminPanel() {
       }
     }
   };
+  const handleClose = () => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == "AdminPanel") {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+      }
+    }
+  };
 
   return (
     <>
-      <DraggableWindow title="Admin" width="72" heigth="2/3" windowKey="admin">
+      <DraggableWindow
+        title="Admin"
+        width="72"
+        heigth="2/3"
+        windowKey="AdminPanel"
+        close={handleClose}
+      >
         <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
           <WindowInternal>
             <LabeledInputStr
