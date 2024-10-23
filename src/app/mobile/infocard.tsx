@@ -4,17 +4,15 @@ import MBlackJackGame from "../components/blackjackcomps/mobileblackjack";
 export default function InfoCard() {
   return (
     <>
-      <div id="boxshadow">
-        <h1 id="title">Adam Cunard Website. Thats Me!</h1>
-        <div className={"flex flex-row"}>
-          <div className={"relative w-full h-48"}>
+      <div className={"flex flex-col w-full h-full"}>
+        <div id="boxshadow" className={"flex flex-col h-full"}>
+          <h1 id="title">Adam Cunard Website. Thats Me!</h1>
+          <div className={"relative w-full h-full"}>
             <Image src={"/AdamBeer1.jpg"} alt="Photo of me" fill={true} />
           </div>
         </div>
-      </div>
 
-      <div className={"flex flex-col w-full h-full"}>
-        <div id="boxshadow" className={"flex flex-col w-full h-full"}>
+        <div id="boxshadow" className={"flex flex-col w-full h-48"}>
           <h1 id="title">Information</h1>
           <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
             <div className={"w-full h-full px-2 text-xl "}>

@@ -9,7 +9,7 @@ export default function TabButton(props: {
   return (
     <div
       id={tab === props.title ? "MTabButtonPressed" : "MTabButton"}
-      className={"w-24 h-full text-center leading-8 hover:cursor-pointer"}
+      className={"w-full h-full text-center leading-8 hover:cursor-pointer"}
       onClick={() => props.set(props.title)}
     >
       {props.title}
