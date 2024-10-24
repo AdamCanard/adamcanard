@@ -15,15 +15,17 @@ export default function InfoCard() {
           </div>
         </div>
 
-        <div id="boxshadow" className={"flex flex-col w-full h-48"}>
+        <div id="boxshadow" className={"flex flex-col w-full h-40"}>
           <h1 id="title">Information</h1>
           <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
-            <div className={"w-full h-full px-2 text-xl "}>
+            <div className={"w-full h-full px-2 text-lg "}>
               If you want to see what im really capable of, visit this site on
               desktop! In the meantime, play some BlackJack or check out my
               links
             </div>
-            <div className={"flex w-full gap-2 justify-end items-end pb-1"}>
+            <div
+              className={"flex w-full gap-2 justify-end items-end pb-1 pr-1"}
+            >
               <a href="https://www.instagram.com/adam_cunard/" id="button">
                 Instagram
               </a>
