@@ -37,6 +37,7 @@ export default function Suggest() {
 
   return (
     <div id="boxshadow" className={"w-full"}>
+      <h1 id="title">Suggest A Beer!</h1>
       <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
         <LabeledInputStr
           title="Beer"
