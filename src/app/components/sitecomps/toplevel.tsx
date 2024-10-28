@@ -1,12 +1,11 @@
 "use client";
 
 import { createContext, SetStateAction, useEffect, useState } from "react";
-import ClientPage from "../clientpage";
 import { BeerData, IError } from "../../types";
 import ErrorPopup from "../errorpopup";
 import { Taskbar } from "./taskbar";
-import AdminPage from "../adminpage";
 import { useRouter } from "next/navigation";
+import Desktop from "./desktop";
 
 interface TaskbarContextType {
   username: string;
@@ -210,7 +209,7 @@ export default function TopLevel() {
             unselectable="on"
             className="h-full w-full flex flex-col justify-center items-center"
           >
-            {!admin ? <ClientPage /> : <AdminPage />}
+            <Desktop />
             <Taskbar />
           </div>
         </ErrorPopup>

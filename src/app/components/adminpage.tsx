@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { BeerData } from "../types";
 import BeerPanel from "./beerviewcomps/beerpanel";
 
@@ -9,50 +9,9 @@ export default function AdminPage() {
 }
 
 export function MainMenu() {
-  const { ids, windows, setWindows, beers, setBeers } =
-    useContext(TaskbarContext);
+  const { windows, setWindows, beers } = useContext(TaskbarContext);
 
-  const getData = useCallback(
-    async (id: string) => {
-      const formData = new FormData();
-      formData.append("id", id);
-      try {
-        const response = await fetch("/api/getbeerbyid/", {
-          method: "POST",
-          body: formData,
-        });
-        const beerData = await response.json();
-        for (let i = 0; i < beers.length; i++) {
-          if (beerData.Beer === beers[i].Beer) {
-            return;
-          }
-        }
-        const prevBeers = beers;
-        setBeers([...prevBeers, beerData]);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          return new Response(
-            JSON.stringify({ error: err.message || err.toString() }),
-            {
-              status: 500,
-              headers: {},
-            }
-          );
-        } else {
-          console.log(err);
-        }
-      }
-    },
-    [beers, setBeers]
-  );
-
-  useEffect(() => {
-    if (ids.length != 0) {
-      getData(ids[ids.length - 1]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ids]);
-
+  //Function checks if beer is already rendered in a window
   const BeerRendered = (windows: JSX.Element[], beer: BeerData) => {
     for (let i = 0; i < windows.length; i++) {
       if (windows[i].key == beer.Beer) {
@@ -62,6 +21,7 @@ export function MainMenu() {
     return false;
   };
 
+  //everytime beers changes
   useEffect(() => {
     for (let i = 0; i < beers.length; i++) {
       if (!BeerRendered(windows, beers[i])) {

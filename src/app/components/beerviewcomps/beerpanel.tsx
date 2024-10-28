@@ -1,35 +1,18 @@
-import { createContext, SetStateAction, useContext, useState } from "react";
+import { useState, useContext } from "react";
 import { BeerData } from "../../types";
-import Popup from "./popup";
-import WindowInternal from "../semanticcomps/windowinternal";
-import WindowButton from "../semanticcomps/windowbutton";
 import BeerLabel from "./beerlabel";
-import { Drink } from "./drink";
 import { TaskbarContext } from "../sitecomps/toplevel";
-
 import DraggableWindow from "../semanticcomps/draggablewindow";
 import Delete from "./delete";
-
-//type for Popup context
-interface PopupContextType {
-  rating: number;
-  setRating: React.Dispatch<SetStateAction<number>>;
-  brewery: string;
-  setBrewery: React.Dispatch<SetStateAction<string>>;
-  drinkTrigger: boolean;
-  setDrinkTrigger: React.Dispatch<SetStateAction<boolean>>;
-}
-
-//cast empty object to contexttype
-export const PopupContext = createContext<PopupContextType>(
-  {} as PopupContextType,
-);
+import { LabeledInputNum, LabeledInputStr } from "../labeledinputs";
 
 export default function BeerPanel(props: { beer: BeerData }) {
   const [rating, setRating] = useState(0);
   const [brewery, setBrewery] = useState("");
   const [drinkTrigger, setDrinkTrigger] = useState(false);
-  const { windows, setWindows, beers, setBeers } = useContext(TaskbarContext);
+  const { windows, setWindows, beers, setBeers, admin, setRefreshBeers } =
+    useContext(TaskbarContext);
+
   const handleClose = () => {
     for (let i = 0; i < beers.length; i++) {
       if (beers[i].Beer == props.beer.Beer) {
@@ -45,61 +28,100 @@ export default function BeerPanel(props: { beer: BeerData }) {
     }
   };
 
+  const drinkBeer = async (formData: FormData) => {
+    try {
+      const response = await fetch("/api/drinkbeer/", {
+        method: "POST",
+        body: formData,
+      });
+      await response.json();
+      setRefreshBeers(true);
+      handleClose();
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          },
+        );
+      }
+    }
+  };
+
+  const handleSubmit = () => {
+    if (rating != 0 && brewery != "") {
+      const formData = new FormData();
+      formData.append("id", props.beer.id);
+      formData.append("Beer", props.beer.Beer);
+      formData.append("Brewery", brewery);
+      formData.append("By", props.beer.By);
+      formData.append("Rating", rating);
+      formData.append("Drank", true);
+      drinkBeer(formData);
+    }
+  };
+
   return (
-    <PopupContext.Provider
-      value={{
-        rating,
-        setRating,
-        brewery,
-        setBrewery,
-        drinkTrigger,
-        setDrinkTrigger,
-      }}
+    <DraggableWindow
+      title={props.beer.Beer}
+      width={"1/2"}
+      heigth={"2/3"}
+      windowKey={props.beer.Beer}
+      close={handleClose}
     >
-      <Popup>
-        <DraggableWindow
-          title={props.beer.Beer}
-          width={"1/2"}
-          heigth={"2/3"}
-          windowKey={props.beer.Beer}
-          close={handleClose}
-        >
-          <div className="flex flex-col gap-4 justify-center items-center">
-            <div className="w-64 h-64 border-2"></div>
-            {/* <Image
-              src={
-                POCKET_BASE_URL +
-                "/api/files/" +
-                props.BeerData.collectionId +
-                "/" +
-                props.BeerData.id +
-                "/" +
-                props.BeerData.Image
-              }
-              width={250}
-              height={250}
-              alt="Picture of the Beer"
-              onClick={handleClick}
-            /> */}
-            <WindowInternal>
-              <BeerLabel title={"Beer"} data={props.beer.Beer} />
-              {props.beer.Brewery && (
-                <BeerLabel title={"Brewery"} data={props.beer.Brewery + ""} />
-              )}
-              {props.beer.Rating != 0 && (
-                <BeerLabel title={"Rating"} data={props.beer.Rating + ""} />
-              )}
-              {props.beer.By && <BeerLabel title={"By"} data={props.beer.By} />}
-            </WindowInternal>
-            <WindowButton>
-              <Delete beer={props.beer} close={handleClose} />
-              {!props.beer.Drank && (
-                <Drink beer={props.beer} close={handleClose} />
-              )}
-            </WindowButton>
-          </div>
-        </DraggableWindow>
-      </Popup>
-    </PopupContext.Provider>
+      <div className="flex flex-col justify-center items-center">
+        {drinkTrigger ? (
+          <>
+            <LabeledInputNum
+              required={true}
+              title="Rating"
+              state={rating}
+              setState={setRating}
+            />
+            <LabeledInputStr
+              required={true}
+              title="Brewery"
+              state={brewery}
+              setState={setBrewery}
+              type="text"
+            />
+
+            <div id="button-i">
+              <input
+                id="button"
+                type="submit"
+                value="Submit"
+                onClick={handleSubmit}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <BeerLabel title={"Beer"} data={props.beer.Beer} />
+            {props.beer.Brewery && (
+              <BeerLabel title={"Brewery"} data={props.beer.Brewery + ""} />
+            )}
+            {props.beer.Rating != 0 && (
+              <BeerLabel title={"Rating"} data={props.beer.Rating + ""} />
+            )}
+            {props.beer.By && <BeerLabel title={"By"} data={props.beer.By} />}
+            {admin ? (
+              <div id="button-i">
+                <Delete beer={props.beer} close={handleClose} />
+                {!props.beer.Drank && (
+                  <div id="border" onClick={() => setDrinkTrigger(true)}>
+                    Drink Me!
+                  </div>
+                )}
+              </div>
+            ) : (
+              <></>
+            )}
+          </>
+        )}
+      </div>
+    </DraggableWindow>
   );
 }
