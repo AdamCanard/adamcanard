@@ -198,7 +198,6 @@ export default function TopLevel() {
           listElements,
           setErrorTrigger,
           setError,
-
           setRefreshBeers,
         }}
       >
