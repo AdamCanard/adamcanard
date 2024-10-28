@@ -1,31 +1,24 @@
-import { LabeledInputStr } from "../components/labeledinputs";
-import { useState } from "react";
-export default function Suggest() {
+"use client";
+
+import { useContext, useState } from "react";
+import { TaskbarContext } from "../sitecomps/toplevel";
+import DraggableWindow from "../semanticcomps/draggablewindow";
+import { postData } from "./suggestionpost";
+import { LabeledInputStr } from "../labeledinputs";
+
+export default function SuggestionDesktop() {
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
+  const { windows, setWindows } = useContext(TaskbarContext);
 
-  const postData = async (formData: FormData) => {
-    try {
-      const response = await fetch("/api/newSuggestion/", {
-        method: "POST",
-        body: formData,
-      });
-      return response;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
+  const handleClose = () => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == "Suggestion") {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
       }
     }
   };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -36,8 +29,13 @@ export default function Suggest() {
   };
 
   return (
-    <div id="boxshadow" className={"w-full"}>
-      <h1 id="title">Suggest A Beer!</h1>
+    <DraggableWindow
+      title={"Suggest A Beer!"}
+      width={"72"}
+      heigth={"2/3"}
+      windowKey="Suggestion"
+      close={handleClose}
+    >
       <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
         <LabeledInputStr
           title="Beer"
@@ -57,6 +55,6 @@ export default function Suggest() {
           <input id="button" type="submit" value="Submit" />
         </div>
       </form>
-    </div>
+    </DraggableWindow>
   );
 }

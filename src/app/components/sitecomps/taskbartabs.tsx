@@ -6,7 +6,7 @@ import DrinkForm from "../drinkform";
 import DrankForm from "../drankform";
 import DraggableWindow from "../semanticcomps/draggablewindow";
 import BlackJack from "../blackjackcomps/blackjackgame";
-import Suggestion from "../suggestionWindow";
+import SuggestionDesktop from "../suggestioncomps/suggestiondesktop";
 
 export default function TaskbarTabs() {
   const { setWindows, windows } = useContext(TaskbarContext);
@@ -38,7 +38,7 @@ export default function TaskbarTabs() {
       </div>
       <div
         id="button-taskbar"
-        onClick={() => handleClick(<Suggestion key={"Suggestion"} />)}
+        onClick={() => handleClick(<SuggestionDesktop key={"Suggestion"} />)}
       >
         Suggestion
       </div>

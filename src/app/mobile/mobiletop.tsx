@@ -9,8 +9,8 @@ import { BeerData } from "../types";
 import MobileList from "./mobilelist";
 import InfoCard from "./infocard";
 import TabBar from "./tabbar";
-import Suggest from "./suggest";
 import Secret from "./secret";
+import SuggestionMobile from "../components/suggestioncomps/suggestionmobile";
 interface MobileContextType {
   tab: string;
   setTab: Dispatch<SetStateAction<string>>;
@@ -66,7 +66,7 @@ export default function MobileTop() {
           />
         );
       case "Suggest":
-        return <Suggest />;
+        return <SuggestionMobile />;
       default:
         return <Secret />;
     }

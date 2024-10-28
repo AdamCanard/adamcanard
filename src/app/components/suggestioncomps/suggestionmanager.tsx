@@ -1,9 +1,8 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import DraggableWindow from "./semanticcomps/draggablewindow";
-import WindowInternal from "./semanticcomps/windowinternal";
-import { TaskbarContext } from "./sitecomps/toplevel";
+import { TaskbarContext } from "../sitecomps/toplevel";
+import DraggableWindow from "../semanticcomps/draggablewindow";
 import SuggestionListElement from "./suggestionlistelement";
 
 export default function SuggestionManager() {
@@ -54,13 +53,11 @@ export default function SuggestionManager() {
         windowKey="SuggestionManager"
         close={() => handleClose()}
       >
-        <WindowInternal>
-          <div className="w-full flex flex-col h-72 overflow-y-scroll">
-            {listElements.map((data, index) => {
-              return <SuggestionListElement data={data} key={index} />;
-            })}
-          </div>
-        </WindowInternal>
+        <div className="w-full flex flex-col h-72 overflow-y-scroll">
+          {listElements.map((data, index) => {
+            return <SuggestionListElement data={data} key={index} />;
+          })}
+        </div>
       </DraggableWindow>
     </div>
   );

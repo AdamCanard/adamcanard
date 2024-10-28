@@ -1,4 +1,4 @@
-import { ISuggestion } from "../types";
+import { ISuggestion } from "@/app/types";
 
 export default function SuggestionListElement(props: { data: ISuggestion }) {
   const Accept = async () => {};

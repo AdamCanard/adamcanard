@@ -3,8 +3,8 @@ import { TaskbarContext } from "./toplevel";
 import Windows from "../../../../public/Windows/Windows.png";
 import Image from "next/image";
 import TaskbarTabs from "./taskbartabs";
-import SuggestionManager from "../suggestionmanager";
 import AdminPanel from "../adminpanel";
+import SuggestionManager from "../suggestioncomps/suggestionmanager";
 
 export function Taskbar() {
   const { windows, setWindows, admin, username } = useContext(TaskbarContext);
