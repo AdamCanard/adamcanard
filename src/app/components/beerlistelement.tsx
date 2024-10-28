@@ -45,7 +45,7 @@ export default function BeerListElement(props: { data: BeerData }) {
     <>
       <div
         id="border"
-        className="flex w-full h-full justify-between items-center p-2 "
+        className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
         onClick={handleClick}
       >
         <>
