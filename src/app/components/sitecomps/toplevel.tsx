@@ -166,15 +166,29 @@ export default function TopLevel() {
           trigger={errorTrigger}
           setTrigger={setErrorTrigger}
         >
-          <div
-            unselectable="on"
-            className="h-full w-full flex flex-col justify-center items-center"
-          >
-            <Desktop />
-            <Taskbar />
-          </div>
+          {username != "" ? (
+            <div
+              unselectable="on"
+              className="h-full w-full flex flex-col justify-center items-center"
+            >
+              <Desktop />
+              <Taskbar />
+            </div>
+          ) : (
+            <div className={"flex mt-[25%] h-[38px]"}>
+              <Loading />
+            </div>
+          )}
         </ErrorPopup>
       </TaskbarContext.Provider>
     </>
+  );
+}
+
+export function Loading() {
+  return (
+    <div id="boxshadow" className={"w-1/8 h-full"}>
+      <h1 id="title">Logging you in...</h1>
+    </div>
   );
 }
