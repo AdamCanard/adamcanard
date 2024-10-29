@@ -45,34 +45,40 @@ export default function TopLevel() {
 
   const loadUser = async () => {
     //if check for users authtoken
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("cookie", "authToken");
-    getAuthCookie(formData);
-
-    //if user has an authtoken, get their user id
-    formData = new FormData();
-    formData.append("cookie", "userId");
-    const cookie = await getCookie(formData);
-
-    //get username from userId
-    formData = new FormData();
-    formData.append("recordId", cookie.data.value);
-    const username = await getUsername(formData);
-    setUsername(username.data.username);
+    loginUser(formData);
   };
 
-  const getAuthCookie = async (formData: FormData) => {
+  const loginUser = async (formData: FormData) => {
     try {
       const response = await fetch("/api/getcookie/", {
         method: "POST",
         body: formData,
       });
+
       const cookie = await response.json();
-      if (cookie.data === undefined) {
+
+      if (Object.keys(cookie).length === 0) {
         router.push("/auth/login");
       } else {
+        let formData = new FormData();
+        formData.append("cookie", "userId");
+        let response = await fetch("/api/getcookie/", {
+          method: "POST",
+          body: formData,
+        });
+        const cookie = await response.json();
+
+        formData = new FormData();
+        formData.append("userId", cookie.data.value);
+        response = await fetch("/api/getusername/", {
+          method: "POST",
+          body: formData,
+        });
+        const username = await response.json();
+        setUsername(username.data.username);
       }
-      return cookie;
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -88,51 +94,6 @@ export default function TopLevel() {
     }
   };
 
-  const getCookie = async (formData: FormData) => {
-    try {
-      const response = await fetch("/api/getcookie/", {
-        method: "POST",
-        body: formData,
-      });
-      const cookie = await response.json();
-      return cookie;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
-  };
-
-  const getUsername = async (formData: FormData) => {
-    try {
-      const response = await fetch("/api/getusername/", {
-        method: "POST",
-        body: formData,
-      });
-      const username = await response.json();
-      return username;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
-  };
   const getListElements = async () => {
     try {
       const response = await fetch("/api/getbeer/", { method: "GET" });

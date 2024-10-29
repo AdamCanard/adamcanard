@@ -48,9 +48,9 @@ export class DatabaseClient {
     }
   }
 
-  async getUsername(record_id: string) {
+  async getUsername(user_id: string) {
     try {
-      const record = await this.client.collection("users").getOne(record_id);
+      const record = await this.client.collection("users").getOne(user_id);
       return record;
     } catch (err: unknown) {
       return err;
