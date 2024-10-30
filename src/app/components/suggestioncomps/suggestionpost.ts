@@ -1,6 +1,6 @@
 export const postData = async (formData: FormData) => {
   try {
-    const response = await fetch("/api/newSuggestion/", {
+    const response = await fetch("/api/newsuggestion/", {
       method: "POST",
       body: formData,
     });

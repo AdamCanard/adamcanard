@@ -9,7 +9,7 @@ import { LabeledInputStr } from "../labeledinputs";
 export default function SuggestionDesktop() {
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
-  const { windows, setWindows } = useContext(TaskbarContext);
+  const { windows, setWindows, username } = useContext(TaskbarContext);
 
   const handleClose = () => {
     for (let i = 0; i < windows.length; i++) {
@@ -23,6 +23,7 @@ export default function SuggestionDesktop() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
+    formData.append("Username", username);
     postData(formData);
     setBeer("");
     setBrewery("");

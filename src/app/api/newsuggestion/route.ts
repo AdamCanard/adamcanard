@@ -7,6 +7,7 @@ export async function POST(req: Request) {
   const data: ISuggestion = {
     Beer: formData.get("Beer") as string,
     Brewery: formData.get("Brewery") as string,
+    Username: formData.get("Username") as string,
   };
 
   db.addSuggestion(data);

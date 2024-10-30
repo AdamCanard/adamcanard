@@ -9,6 +9,7 @@ export default function SuggestionMobile() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
+    formData.append("Username", "Mobile");
     postData(formData);
     setBeer("");
     setBrewery("");

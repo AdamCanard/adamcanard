@@ -11,6 +11,7 @@ export interface BeerData {
 export interface ISuggestion {
   Beer: string;
   Brewery: string;
+  Username?: string;
 }
 
 export interface IError {
