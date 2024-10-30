@@ -1,14 +1,11 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { TaskbarContext } from "../sitecomps/toplevel";
-import DraggableWindow from "../semanticcomps/draggablewindow";
+import { useEffect, useState } from "react";
 import SuggestionListElement from "./suggestionlistelement";
+import DesktopWindow from "../sitecomps/desktopwindow";
 
 export default function SuggestionManager() {
   const [listElements, setListElements] = useState([]);
-
-  const { windows, setWindows } = useContext(TaskbarContext);
 
   const getListElements = async () => {
     try {
@@ -35,30 +32,15 @@ export default function SuggestionManager() {
     getListElements();
   }, []);
 
-  const handleClose = () => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == "SuggestionManager") {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
-      }
-    }
-  };
-
   return (
     <div className="w-full">
-      <DraggableWindow
-        title="Suggestion Manager"
-        width={"1/3"}
-        heigth={"2/3"}
-        windowKey="SuggestionManager"
-        close={() => handleClose()}
-      >
+      <DesktopWindow title="Suggestion Manager" width={"1/3"} height={"2/3"}>
         <div className="w-full flex flex-col h-72 overflow-y-scroll">
           {listElements.map((data, index) => {
             return <SuggestionListElement data={data} key={index} />;
           })}
         </div>
-      </DraggableWindow>
+      </DesktopWindow>
     </div>
   );
 }

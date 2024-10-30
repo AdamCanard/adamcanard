@@ -67,7 +67,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
     <DraggableWindow
       title={props.beer.Beer}
       width={"1/2"}
-      heigth={"2/3"}
+      height={"2/3"}
       windowKey={props.beer.Beer}
       close={handleClose}
     >

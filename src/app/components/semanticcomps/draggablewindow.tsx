@@ -11,7 +11,7 @@ export default function DraggableWindow(props: {
   title: string;
   children: React.ReactNode;
   width: string;
-  heigth: string;
+  height: string;
   windowKey: string;
   close?: () => void;
 }) {
@@ -84,7 +84,7 @@ export default function DraggableWindow(props: {
     <>
       <div
         unselectable="on"
-        className={`flex flex-col justify-center items-center w-${props.width} h-${props.heigth} absolute`}
+        className={`flex flex-col justify-center items-center w-${props.width} h-${props.height} absolute`}
         style={point}
       >
         <div id="window">

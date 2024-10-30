@@ -2,23 +2,15 @@
 
 import { useContext, useState } from "react";
 import { TaskbarContext } from "../sitecomps/toplevel";
-import DraggableWindow from "../semanticcomps/draggablewindow";
 import { postData } from "./suggestionpost";
 import { LabeledInputStr } from "../labeledinputs";
+import DesktopWindow from "../sitecomps/desktopwindow";
 
 export default function SuggestionDesktop() {
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
-  const { windows, setWindows, username } = useContext(TaskbarContext);
+  const { username } = useContext(TaskbarContext);
 
-  const handleClose = () => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == "Suggestion") {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
-      }
-    }
-  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -30,13 +22,7 @@ export default function SuggestionDesktop() {
   };
 
   return (
-    <DraggableWindow
-      title={"Suggest A Beer!"}
-      width={"72"}
-      heigth={"2/3"}
-      windowKey="Suggestion"
-      close={handleClose}
-    >
+    <DesktopWindow title={"Suggest A Beer!"} width={"72"} height={"2/3"}>
       <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
         <LabeledInputStr
           title="Beer"
@@ -56,6 +42,6 @@ export default function SuggestionDesktop() {
           <input id="button" type="submit" value="Submit" />
         </div>
       </form>
-    </DraggableWindow>
+    </DesktopWindow>
   );
 }

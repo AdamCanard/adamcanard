@@ -2,6 +2,7 @@ import { BeerData } from "@/app/types";
 import BeerPanel from "../beerviewcomps/beerpanel";
 import { TaskbarContext } from "./toplevel";
 import { useContext, useEffect } from "react";
+import WindowManager from "./windowmanager";
 
 export default function Desktop() {
   const { windows, setWindows, beers } = useContext(TaskbarContext);
@@ -31,9 +32,7 @@ export default function Desktop() {
   return (
     <>
       <div className="flex flex-row w-full h-full justify-center">
-        {windows.map((tab) => {
-          return <div key={tab.key}>{tab}</div>;
-        })}
+        <WindowManager />
       </div>
     </>
   );

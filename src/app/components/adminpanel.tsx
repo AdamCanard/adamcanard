@@ -4,8 +4,8 @@ import { LabeledInputStr } from "@/app/components/labeledinputs";
 import WindowButton from "@/app/components/semanticcomps/windowbutton";
 import WindowInternal from "@/app/components/semanticcomps/windowinternal";
 import { useContext, useState } from "react";
-import DraggableWindow from "./semanticcomps/draggablewindow";
 import { TaskbarContext } from "./sitecomps/toplevel";
+import DesktopWindow from "./sitecomps/desktopwindow";
 
 export default function AdminPanel() {
   const [email, setEmail] = useState("");
@@ -52,7 +52,7 @@ export default function AdminPanel() {
   };
   const handleClose = () => {
     for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == "AdminPanel") {
+      if (windows[i].key == "Admin") {
         const newWindows = windows.toSpliced(i, 1);
         setWindows(newWindows);
       }
@@ -61,13 +61,7 @@ export default function AdminPanel() {
 
   return (
     <>
-      <DraggableWindow
-        title="Admin"
-        width="72"
-        heigth="2/3"
-        windowKey="AdminPanel"
-        close={handleClose}
-      >
+      <DesktopWindow title="Admin" width="72" height="2/3">
         <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
           <WindowInternal>
             <LabeledInputStr
@@ -89,7 +83,7 @@ export default function AdminPanel() {
             <input id="button" type="submit" value="Submit" />
           </WindowButton>
         </form>
-      </DraggableWindow>
+      </DesktopWindow>
     </>
   );
 }

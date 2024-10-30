@@ -36,7 +36,7 @@ export function Taskbar() {
               <div
                 id="button-taskbar"
                 onClick={() => {
-                  handleClick(<SuggestionManager key={"SuggestionManager"} />);
+                  handleClick(<SuggestionManager key={"Suggestion Manager"} />);
                 }}
               >
                 Suggestions
@@ -47,7 +47,7 @@ export function Taskbar() {
             <div
               id="button-taskbar"
               onClick={() => {
-                handleClick(<AdminPanel key={"AdminPanel"} />);
+                handleClick(<AdminPanel key={"Admin"} />);
               }}
             >
               Admin
