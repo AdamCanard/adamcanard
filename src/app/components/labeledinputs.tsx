@@ -47,14 +47,14 @@ export function LabeledInputNum(props: {
         {props.required ? (
           <input
             required
-            type="text"
+            type="number"
             name={props.title}
             value={props.state}
             onChange={(e) => props.setState(+e.target.value)}
           />
         ) : (
           <input
-            type="text"
+            type="number"
             name={props.title}
             value={props.state}
             onChange={(e) => props.setState(+e.target.value)}

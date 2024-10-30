@@ -34,8 +34,8 @@ export default function SuggestionManager() {
 
   return (
     <div className="w-full">
-      <DesktopWindow title="Suggestion Manager" width={"1/3"} height={"2/3"}>
-        <div className="w-full flex flex-col h-72 overflow-y-scroll">
+      <DesktopWindow title="Suggestion Manager" width={"24rem"} height={""}>
+        <div className="w-full flex flex-col overflow-y-scroll">
           {listElements.map((data, index) => {
             return <SuggestionListElement data={data} key={index} />;
           })}

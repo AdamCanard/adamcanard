@@ -5,7 +5,7 @@ import { TaskbarContext } from "./sitecomps/toplevel";
 export default function Windows() {
   const { windows } = useContext(TaskbarContext);
   return (
-    <DesktopWindow title="Windows" width="48" height="96">
+    <DesktopWindow title="Windows" width="18rem" height="">
       <div>
         {windows.map((window: JSX.Element, index: number) => {
           return (

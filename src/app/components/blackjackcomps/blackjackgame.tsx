@@ -1,6 +1,5 @@
 "use client";
 import {
-  ChangeEvent,
   createContext,
   SetStateAction,
   useCallback,
@@ -15,6 +14,7 @@ import Image from "next/image";
 import WindowButton from "../semanticcomps/windowbutton";
 import { BJEvaluateHand, Shuffle } from "./deckfunctions";
 import DesktopWindow from "../sitecomps/desktopwindow";
+import { LabeledInputNum } from "../labeledinputs";
 
 export interface IBlackJackContext {
   DeckKeys: string[];
@@ -53,24 +53,16 @@ export default function BlackJack() {
     StartRound();
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const wager = e.target.value;
-    setWager(+wager);
-  };
-
   return (
-    <DesktopWindow title={"BlackJack"} width={"60"} height={"32"}>
+    <DesktopWindow title={"BlackJack"} width={"17rem"} height={""}>
       {!gameTrigger ? (
         <>
-          <label className="flex justify-between gap-1">
-            Wager:
-            <input
-              type="number"
-              name="wager"
-              value={wager}
-              onChange={(e) => handleChange(e)}
-            />
-          </label>
+          <LabeledInputNum
+            title="wager"
+            required={true}
+            state={wager}
+            setState={setWager}
+          />
           <WindowButton>
             <button
               id="button"
@@ -208,7 +200,7 @@ export function BlackJackGame() {
       <div className="flex flex-col w-full ">
         {reveal ? (
           <div className="flex flex-col w-full justify-between items-center">
-            <div className="flex flex-col ">
+            <div className="flex flex-col w-full ">
               <CardRow hand={player} cover={false} />
               <CardRow hand={dealer} cover={false} />
             </div>
@@ -221,7 +213,7 @@ export function BlackJackGame() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col ">
+          <div className="flex flex-col w-full">
             <CardRow hand={player} cover={false} />
             <CardRow hand={dealer} cover={true} />
             <WindowButton>
@@ -243,7 +235,7 @@ export function CardRow(props: { hand: string[]; cover: boolean }) {
   return (
     <div
       id="border-s"
-      className="flex h-full w-64 justify-between items-center p-1 gap-1"
+      className="flex h-full w-full justify-between items-center p-1 gap-1"
     >
       <div className="flex justify-start">
         {props.cover ? (

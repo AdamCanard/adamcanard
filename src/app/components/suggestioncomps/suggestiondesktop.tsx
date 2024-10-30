@@ -22,7 +22,7 @@ export default function SuggestionDesktop() {
   };
 
   return (
-    <DesktopWindow title={"Suggest A Beer!"} width={"72"} height={"2/3"}>
+    <DesktopWindow title={"Suggest A Beer!"} width={"18rem"} height={""}>
       <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
         <LabeledInputStr
           title="Beer"

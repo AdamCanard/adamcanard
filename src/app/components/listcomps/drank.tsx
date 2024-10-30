@@ -8,7 +8,7 @@ export default function Drank() {
   const { listElements, admin } = useContext(TaskbarContext);
 
   return (
-    <DesktopWindow title="Drank" width={"72"} height={"2/3"}>
+    <DesktopWindow title="Drank" width={"20rem"} height={""}>
       <BeerList
         listElements={listElements.filter((element) => element.Drank == true)}
       />

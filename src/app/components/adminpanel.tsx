@@ -61,7 +61,7 @@ export default function AdminPanel() {
 
   return (
     <>
-      <DesktopWindow title="Admin" width="72" height="2/3">
+      <DesktopWindow title="Admin" width="18rem" height="">
         <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
           <WindowInternal>
             <LabeledInputStr

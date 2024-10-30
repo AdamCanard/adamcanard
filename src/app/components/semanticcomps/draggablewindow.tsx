@@ -6,6 +6,8 @@ interface IPoint {
   top: number;
   left: number;
   cursor?: string;
+  width?: string;
+  height?: string;
 }
 export default function DraggableWindow(props: {
   title: string;
@@ -15,7 +17,12 @@ export default function DraggableWindow(props: {
   windowKey: string;
   close?: () => void;
 }) {
-  const [point, setPoint] = useState<IPoint>({ top: 50, left: 50 });
+  const [point, setPoint] = useState<IPoint>({
+    top: 50,
+    left: 50,
+    width: props.width,
+    height: props.height,
+  });
   const [pointOffset, setPointOffset] = useState<IPoint>({
     top: 0,
     left: 0,
@@ -41,6 +48,8 @@ export default function DraggableWindow(props: {
     setPoint({
       top: e.pageY - (e.nativeEvent.offsetY + 2),
       left: e.pageX - (e.nativeEvent.offsetX + 2),
+      width: props.width,
+      height: props.height,
     });
     setCursor("grabbing");
   };
@@ -50,9 +59,11 @@ export default function DraggableWindow(props: {
       setPoint({
         top: e.pageY - +pointOffset.top,
         left: e.pageX - +pointOffset.left,
+        width: props.width,
+        height: props.height,
       });
     },
-    [pointOffset.left, pointOffset.top],
+    [pointOffset.left, pointOffset.top, props.height, props.width],
   );
 
   const resetPoint = () => {
@@ -84,7 +95,7 @@ export default function DraggableWindow(props: {
     <>
       <div
         unselectable="on"
-        className={`flex flex-col justify-center items-center w-${props.width} h-${props.height} absolute`}
+        className="flex flex-col justify-center items-center absolute"
         style={point}
       >
         <div id="window">
