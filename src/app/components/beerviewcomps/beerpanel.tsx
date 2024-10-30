@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 import { BeerData } from "../../types";
 import BeerLabel from "./beerlabel";
 import { TaskbarContext } from "../sitecomps/toplevel";
-import DraggableWindow from "../semanticcomps/draggablewindow";
 import Delete from "./delete";
 import { LabeledInputNum, LabeledInputStr } from "../labeledinputs";
+import DesktopWindow from "../sitecomps/desktopwindow";
 
 export default function BeerPanel(props: { beer: BeerData }) {
   const [rating, setRating] = useState(0);
@@ -64,13 +64,7 @@ export default function BeerPanel(props: { beer: BeerData }) {
   };
 
   return (
-    <DraggableWindow
-      title={props.beer.Beer}
-      width={"1/2"}
-      height={"2/3"}
-      windowKey={props.beer.Beer}
-      close={handleClose}
-    >
+    <DesktopWindow title={props.beer.Beer} width={"1/2"} height={"2/3"}>
       <div className="flex flex-col justify-center items-center">
         {drinkTrigger ? (
           <>
@@ -122,6 +116,6 @@ export default function BeerPanel(props: { beer: BeerData }) {
           </>
         )}
       </div>
-    </DraggableWindow>
+    </DesktopWindow>
   );
 }
