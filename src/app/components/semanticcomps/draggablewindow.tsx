@@ -5,9 +5,11 @@ import { TaskbarContext } from "../sitecomps/toplevel";
 interface IPoint {
   top: number;
   left: number;
-  cursor?: string;
   width?: string;
   height?: string;
+}
+interface ICursor {
+  cursor: string;
 }
 export default function DraggableWindow(props: {
   title: string;
@@ -27,7 +29,9 @@ export default function DraggableWindow(props: {
     top: 0,
     left: 0,
   });
-  const [cursor, setCursor] = useState<string>("grab");
+  const [cursor, setCursor] = useState<ICursor>({
+    cursor: "grab",
+  });
   const { windows, setWindows } = useContext(TaskbarContext);
 
   const raiseWindow = () => {
@@ -40,6 +44,7 @@ export default function DraggableWindow(props: {
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+    setCursor({ cursor: "grabbing" });
     raiseWindow();
     setPointOffset({
       top: e.nativeEvent.offsetY,
@@ -51,7 +56,6 @@ export default function DraggableWindow(props: {
       width: props.width,
       height: props.height,
     });
-    setCursor("grabbing");
   };
 
   const movePoint = useCallback(
@@ -71,7 +75,7 @@ export default function DraggableWindow(props: {
       top: 0,
       left: 0,
     });
-    setCursor("grab");
+    setCursor({ cursor: "grab" });
   };
 
   useEffect(() => {
@@ -102,7 +106,8 @@ export default function DraggableWindow(props: {
           <div className="flex justify-between w-full relative">
             <h1
               id="title"
-              className={`hover:cursor-${cursor} w-full`}
+              className=" w-full"
+              style={cursor}
               onMouseDown={handleMouseDown}
             >
               {props.title}
