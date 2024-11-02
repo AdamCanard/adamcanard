@@ -7,6 +7,7 @@ interface IPoint {
   left: number;
   width?: string;
   height?: string;
+  windowKey?: string;
 }
 interface ICursor {
   cursor: string;
@@ -19,11 +20,13 @@ export default function DraggableWindow(props: {
   windowKey: string;
   close?: () => void;
 }) {
+  const { windows, setWindows } = useContext(TaskbarContext);
   const [point, setPoint] = useState<IPoint>({
-    top: 50,
-    left: 50,
+    top: Math.random() * 220,
+    left: Math.random() * 850,
     width: props.width,
     height: props.height,
+    windowKey: props.windowKey,
   });
   const [pointOffset, setPointOffset] = useState<IPoint>({
     top: 0,
@@ -32,7 +35,6 @@ export default function DraggableWindow(props: {
   const [cursor, setCursor] = useState<ICursor>({
     cursor: "grab",
   });
-  const { windows, setWindows } = useContext(TaskbarContext);
 
   const raiseWindow = () => {
     const windowIndex = windows.findIndex(
@@ -55,6 +57,7 @@ export default function DraggableWindow(props: {
       left: e.pageX - (e.nativeEvent.offsetX + 2),
       width: props.width,
       height: props.height,
+      windowKey: props.windowKey,
     });
   };
 
@@ -65,21 +68,28 @@ export default function DraggableWindow(props: {
         left: e.pageX - +pointOffset.left,
         width: props.width,
         height: props.height,
+        windowKey: props.windowKey,
       });
     },
-    [pointOffset.left, pointOffset.top, props.height, props.width],
+    [
+      pointOffset.left,
+      pointOffset.top,
+      props.height,
+      props.width,
+      props.windowKey,
+    ],
   );
 
-  const resetPoint = () => {
+  const resetPoint = useCallback(() => {
     setPointOffset({
       top: 0,
       left: 0,
     });
     setCursor({ cursor: "grab" });
-  };
+  }, []);
 
   useEffect(() => {
-    if (pointOffset.top != 0) {
+    if (+pointOffset.top != 0) {
       addEventListener("mousemove", movePoint);
       addEventListener("mouseup", resetPoint);
     }
@@ -87,7 +97,7 @@ export default function DraggableWindow(props: {
       removeEventListener("mousemove", movePoint);
       removeEventListener("mouseup", resetPoint);
     };
-  }, [movePoint, pointOffset]);
+  }, [movePoint, pointOffset, resetPoint]);
 
   const handleClick = () => {
     {

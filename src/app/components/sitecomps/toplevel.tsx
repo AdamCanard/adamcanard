@@ -1,7 +1,12 @@
 "use client";
 
-import { createContext, SetStateAction, useEffect, useState } from "react";
-import { BeerData, IError } from "../../types";
+import React, {
+  createContext,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import { BeerData, IError, IPoint } from "../../types";
 import ErrorPopup from "../errorpopup";
 import { Taskbar } from "./taskbar";
 import { useRouter } from "next/navigation";
@@ -21,6 +26,8 @@ interface TaskbarContextType {
   setError: React.Dispatch<SetStateAction<IError>>;
   setErrorTrigger: React.Dispatch<SetStateAction<boolean>>;
   setRefreshBeers: React.Dispatch<SetStateAction<boolean>>;
+  pointList: IPoint[];
+  setPointList: React.Dispatch<SetStateAction<IPoint[]>>;
 }
 
 //cast empty object to contexttype
@@ -40,6 +47,7 @@ export default function TopLevel() {
   const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
   const [listElements, setListElements] = useState<BeerData[]>([]);
   const [refreshBeers, setRefreshBeers] = useState<boolean>(true);
+  const [pointList, setPointList] = useState<IPoint[]>([]);
 
   const router = useRouter();
 
@@ -159,6 +167,8 @@ export default function TopLevel() {
           setErrorTrigger,
           setError,
           setRefreshBeers,
+          pointList,
+          setPointList,
         }}
       >
         <ErrorPopup
