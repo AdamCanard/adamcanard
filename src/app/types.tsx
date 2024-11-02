@@ -6,6 +6,9 @@ export interface BeerData {
   Rating?: number;
   By?: string;
   Drank: boolean;
+  Start?: number;
+  End?: number;
+  Notes?: string;
 }
 export interface ISuggestion {
   Beer: string;
