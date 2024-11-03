@@ -3,7 +3,6 @@ import ErrorPopup from "@/app/components/errorpopup";
 import { LabeledInputStr } from "@/app/components/labeledinputs";
 
 import Window from "@/app/components/semanticcomps/window";
-import WindowButton from "@/app/components/semanticcomps/windowbutton";
 import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -102,17 +101,19 @@ export default function Login() {
               setState={setUsername}
               required={true}
             />
-            <WindowButton>
-              <input id="button" type="submit" value="Submit" />
-            </WindowButton>
+            <div id="button-i">
+              <div className={"flex justify-between w-full pl-0.5"}>
+                <input
+                  id="button"
+                  type="button"
+                  value="SignUp"
+                  onClick={handleClick}
+                />
+                <input id="button" type="submit" value="Submit" />
+              </div>
+            </div>
           </form>
         </Window>
-        <div
-          onClick={handleClick}
-          className="hover:cursor-pointer text-xs w-full justify-center flex pt-1 text-[#1084d0]"
-        >
-          Try signup
-        </div>
       </ErrorPopup>
     </>
   );

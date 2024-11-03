@@ -68,17 +68,19 @@ export default function SignUp() {
               setState={setUsername}
               required={true}
             />
-            <WindowButton>
-              <input id="button" type="submit" value="Submit" />
-            </WindowButton>
+            <div id="button-i">
+              <div className={"flex justify-between w-full pl-0.5"}>
+                <input
+                  id="button"
+                  type="button"
+                  value="Login"
+                  onClick={handleClick}
+                />
+                <input id="button" type="submit" value="Submit" />
+              </div>
+            </div>
           </form>
         </Window>
-        <div
-          onClick={handleClick}
-          className="hover:cursor-pointer text-xs w-full justify-center flex pt-1 text-[#1084d0]"
-        >
-          Try login
-        </div>
       </ErrorPopup>
     </>
   );
