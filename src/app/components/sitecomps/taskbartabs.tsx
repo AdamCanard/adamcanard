@@ -7,7 +7,7 @@ import Drank from "../listcomps/drank";
 import Drink from "../listcomps/drink";
 import SuggestionManager from "../suggestioncomps/suggestionmanager";
 import AdminPanel from "../adminpanel";
-import DrinkBeer from "../drinkbeer";
+import CurrentDrink from "../currentdrink";
 
 export default function TaskbarTabs() {
   const { setWindows, windows, admin, username } = useContext(TaskbarContext);
@@ -68,7 +68,7 @@ export default function TaskbarTabs() {
             <div
               id="button-taskbar"
               onClick={() => {
-                handleClick(<DrinkBeer key={"Drink A Beer!"} />);
+                handleClick(<CurrentDrink key={"Drink A Beer!"} />);
               }}
             >
               Drink Beer

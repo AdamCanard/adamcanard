@@ -22,7 +22,6 @@ export class DatabaseClient {
     this.client = new PocketBase(domain);
     this.client.autoCancellation(false);
   }
-
   async register(username: string) {
     try {
       const result = await this.client.collection("users").create({
@@ -133,6 +132,14 @@ export class DatabaseClient {
   async addBeer(data: BeerData) {
     const result = await this.client.collection("Beer").create(data);
     return result;
+  }
+
+  async getActiveBeer() {
+    const BeerList = await this.client.collection("Beer").getList(1, 50, {
+      filter: "Start > 0",
+    });
+
+    return BeerList;
   }
 
   async getBeer() {
