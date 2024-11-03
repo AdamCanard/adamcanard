@@ -2,7 +2,6 @@
 import ErrorPopup from "@/app/components/errorpopup";
 import { LabeledInputStr } from "@/app/components/labeledinputs";
 import Window from "@/app/components/semanticcomps/window";
-import WindowButton from "@/app/components/semanticcomps/windowbutton";
 import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
