@@ -136,7 +136,7 @@ export class DatabaseClient {
 
   async getActiveBeer() {
     const BeerList = await this.client.collection("Beer").getList(1, 50, {
-      filter: "Start > 0",
+      filter: 'Start > "0" && End = "0"',
     });
 
     return BeerList;

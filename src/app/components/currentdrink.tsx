@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DrinkBeer from "./drinkbeer";
 import { BeerData } from "../types";
+import FinishBeer from "./finishbeer";
 
 export default function CurrentDrink() {
   const [currentBeer, setCurrentBeer] = useState<BeerData[]>([]);
@@ -31,13 +32,15 @@ export default function CurrentDrink() {
 
   return (
     <>
-      <div
-        id="boxshadow"
-        onClick={() => {
-          console.log(currentBeer);
-        }}
-      ></div>
-      <DrinkBeer />
+      {currentBeer.length === 0 ? (
+        <>
+          <DrinkBeer />
+        </>
+      ) : (
+        <>
+          <FinishBeer beer={currentBeer[0]} />
+        </>
+      )}
     </>
   );
 }
