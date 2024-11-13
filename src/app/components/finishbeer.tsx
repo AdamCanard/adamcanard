@@ -10,7 +10,7 @@ export default function FinishBeer(props: { beer: BeerData }) {
 
   const postData = async (formData: FormData) => {
     try {
-      const response = await fetch("/api/finishbeer/", {
+      const response = await fetch("/api/drinkbeer/", {
         method: "POST",
         body: formData,
       });

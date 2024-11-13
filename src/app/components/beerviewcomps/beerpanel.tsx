@@ -9,6 +9,7 @@ import DesktopWindow from "../sitecomps/desktopwindow";
 export default function BeerPanel(props: { beer: BeerData }) {
   const [rating, setRating] = useState(0);
   const [brewery, setBrewery] = useState("");
+  const [beer, setBeer] = useState(props.beer.Beer);
   const [drinkTrigger, setDrinkTrigger] = useState(false);
   const { windows, setWindows, beers, setBeers, admin, setRefreshBeers } =
     useContext(TaskbarContext);
@@ -50,7 +51,8 @@ export default function BeerPanel(props: { beer: BeerData }) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (rating != 0 && brewery != "") {
       const formData = new FormData();
       formData.append("id", props.beer.id);
@@ -64,31 +66,43 @@ export default function BeerPanel(props: { beer: BeerData }) {
   };
 
   return (
-    <DesktopWindow title={props.beer.Beer} width={"1/2"} height={"2/3"}>
+    <DesktopWindow
+      title={props.beer.Beer}
+      width={"1/2"}
+      height={"2/3"}
+      close={handleClose}
+    >
       <div className="flex flex-col justify-center items-center">
         {drinkTrigger ? (
           <>
-            <LabeledInputNum
-              required={true}
-              title="Rating"
-              state={rating}
-              setState={setRating}
-            />
-            <LabeledInputStr
-              required={true}
-              title="Brewery"
-              state={brewery}
-              setState={setBrewery}
-              type="text"
-            />
-
-            <div id="button-i">
-              <input
-                id="button"
-                type="submit"
-                value="Submit"
-                onClick={handleSubmit}
+            <form
+              className="flex flex-col"
+              onSubmit={(e) => handleSubmit(e)}
+              autoComplete="off"
+            >
+              <LabeledInputStr
+                title="Beer"
+                type="text"
+                state={beer}
+                setState={setBeer}
+                required={true}
               />
+              <LabeledInputStr
+                title="Brewery"
+                type="text"
+                state={brewery}
+                setState={setBrewery}
+                required={true}
+              />
+              <LabeledInputNum
+                title="Rating"
+                state={rating}
+                setState={setRating}
+                required={true}
+              />
+            </form>
+            <div id="button-i">
+              <input id="button" type="submit" value="Finish" />
             </div>
           </>
         ) : (

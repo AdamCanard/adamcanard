@@ -7,8 +7,10 @@ export default function DesktopWindow(props: {
   width: string;
   height: string;
   children: React.ReactNode;
+  close?: () => void;
 }) {
   const { windows, setWindows } = useContext(TaskbarContext);
+
   const handleClose = () => {
     for (let i = 0; i < windows.length; i++) {
       if (windows[i].key == props.title) {
@@ -23,7 +25,7 @@ export default function DesktopWindow(props: {
       width={props.width}
       height={props.height}
       windowKey={props.title}
-      close={() => handleClose()}
+      close={props.close === undefined ? handleClose : props.close}
     >
       {props.children}
     </DraggableWindow>
