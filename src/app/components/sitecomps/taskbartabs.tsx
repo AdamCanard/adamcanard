@@ -3,12 +3,11 @@ import { TaskbarContext } from "./toplevel";
 
 import BlackJack from "../blackjackcomps/blackjackgame";
 import SuggestionDesktop from "../suggestioncomps/suggestiondesktop";
-import Drank from "../listcomps/drank";
-import Drink from "../listcomps/drink";
 import SuggestionManager from "../suggestioncomps/suggestionmanager";
 import AdminPanel from "../adminpanel";
 import CurrentDrink from "../currentdrink";
 import Windows, { Beers } from "../windows";
+import Lister from "../listcomps/lister";
 
 export default function TaskbarTabs() {
   const { setWindows, windows, admin, username } = useContext(TaskbarContext);
@@ -29,15 +28,9 @@ export default function TaskbarTabs() {
       <div className={"flex flex-row"}>
         <div
           id="button-taskbar"
-          onClick={() => handleClick(<Drank key={"Drank"} />)}
+          onClick={() => handleClick(<Lister key={"Lists"} />)}
         >
-          Drank
-        </div>
-        <div
-          id="button-taskbar"
-          onClick={() => handleClick(<Drink key={"Drink"} />)}
-        >
-          Drink
+          Lists
         </div>
         <div
           id="button-taskbar"
@@ -106,3 +99,11 @@ export default function TaskbarTabs() {
     </div>
   );
 }
+//<>
+//  <div id="button-taskbar" onClick={() => handleClick(<Drank key={"Drank"} />)}>
+//    Drank
+//  </div>
+//  <div id="button-taskbar" onClick={() => handleClick(<Drink key={"Drink"} />)}>
+//    Drink
+//  </div>
+//</>;

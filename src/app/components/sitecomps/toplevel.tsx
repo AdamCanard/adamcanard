@@ -11,6 +11,7 @@ import ErrorPopup from "../errorpopup";
 import { Taskbar } from "./taskbar";
 import { useRouter } from "next/navigation";
 import Desktop from "./desktop";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 interface TaskbarContextType {
   username: string;
@@ -51,6 +52,7 @@ export default function TopLevel() {
 
   const router = useRouter();
 
+  const queryClient = new QueryClient();
   const loadUser = async () => {
     //if check for users authtoken
     const formData = new FormData();
@@ -176,19 +178,21 @@ export default function TopLevel() {
           trigger={errorTrigger}
           setTrigger={setErrorTrigger}
         >
-          {username != "" ? (
-            <div
-              unselectable="on"
-              className="h-full w-full flex flex-col justify-center items-center"
-            >
-              <Desktop />
-              <Taskbar />
-            </div>
-          ) : (
-            <div className={"flex mt-[25%] h-[38px]"}>
-              <Loading />
-            </div>
-          )}
+          <QueryClientProvider client={queryClient}>
+            {username != "" ? (
+              <div
+                unselectable="on"
+                className="h-full w-full flex flex-col justify-center items-center"
+              >
+                <Desktop />
+                <Taskbar />
+              </div>
+            ) : (
+              <div className={"flex mt-[25%] h-[38px]"}>
+                <Loading />
+              </div>
+            )}
+          </QueryClientProvider>
         </ErrorPopup>
       </TaskbarContext.Provider>
     </>

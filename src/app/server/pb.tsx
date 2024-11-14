@@ -150,6 +150,25 @@ export class DatabaseClient {
     return BeerList;
   }
 
+  async getDrank() {
+    const BeerList = await this.client.collection("Beer").getList(1, 50, {
+      sort: "-created",
+      fields: "id,Beer,Brewery,By,Notes,Rating",
+      filter: "Drank = true",
+    });
+
+    return BeerList;
+  }
+  async getDrink() {
+    const BeerList = await this.client.collection("Beer").getList(1, 50, {
+      sort: "-created",
+      fields: "id,Beer,Brewery,By",
+      filter: "Drank != true",
+    });
+
+    return BeerList;
+  }
+
   async updateBeer(data: BeerData, id: string) {
     const result = await this.client.collection("Beer").update(id, data);
     return result;
