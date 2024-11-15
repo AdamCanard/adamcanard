@@ -6,8 +6,7 @@ run ./pocketbase .serve <br>
 test add<br>
 
 Fixes:
-React Query
-Lister
 Pull Prod database
 By Suggestion
 About me under windows logo
+mobile svh

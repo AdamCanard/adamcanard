@@ -18,6 +18,7 @@ export default function Lister() {
   };
 
   const getData = async (id: string) => {
+    console.log(beers);
     if (id) {
       const formData = new FormData();
       formData.append("id", id);

@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { BeerData, IError, IPoint } from "../../types";
+import { BeerData, IError } from "../../types";
 import ErrorPopup from "../errorpopup";
 import { Taskbar } from "./taskbar";
 import { useRouter } from "next/navigation";
@@ -17,8 +17,6 @@ interface TaskbarContextType {
   username: string;
   admin: boolean;
   setAdmin: React.Dispatch<SetStateAction<boolean>>;
-  ids: string[];
-  setIds: React.Dispatch<SetStateAction<string[]>>;
   windows: JSX.Element[];
   setWindows: React.Dispatch<SetStateAction<JSX.Element[]>>;
   beers: BeerData[];
@@ -27,8 +25,6 @@ interface TaskbarContextType {
   setError: React.Dispatch<SetStateAction<IError>>;
   setErrorTrigger: React.Dispatch<SetStateAction<boolean>>;
   setRefreshBeers: React.Dispatch<SetStateAction<boolean>>;
-  pointList: IPoint[];
-  setPointList: React.Dispatch<SetStateAction<IPoint[]>>;
 }
 
 //cast empty object to contexttype
@@ -37,7 +33,6 @@ export const TaskbarContext = createContext<TaskbarContextType>(
 );
 
 export default function TopLevel() {
-  const [ids, setIds] = useState<string[]>([]);
   const [windows, setWindows] = useState<JSX.Element[]>([]);
   const [admin, setAdmin] = useState(false);
   const [username, setUsername] = useState("");
@@ -48,7 +43,6 @@ export default function TopLevel() {
   const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
   const [listElements, setListElements] = useState<BeerData[]>([]);
   const [refreshBeers, setRefreshBeers] = useState<boolean>(true);
-  const [pointList, setPointList] = useState<IPoint[]>([]);
 
   const router = useRouter();
 
@@ -159,8 +153,6 @@ export default function TopLevel() {
           username,
           admin,
           setAdmin,
-          ids,
-          setIds,
           windows,
           setWindows,
           beers,
@@ -169,8 +161,6 @@ export default function TopLevel() {
           setErrorTrigger,
           setError,
           setRefreshBeers,
-          pointList,
-          setPointList,
         }}
       >
         <ErrorPopup
