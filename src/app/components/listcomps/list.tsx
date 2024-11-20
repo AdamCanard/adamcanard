@@ -8,8 +8,9 @@ export default function List(props: {
   api: string;
   handleClick: (arg0: string) => void;
 }) {
-  const {} = useContext(TaskbarContext);
+  const { admin } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
+  const [formElements, setFormElements] = useState<string[]>([]);
 
   const getListElements = async () => {
     try {
@@ -17,6 +18,7 @@ export default function List(props: {
       const listResponse = await response.json();
 
       setListElements(listResponse.items);
+      setFormElements(Object.keys(listResponse.items[0]));
       return listResponse;
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -46,6 +48,7 @@ export default function List(props: {
   }
 
   if (isSuccess) {
+    console.log(formElements);
     return (
       <DesktopWindow title={props.title} width={"20rem"} height={""}>
         <div className="w-full flex flex-col max-h-60 overflow-y-scroll">
@@ -73,7 +76,78 @@ export default function List(props: {
             );
           })}
         </div>
+        {admin && <Form api={props.api} formElements={formElements} />}
       </DesktopWindow>
     );
   }
+}
+
+export function Form(props: { api: string; formElements: string[] }) {
+  const { setRefreshBeers } = useContext(TaskbarContext);
+
+  const postData = async (formData: FormData) => {
+    try {
+      const response = await fetch(props.api, {
+        method: "POST",
+        body: formData,
+      });
+      return response;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          },
+        );
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    await postData(formData);
+    setRefreshBeers(true);
+  };
+
+  return (
+    <form
+      className="flex flex-col"
+      onSubmit={(e) => handleSubmit(e)}
+      autoComplete="off"
+    >
+      {props.formElements.map((element: string, index: number) => {
+        if (index < Object.keys(props.formElements).length - 1) {
+          return <Input value={element} key={index} />;
+        }
+      })}
+
+      <div id="button-i">
+        <input id="button" type="submit" value="Submit" />
+      </div>
+    </form>
+  );
+}
+
+export function Input(props: { value: string }) {
+  const [value, setValue] = useState("");
+  return (
+    <>
+      <label id="border" className="flex justify-between w-full text-sm">
+        Enter {props.value}:
+        <input
+          autoComplete="off"
+          type="text"
+          name={props.value}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      </label>
+    </>
+  );
 }

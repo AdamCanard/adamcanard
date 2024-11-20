@@ -153,7 +153,7 @@ export class DatabaseClient {
   async getDrank() {
     const BeerList = await this.client.collection("Beer").getList(1, 50, {
       sort: "-created",
-      fields: "id,Beer,Brewery,By,Notes,Rating",
+      fields: "id,Beer,Brewery,By,Rating",
       filter: "Drank = true",
     });
 
