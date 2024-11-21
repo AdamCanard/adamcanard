@@ -121,7 +121,6 @@ export default function TopLevel() {
       }
     }
   };
-
   const sameLists = (list1: BeerData[], list2: BeerData[]) => {
     if (list1.length == list2.length) {
       for (let i = 0; i < list1.length; i++) {
@@ -135,7 +134,6 @@ export default function TopLevel() {
     }
     return true;
   };
-
   useEffect(() => {
     loadUser();
     if (refreshBeers) {

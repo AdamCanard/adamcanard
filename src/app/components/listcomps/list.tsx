@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
 import { TaskbarContext } from "../sitecomps/toplevel";
 import Form from "./form";
@@ -12,8 +12,9 @@ export default function List(props: {
   const { admin } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
-  const getListElements = async () => {
+  const getListElements = useCallback(async () => {
     try {
       const response = await fetch(props.api, { method: "GET" });
       const listResponse = await response.json();
@@ -34,7 +35,15 @@ export default function List(props: {
         console.log(err);
       }
     }
-  };
+  }, [props.api]);
+
+  useEffect(() => {
+    if (refresh) {
+      alert("apple");
+      getListElements();
+      setRefresh(false);
+    }
+  }, [refresh, getListElements]);
 
   const { isPending, isError, error, isSuccess } = useQuery({
     queryKey: [props.title],
@@ -49,7 +58,6 @@ export default function List(props: {
   }
 
   if (isSuccess) {
-    console.log(formElements);
     return (
       <DesktopWindow title={props.title} width={"20rem"} height={""}>
         <div className="w-full flex flex-col max-h-60 overflow-y-scroll">
@@ -77,7 +85,13 @@ export default function List(props: {
             );
           })}
         </div>
-        {admin && <Form api={props.api} formElements={formElements} />}
+        {admin && (
+          <Form
+            api={props.api}
+            formElements={formElements}
+            refresher={setRefresh}
+          />
+        )}
       </DesktopWindow>
     );
   }

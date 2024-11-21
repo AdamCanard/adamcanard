@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     Brewery: formData.get("Brewery") as string,
     By: formData.get("By") as string,
     Rating: +(formData.get("Rating") as string),
-    Drank: false,
+    Drank: true,
   };
   db.addBeer(data);
   return new Response(JSON.stringify({ data: data }), {

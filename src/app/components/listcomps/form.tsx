@@ -11,7 +11,11 @@ export const FormContext = createContext<FormContextType>(
   {} as FormContextType,
 );
 
-export default function Form(props: { api: string; formElements: string[] }) {
+export default function Form(props: {
+  api: string;
+  formElements: string[];
+  refresher: Dispatch<SetStateAction<boolean>>;
+}) {
   const [clear, setClear] = useState(false);
 
   const postData = async (formData: FormData) => {
@@ -42,6 +46,7 @@ export default function Form(props: { api: string; formElements: string[] }) {
     const formData = new FormData(form);
     await postData(formData);
     setClear(true);
+    props.refresher(true);
   };
 
   return (
