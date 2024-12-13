@@ -19,8 +19,9 @@ export default function List(props: {
       const response = await fetch(props.api, { method: "GET" });
       const listResponse = await response.json();
 
-      setListElements(listResponse.items);
-      setFormElements(Object.keys(listResponse.items[0]));
+      console.log(listResponse);
+      setListElements(listResponse);
+      setFormElements(Object.keys(listResponse[0]));
       return listResponse;
     } catch (err: unknown) {
       if (err instanceof Error) {

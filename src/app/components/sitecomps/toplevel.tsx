@@ -81,7 +81,10 @@ export default function TopLevel() {
           body: formData,
         });
         const username = await response.json();
-        setUsername(username.data.username);
+        if (username.data.status == 404) {
+          router.push("/auth/login");
+        }
+        setUsername(username.data.email.split("@")[0]);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -98,46 +101,46 @@ export default function TopLevel() {
     }
   };
 
-  const getListElements = async () => {
-    try {
-      const response = await fetch("/api/getbeer/", { method: "GET" });
-      const beerListResponse = await response.json();
-      if (sameLists(listElements, beerListResponse.items)) {
-        await getListElements();
-      } else {
-        setListElements(beerListResponse.items);
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
-  };
-  const sameLists = (list1: BeerData[], list2: BeerData[]) => {
-    if (list1.length == list2.length) {
-      for (let i = 0; i < list1.length; i++) {
-        if (list1[i].Drank === list2[i].Drank) {
-        } else {
-          return false;
-        }
-      }
-    } else {
-      return false;
-    }
-    return true;
-  };
+  //const getListElements = async () => {
+  //  try {
+  //    const response = await fetch("/api/getbeer/", { method: "GET" });
+  //    const beerListResponse = await response.json();
+  //    if (sameLists(listElements, beerListResponse.items)) {
+  //      await getListElements();
+  //    } else {
+  //      setListElements(beerListResponse.items);
+  //    }
+  //  } catch (err: unknown) {
+  //    if (err instanceof Error) {
+  //      return new Response(
+  //        JSON.stringify({ error: err.message || err.toString() }),
+  //        {
+  //          status: 500,
+  //          headers: {},
+  //        },
+  //      );
+  //    } else {
+  //      console.log(err);
+  //    }
+  //  }
+  //};
+  //const sameLists = (list1: BeerData[], list2: BeerData[]) => {
+  //  if (list1.length == list2.length) {
+  //    for (let i = 0; i < list1.length; i++) {
+  //      if (list1[i].Drank === list2[i].Drank) {
+  //      } else {
+  //        return false;
+  //      }
+  //    }
+  //  } else {
+  //    return false;
+  //  }
+  //  return true;
+  //};
   useEffect(() => {
     loadUser();
     if (refreshBeers) {
-      getListElements();
+      //getListElements();
       setRefreshBeers(false);
     }
 

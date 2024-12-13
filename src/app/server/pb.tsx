@@ -25,6 +25,7 @@ export class DatabaseClient {
   async register(username: string) {
     try {
       const result = await this.client.collection("users").create({
+        email: username + "@adamcanard.ca",
         username: username,
         password: username,
         passwordConfirm: username,
@@ -40,7 +41,7 @@ export class DatabaseClient {
     try {
       const result = await this.client
         .collection("users")
-        .authWithPassword(username, username);
+        .authWithPassword(username + "@adamcanard.ca", username);
       return result;
     } catch (err: unknown) {
       return err;
@@ -143,25 +144,21 @@ export class DatabaseClient {
   }
 
   async getBeer() {
-    const BeerList = await this.client.collection("Beer").getList(1, 50, {
-      sort: "-created",
-    });
+    const BeerList = await this.client.collection("Beer").getList(1, 50, {});
 
     return BeerList;
   }
 
   async getDrank() {
-    const BeerList = await this.client.collection("Beer").getList(1, 50, {
-      sort: "-created",
-      fields: "id,Beer,Brewery,By,Rating",
+    const BeerList = await this.client.collection("Beer").getFullList({
+      fields: "id,Beer,Brewery,By",
       filter: "Drank = true",
     });
-
+    console.log(BeerList);
     return BeerList;
   }
   async getDrink() {
-    const BeerList = await this.client.collection("Beer").getList(1, 50, {
-      sort: "-created",
+    const BeerList = await this.client.collection("Beer").getFullList({
       fields: "id,Beer,Brewery,By",
       filter: "Drank != true",
     });
