@@ -30,10 +30,9 @@
   }
 
   #mobile {
-    width: 95%;
-    height: 85%;
+    width: 100svw;
+    height: 100svh;
     display: flex;
-    margin-top: 1rem;
   }
   #desktop {
     display: none;
