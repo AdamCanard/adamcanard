@@ -13,6 +13,7 @@
     "@dotenvx/dotenvx": "^1.19.3",
     "@tanstack/react-query": "^5.60.2",
     "concurrently": "^9.0.1",
+    "mongoose": "^8.8.4",
     "next": "^14.2.13",
     "pocketbase": "^0.21.5",
     "react": "^18",
