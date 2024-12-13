@@ -43,7 +43,6 @@ export default function TopLevel() {
   const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
   const [listElements, setListElements] = useState<BeerData[]>([]);
   const [refreshBeers, setRefreshBeers] = useState<boolean>(true);
-
   const router = useRouter();
 
   const queryClient = new QueryClient();
@@ -140,7 +139,7 @@ export default function TopLevel() {
   useEffect(() => {
     loadUser();
     if (refreshBeers) {
-      //getListElements();
+      setListElements([]);
       setRefreshBeers(false);
     }
 
