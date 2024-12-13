@@ -8,7 +8,7 @@ export default function MobileList(props: { api: string }) {
       const response = await fetch(props.api, { method: "GET" });
       const listResponse = await response.json();
 
-      setListElements(listResponse.items);
+      setListElements(listResponse);
       return listResponse;
     } catch (err: unknown) {
       if (err instanceof Error) {

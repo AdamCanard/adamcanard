@@ -154,7 +154,6 @@ export class DatabaseClient {
       fields: "id,Beer,Brewery,By",
       filter: "Drank = true",
     });
-    console.log(BeerList);
     return BeerList;
   }
   async getDrink() {
