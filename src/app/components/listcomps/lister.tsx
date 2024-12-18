@@ -57,6 +57,7 @@ export default function Lister() {
               api="/api/drank/"
               key={"Drank"}
               handleClick={getData}
+              adminNeeded={true}
             />,
           )
         }
@@ -72,6 +73,7 @@ export default function Lister() {
               api="/api/drink/"
               key={"Drink"}
               handleClick={getData}
+              adminNeeded={true}
             />,
           )
         }
@@ -87,6 +89,7 @@ export default function Lister() {
               api="/api/suggestion/"
               key={"Suggestion"}
               handleClick={() => {}}
+              adminNeeded={false}
             />,
           )
         }

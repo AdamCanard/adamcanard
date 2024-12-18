@@ -8,6 +8,7 @@ export default function List(props: {
   title: string;
   api: string;
   handleClick: (arg0: string) => void;
+  adminNeeded: boolean;
 }) {
   const { admin } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
@@ -84,7 +85,7 @@ export default function List(props: {
             );
           })}
         </div>
-        {admin && (
+        {(admin || !props.adminNeeded) && (
           <Form
             api={props.api}
             formElements={formElements}

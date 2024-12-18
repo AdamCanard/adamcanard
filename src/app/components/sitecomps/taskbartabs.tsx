@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { TaskbarContext } from "./toplevel";
 
 import BlackJack from "../blackjackcomps/blackjackgame";
-import SuggestionDesktop from "../suggestioncomps/suggestiondesktop";
 import SuggestionManager from "../suggestioncomps/suggestionmanager";
 import AdminPanel from "../adminpanel";
 import CurrentDrink from "../currentdrink";
@@ -32,14 +31,7 @@ export default function TaskbarTabs() {
         >
           Lists
         </div>
-        <div
-          id="button-taskbar"
-          onClick={() =>
-            handleClick(<SuggestionDesktop key={"Suggest A Beer!"} />)
-          }
-        >
-          Suggestion
-        </div>
+
         <div
           id="button-taskbar"
           onClick={() => handleClick(<BlackJack key={"BlackJack"} />)}
