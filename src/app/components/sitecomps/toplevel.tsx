@@ -80,7 +80,6 @@ export default function TopLevel() {
           body: formData,
         });
         const username = await response.json();
-        console.log(username);
         if (username.data.status == 404) {
           router.push("/auth/login");
         }
