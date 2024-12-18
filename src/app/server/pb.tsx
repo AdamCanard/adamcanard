@@ -29,6 +29,7 @@ export class DatabaseClient {
         username: username,
         password: username,
         passwordConfirm: username,
+        name: username,
       });
       return result;
     } catch (err: unknown) {
@@ -76,7 +77,9 @@ export class DatabaseClient {
 
   async authAsAdminPanel(email: string, password: string) {
     try {
-      const result = await this.client.admins.authWithPassword(email, password);
+      const result = await this.client
+        .collection("_superusers")
+        .authWithPassword(email, password);
       return result;
     } catch (e) {
       console.error("Error authenticating as admin: ", e);

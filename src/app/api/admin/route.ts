@@ -6,6 +6,7 @@ export async function POST(req: Request) {
   const password = formData.get("password") as string;
 
   const data = await db.authAsAdminPanel(email, password);
+  console.log(data);
   return new Response(JSON.stringify({ data: data }), {
     status: 200,
   });

@@ -46,6 +46,7 @@ export default function TopLevel() {
   const router = useRouter();
 
   const queryClient = new QueryClient();
+
   const loadUser = async () => {
     //if check for users authtoken
     const formData = new FormData();
@@ -61,7 +62,6 @@ export default function TopLevel() {
       });
 
       const cookie = await response.json();
-
       if (Object.keys(cookie).length === 0) {
         router.push("/auth/login");
       } else {
@@ -80,10 +80,11 @@ export default function TopLevel() {
           body: formData,
         });
         const username = await response.json();
+        console.log(username);
         if (username.data.status == 404) {
           router.push("/auth/login");
         }
-        setUsername(username.data.email.split("@")[0]);
+        setUsername(username.data.name);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
