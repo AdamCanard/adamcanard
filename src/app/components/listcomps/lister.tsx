@@ -78,6 +78,21 @@ export default function Lister() {
       >
         Drink
       </div>
+      <div
+        id="button-taskbar"
+        onClick={() =>
+          handleClick(
+            <List
+              title="Suggestion"
+              api="/api/suggestion/"
+              key={"Suggestion"}
+              handleClick={() => {}}
+            />,
+          )
+        }
+      >
+        Suggestion
+      </div>{" "}
     </DesktopWindow>
   );
 }

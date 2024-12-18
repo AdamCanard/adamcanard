@@ -154,7 +154,7 @@ export class DatabaseClient {
 
   async getDrank() {
     const BeerList = await this.client.collection("Beer").getFullList({
-      fields: "id,Beer,Brewery,By",
+      fields: "id,Beer,Brewery,By,Rating",
       filter: "Drank = true",
     });
     return BeerList;

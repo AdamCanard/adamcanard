@@ -13,7 +13,7 @@ export interface BeerData {
 export interface ISuggestion {
   Beer: string;
   Brewery: string;
-  Username?: string;
+  By: string;
 }
 
 export interface IError {
