@@ -121,8 +121,8 @@ export class DatabaseClient {
   }
 
   async getSuggestion() {
-    const BeerList = await this.client.collection("Suggestion").getList(1, 50, {
-      sort: "-created",
+    const BeerList = await this.client.collection("Suggestion").getFullList({
+      fields: "id,Beer,Brewery,By",
     });
 
     return BeerList;
