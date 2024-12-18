@@ -19,7 +19,6 @@ export default function List(props: {
       const response = await fetch(props.api, { method: "GET" });
       const listResponse = await response.json();
 
-      console.log(listResponse);
       setListElements(listResponse);
       setFormElements(Object.keys(listResponse[0]));
       return listResponse;
@@ -40,7 +39,6 @@ export default function List(props: {
 
   useEffect(() => {
     if (refresh) {
-      alert("apple");
       getListElements();
       setRefresh(false);
     }

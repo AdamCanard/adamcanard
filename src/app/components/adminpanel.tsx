@@ -21,7 +21,7 @@ export default function AdminPanel() {
     setEmail("");
     setPassword("");
     try {
-      if (data.data.admin) {
+      if (data.token !== "") {
         setAdmin(true);
         handleClose();
       }
