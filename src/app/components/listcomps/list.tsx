@@ -10,6 +10,7 @@ export default function List(props: {
   itemHandleClick: (arg0: string) => void;
   adminNeeded: boolean;
   submit: (arg0: never[]) => void;
+  actionNeeded: boolean;
 }) {
   const { admin } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
@@ -86,9 +87,8 @@ export default function List(props: {
             );
           })}
         </div>
-        {props.submit !== undefined && (
+        {props.actionNeeded && (
           <>
-            {" "}
             <div id="button-i">
               <div onClick={() => props.submit(listElements)} id="button">
                 Action

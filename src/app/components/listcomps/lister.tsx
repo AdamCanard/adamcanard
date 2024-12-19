@@ -48,8 +48,7 @@ export default function Lister() {
   };
 
   const randomOutput = (data: never[]) => {
-    console.log("Here");
-    console.log(data[Math.floor(Math.random() * data.length)]);
+    alert(Object.values(data[Math.floor(Math.random() * data.length)])[0]);
   };
   return (
     <DesktopWindow title="Lists" width={"8rem"} height={""}>
@@ -64,6 +63,7 @@ export default function Lister() {
               itemHandleClick={getData}
               adminNeeded={true}
               submit={() => {}}
+              actionNeeded={false}
             />,
           )
         }
@@ -81,6 +81,7 @@ export default function Lister() {
               itemHandleClick={getData}
               adminNeeded={true}
               submit={() => {}}
+              actionNeeded={false}
             />,
           )
         }
@@ -98,6 +99,7 @@ export default function Lister() {
               itemHandleClick={() => {}}
               adminNeeded={false}
               submit={() => {}}
+              actionNeeded={false}
             />,
           )
         }
@@ -115,6 +117,7 @@ export default function Lister() {
               itemHandleClick={() => {}}
               adminNeeded={true}
               submit={randomOutput}
+              actionNeeded={true}
             />,
           )
         }

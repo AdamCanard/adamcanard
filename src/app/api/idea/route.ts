@@ -4,7 +4,7 @@ import db from "../../server/pb";
 export async function POST(req: Request) {
   const formData = await req.formData();
   const data: IIdea = {
-    idea: formData.get("Idea") as string,
+    Idea: formData.get("Idea") as string,
   };
   db.addIdea(data);
   return new Response(JSON.stringify({ data }), {
@@ -14,6 +14,5 @@ export async function POST(req: Request) {
 
 export async function GET() {
   const ideaList = await db.getIdeas();
-  console.log(ideaList);
   return new Response(JSON.stringify(ideaList), { status: 200 });
 }

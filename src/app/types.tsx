@@ -31,5 +31,5 @@ export interface IPoint {
 
 export interface IIdea {
   id?: string;
-  idea: string;
+  Idea: string;
 }
