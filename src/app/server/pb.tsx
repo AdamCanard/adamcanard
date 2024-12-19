@@ -172,7 +172,6 @@ export class DatabaseClient {
     const IdeaList = await this.client
       .collection("Ideas")
       .getFullList({ fields: "id, Idea" });
-    console.log(IdeaList);
     return IdeaList;
   }
 

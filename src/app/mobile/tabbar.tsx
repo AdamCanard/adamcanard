@@ -10,11 +10,14 @@ export default function TabBar() {
         <div className={"w-full h-8 flex flex-row"}>
           <TabButton title="Info" set={setTab} />
 
-          <TabButton title="Drank" set={setTab} />
-          <TabButton title="Drink" set={setTab} />
-          <TabButton title="Suggest" set={setTab} />
+          <TabButton title="Lists" set={setTab} />
         </div>
       </div>
     </>
   );
 }
+
+//
+//<TabButton title="Drank" set={setTab} />
+//          <TabButton title="Drink" set={setTab} />
+//          <TabButton title="Suggest" set={setTab} />
