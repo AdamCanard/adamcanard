@@ -41,39 +41,37 @@ export default function MobileList(props: { api: string; open: boolean }) {
 
   if (isSuccess) {
     return (
-      <>
-        <div
-          id="window"
-          className="overflow-y-scroll w-full h-full flex flex-col"
-        >
-          {listElements.map((listElement) => {
-            const id: string = Object.values(listElement)[
-              Object.keys(listElement).length - 1
-            ] as string;
-            return (
-              <div
-                id="border"
-                className="flex w-full h-full justify-between items-center p-2"
-                key={id}
-              >
-                <>
-                  {Object.values(listElement).map((data, index: number) => {
-                    if (index < Object.keys(listElement).length - 1) {
-                      if ((data as string) !== "") {
-                        return <div key={index + id}>{data as string}</div>;
-                      }
+      <div
+        id="window"
+        className="overflow-y-scroll w-full h-full flex flex-col"
+      >
+        {listElements.map((listElement) => {
+          const id: string = Object.values(listElement)[
+            Object.keys(listElement).length - 1
+          ] as string;
+          return (
+            <div
+              id="border"
+              className="flex w-full h-full justify-between items-center p-2"
+              key={id}
+            >
+              <>
+                {Object.values(listElement).map((data, index: number) => {
+                  if (index < Object.keys(listElement).length - 1) {
+                    if ((data as string) !== "") {
+                      return <div key={index + id}>{data as string}</div>;
                     }
-                  })}
-                </>
-              </div>
-            );
-          })}
-          <div>
-            {" "}
-            {props.open && <Form api={props.api} formElements={formElements} />}
-          </div>
+                  }
+                })}
+              </>
+            </div>
+          );
+        })}
+        <div>
+          {" "}
+          {props.open && <Form api={props.api} formElements={formElements} />}
         </div>
-      </>
+      </div>
     );
   }
 }

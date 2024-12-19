@@ -23,8 +23,10 @@ export default function MobileLists() {
 
   return (
     <>
-      <ListBar />
-      {ListDecider(list)}`
+      <div className={"flex flex-col w-full h-full"}>
+        <ListBar />
+        {ListDecider(list)}
+      </div>
     </>
   );
 }
