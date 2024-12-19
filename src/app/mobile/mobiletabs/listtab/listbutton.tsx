@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useContext } from "react";
-import { MobileContext } from "./mobiletop";
+import { MobileContext } from "../../mobiletop";
 
 export default function ListButton(props: {
   title: string;
