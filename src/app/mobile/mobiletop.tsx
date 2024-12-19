@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, useState, createContext } from "react";
-import InfoCard from "./infocard";
+import InfoCard from "./mobiletabs/maintab/infocard";
 import TabBar from "./tabbar";
-import Secret from "./secret";
+import Secret from "./mobiletabs/maintab/secret";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import MobileLists from "./mobilelists";
+import MobileLists from "./mobiletabs/listtab/mobilelists";
 interface MobileContextType {
   tab: string;
   setTab: Dispatch<SetStateAction<string>>;
