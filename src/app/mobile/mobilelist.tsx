@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Form from "../components/listcomps/form";
+import { Loading } from "../components/sitecomps/toplevel";
 export default function MobileList(props: { api: string; open: boolean }) {
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
@@ -33,6 +34,7 @@ export default function MobileList(props: { api: string; open: boolean }) {
   });
 
   if (isPending) {
+    <Loading />;
   }
 
   if (isError) {
