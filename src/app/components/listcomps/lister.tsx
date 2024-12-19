@@ -46,6 +46,11 @@ export default function Lister() {
       }
     }
   };
+
+  const randomOutput = (data: never[]) => {
+    console.log("Here");
+    console.log(data[Math.floor(Math.random() * data.length)]);
+  };
   return (
     <DesktopWindow title="Lists" width={"8rem"} height={""}>
       <div
@@ -56,8 +61,9 @@ export default function Lister() {
               title="Drank"
               api="/api/drank/"
               key={"Drank"}
-              handleClick={getData}
+              itemHandleClick={getData}
               adminNeeded={true}
+              submit={() => {}}
             />,
           )
         }
@@ -72,8 +78,9 @@ export default function Lister() {
               title="Drink"
               api="/api/drink/"
               key={"Drink"}
-              handleClick={getData}
+              itemHandleClick={getData}
               adminNeeded={true}
+              submit={() => {}}
             />,
           )
         }
@@ -88,13 +95,31 @@ export default function Lister() {
               title="Suggestion"
               api="/api/suggestion/"
               key={"Suggestion"}
-              handleClick={() => {}}
+              itemHandleClick={() => {}}
               adminNeeded={false}
+              submit={() => {}}
             />,
           )
         }
       >
         Suggestion
+      </div>{" "}
+      <div
+        id="button-taskbar"
+        onClick={() =>
+          handleClick(
+            <List
+              title="Ideas"
+              api="/api/idea/"
+              key={"Ideas"}
+              itemHandleClick={() => {}}
+              adminNeeded={true}
+              submit={randomOutput}
+            />,
+          )
+        }
+      >
+        Ideas
       </div>{" "}
     </DesktopWindow>
   );

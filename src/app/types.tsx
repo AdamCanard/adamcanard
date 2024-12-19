@@ -28,3 +28,8 @@ export interface IPoint {
   height?: string;
   windowKey?: string;
 }
+
+export interface IIdea {
+  id?: string;
+  idea: string;
+}

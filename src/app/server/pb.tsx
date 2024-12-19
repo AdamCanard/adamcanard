@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase";
-import { BeerData, ISuggestion } from "../types";
+import { BeerData, ISuggestion, IIdea } from "../types";
 
 export const POCKET_BASE_URL = "http://127.0.0.1:8090";
 export const domain = process.env.PB_DOMAIN;
@@ -166,6 +166,19 @@ export class DatabaseClient {
     });
 
     return BeerList;
+  }
+
+  async getIdeas() {
+    const IdeaList = await this.client
+      .collection("Ideas")
+      .getFullList({ fields: "id, Idea" });
+    console.log(IdeaList);
+    return IdeaList;
+  }
+
+  async addIdea(data: IIdea) {
+    const result = await this.client.collection("Ideas").create(data);
+    return result;
   }
 
   async updateBeer(data: BeerData, id: string) {

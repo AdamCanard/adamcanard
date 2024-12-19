@@ -7,8 +7,9 @@ import Form from "./form";
 export default function List(props: {
   title: string;
   api: string;
-  handleClick: (arg0: string) => void;
+  itemHandleClick: (arg0: string) => void;
   adminNeeded: boolean;
+  submit: (arg0: never[]) => void;
 }) {
   const { admin } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
@@ -70,7 +71,7 @@ export default function List(props: {
                 id="border"
                 className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
                 key={id}
-                onClick={() => props.handleClick(id)}
+                onClick={() => props.itemHandleClick(id)}
               >
                 <>
                   {Object.values(listElement).map((data, index: number) => {
@@ -85,6 +86,17 @@ export default function List(props: {
             );
           })}
         </div>
+        {props.submit !== undefined && (
+          <>
+            {" "}
+            <div id="button-i">
+              <div onClick={() => props.submit(listElements)} id="button">
+                Action
+              </div>
+            </div>
+          </>
+        )}
+
         {(admin || !props.adminNeeded) && (
           <Form
             api={props.api}
