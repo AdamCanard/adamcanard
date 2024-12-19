@@ -98,11 +98,7 @@ export default function List(props: {
         )}
 
         {(admin || !props.adminNeeded) && (
-          <Form
-            api={props.api}
-            formElements={formElements}
-            refresher={setRefresh}
-          />
+          <Form api={props.api} formElements={formElements} />
         )}
       </DesktopWindow>
     );

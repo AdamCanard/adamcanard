@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-export default function MobileList(props: { api: string }) {
+import Form from "../components/listcomps/form";
+export default function MobileList(props: { api: string; open: boolean }) {
   const [listElements, setListElements] = useState([]);
-
+  const [formElements, setFormElements] = useState<string[]>([]);
   const getListElements = async () => {
     try {
       const response = await fetch(props.api, { method: "GET" });
       const listResponse = await response.json();
 
+      setFormElements(Object.keys(listResponse[0]));
       setListElements(listResponse);
       return listResponse;
     } catch (err: unknown) {
@@ -40,7 +42,10 @@ export default function MobileList(props: { api: string }) {
   if (isSuccess) {
     return (
       <>
-        <div className="overflow-y-scroll w-full h-full flex flex-col">
+        <div
+          id="window"
+          className="overflow-y-scroll w-full h-full flex flex-col"
+        >
           {listElements.map((listElement) => {
             const id: string = Object.values(listElement)[
               Object.keys(listElement).length - 1
@@ -63,6 +68,10 @@ export default function MobileList(props: { api: string }) {
               </div>
             );
           })}
+          <div>
+            {" "}
+            {props.open && <Form api={props.api} formElements={formElements} />}
+          </div>
         </div>
       </>
     );

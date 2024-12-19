@@ -8,10 +8,16 @@ export default function MobileLists() {
 
   const ListDecider = (list: string) => {
     switch (list) {
-      case "Info":
-        return <></>;
+      case "Drank":
+        return <MobileList api="/api/drank" open={false} />;
+      case "Drink":
+        return <MobileList api="/api/drink" open={false} />;
+      case "Suggestions":
+        return <MobileList api="/api/suggestion" open={true} />;
+      case "Ideas":
+        return <MobileList api="/api/idea" open={false} />;
       default:
-        return <MobileList api="/api/drank" />;
+        return <MobileList api="/api/drank" open={false} />;
     }
   };
 
