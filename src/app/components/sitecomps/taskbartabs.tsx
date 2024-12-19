@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { TaskbarContext } from "./toplevel";
 
 import BlackJack from "../blackjackcomps/blackjackgame";
-import SuggestionManager from "../suggestioncomps/suggestionmanager";
 import AdminPanel from "../adminpanel";
 import CurrentDrink from "../currentdrink";
 import Windows, { Beers } from "../windows";
@@ -43,14 +42,6 @@ export default function TaskbarTabs() {
       <div className={"flex flex-row"}>
         {admin && (
           <>
-            <div
-              id="button-taskbar"
-              onClick={() => {
-                handleClick(<SuggestionManager key={"Suggestion Manager"} />);
-              }}
-            >
-              Suggestions
-            </div>
             <div
               id="button-taskbar"
               onClick={() => {

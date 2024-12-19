@@ -5,14 +5,15 @@ export default function SuggestionMobile() {
   const [beer, setBeer] = useState("");
   const [brewery, setBrewery] = useState("");
 
+  const [by, setBy] = useState("");
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    formData.append("Username", "Mobile");
     postData(formData);
     setBeer("");
     setBrewery("");
+    setBy("");
   };
 
   return (
@@ -31,6 +32,13 @@ export default function SuggestionMobile() {
           type="text"
           state={brewery}
           setState={setBrewery}
+          required={true}
+        />
+        <LabeledInputStr
+          title="By"
+          type="text"
+          state={by}
+          setState={setBy}
           required={true}
         />
         <div id="button-i">

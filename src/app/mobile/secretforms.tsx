@@ -26,7 +26,7 @@ function DrinkForm() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     formData.append("Drank", false);
-    await postData(formData);
+    await postData(formData, "/api/drink/");
     setBeer("");
     setBrewery("");
     setBy("");
@@ -75,7 +75,7 @@ function DrankForm() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     formData.append("Drank", true);
-    await postData(formData);
+    await postData(formData, "/api/drank/");
     setBeer("");
     setBrewery("");
     setRating(0);
@@ -117,9 +117,9 @@ function DrankForm() {
   );
 }
 
-const postData = async (formData: FormData) => {
+const postData = async (formData: FormData, api: string) => {
   try {
-    const response = await fetch("/api/newbeer/", {
+    const response = await fetch(api, {
       method: "POST",
       body: formData,
     });

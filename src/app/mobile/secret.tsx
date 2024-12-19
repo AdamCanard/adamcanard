@@ -13,7 +13,7 @@ export default function Secret() {
     const formData = new FormData(form);
     const data = await postData(formData);
     try {
-      if (data.data.admin) {
+      if (data.token !== "") {
         setAuthenticated(true);
       }
     } catch (error) {}
