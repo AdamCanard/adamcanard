@@ -41,8 +41,8 @@ export default function MobileList(props: { api: string; open: boolean }) {
 
   if (isSuccess) {
     return (
-      <div id="window" className={"h-full flex flex-col"}>
-        <div className="overflow-y-scroll w-full h-full flex flex-col">
+      <div id="window" className={"flex flex-col"}>
+        <div id="listHeight" className="overflow-y-scroll w-full flex flex-col">
           {listElements.map((listElement) => {
             const id: string = Object.values(listElement)[
               Object.keys(listElement).length - 1

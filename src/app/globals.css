@@ -52,7 +52,9 @@
     display: flex;
   }
 }
-
+#listHeight {
+  height: calc(100% - 64px);
+}
 #title {
   height: 30px;
   width: 100%;
