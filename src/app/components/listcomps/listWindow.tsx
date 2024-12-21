@@ -6,10 +6,11 @@ export default function ListWindow(props: {
   id: string;
 }) {
   console.log(props.data);
+  const keys = Object.keys(props.data);
   return (
     <DesktopWindow title={props.id} width={"8rem"} height={""}>
       {Object.values(props.data).map((data, index: number) => {
-        if ((data as string) !== "") {
+        if (!Omit.includes(keys[index])) {
           return (
             <div
               id="border"
@@ -24,3 +25,5 @@ export default function ListWindow(props: {
     </DesktopWindow>
   );
 }
+
+const Omit = ["collectionId", "collectionName", "id", "created", "updated"];
