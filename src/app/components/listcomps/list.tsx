@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
 import { TaskbarContext } from "../sitecomps/toplevel";
 import Form from "./form";
+import ListWindow from "./listWindow";
 
 export default function List(props: {
   title: string;
@@ -16,6 +17,19 @@ export default function List(props: {
   const [formElements, setFormElements] = useState<string[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
 
+  const { windows, setWindows } = useContext(TaskbarContext);
+
+  const openElementWindow = (window: JSX.Element) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == window.key) {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+        return;
+      }
+    }
+    setWindows([...windows, window]);
+  };
+
   const getData = async (id: string) => {
     if (id) {
       try {
@@ -23,7 +37,9 @@ export default function List(props: {
           method: "GET",
         });
         const data = await response.json();
-        console.log(data);
+        openElementWindow(
+          <ListWindow api={props.api} data={data} id={id} key={id} />,
+        );
       } catch (err: unknown) {
         if (err instanceof Error) {
           return new Response(
