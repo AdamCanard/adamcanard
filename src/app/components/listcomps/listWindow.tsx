@@ -8,7 +8,7 @@ export default function ListWindow(props: {
   console.log(props.data);
   const keys = Object.keys(props.data);
   return (
-    <DesktopWindow title={props.id} width={"8rem"} height={""}>
+    <DesktopWindow title={props.id} width={"16rem"} height={""}>
       {Object.values(props.data).map((data, index: number) => {
         if (!Omit.includes(keys[index])) {
           return (
