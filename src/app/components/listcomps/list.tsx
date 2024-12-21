@@ -7,7 +7,6 @@ import Form from "./form";
 export default function List(props: {
   title: string;
   api: string;
-  itemHandleClick: (arg0: string) => void;
   adminNeeded: boolean;
   submit: (arg0: never[]) => void;
   actionNeeded: boolean;
@@ -16,6 +15,27 @@ export default function List(props: {
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
+
+  const getData = async (id: string) => {
+    if (id) {
+      try {
+        const response = await fetch(props.api + id, {
+          method: "GET",
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          return new Response(
+            JSON.stringify({ error: err.message || err.toString() }),
+            { status: 500, headers: {} },
+          );
+        } else {
+          console.log(err);
+        }
+      }
+    }
+  };
 
   const getListElements = useCallback(async () => {
     try {
@@ -72,7 +92,7 @@ export default function List(props: {
                 id="border"
                 className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
                 key={id}
-                onClick={() => props.itemHandleClick(id)}
+                onClick={() => getData(id)}
               >
                 <>
                   {Object.values(listElement).map((data, index: number) => {

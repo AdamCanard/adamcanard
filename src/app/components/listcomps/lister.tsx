@@ -4,7 +4,7 @@ import { TaskbarContext } from "../sitecomps/toplevel";
 import List from "./list";
 
 export default function Lister() {
-  const { windows, setWindows, beers, setBeers } = useContext(TaskbarContext);
+  const { windows, setWindows } = useContext(TaskbarContext);
 
   const handleClick = (window: JSX.Element) => {
     for (let i = 0; i < windows.length; i++) {
@@ -15,36 +15,6 @@ export default function Lister() {
       }
     }
     setWindows([...windows, window]);
-  };
-
-  const getData = async (id: string) => {
-    if (id) {
-      const formData = new FormData();
-      formData.append("id", id);
-      try {
-        const response = await fetch("/api/getbeerbyid/", {
-          method: "POST",
-          body: formData,
-        });
-        const beerData = await response.json();
-        for (let i = 0; i < beers.length; i++) {
-          if (beerData.Beer == beers[i].Beer) {
-            return;
-          }
-        }
-        const prevBeers = beers;
-        setBeers([...prevBeers, beerData]);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          return new Response(
-            JSON.stringify({ error: err.message || err.toString() }),
-            { status: 500, headers: {} },
-          );
-        } else {
-          console.log(err);
-        }
-      }
-    }
   };
 
   const randomOutput = (data: never[]) => {
@@ -60,7 +30,6 @@ export default function Lister() {
               title="Drank"
               api="/api/drank/"
               key={"Drank"}
-              itemHandleClick={getData}
               adminNeeded={true}
               submit={() => {}}
               actionNeeded={false}
@@ -78,7 +47,6 @@ export default function Lister() {
               title="Drink"
               api="/api/drink/"
               key={"Drink"}
-              itemHandleClick={getData}
               adminNeeded={true}
               submit={() => {}}
               actionNeeded={false}
@@ -96,7 +64,6 @@ export default function Lister() {
               title="Suggestion"
               api="/api/suggestion/"
               key={"Suggestion"}
-              itemHandleClick={() => {}}
               adminNeeded={false}
               submit={() => {}}
               actionNeeded={false}
@@ -114,7 +81,6 @@ export default function Lister() {
               title="Ideas"
               api="/api/idea/"
               key={"Ideas"}
-              itemHandleClick={() => {}}
               adminNeeded={true}
               submit={randomOutput}
               actionNeeded={true}
