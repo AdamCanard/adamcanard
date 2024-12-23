@@ -4,7 +4,7 @@ import { TaskbarContext } from "./toplevel";
 import BlackJack from "../blackjackcomps/blackjackgame";
 import AdminPanel from "../adminpanel";
 import CurrentDrink from "../currentdrink";
-import Windows, { Beers } from "../windows";
+import Windows from "../windows";
 import Lister from "../listcomps/lister";
 
 export default function TaskbarTabs() {
@@ -58,14 +58,6 @@ export default function TaskbarTabs() {
             >
               Windows
             </div>{" "}
-            <div
-              id="button-taskbar"
-              onClick={() => {
-                handleClick(<Beers key={"Beers"} />);
-              }}
-            >
-              Beers
-            </div>
           </>
         )}
 
