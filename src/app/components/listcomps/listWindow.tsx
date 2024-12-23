@@ -1,16 +1,25 @@
+import { useContext } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
+import { TaskbarContext } from "../sitecomps/toplevel";
 
 export default function ListWindow(props: {
   api: string;
   data: object;
   id: string;
 }) {
+  const { windows, setWindows } = useContext(TaskbarContext);
   const keys = Object.keys(props.data);
 
   const updateItem = () => {};
 
   const deleteItem = () => {
     deleteById(props.id);
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == Object.values(props.data)[0]) {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+      }
+    }
   };
 
   const deleteById = async (id: string) => {
