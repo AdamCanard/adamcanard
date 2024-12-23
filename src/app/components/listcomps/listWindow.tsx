@@ -5,7 +5,6 @@ export default function ListWindow(props: {
   data: object;
   id: string;
 }) {
-  console.log(props.data);
   const keys = Object.keys(props.data);
   return (
     <DesktopWindow
@@ -15,19 +14,36 @@ export default function ListWindow(props: {
     >
       {Object.values(props.data).map((data, index: number) => {
         if (!Omit.includes(keys[index])) {
-          return (
-            <div
-              id="border"
-              className="flex w-full h-full justify-between items-center p-3"
-              key={index + props.id}
-            >
-              {data !== "" && (data as string)}
-            </div>
-          );
+          if ((data as string) !== "" && index !== 0) {
+            return (
+              <div
+                id="border"
+                className="flex w-full h-full justify-between items-center p-3"
+                key={index + props.id}
+              >
+                <div>{keys[index]}:</div>
+                <div>{data as string}</div>
+              </div>
+            );
+          }
         }
       })}
+      <div id="button-i">
+        <div id="button">Update</div>
+
+        <div id="button">Delete</div>
+      </div>
     </DesktopWindow>
   );
 }
 
-const Omit = ["collectionId", "collectionName", "id", "created", "updated"];
+const Omit = [
+  "Start",
+  "End",
+  "collectionId",
+  "collectionName",
+  "id",
+  "created",
+  "updated",
+  "Drank",
+];
