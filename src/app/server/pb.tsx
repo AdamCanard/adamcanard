@@ -128,8 +128,8 @@ export class DatabaseClient {
     return BeerList;
   }
 
-  async deleteBeer(id: string) {
-    const result = await this.client.collection("Beer").delete(id);
+  async delete(collection: string, id: string) {
+    const result = await this.client.collection(collection).delete(id);
     return result;
   }
 
