@@ -36,9 +36,14 @@ export default function List(props: {
         const response = await fetch(props.api + id, {
           method: "GET",
         });
-        const data = await response.json();
+        const data: object = await response.json();
         openElementWindow(
-          <ListWindow api={props.api} data={data} id={id} key={id} />,
+          <ListWindow
+            api={props.api}
+            data={data}
+            id={id}
+            key={Object.values(data)[0]}
+          />,
         );
       } catch (err: unknown) {
         if (err instanceof Error) {

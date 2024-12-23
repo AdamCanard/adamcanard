@@ -8,7 +8,11 @@ export default function ListWindow(props: {
   console.log(props.data);
   const keys = Object.keys(props.data);
   return (
-    <DesktopWindow title={props.id} width={"16rem"} height={""}>
+    <DesktopWindow
+      title={Object.values(props.data)[0]}
+      width={"16rem"}
+      height={""}
+    >
       {Object.values(props.data).map((data, index: number) => {
         if (!Omit.includes(keys[index])) {
           return (
@@ -17,7 +21,7 @@ export default function ListWindow(props: {
               className="flex w-full h-full justify-between items-center p-3"
               key={index + props.id}
             >
-              {data as string}
+              {data !== "" && (data as string)}
             </div>
           );
         }
