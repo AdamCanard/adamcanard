@@ -6,6 +6,31 @@ export default function ListWindow(props: {
   id: string;
 }) {
   const keys = Object.keys(props.data);
+
+  const updateItem = () => {};
+
+  const deleteItem = () => {
+    deleteById(props.id);
+  };
+
+  const deleteById = async (id: string) => {
+    try {
+      const response = await fetch(props.api + id, {
+        method: "DELETE",
+      });
+      const data: object = await response.json();
+      return data;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          { status: 500, headers: {} },
+        );
+      } else {
+        console.log(err);
+      }
+    }
+  };
   return (
     <DesktopWindow
       title={Object.values(props.data)[0]}
@@ -29,9 +54,13 @@ export default function ListWindow(props: {
         }
       })}
       <div id="button-i">
-        <div id="button">Update</div>
+        <div onClick={updateItem} id="button">
+          Update
+        </div>
 
-        <div id="button">Delete</div>
+        <div onClick={deleteItem} id="button">
+          Delete
+        </div>
       </div>
     </DesktopWindow>
   );
