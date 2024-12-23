@@ -7,7 +7,7 @@ export default function ListWindow(props: {
   data: object;
   id: string;
 }) {
-  const { windows, setWindows } = useContext(TaskbarContext);
+  const { windows, setWindows, admin } = useContext(TaskbarContext);
   const keys = Object.keys(props.data);
 
   const updateItem = () => {};
@@ -62,15 +62,17 @@ export default function ListWindow(props: {
           }
         }
       })}
-      <div id="button-i">
-        <div onClick={updateItem} id="button">
-          Update
-        </div>
+      {admin && (
+        <div id="button-i">
+          <div onClick={updateItem} id="button">
+            Update
+          </div>
 
-        <div onClick={deleteItem} id="button">
-          Delete
+          <div onClick={deleteItem} id="button">
+            Delete
+          </div>
         </div>
-      </div>
+      )}
     </DesktopWindow>
   );
 }
