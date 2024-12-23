@@ -28,7 +28,6 @@ function DrinkForm() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    formData.append("Drank", false);
     await postData(formData, "/api/drink/");
     setBeer("");
     setBrewery("");
@@ -77,7 +76,6 @@ function DrankForm() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    formData.append("Drank", true);
     await postData(formData, "/api/drank/");
     setBeer("");
     setBrewery("");
