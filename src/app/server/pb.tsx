@@ -133,6 +133,12 @@ export class DatabaseClient {
     return result;
   }
 
+  async update(collection: string, id: string, data: object) {
+    const result = await this.client.collection(collection).update(id, data);
+    console.log("here");
+    return result;
+  }
+
   async addBeer(data: BeerData) {
     const result = await this.client.collection("Beer").create(data);
     return result;
