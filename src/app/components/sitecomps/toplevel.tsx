@@ -19,8 +19,6 @@ interface TaskbarContextType {
   setAdmin: React.Dispatch<SetStateAction<boolean>>;
   windows: JSX.Element[];
   setWindows: React.Dispatch<SetStateAction<JSX.Element[]>>;
-  beers: BeerData[];
-  setBeers: React.Dispatch<SetStateAction<BeerData[]>>;
   listElements: BeerData[];
   setError: React.Dispatch<SetStateAction<IError>>;
   setErrorTrigger: React.Dispatch<SetStateAction<boolean>>;
@@ -36,7 +34,6 @@ export default function TopLevel() {
   const [windows, setWindows] = useState<JSX.Element[]>([]);
   const [admin, setAdmin] = useState(false);
   const [username, setUsername] = useState("");
-  const [beers, setBeers] = useState<BeerData[]>([]);
   const [error, setError] = useState<IError>({
     admin: { code: "123", message: "You are not Admin" },
   });
@@ -100,42 +97,6 @@ export default function TopLevel() {
     }
   };
 
-  //const getListElements = async () => {
-  //  try {
-  //    const response = await fetch("/api/getbeer/", { method: "GET" });
-  //    const beerListResponse = await response.json();
-  //    if (sameLists(listElements, beerListResponse.items)) {
-  //      await getListElements();
-  //    } else {
-  //      setListElements(beerListResponse.items);
-  //    }
-  //  } catch (err: unknown) {
-  //    if (err instanceof Error) {
-  //      return new Response(
-  //        JSON.stringify({ error: err.message || err.toString() }),
-  //        {
-  //          status: 500,
-  //          headers: {},
-  //        },
-  //      );
-  //    } else {
-  //      console.log(err);
-  //    }
-  //  }
-  //};
-  //const sameLists = (list1: BeerData[], list2: BeerData[]) => {
-  //  if (list1.length == list2.length) {
-  //    for (let i = 0; i < list1.length; i++) {
-  //      if (list1[i].Drank === list2[i].Drank) {
-  //      } else {
-  //        return false;
-  //      }
-  //    }
-  //  } else {
-  //    return false;
-  //  }
-  //  return true;
-  //};
   useEffect(() => {
     loadUser();
     if (refreshBeers) {
@@ -155,8 +116,6 @@ export default function TopLevel() {
           setAdmin,
           windows,
           setWindows,
-          beers,
-          setBeers,
           listElements,
           setErrorTrigger,
           setError,
