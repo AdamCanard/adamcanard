@@ -25,7 +25,7 @@ export default function ListWindow(props: {
 
   const postData = async (formData: FormData) => {
     try {
-      const response = await fetch(props.api, {
+      const response = await fetch(props.api + props.id, {
         method: "PUT",
         body: formData,
       });
@@ -132,9 +132,7 @@ export default function ListWindow(props: {
               Cancel
             </div>
 
-            <div onClick={deleteItem} id="button">
-              Save
-            </div>
+            <input id="button" type="submit" value="Submit" />
           </div>
         </form>
       )}
