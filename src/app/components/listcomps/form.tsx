@@ -53,7 +53,7 @@ export default function Form(props: { api: string; formElements: string[] }) {
       <FormContext.Provider value={{ clear, setClear }}>
         {props.formElements.map((element: string, index: number) => {
           if (index < Object.keys(props.formElements).length - 1) {
-            return <Input value={element} key={index} />;
+            return <Input name={element} value="" key={index} />;
           }
         })}
         <div id="button-i">
