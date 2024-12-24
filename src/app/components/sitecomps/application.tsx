@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { TaskbarContext } from "./toplevel";
+import Image from "next/image";
 
 export default function Application(props: {
   title: string;
@@ -18,5 +19,9 @@ export default function Application(props: {
     setWindows([...windows, props.window]);
   };
 
-  return <div onClick={openAppWindow}></div>;
+  return (
+    <div onClick={openAppWindow} className={"w-full h-full"}>
+      <Image src={props.src} alt={props.title + " desktop image"} />
+    </div>
+  );
 }
