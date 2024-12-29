@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { TaskbarContext } from "./toplevel";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 export default function Application(props: {
   title: string;
-  src: string;
+  src: StaticImageData;
   window: JSX.Element;
 }) {
   const { windows, setWindows } = useContext(TaskbarContext);
@@ -20,8 +20,12 @@ export default function Application(props: {
   };
 
   return (
-    <div onClick={openAppWindow} className={"w-full h-full"}>
-      <Image src={props.src} alt={props.title + " desktop image"} />
+    <div onClick={openAppWindow} className={"w-full h-full "}>
+      <Image
+        className={"hover:cursor-pointer"}
+        src={props.src}
+        alt={props.title + " desktop image"}
+      />
     </div>
   );
 }
