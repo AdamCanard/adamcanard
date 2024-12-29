@@ -135,7 +135,6 @@ export class DatabaseClient {
 
   async update(collection: string, id: string, data: object) {
     const result = await this.client.collection(collection).update(id, data);
-    console.log("here");
     return result;
   }
 

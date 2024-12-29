@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
 import { TaskbarContext } from "../sitecomps/toplevel";
 import Form from "./form";
@@ -15,7 +15,6 @@ export default function List(props: {
   const { admin } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
-  const [refresh, setRefresh] = useState<boolean>(false);
 
   const { windows, setWindows } = useContext(TaskbarContext);
 
@@ -80,13 +79,6 @@ export default function List(props: {
       }
     }
   }, [props.api]);
-
-  useEffect(() => {
-    if (refresh) {
-      getListElements();
-      setRefresh(false);
-    }
-  }, [refresh, getListElements]);
 
   const { isPending, isError, error, isSuccess } = useQuery({
     queryKey: [props.title],

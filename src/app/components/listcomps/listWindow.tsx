@@ -21,6 +21,7 @@ export default function ListWindow(props: {
     const form = e.currentTarget;
     const formData = new FormData(form);
     await postData(formData);
+    setUpdating(false);
   };
 
   const postData = async (formData: FormData) => {
@@ -45,14 +46,18 @@ export default function ListWindow(props: {
     }
   };
 
-  const deleteItem = () => {
-    deleteById(props.id);
+  const closeWindow = () => {
     for (let i = 0; i < windows.length; i++) {
       if (windows[i].key == Object.values(props.data)[0]) {
         const newWindows = windows.toSpliced(i, 1);
         setWindows(newWindows);
       }
     }
+  };
+
+  const deleteItem = () => {
+    deleteById(props.id);
+    closeWindow();
   };
 
   const deleteById = async (id: string) => {

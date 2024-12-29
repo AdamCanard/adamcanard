@@ -316,6 +316,18 @@ label {
   background-color: #c0c0c0;
 }
 
+#border-pressed {
+  box-shadow:
+    inset -1px -1px #fafafa,
+    inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px #808080;
+  text-shadow: 1px 1px #222222;
+  border: 2px #c0c0c0 solid;
+  padding: 4px;
+  background-color: #c0c0c0;
+}
+
 #border:focus {
   border-left: 4px solid #dfdfdf;
   border-top: 4px solid #808080;
