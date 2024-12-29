@@ -4,6 +4,7 @@ import DesktopWindow from "../sitecomps/desktopwindow";
 import { TaskbarContext } from "../sitecomps/toplevel";
 import Form from "./form";
 import ListWindow from "./listWindow";
+import ListToolBar from "./listtoolbar";
 
 export default function List(props: {
   title: string;
@@ -12,11 +13,10 @@ export default function List(props: {
   submit: (arg0: never[]) => void;
   actionNeeded: boolean;
 }) {
-  const { admin } = useContext(TaskbarContext);
+  const { admin, windows, setWindows } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
-
-  const { windows, setWindows } = useContext(TaskbarContext);
+  const [search, setSearch] = useState<string>("");
 
   const openElementWindow = (window: JSX.Element) => {
     for (let i = 0; i < windows.length; i++) {
@@ -66,6 +66,15 @@ export default function List(props: {
     return false;
   };
 
+  const subStringer = (element: object) => {
+    const list = Object.values(element);
+    let subStringed = "";
+    for (let i = 0; i < list.length - 1; i++) {
+      subStringed += list[i] + " ";
+    }
+    return subStringed.indexOf(search) !== -1;
+  };
+
   const getListElements = useCallback(async () => {
     try {
       const response = await fetch(props.api, { method: "GET" });
@@ -104,32 +113,41 @@ export default function List(props: {
   if (isSuccess) {
     return (
       <DesktopWindow title={props.title} width={"20rem"} height={""}>
+        <ListToolBar
+          list={listElements}
+          search={setSearch}
+          form={formElements.toSpliced(formElements.length - 1)}
+        />
         <div className="w-full flex flex-col max-h-60 overflow-y-scroll">
           {listElements.map((listElement) => {
             const id: string = Object.values(listElement)[
               Object.keys(listElement).length - 1
             ] as string;
             return (
-              <div
-                id={
-                  isOpen(Object.values(listElement)[0] as string)
-                    ? "border-pressed"
-                    : "border"
-                }
-                className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
-                key={id}
-                onClick={() => getData(id)}
-              >
-                <>
-                  {Object.values(listElement).map((data, index: number) => {
-                    if (index < Object.keys(listElement).length - 1) {
-                      if ((data as string) !== "") {
-                        return <div key={index + id}>{data as string}</div>;
-                      }
+              <>
+                {subStringer(listElement) && (
+                  <div
+                    id={
+                      isOpen(Object.values(listElement)[0] as string)
+                        ? "border-pressed"
+                        : "border"
                     }
-                  })}
-                </>
-              </div>
+                    className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
+                    key={id}
+                    onClick={() => getData(id)}
+                  >
+                    <>
+                      {Object.values(listElement).map((data, index: number) => {
+                        if (index < Object.keys(listElement).length - 1) {
+                          if ((data as string) !== "") {
+                            return <div key={index + id}>{data as string}</div>;
+                          }
+                        }
+                      })}
+                    </>
+                  </div>
+                )}
+              </>
             );
           })}
         </div>
