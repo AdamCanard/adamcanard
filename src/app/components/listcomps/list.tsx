@@ -57,6 +57,15 @@ export default function List(props: {
     }
   };
 
+  const isOpen = (name: string) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == name) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const getListElements = useCallback(async () => {
     try {
       const response = await fetch(props.api, { method: "GET" });
@@ -102,7 +111,11 @@ export default function List(props: {
             ] as string;
             return (
               <div
-                id="border"
+                id={
+                  isOpen(Object.values(listElement)[0] as string)
+                    ? "border-pressed"
+                    : "border"
+                }
                 className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
                 key={id}
                 onClick={() => getData(id)}
