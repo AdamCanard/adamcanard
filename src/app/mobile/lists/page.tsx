@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export default function Page() {
   const router = useRouter();
   useEffect(() => {
-    router.push("/mobile/lists/drank");
+    router.push("/mobile/lists/beer");
   });
   return <></>;
 }
