@@ -11,7 +11,7 @@ export default function ListToolBar(props: {
 
   return (
     <>
-      <div className={"flex flex-row h-full w-full "}>
+      <div id="boxshadow" className={"flex flex-row  w-full "}>
         <div className={"mt-1"}>Search:</div>
         <input
           id="search"

@@ -14,7 +14,7 @@ export default function Page() {
 
   return (
     <>
-      {true ? (
+      {false ? (
         <MobilePage />
       ) : (
         <div id="desktop">
