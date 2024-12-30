@@ -143,14 +143,6 @@ export class DatabaseClient {
     return result;
   }
 
-  async getActiveBeer() {
-    const BeerList = await this.client.collection("Beer").getList(1, 50, {
-      filter: 'Start > "0" && End = "0"',
-    });
-
-    return BeerList;
-  }
-
   async getBeer() {
     const BeerList = await this.client.collection("Beer").getFullList({
       fields: "id,Beer,Brewery,By,Rating",

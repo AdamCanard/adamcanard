@@ -27,7 +27,7 @@ export default function Lister() {
         onClick={() =>
           handleClick(
             <List
-              title="Beer"
+              title="Beers"
               api="/api/beer/"
               key={"Beer"}
               adminNeeded={true}
@@ -37,7 +37,7 @@ export default function Lister() {
           )
         }
       >
-        Beer
+        Beers
       </div>{" "}
       <div
         id="button-taskbar"
