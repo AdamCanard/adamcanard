@@ -1,17 +1,13 @@
-import { Dispatch, SetStateAction, useContext } from "react";
-import { MobileContext } from "../../page";
+import { useRouter } from "next/navigation";
 
-export default function ListButton(props: {
-  title: string;
-  set: Dispatch<SetStateAction<string>>;
-}) {
-  const { list } = useContext(MobileContext);
+export default function ListButton(props: { title: string }) {
+  const router = useRouter();
   return (
     <>
       <div
-        id={list === props.title ? "MTabButtonPressed" : "MTabButton"}
+        id={"MTabButton"}
         className={"w-full h-full text-center leading-8 hover:cursor-pointer"}
-        onClick={() => props.set(props.title)}
+        onClick={() => router.push("/mobile/lists/" + props.title)}
       >
         {props.title}
       </div>
