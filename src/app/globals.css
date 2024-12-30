@@ -47,7 +47,7 @@
   }
 }
 #listHeight {
-  height: calc(100% - 96px);
+  height: calc(100% - 64px);
 }
 #title {
   height: 30px;

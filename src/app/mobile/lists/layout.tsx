@@ -6,9 +6,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div id="mobile" className={"h-full flex-col"}>
+    <>
       <ListBar />
       {children}
-    </div>
+    </>
   );
 }

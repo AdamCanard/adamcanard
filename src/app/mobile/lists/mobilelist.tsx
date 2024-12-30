@@ -44,7 +44,7 @@ export default function MobileList(props: { api: string; open: boolean }) {
 
   if (isSuccess) {
     return (
-      <div id="window" className={"flex flex-col"}>
+      <div id="window" className={"flex flex-col h-full"}>
         <div id="listHeight" className="overflow-y-scroll w-full flex flex-col">
           {listElements.map((listElement) => {
             const id: string = Object.values(listElement)[
@@ -69,10 +69,10 @@ export default function MobileList(props: { api: string; open: boolean }) {
             );
           })}
         </div>{" "}
-        <div>
+        <>
           {" "}
           {props.open && <Form api={props.api} formElements={formElements} />}
-        </div>
+        </>
       </div>
     );
   }
