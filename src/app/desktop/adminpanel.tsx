@@ -4,8 +4,8 @@ import { LabeledInputStr } from "@/app/desktop/labeledinputs";
 import WindowButton from "@/app/desktop/semanticcomps/windowbutton";
 import WindowInternal from "@/app/desktop/semanticcomps/windowinternal";
 import { useContext, useState } from "react";
-import { TaskbarContext } from "./sitecomps/toplevel";
 import DesktopWindow from "./sitecomps/desktopwindow";
+import { TaskbarContext } from "./layout";
 
 export default function AdminPanel() {
   const [email, setEmail] = useState("");

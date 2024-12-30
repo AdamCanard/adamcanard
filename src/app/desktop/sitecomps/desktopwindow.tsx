@@ -1,6 +1,7 @@
+"use client";
 import { useContext } from "react";
 import DraggableWindow from "../semanticcomps/draggablewindow";
-import { TaskbarContext } from "./toplevel";
+import { TaskbarContext } from "../layout";
 
 export default function DesktopWindow(props: {
   title: string;
