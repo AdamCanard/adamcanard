@@ -1,7 +1,8 @@
+"use client";
 import { Dispatch, SetStateAction, useState, createContext } from "react";
-import InfoCard from "./mobiletabs/maintab/infocard";
+import InfoCard from "./mobiletabs/main/infocard";
 import TabBar from "./tabbar";
-import Secret from "./mobiletabs/maintab/secret";
+import Secret from "./mobiletabs/main/secret";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MobileLists from "./mobiletabs/listtab/mobilelists";
 interface MobileContextType {
@@ -32,13 +33,13 @@ export default function MobileTop() {
   };
 
   return (
-    <>
+    <div id="mobile" className={"h-full flex-col"}>
       <QueryClientProvider client={queryClient}>
         <MobileContext.Provider value={{ tab, setTab, list, setList }}>
           <TabBar />
           {TabDecider(tab)}
         </MobileContext.Provider>
       </QueryClientProvider>
-    </>
+    </div>
   );
 }

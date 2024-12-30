@@ -1,7 +1,7 @@
 import Image from "next/image";
 import MBlackJackGame from "../../../components/blackjackcomps/mobileblackjack";
 import { useContext } from "react";
-import { MobileContext } from "../../mobiletop";
+import { MobileContext } from "../../page";
 
 export default function InfoCard() {
   const { setTab } = useContext(MobileContext);

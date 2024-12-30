@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useContext } from "react";
-import { MobileContext } from "./mobiletop";
+import { MobileContext } from "./page";
 
 export default function TabButton(props: {
   title: string;

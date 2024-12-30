@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import TabButton from "./tabbutton";
-import { MobileContext } from "./mobiletop";
+import { MobileContext } from "./page";
 
 export default function TabBar() {
   const { setTab } = useContext(MobileContext);
@@ -16,8 +16,3 @@ export default function TabBar() {
     </>
   );
 }
-
-//
-//<TabButton title="Drank" set={setTab} />
-//          <TabButton title="Drink" set={setTab} />
-//          <TabButton title="Suggest" set={setTab} />

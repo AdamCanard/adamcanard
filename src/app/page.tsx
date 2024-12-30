@@ -1,27 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
 import TopLevel from "./components/sitecomps/toplevel";
-import MobileTop from "./mobile/mobiletop";
+import { useRouter } from "next/navigation";
 export default function Page() {
-  const [flag, setFlag] = useState(true);
-  useEffect(() => {
-    const mql = window.matchMedia("(max-width: 1000px)");
-    setFlag(mql.matches);
-  }, []);
+  const router = useRouter();
+
+  const mql = window.matchMedia("(max-width: 1000px)");
+  if (mql.matches) {
+    router.push("/mobile");
+  } else {
+  }
 
   return (
     <>
-      {flag ? (
-        <div id="mobile" className={"h-full flex-col"}>
-          <MobileTop />
+      <div id="desktop">
+        <div className="flex justify-center items-center w-full h-full">
+          <TopLevel />
         </div>
-      ) : (
-        <div id="desktop">
-          <div className="flex justify-center items-center w-full h-full">
-            <TopLevel />
-          </div>
-        </div>
-      )}
+      </div>
     </>
   );
 }
