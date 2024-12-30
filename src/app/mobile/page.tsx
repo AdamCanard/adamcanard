@@ -1,5 +1,8 @@
-import InfoCard from "./infocard";
+"use client";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  return <InfoCard />;
+  const router = useRouter();
+  router.push("/mobile/info");
+  return <></>;
 }

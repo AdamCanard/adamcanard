@@ -9,15 +9,11 @@ export default function RootLayout({
 }>) {
   const queryClient = new QueryClient();
   return (
-    <html lang="en">
-      <body className=" w-full">
-        <div id="mobile" className={"h-full flex-col"}>
-          <QueryClientProvider client={queryClient}>
-            <TabBar />
-            {children}
-          </QueryClientProvider>
-        </div>
-      </body>
-    </html>
+    <div id="mobile" className={"h-full flex-col"}>
+      <QueryClientProvider client={queryClient}>
+        <TabBar />
+        {children}
+      </QueryClientProvider>
+    </div>
   );
 }
