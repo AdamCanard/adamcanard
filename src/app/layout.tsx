@@ -7,6 +7,9 @@ const MSFont = localFont({ src: "../../public/fonts/ms-sans-serif.ttf" });
 export const metadata: Metadata = {
   title: "Adam Cunard Portfolio",
   description: "Reject Modernity. Return to Tradition",
+  icons: {
+    icon: "/Windows/Windows.png",
+  },
 };
 
 export default function RootLayout({
