@@ -37,7 +37,7 @@ export default function Lister() {
           )
         }
       >
-        Drank
+        Beer
       </div>{" "}
       <div
         id="button-taskbar"
