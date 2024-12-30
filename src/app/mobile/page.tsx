@@ -1,5 +1,5 @@
 import InfoCard from "./infocard";
 
-export default function MobileTop() {
+export default function Page() {
   return <InfoCard />;
 }
