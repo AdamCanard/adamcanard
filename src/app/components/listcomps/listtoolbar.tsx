@@ -12,13 +12,13 @@ export default function ListToolBar(props: {
   return (
     <>
       <div className={"flex flex-row h-full w-full "}>
+        <div className={"mt-1"}>Search:</div>
         <input
           id="search"
           onChange={(e) => {
             props.search(e.target.value);
           }}
         />
-        <button id="button">Search</button>
       </div>
       <div id="border" className={"h-6 flex flex-col justify-center"}>
         <div className={"text-xs flex flex-row justify-between"}>
