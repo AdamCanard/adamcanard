@@ -15,9 +15,7 @@ export default function Page() {
   return (
     <>
       {true ? (
-        <div id="mobile" className={"h-full flex-col"}>
-          <MobilePage />
-        </div>
+        <MobilePage />
       ) : (
         <div id="desktop">
           <div className="flex justify-center items-center w-full h-full">
