@@ -1,10 +1,10 @@
+"use client";
 import Image from "next/image";
-import MBlackJackGame from "../../../components/blackjackcomps/mobileblackjack";
-import { useContext } from "react";
-import { MobileContext } from "../../page";
+import MBlackJackGame from "../components/blackjackcomps/mobileblackjack";
+import { useRouter } from "next/navigation";
 
 export default function InfoCard() {
-  const { setTab } = useContext(MobileContext);
+  const router = useRouter();
   return (
     <>
       <div className={"flex flex-col w-full h-full"}>
@@ -45,7 +45,7 @@ export default function InfoCard() {
           <h1
             id="title"
             onClick={() => {
-              setTab("secret");
+              router.push("mobile/secret");
             }}
           >
             {" "}

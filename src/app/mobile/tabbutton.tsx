@@ -1,16 +1,14 @@
-import { Dispatch, SetStateAction, useContext } from "react";
-import { MobileContext } from "./page";
+import { useRouter } from "next/navigation";
 
-export default function TabButton(props: {
-  title: string;
-  set: Dispatch<SetStateAction<string>>;
-}) {
-  const { tab } = useContext(MobileContext);
+import { usePathname } from "next/navigation";
+export default function TabButton(props: { title: string; nav: string }) {
+  const router = useRouter();
+  const pathname = usePathname();
   return (
     <div
-      id={tab === props.title ? "MTabButtonPressed" : "MTabButton"}
+      id={pathname === props.nav ? "MTabButtonPressed" : "MTabButton"}
       className={"w-full h-full text-center leading-8 hover:cursor-pointer"}
-      onClick={() => props.set(props.title)}
+      onClick={() => router.push(props.nav)}
     >
       {props.title}
     </div>
