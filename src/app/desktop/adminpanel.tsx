@@ -1,8 +1,8 @@
 "use client";
 
-import { LabeledInputStr } from "@/app/components/labeledinputs";
-import WindowButton from "@/app/components/semanticcomps/windowbutton";
-import WindowInternal from "@/app/components/semanticcomps/windowinternal";
+import { LabeledInputStr } from "@/app/desktop/labeledinputs";
+import WindowButton from "@/app/desktop/semanticcomps/windowbutton";
+import WindowInternal from "@/app/desktop/semanticcomps/windowinternal";
 import { useContext, useState } from "react";
 import { TaskbarContext } from "./sitecomps/toplevel";
 import DesktopWindow from "./sitecomps/desktopwindow";

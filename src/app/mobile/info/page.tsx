@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import MBlackJackGame from "../../components/blackjackcomps/mobileblackjack";
+import MBlackJackGame from "../../desktop/blackjackcomps/mobileblackjack";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
