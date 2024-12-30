@@ -18,7 +18,7 @@ export default function Page() {
           <Taskbar />
         </div>
       ) : (
-        <div className={"flex mt-[25%] h-[38px]"}>
+        <div>
           <Loading />
         </div>
       )}

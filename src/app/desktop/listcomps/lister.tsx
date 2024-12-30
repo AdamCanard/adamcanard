@@ -28,7 +28,7 @@ export default function Lister() {
           handleClick(
             <List
               title="Beer"
-              api="/api/Beer/"
+              api="/api/beer/"
               key={"Beer"}
               adminNeeded={true}
               submit={() => {}}
