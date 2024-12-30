@@ -49,9 +49,7 @@
 #listHeight {
   height: calc(100% - 64px);
 }
-#listHeightOpen {
-  height: calc(100% - 207px);
-}
+
 #title {
   height: 30px;
   width: 100%;
