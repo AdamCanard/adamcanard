@@ -8,7 +8,12 @@ export const metadata: Metadata = {
   title: "Adam Cunard Portfolio",
   description: "Reject Modernity. Return to Tradition",
   icons: {
-    icon: "/Windows/Windows.png",
+    icon: [
+      {
+        url: "/Windows/Windows.png",
+        href: "/Windows/Windows.png",
+      },
+    ],
   },
 };
 
