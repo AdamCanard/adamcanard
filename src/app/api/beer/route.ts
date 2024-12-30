@@ -8,7 +8,6 @@ export async function POST(req: Request) {
     Brewery: formData.get("Brewery") as string,
     By: formData.get("By") as string,
     Rating: +(formData.get("Rating") as string),
-    Drank: true,
   };
   db.addBeer(data);
   return new Response(JSON.stringify({ data: data }), {
@@ -17,6 +16,6 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  const drankList = await db.getDrank();
+  const drankList = await db.getBeer();
   return new Response(JSON.stringify(drankList), { status: 200 });
 }
