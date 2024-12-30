@@ -4,7 +4,7 @@ import BlackJack from "../blackjackcomps/blackjackgame";
 import AdminPanel from "../adminpanel";
 import Windows from "../windows";
 import Lister from "../listcomps/lister";
-import { TaskbarContext } from "../layout";
+import { TaskbarContext } from "../taskbarcontext";
 
 export default function TaskbarTabs() {
   const { setWindows, windows, admin, username } = useContext(TaskbarContext);

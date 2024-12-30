@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Image, { StaticImageData } from "next/image";
-import { TaskbarContext } from "../layout";
+import { TaskbarContext } from "../taskbarcontext";
 
 export default function Application(props: {
   title: string;

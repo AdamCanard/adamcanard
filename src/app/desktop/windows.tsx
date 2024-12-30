@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import DesktopWindow from "./sitecomps/desktopwindow";
-import { TaskbarContext } from "./layout";
+import { TaskbarContext } from "./taskbarcontext";
 
 export default function Windows() {
   const { windows } = useContext(TaskbarContext);

@@ -5,7 +5,7 @@ import WindowButton from "@/app/desktop/semanticcomps/windowbutton";
 import WindowInternal from "@/app/desktop/semanticcomps/windowinternal";
 import { useContext, useState } from "react";
 import DesktopWindow from "./sitecomps/desktopwindow";
-import { TaskbarContext } from "./layout";
+import { TaskbarContext } from "./taskbarcontext";
 
 export default function AdminPanel() {
   const [email, setEmail] = useState("");

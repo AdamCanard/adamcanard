@@ -1,7 +1,9 @@
+"use client";
 import { useContext } from "react";
-import { TaskbarContext } from "./layout";
 import Desktop from "./sitecomps/desktop";
 import { Taskbar } from "./sitecomps/taskbar";
+import { TaskbarContext } from "./taskbarcontext";
+import Loading from "./sitecomps/loading";
 
 export default function Page() {
   const { username } = useContext(TaskbarContext);
@@ -21,12 +23,5 @@ export default function Page() {
         </div>
       )}
     </>
-  );
-}
-export function Loading() {
-  return (
-    <div id="boxshadow" className={"w-1/8 h-full"}>
-      <h1 id="title">Logging you in...</h1>
-    </div>
   );
 }

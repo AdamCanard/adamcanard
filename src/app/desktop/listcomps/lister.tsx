@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
 import List from "./list";
-import { TaskbarContext } from "../layout";
+import { TaskbarContext } from "../taskbarcontext";
 
 export default function Lister() {
   const { windows, setWindows } = useContext(TaskbarContext);

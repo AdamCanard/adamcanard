@@ -6,7 +6,7 @@ import DesktopWindow from "../sitecomps/desktopwindow";
 import Form from "./form";
 import ListWindow from "./listWindow";
 import ListToolBar from "./listtoolbar";
-import { TaskbarContext } from "../layout";
+import { TaskbarContext } from "../taskbarcontext";
 
 export default function List(props: {
   title: string;

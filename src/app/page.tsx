@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Loading } from "./desktop/page";
+import Loading from "./desktop/sitecomps/loading";
 export default function Page() {
   const router = useRouter();
   useEffect(() => {
