@@ -152,27 +152,11 @@ export class DatabaseClient {
   }
 
   async getBeer() {
-    const BeerList = await this.client.collection("Beer").getList(1, 50, {});
-
-    return BeerList;
-  }
-
-  async getDrank() {
     const BeerList = await this.client.collection("Beer").getFullList({
       fields: "id,Beer,Brewery,By,Rating",
-      filter: "Drank = true",
     });
     return BeerList;
   }
-  async getDrink() {
-    const BeerList = await this.client.collection("Beer").getFullList({
-      fields: "id,Beer,Brewery,By",
-      filter: "Drank != true",
-    });
-
-    return BeerList;
-  }
-
   async getIdeas() {
     const IdeaList = await this.client
       .collection("Ideas")
