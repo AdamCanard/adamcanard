@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  LabeledInputNum,
-  LabeledInputStr,
-} from "../../components/labeledinputs";
+import { LabeledInputNum, LabeledInputStr } from "../../desktop/labeledinputs";
 
 export default function SecretForms() {
   return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LabeledInputStr } from "../../components/labeledinputs";
+import { LabeledInputStr } from "../../desktop/labeledinputs";
 import SecretForms from "./secretforms";
 
 export default function Secret() {

@@ -1,7 +1,7 @@
 "use client";
-import ErrorPopup from "@/app/components/errorpopup";
-import { LabeledInputStr } from "@/app/components/labeledinputs";
-import Window from "@/app/components/semanticcomps/window";
+import ErrorPopup from "@/app/desktop/errorpopup";
+import { LabeledInputStr } from "@/app/desktop/labeledinputs";
+import Window from "@/app/desktop/semanticcomps/window";
 import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
