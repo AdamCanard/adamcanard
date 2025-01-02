@@ -5,10 +5,6 @@ export default function ListToolBar(props: {
   form: string[];
   search: Dispatch<SetStateAction<string>>;
 }) {
-  console.log(props.list);
-
-  console.log(props.form);
-
   return (
     <>
       <div id="boxshadow" className={"flex flex-row  w-full "}>
