@@ -29,7 +29,7 @@ export default function Lister() {
             <List
               title="Beers"
               api="/api/beer/"
-              key={"Beer"}
+              key={"Beers"}
               adminNeeded={true}
               submit={() => {}}
               actionNeeded={false}
