@@ -102,11 +102,7 @@ export default function MobileList(props: { open: boolean; title: string }) {
           </div>{" "}
           {props.open && (
             <div id="boxshadow">
-              <Form
-                api={"/api/list/"}
-                formElements={formElements}
-                title={props.title}
-              />{" "}
+              <Form formElements={formElements} title={props.title} />{" "}
             </div>
           )}
         </div>

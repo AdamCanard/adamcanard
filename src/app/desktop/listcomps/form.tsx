@@ -12,16 +12,12 @@ export const FormContext = createContext<FormContextType>(
   {} as FormContextType,
 );
 
-export default function Form(props: {
-  api: string;
-  formElements: string[];
-  title: string;
-}) {
+export default function Form(props: { formElements: string[]; title: string }) {
   const [clear, setClear] = useState(false);
 
   const postData = async (formData: FormData) => {
     try {
-      const response = await fetch(props.api + props.title, {
+      const response = await fetch("/api/list/" + props.title, {
         method: "POST",
         body: formData,
       });

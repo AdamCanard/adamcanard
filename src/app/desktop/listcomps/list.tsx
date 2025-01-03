@@ -11,7 +11,6 @@ import { Omit } from "./omit";
 
 export default function List(props: {
   title: string;
-  api: string;
   adminNeeded: boolean;
   submit: (arg0: never[]) => void;
   actionNeeded: boolean;
@@ -35,13 +34,13 @@ export default function List(props: {
   const getData = async (id: string) => {
     if (id) {
       try {
-        const response = await fetch(props.api + props.title + "/" + id, {
+        const response = await fetch("/api/list/" + props.title + "/" + id, {
           method: "GET",
         });
         const data: object = await response.json();
         openElementWindow(
           <ListWindow
-            api={props.api + props.title + "/"}
+            api={"/api/list/" + props.title + "/"}
             data={data}
             id={id}
             key={Object.values(data)[0]}
@@ -80,7 +79,9 @@ export default function List(props: {
 
   const getListElements = useCallback(async () => {
     try {
-      const response = await fetch(props.api + props.title, { method: "GET" });
+      const response = await fetch("/api/list/" + props.title, {
+        method: "GET",
+      });
       const listResponse = await response.json();
 
       setListElements(listResponse);
@@ -99,7 +100,7 @@ export default function List(props: {
         console.log(err);
       }
     }
-  }, [props.api, props.title]);
+  }, [props.title]);
 
   const { isPending, isError, error, isSuccess } = useQuery({
     queryKey: [props.title],
@@ -165,11 +166,7 @@ export default function List(props: {
         )}
 
         {(admin || !props.adminNeeded) && (
-          <Form
-            api={props.api}
-            formElements={formElements}
-            title={props.title}
-          />
+          <Form formElements={formElements} title={props.title} />
         )}
       </DesktopWindow>
     );
