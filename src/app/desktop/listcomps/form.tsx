@@ -21,7 +21,7 @@ export default function Form(props: {
 
   const postData = async (formData: FormData) => {
     try {
-      const response = await fetch(props.api, {
+      const response = await fetch(props.api + props.title, {
         method: "POST",
         body: formData,
       });
@@ -45,7 +45,6 @@ export default function Form(props: {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    formData.append("collection", props.title);
     await postData(formData);
     setClear(true);
   };

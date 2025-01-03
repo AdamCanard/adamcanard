@@ -28,7 +28,7 @@ export default function Lister() {
           handleClick(
             <List
               title="Beers"
-              api="/api/beer/"
+              api="/api/list/"
               key={"Beers"}
               adminNeeded={true}
               submit={() => {}}
@@ -62,7 +62,7 @@ export default function Lister() {
           handleClick(
             <List
               title="Ideas"
-              api="/api/idea/"
+              api="/api/list/"
               key={"Ideas"}
               adminNeeded={true}
               submit={randomOutput}

@@ -35,13 +35,13 @@ export default function List(props: {
   const getData = async (id: string) => {
     if (id) {
       try {
-        const response = await fetch(props.api + id, {
+        const response = await fetch(props.api + props.title + "/" + id, {
           method: "GET",
         });
         const data: object = await response.json();
         openElementWindow(
           <ListWindow
-            api={props.api}
+            api={props.api + props.title + "/"}
             data={data}
             id={id}
             key={Object.values(data)[0]}
@@ -80,7 +80,7 @@ export default function List(props: {
 
   const getListElements = useCallback(async () => {
     try {
-      const response = await fetch(props.api, { method: "GET" });
+      const response = await fetch(props.api + props.title, { method: "GET" });
       const listResponse = await response.json();
 
       setListElements(listResponse);
@@ -99,7 +99,7 @@ export default function List(props: {
         console.log(err);
       }
     }
-  }, [props.api]);
+  }, [props.api, props.title]);
 
   const { isPending, isError, error, isSuccess } = useQuery({
     queryKey: [props.title],
@@ -124,7 +124,7 @@ export default function List(props: {
         <div className="w-full flex flex-col max-h-60 overflow-y-scroll">
           {listElements.map((listElement) => {
             const id: string = Object.values(listElement)[
-              Object.keys(listElement).length - 1
+              formElements.indexOf("id")
             ] as string;
             return (
               <>
