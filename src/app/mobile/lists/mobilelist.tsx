@@ -4,7 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import Form from "../../desktop/listcomps/form";
 import ListToolBar from "@/app/desktop/listcomps/listtoolbar";
 import Loading from "@/app/desktop/sitecomps/loading";
-export default function MobileList(props: { api: string; open: boolean }) {
+export default function MobileList(props: {
+  api: string;
+  open: boolean;
+  title: string;
+}) {
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
 
@@ -99,7 +103,11 @@ export default function MobileList(props: { api: string; open: boolean }) {
           </div>{" "}
           {props.open && (
             <div id="boxshadow">
-              <Form api={props.api} formElements={formElements} />{" "}
+              <Form
+                api={props.api}
+                formElements={formElements}
+                title={props.title}
+              />{" "}
             </div>
           )}
         </div>
