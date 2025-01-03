@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import { Omit } from "./omit";
 
 export default function ListToolBar(props: {
   list: never[];
@@ -19,7 +20,9 @@ export default function ListToolBar(props: {
       <div id="border" className={"h-6 flex flex-col justify-center"}>
         <div className={"text-xs flex flex-row justify-between"}>
           {props.form.map((value, index) => {
-            return <div key={index}>{value}:</div>;
+            if (!Omit.includes(props.form[index])) {
+              return <div key={index}>{value}:</div>;
+            }
           })}
         </div>
       </div>

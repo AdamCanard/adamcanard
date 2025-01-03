@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 import Input from "./input";
+import { Omit } from "./omit";
 
 interface FormContextType {
   clear: boolean;
@@ -11,7 +12,11 @@ export const FormContext = createContext<FormContextType>(
   {} as FormContextType,
 );
 
-export default function Form(props: { api: string; formElements: string[] }) {
+export default function Form(props: {
+  api: string;
+  formElements: string[];
+  title: string;
+}) {
   const [clear, setClear] = useState(false);
 
   const postData = async (formData: FormData) => {
@@ -40,6 +45,7 @@ export default function Form(props: { api: string; formElements: string[] }) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
+    formData.append("collection", props.title);
     await postData(formData);
     setClear(true);
   };
@@ -52,7 +58,7 @@ export default function Form(props: { api: string; formElements: string[] }) {
     >
       <FormContext.Provider value={{ clear, setClear }}>
         {props.formElements.map((element: string, index: number) => {
-          if (index < Object.keys(props.formElements).length - 1) {
+          if (!Omit.includes(element)) {
             return <Input name={element} value="" key={index} />;
           }
         })}

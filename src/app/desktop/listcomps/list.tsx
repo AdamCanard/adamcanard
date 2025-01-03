@@ -7,6 +7,7 @@ import Form from "./form";
 import ListWindow from "./listWindow";
 import ListToolBar from "./listtoolbar";
 import { TaskbarContext } from "../taskbarcontext";
+import { Omit } from "./omit";
 
 export default function List(props: {
   title: string;
@@ -140,7 +141,7 @@ export default function List(props: {
                   >
                     <>
                       {Object.values(listElement).map((data, index: number) => {
-                        if (index < Object.keys(listElement).length - 1) {
+                        if (!Omit.includes(formElements[index])) {
                           if ((data as string) !== "") {
                             return <div key={index + id}>{data as string}</div>;
                           }
@@ -164,7 +165,11 @@ export default function List(props: {
         )}
 
         {(admin || !props.adminNeeded) && (
-          <Form api={props.api} formElements={formElements} />
+          <Form
+            api={props.api}
+            formElements={formElements}
+            title={props.title}
+          />
         )}
       </DesktopWindow>
     );

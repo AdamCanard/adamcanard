@@ -128,6 +128,16 @@ export class DatabaseClient {
     return BeerList;
   }
 
+  async addValue(data: object, collection: string) {
+    const result = await this.client.collection(collection).create(data);
+    return result;
+  }
+
+  async getList(collection: string) {
+    const List = await this.client.collection(collection).getFullList();
+    return List;
+  }
+
   async delete(collection: string, id: string) {
     const result = await this.client.collection(collection).delete(id);
     return result;
