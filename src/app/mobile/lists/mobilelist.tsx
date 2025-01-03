@@ -4,18 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 import Form from "../../desktop/listcomps/form";
 import ListToolBar from "@/app/desktop/listcomps/listtoolbar";
 import Loading from "@/app/desktop/sitecomps/loading";
-export default function MobileList(props: {
-  api: string;
-  open: boolean;
-  title: string;
-}) {
+import { Omit } from "@/app/desktop/listcomps/omit";
+export default function MobileList(props: { open: boolean; title: string }) {
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
 
   const [search, setSearch] = useState<string>("");
   const getListElements = async () => {
     try {
-      const response = await fetch(props.api, { method: "GET" });
+      const response = await fetch("/api/list/" + props.title, {
+        method: "GET",
+      });
       const listResponse = await response.json();
 
       setFormElements(Object.keys(listResponse[0]));
@@ -46,7 +45,7 @@ export default function MobileList(props: {
   };
 
   const { isPending, isError, error, isSuccess } = useQuery({
-    queryKey: [props.api],
+    queryKey: [props.title],
     queryFn: getListElements,
   });
 
@@ -84,7 +83,7 @@ export default function MobileList(props: {
                         <>
                           {Object.values(listElement).map(
                             (data, index: number) => {
-                              if (index < Object.keys(listElement).length - 1) {
+                              if (!Omit.includes(formElements[index])) {
                                 if ((data as string) !== "") {
                                   return (
                                     <div key={index + id}>{data as string}</div>
@@ -104,7 +103,7 @@ export default function MobileList(props: {
           {props.open && (
             <div id="boxshadow">
               <Form
-                api={props.api}
+                api={"/api/list/"}
                 formElements={formElements}
                 title={props.title}
               />{" "}

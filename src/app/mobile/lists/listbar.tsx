@@ -5,8 +5,8 @@ export default function ListBar() {
     <>
       <div id="TabBar" className={"flex flex-row justify-between"}>
         <div className={"w-full h-8 flex flex-row"}>
-          <ListButton title="Beer" nav="/mobile/lists/beer" />
-          <ListButton title="Suggestions" nav="/mobile/lists/suggestions" />
+          <ListButton title="Beers" nav="/mobile/lists/beers" />
+          <ListButton title="Suggestion" nav="/mobile/lists/suggestion" />
           <ListButton title="Ideas" nav="/mobile/lists/ideas" />
         </div>
       </div>
