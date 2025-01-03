@@ -1,5 +1,4 @@
 import PocketBase from "pocketbase";
-import { BeerData, ISuggestion, IIdea } from "../types";
 
 export const POCKET_BASE_URL = "http://127.0.0.1:8090";
 export const domain = process.env.PB_DOMAIN;
@@ -109,25 +108,6 @@ export class DatabaseClient {
       }
     }
   }
-  async addSuggestion(data: ISuggestion) {
-    try {
-      const result = await this.client.collection("Suggestion").create(data);
-      return result;
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        return e;
-      }
-    }
-  }
-
-  async getSuggestion() {
-    const BeerList = await this.client.collection("Suggestion").getFullList({
-      fields: "id,Beer,Brewery,By",
-    });
-
-    return BeerList;
-  }
-
   async addValue(data: object, collection: string) {
     const result = await this.client.collection(collection).create(data);
     return result;
@@ -145,34 +125,6 @@ export class DatabaseClient {
 
   async update(collection: string, id: string, data: object) {
     const result = await this.client.collection(collection).update(id, data);
-    return result;
-  }
-
-  async addBeer(data: BeerData) {
-    const result = await this.client.collection("Beer").create(data);
-    return result;
-  }
-
-  async getBeer() {
-    const BeerList = await this.client.collection("Beer").getFullList({
-      fields: "id,Beer,Brewery,By,Rating",
-    });
-    return BeerList;
-  }
-  async getIdeas() {
-    const IdeaList = await this.client
-      .collection("Ideas")
-      .getFullList({ fields: "id, Idea" });
-    return IdeaList;
-  }
-
-  async addIdea(data: IIdea) {
-    const result = await this.client.collection("Ideas").create(data);
-    return result;
-  }
-
-  async updateBeer(data: BeerData, id: string) {
-    const result = await this.client.collection("Beer").update(id, data);
     return result;
   }
 
