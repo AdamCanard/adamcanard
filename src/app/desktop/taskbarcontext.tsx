@@ -2,7 +2,6 @@
 import { createContext, SetStateAction, useEffect, useState } from "react";
 import { IError } from "../types";
 import ErrorPopup from "./errorpopup";
-import { useRouter } from "next/navigation";
 
 interface TaskbarContextType {
   username: string;
@@ -29,46 +28,25 @@ export default function TaskbarContextWrapper(props: {
     admin: { code: "123", message: "You are not Admin" },
   });
   const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
-  const router = useRouter();
 
-  const loadUser = async () => {
-    //if check for users authtoken
-    const formData = new FormData();
-    formData.append("cookie", "authToken");
-    loginUser(formData);
-  };
-
-  const loginUser = async (formData: FormData) => {
+  const loginUser = async () => {
     try {
-      const response = await fetch("/api/getcookie/", {
+      let formData = new FormData();
+      formData.append("cookie", "userId");
+      let response = await fetch("/api/getcookie/", {
         method: "POST",
         body: formData,
       });
-
       const cookie = await response.json();
-      if (Object.keys(cookie).length === 0) {
-        router.push("/auth/login");
-      } else {
-        let formData = new FormData();
-        formData.append("cookie", "userId");
-        let response = await fetch("/api/getcookie/", {
-          method: "POST",
-          body: formData,
-        });
-        const cookie = await response.json();
+      formData = new FormData();
+      formData.append("userId", cookie.data.value);
+      response = await fetch("/api/getusername/", {
+        method: "POST",
+        body: formData,
+      });
+      const username = await response.json();
 
-        formData = new FormData();
-        formData.append("userId", cookie.data.value);
-        response = await fetch("/api/getusername/", {
-          method: "POST",
-          body: formData,
-        });
-        const username = await response.json();
-        if (username.data.status == 404) {
-          router.push("/auth/login");
-        }
-        setUsername(username.data.name);
-      }
+      setUsername(username.data.name);
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -85,7 +63,7 @@ export default function TaskbarContextWrapper(props: {
   };
 
   useEffect(() => {
-    loadUser();
+    loginUser();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
