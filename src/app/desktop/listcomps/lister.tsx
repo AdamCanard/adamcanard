@@ -57,4 +57,4 @@ export default function Lister() {
   );
 }
 
-const lists = ["Beers", "Suggestion", "Ideas"];
+const lists = ["Beers", "Suggestion", "Ideas", "Books", "Vinyls"];
