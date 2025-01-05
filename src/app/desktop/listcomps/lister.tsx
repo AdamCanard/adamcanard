@@ -16,60 +16,45 @@ export default function Lister() {
     }
     setWindows([...windows, window]);
   };
-
-  const randomOutput = (data: never[]) => {
-    alert(Object.values(data[Math.floor(Math.random() * data.length)])[0]);
+  const isOpen = (name: string) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == name) {
+        return true;
+      }
+    }
+    return false;
   };
+
+  //const randomOutput = (data: never[]) => {
+  //  alert(Object.values(data[Math.floor(Math.random() * data.length)])[0]);
+  //};
   return (
     <DesktopWindow title="Lists" width={"8rem"} height={""}>
-      <div
-        id="button-taskbar"
-        onClick={() =>
-          handleClick(
-            <List
-              title="Beers"
-              key={"Beers"}
-              adminNeeded={true}
-              submit={() => {}}
-              actionNeeded={false}
-            />,
-          )
-        }
-      >
-        Beers
-      </div>{" "}
-      <div
-        id="button-taskbar"
-        onClick={() =>
-          handleClick(
-            <List
-              title="Suggestion"
-              key={"Suggestion"}
-              adminNeeded={false}
-              submit={() => {}}
-              actionNeeded={false}
-            />,
-          )
-        }
-      >
-        Suggestion
-      </div>{" "}
-      <div
-        id="button-taskbar"
-        onClick={() =>
-          handleClick(
-            <List
-              title="Ideas"
-              key={"Ideas"}
-              adminNeeded={true}
-              submit={randomOutput}
-              actionNeeded={true}
-            />,
-          )
-        }
-      >
-        Ideas
-      </div>{" "}
+      {lists.map((collection: string) => {
+        return (
+          <div
+            id={
+              isOpen(collection) ? "button-taskbar-pressed" : "button-taskbar"
+            }
+            key={collection}
+            onClick={() =>
+              handleClick(
+                <List
+                  title={collection}
+                  key={collection}
+                  adminNeeded={true}
+                  submit={() => {}}
+                  actionNeeded={false}
+                />,
+              )
+            }
+          >
+            {collection}
+          </div>
+        );
+      })}
     </DesktopWindow>
   );
 }
+
+const lists = ["Beers", "Suggestion", "Ideas"];
