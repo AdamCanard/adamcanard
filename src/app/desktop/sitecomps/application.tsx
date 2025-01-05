@@ -1,3 +1,4 @@
+"use client";
 import { useContext } from "react";
 import Image, { StaticImageData } from "next/image";
 import { TaskbarContext } from "../taskbarcontext";

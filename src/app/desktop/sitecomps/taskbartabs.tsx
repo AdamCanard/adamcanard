@@ -1,5 +1,5 @@
+"use client";
 import { useContext } from "react";
-
 import BlackJack from "../blackjackcomps/blackjackgame";
 import AdminPanel from "../adminpanel";
 import Windows from "../windows";
