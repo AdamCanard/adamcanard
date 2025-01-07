@@ -32,3 +32,10 @@ export interface IIdea {
   id?: string;
   Idea: string;
 }
+
+export interface IUser {
+  id: string;
+  Name: string;
+  Logs: number;
+  Losses: number;
+}
