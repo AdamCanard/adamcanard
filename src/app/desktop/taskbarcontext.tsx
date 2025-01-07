@@ -43,12 +43,11 @@ export default function TaskbarContextWrapper(props: {
       const cookie = await response.json();
       formData = new FormData();
       formData.append("userId", cookie.data.value);
-      response = await fetch("/api/getusername/", {
+      response = await fetch("/api/user/", {
         method: "POST",
         body: formData,
       });
       const username = await response.json();
-
       setUser(username);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -70,10 +69,6 @@ export default function TaskbarContextWrapper(props: {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   const openWindow = (window: JSX.Element) => {
     for (let i = 0; i < windows.length; i++) {

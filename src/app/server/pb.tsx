@@ -51,26 +51,10 @@ export class DatabaseClient {
   async getUsername(user_id: string) {
     try {
       const record = await this.client.collection("users").getOne(user_id);
+      record.Logs += 1;
       return record;
     } catch (err: unknown) {
       return err;
-    }
-  }
-
-  async isBanned(userId: string) {
-    try {
-      const resultList = await this.client.collection("Banned").getList(1, 50, {
-        sort: "-created",
-      });
-
-      for (let i = 0; i < resultList.items.length; i++) {
-        if (userId === resultList.items[i].userId) {
-          return true;
-        }
-      }
-      return false;
-    } catch (e) {
-      console.error("Error getting user: ", e);
     }
   }
 
