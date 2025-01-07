@@ -64,7 +64,7 @@ export default function List(props: {
       });
       const listResponse = await response.json();
 
-      setListElements(listResponse);
+      setListElements(listResponse.toReversed());
       setFormElements(Object.keys(listResponse[0]));
       return listResponse;
     } catch (err: unknown) {
