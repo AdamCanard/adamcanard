@@ -9,7 +9,7 @@ export default function ListWindow(props: {
   id: string;
 }) {
   const [updating, setUpdating] = useState(false);
-  const { windows, setWindows, admin } = useContext(TaskbarContext);
+  const { admin, closeWindow } = useContext(TaskbarContext);
   const keys = Object.keys(props.data);
 
   const updateItem = () => {
@@ -46,18 +46,9 @@ export default function ListWindow(props: {
     }
   };
 
-  const closeWindow = () => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == Object.values(props.data)[0]) {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
-      }
-    }
-  };
-
   const deleteItem = () => {
     deleteById(props.id);
-    closeWindow();
+    closeWindow(Object.values(props.data)[0]);
   };
 
   const deleteById = async (id: string) => {
