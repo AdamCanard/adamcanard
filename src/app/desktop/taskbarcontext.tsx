@@ -11,6 +11,7 @@ interface TaskbarContextType {
   setWindows: React.Dispatch<SetStateAction<JSX.Element[]>>;
   openWindow: (window: JSX.Element) => void;
   isOpen: (name: string) => boolean;
+  closeWindow: (name: string) => void;
   setError: React.Dispatch<SetStateAction<IError>>;
   setErrorTrigger: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -88,6 +89,14 @@ export default function TaskbarContextWrapper(props: {
     }
     return false;
   };
+  const closeWindow = (name: string) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == name) {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+      }
+    }
+  };
 
   return (
     <>
@@ -102,6 +111,7 @@ export default function TaskbarContextWrapper(props: {
           setError,
           openWindow,
           isOpen,
+          closeWindow,
         }}
       >
         {" "}
