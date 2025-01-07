@@ -9,6 +9,8 @@ interface TaskbarContextType {
   setAdmin: React.Dispatch<SetStateAction<boolean>>;
   windows: JSX.Element[];
   setWindows: React.Dispatch<SetStateAction<JSX.Element[]>>;
+  openWindow: (window: JSX.Element) => void;
+  isOpen: (name: string) => boolean;
   setError: React.Dispatch<SetStateAction<IError>>;
   setErrorTrigger: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -68,6 +70,25 @@ export default function TaskbarContextWrapper(props: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const openWindow = (window: JSX.Element) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == window.key) {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+        return;
+      }
+    }
+    setWindows([...windows, window]);
+  };
+  const isOpen = (name: string) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == name) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   return (
     <>
       <TaskbarContext.Provider
@@ -79,6 +100,8 @@ export default function TaskbarContextWrapper(props: {
           setWindows,
           setErrorTrigger,
           setError,
+          openWindow,
+          isOpen,
         }}
       >
         {" "}
