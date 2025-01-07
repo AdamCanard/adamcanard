@@ -1,7 +1,6 @@
 "use client";
 import ErrorPopup from "@/app/desktop/errorpopup";
 import { LabeledInputStr } from "@/app/desktop/labeledinputs";
-
 import Window from "@/app/desktop/semanticcomps/window";
 import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";

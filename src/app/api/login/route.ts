@@ -4,7 +4,6 @@ export async function POST(req: Request) {
   const formData = await req.formData();
   const username = formData.get("username") as string;
   const data = await db.authenticate(username);
-  console.log(data);
   return new Response(JSON.stringify(data), {
     status: 200,
   });
