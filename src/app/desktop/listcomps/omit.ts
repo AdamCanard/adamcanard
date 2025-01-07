@@ -7,4 +7,6 @@ export const Omit = [
   "created",
   "updated",
   "Drank",
+  "verified",
+  "emailVisibility",
 ];
