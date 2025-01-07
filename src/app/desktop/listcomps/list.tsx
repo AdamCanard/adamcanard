@@ -15,21 +15,10 @@ export default function List(props: {
   submit: (arg0: never[]) => void;
   actionNeeded: boolean;
 }) {
-  const { admin, windows, setWindows } = useContext(TaskbarContext);
+  const { admin, openWindow, isOpen } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
   const [search, setSearch] = useState<string>("");
-
-  const openElementWindow = (window: JSX.Element) => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == window.key) {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
-        return;
-      }
-    }
-    setWindows([...windows, window]);
-  };
 
   const getData = async (id: string) => {
     if (id) {
@@ -38,7 +27,7 @@ export default function List(props: {
           method: "GET",
         });
         const data: object = await response.json();
-        openElementWindow(
+        openWindow(
           <ListWindow
             api={"/api/list/" + props.title + "/"}
             data={data}
@@ -57,15 +46,6 @@ export default function List(props: {
         }
       }
     }
-  };
-
-  const isOpen = (name: string) => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == name) {
-        return true;
-      }
-    }
-    return false;
   };
 
   const subStringer = (element: object) => {
