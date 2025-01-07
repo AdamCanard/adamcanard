@@ -8,20 +8,9 @@ export default function Application(props: {
   src: StaticImageData;
   window: JSX.Element;
 }) {
-  const { windows, setWindows } = useContext(TaskbarContext);
-  const openAppWindow = () => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == props.window.key) {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
-        return;
-      }
-    }
-    setWindows([...windows, props.window]);
-  };
-
+  const { openWindow } = useContext(TaskbarContext);
   return (
-    <div onClick={openAppWindow} className={"w-full h-full "}>
+    <div onClick={() => openWindow(props.window)} className={"w-full h-full "}>
       <Image
         className={"hover:cursor-pointer"}
         src={props.src}

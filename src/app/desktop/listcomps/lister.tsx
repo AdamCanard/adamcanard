@@ -4,26 +4,7 @@ import List from "./list";
 import { TaskbarContext } from "../taskbarcontext";
 
 export default function Lister() {
-  const { windows, setWindows } = useContext(TaskbarContext);
-
-  const handleClick = (window: JSX.Element) => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == window.key) {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
-        return;
-      }
-    }
-    setWindows([...windows, window]);
-  };
-  const isOpen = (name: string) => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == name) {
-        return true;
-      }
-    }
-    return false;
-  };
+  const { isOpen, openWindow } = useContext(TaskbarContext);
 
   //const randomOutput = (data: never[]) => {
   //  alert(Object.values(data[Math.floor(Math.random() * data.length)])[0]);
@@ -38,7 +19,7 @@ export default function Lister() {
             }
             key={collection}
             onClick={() =>
-              handleClick(
+              openWindow(
                 <List
                   title={collection}
                   key={collection}

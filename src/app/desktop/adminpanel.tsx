@@ -11,7 +11,7 @@ export default function AdminPanel() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setAdmin, windows, setWindows } = useContext(TaskbarContext);
+  const { setAdmin, closeWindow } = useContext(TaskbarContext);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ export default function AdminPanel() {
     try {
       if (data.token !== "") {
         setAdmin(true);
-        handleClose();
+        closeWindow("Admin");
       }
     } catch (error) {}
   };
@@ -47,14 +47,6 @@ export default function AdminPanel() {
             headers: {},
           },
         );
-      }
-    }
-  };
-  const handleClose = () => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == "Admin") {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
       }
     }
   };

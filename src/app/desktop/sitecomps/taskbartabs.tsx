@@ -7,32 +7,21 @@ import Lister from "../listcomps/lister";
 import { TaskbarContext } from "../taskbarcontext";
 
 export default function TaskbarTabs() {
-  const { setWindows, windows, admin, username } = useContext(TaskbarContext);
-
-  const handleClick = (window: JSX.Element) => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == window.key) {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
-        return;
-      }
-    }
-    setWindows([...windows, window]);
-  };
+  const { openWindow, admin, username } = useContext(TaskbarContext);
 
   return (
     <div className={"flex flex-row w-full justify-between"}>
       <div className={"flex flex-row"}>
         <div
           id="button-taskbar"
-          onClick={() => handleClick(<Lister key={"Lists"} />)}
+          onClick={() => openWindow(<Lister key={"Lists"} />)}
         >
           Lists
         </div>
 
         <div
           id="button-taskbar"
-          onClick={() => handleClick(<BlackJack key={"BlackJack"} />)}
+          onClick={() => openWindow(<BlackJack key={"BlackJack"} />)}
         >
           BlackJack
         </div>
@@ -44,7 +33,7 @@ export default function TaskbarTabs() {
             <div
               id="button-taskbar"
               onClick={() => {
-                handleClick(<Windows key={"Windows"} />);
+                openWindow(<Windows key={"Windows"} />);
               }}
             >
               Windows
@@ -56,7 +45,7 @@ export default function TaskbarTabs() {
         <div
           id="button-taskbar"
           onClick={() => {
-            handleClick(<AdminPanel key={"Admin"} />);
+            openWindow(<AdminPanel key={"Admin"} />);
           }}
         >
           Admin
