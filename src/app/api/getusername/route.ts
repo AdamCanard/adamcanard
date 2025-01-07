@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const userId = formData.get("userId") as string;
 
   const data = await db.getUsername(userId);
-  return new Response(JSON.stringify({ data: data }), {
+  return new Response(JSON.stringify(data), {
     status: 200,
   });
 }
