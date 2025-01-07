@@ -20,7 +20,6 @@ export default function Login() {
         method: "POST",
         body: formData,
       });
-
       return response.json();
     } catch (err: unknown) {
       if (typeof err === "string") {
@@ -42,23 +41,21 @@ export default function Login() {
     const form = e.currentTarget;
     let formData = new FormData(form);
     let data = await postData(formData);
-
-    if (data.data.status === undefined) {
+    if (data.status === undefined) {
       //api returned user data
       formData = new FormData();
       formData.append("cookieName", "authToken");
-      formData.append("cookieData", data.data.token);
-      formData.append("userId", data.data.record.id);
+      formData.append("cookieData", data.token);
       await createCookie(formData);
       formData = new FormData();
       formData.append("cookieName", "userId");
-      formData.append("cookieData", data.data.record.id);
+      formData.append("cookieData", data.record.id);
       data = await createCookie(formData);
       if (data.status === 400) {
-        setError(data.data);
+        setError(data);
         setPopup(true);
       } else {
-        router.push("/");
+        router.push("/desktop");
       }
     }
   };
