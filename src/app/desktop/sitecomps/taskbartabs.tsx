@@ -5,22 +5,23 @@ import AdminPanel from "../adminpanel";
 import Windows from "../windows";
 import Lister from "../listcomps/lister";
 import { TaskbarContext } from "../taskbarcontext";
+import UserPanel from "../userpanel";
 
 export default function TaskbarTabs() {
-  const { openWindow, admin, username } = useContext(TaskbarContext);
+  const { openWindow, admin, user, isOpen } = useContext(TaskbarContext);
 
   return (
     <div className={"flex flex-row w-full justify-between"}>
       <div className={"flex flex-row"}>
         <div
-          id="button-taskbar"
+          id={isOpen("Lists") ? "button-taskbar-pressed" : "button-taskbar"}
           onClick={() => openWindow(<Lister key={"Lists"} />)}
         >
           Lists
         </div>
 
         <div
-          id="button-taskbar"
+          id={isOpen("BlackJack") ? "button-taskbar-pressed" : "button-taskbar"}
           onClick={() => openWindow(<BlackJack key={"BlackJack"} />)}
         >
           BlackJack
@@ -31,7 +32,9 @@ export default function TaskbarTabs() {
         {admin && (
           <>
             <div
-              id="button-taskbar"
+              id={
+                isOpen("Windows") ? "button-taskbar-pressed" : "button-taskbar"
+              }
               onClick={() => {
                 openWindow(<Windows key={"Windows"} />);
               }}
@@ -41,9 +44,16 @@ export default function TaskbarTabs() {
           </>
         )}
 
-        <div id="button-taskbar">{username}</div>
         <div
-          id="button-taskbar"
+          id={isOpen(user.Name) ? "button-taskbar-pressed" : "button-taskbar"}
+          onClick={() => {
+            openWindow(<UserPanel key={user.Name} />);
+          }}
+        >
+          {user.Name}
+        </div>
+        <div
+          id={isOpen("Admin") ? "button-taskbar-pressed" : "button-taskbar"}
           onClick={() => {
             openWindow(<AdminPanel key={"Admin"} />);
           }}
