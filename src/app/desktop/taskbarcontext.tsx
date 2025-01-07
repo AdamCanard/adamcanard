@@ -1,10 +1,10 @@
 "use client";
 import { createContext, SetStateAction, useEffect, useState } from "react";
-import { IError } from "../types";
+import { IError, IUser } from "../types";
 import ErrorPopup from "./errorpopup";
 
 interface TaskbarContextType {
-  username: string;
+  user: IUser;
   admin: boolean;
   setAdmin: React.Dispatch<SetStateAction<boolean>>;
   windows: JSX.Element[];
@@ -26,7 +26,7 @@ export default function TaskbarContextWrapper(props: {
 }) {
   const [windows, setWindows] = useState<JSX.Element[]>([]);
   const [admin, setAdmin] = useState(false);
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState<IUser>({} as IUser);
   const [error, setError] = useState<IError>({
     admin: { code: "123", message: "You are not Admin" },
   });
@@ -49,7 +49,7 @@ export default function TaskbarContextWrapper(props: {
       });
       const username = await response.json();
 
-      setUsername(username.data.name);
+      setUser(username);
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -70,6 +70,10 @@ export default function TaskbarContextWrapper(props: {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const openWindow = (window: JSX.Element) => {
     for (let i = 0; i < windows.length; i++) {
@@ -102,7 +106,7 @@ export default function TaskbarContextWrapper(props: {
     <>
       <TaskbarContext.Provider
         value={{
-          username,
+          user,
           admin,
           setAdmin,
           windows,
