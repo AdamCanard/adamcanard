@@ -15,6 +15,7 @@ import WindowButton from "../semanticcomps/windowbutton";
 import { BJEvaluateHand, Shuffle } from "./deckfunctions";
 import DesktopWindow from "../sitecomps/desktopwindow";
 import { LabeledInputNum } from "../labeledinputs";
+import { TaskbarContext } from "../taskbarcontext";
 
 export interface IBlackJackContext {
   DeckKeys: string[];
@@ -24,6 +25,7 @@ export interface IBlackJackContext {
   dealer: string[];
   setDealer: React.Dispatch<SetStateAction<string[]>>;
   setGameTrigger: React.Dispatch<SetStateAction<boolean>>;
+  wager: number;
 }
 
 //cast empty object to contexttype
@@ -83,6 +85,7 @@ export default function BlackJack() {
             dealer,
             setDealer,
             setGameTrigger,
+            wager,
           }}
         >
           <BlackJackGame />
@@ -101,7 +104,9 @@ export function BlackJackGame() {
     DeckKeys,
     setDeckKeys,
     setGameTrigger,
+    wager,
   } = useContext(BlackJackContext);
+  const { user, setUser } = useContext(TaskbarContext);
   const [reveal, setReveal] = useState<boolean>(false);
   const [winner, setWinner] = useState<string>("");
 
@@ -117,6 +122,36 @@ export function BlackJackGame() {
     setDealer(newDealer);
     setDeckKeys(DeckKeys);
   }, [DeckKeys, dealer, setDealer, setDeckKeys]);
+
+  const postGame = useCallback(
+    async (wager: number) => {
+      const formData = new FormData();
+      formData.append("Losses", user.Losses + wager + "");
+      const newUser = user;
+      newUser.Losses = user.Losses + wager;
+      setUser(newUser);
+      try {
+        const response = await fetch("/api/user/" + user.id, {
+          method: "PUT",
+          body: formData,
+        });
+        return response;
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          return new Response(
+            JSON.stringify({ error: err.message || err.toString() }),
+            {
+              status: 500,
+              headers: {},
+            },
+          );
+        } else {
+          console.log(err);
+        }
+      }
+    },
+    [user, setUser],
+  );
 
   const EndRound = useCallback(() => {
     //dealer hits on 16 and soft 17
@@ -163,6 +198,7 @@ export function BlackJackGame() {
     //WIN
     if (playervalue <= 21 && (playervalue > dealervalue || dealervalue > 21)) {
       setWinner("Player");
+      postGame(wager * 2);
     } else if (
       //PUSH
       playervalue === dealervalue ||
@@ -171,9 +207,17 @@ export function BlackJackGame() {
       setWinner("Nobody");
     } else {
       setWinner("Dealer");
-      //womp womp
+      postGame(wager * -1);
     }
-  }, [DeckKeys.length, dealer, drawDealer, player, setDeckKeys]);
+  }, [
+    DeckKeys.length,
+    dealer,
+    drawDealer,
+    player,
+    setDeckKeys,
+    wager,
+    postGame,
+  ]);
 
   const reset = () => {
     setPlayer([]);
