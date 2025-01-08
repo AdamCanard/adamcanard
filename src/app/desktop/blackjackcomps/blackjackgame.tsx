@@ -39,7 +39,7 @@ export default function BlackJack() {
   const [dealer, setDealer] = useState<string[]>([]);
   const [player, setPlayer] = useState<string[]>([]);
   const [gameTrigger, setGameTrigger] = useState<boolean>(false);
-  const [wager, setWager] = useState<number>(0);
+  const [wager, setWager] = useState<number>(10);
 
   function StartRound() {
     Shuffle(DeckKeys, setDeckKeys);
@@ -52,7 +52,11 @@ export default function BlackJack() {
   }
 
   const handleClick = () => {
-    StartRound();
+    if (wager >= 10) {
+      StartRound();
+    } else {
+      setWager(10);
+    }
   };
 
   return (
