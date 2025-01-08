@@ -1,10 +1,17 @@
 "use client";
-import { createContext, SetStateAction, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { IError, IUser } from "../types";
 import ErrorPopup from "./errorpopup";
 
 interface TaskbarContextType {
   user: IUser;
+  setUser: Dispatch<SetStateAction<IUser>>;
   admin: boolean;
   setAdmin: React.Dispatch<SetStateAction<boolean>>;
   windows: JSX.Element[];
@@ -49,6 +56,13 @@ export default function TaskbarContextWrapper(props: {
       });
       const username = await response.json();
       setUser(username);
+      console.log(username);
+      formData = new FormData();
+      formData.append("Logs", username.Logs);
+      response = await fetch("/api/user/" + username.id, {
+        method: "PUT",
+        body: formData,
+      });
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -111,6 +125,7 @@ export default function TaskbarContextWrapper(props: {
           openWindow,
           isOpen,
           closeWindow,
+          setUser,
         }}
       >
         {" "}
