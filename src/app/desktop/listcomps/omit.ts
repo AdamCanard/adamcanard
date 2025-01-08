@@ -9,4 +9,5 @@ export const Omit = [
   "Drank",
   "verified",
   "emailVisibility",
+  "email",
 ];
