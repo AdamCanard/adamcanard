@@ -53,9 +53,8 @@ export default function Login() {
       if (data.status === 400) {
         setError(data);
         setPopup(true);
-      } else {
-        router.push("/desktop");
       }
+      router.push("/desktop");
     }
   };
 
