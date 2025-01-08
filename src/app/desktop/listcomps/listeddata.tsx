@@ -1,8 +1,8 @@
 "use client";
 import { useContext } from "react";
 import ListWindow from "./listWindow";
-import { Omit } from "./omit";
 import { TaskbarContext } from "../taskbarcontext";
+import { Omit } from "@/app/omit";
 
 export default function ListedData(props: {
   list: never[];

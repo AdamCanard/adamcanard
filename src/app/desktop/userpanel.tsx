@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import DesktopWindow from "./sitecomps/desktopwindow";
 import { TaskbarContext } from "./taskbarcontext";
-import { Omit } from "./listcomps/omit";
+import { Omit } from "../omit";
 
 export default function UserPanel() {
   const { user } = useContext(TaskbarContext);

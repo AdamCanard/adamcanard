@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Form from "../../desktop/listcomps/form";
 import ListToolBar from "@/app/desktop/listcomps/listtoolbar";
 import Loading from "@/app/desktop/sitecomps/loading";
-import { Omit } from "@/app/desktop/listcomps/omit";
+import { Omit } from "@/app/omit";
 export default function MobileList(props: { open: boolean; title: string }) {
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 import Input from "./input";
-import { Omit } from "./omit";
+import { Omit } from "../../omit";
 
 interface FormContextType {
   clear: boolean;
