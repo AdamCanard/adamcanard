@@ -56,7 +56,6 @@ export default function TaskbarContextWrapper(props: {
       });
       const username = await response.json();
       setUser(username);
-      console.log(username);
       formData = new FormData();
       formData.append("Logs", username.Logs);
       response = await fetch("/api/user/" + username.id, {
