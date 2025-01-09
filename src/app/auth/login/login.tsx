@@ -50,11 +50,11 @@ export default function Login() {
       formData.append("cookieName", "userId");
       formData.append("cookieData", data.record.id);
       data = await createCookie(formData);
+      router.push("/desktop");
       if (data.status === 400) {
         setError(data);
         setPopup(true);
       }
-      router.push("/desktop");
     }
   };
 
