@@ -18,6 +18,7 @@ export default function List(props: {
   const [listElements, setListElements] = useState([]);
   const [formElements, setFormElements] = useState<string[]>([]);
   const [search, setSearch] = useState<string>("");
+  const [groupBy, setGroupBy] = useState<string>("");
 
   const getListElements = useCallback(async () => {
     try {
@@ -27,7 +28,7 @@ export default function List(props: {
       const listResponse = await response.json();
 
       setListElements(listResponse.toReversed());
-      setFormElements(Object.keys(listResponse[0]));
+      setFormElements(listStructuring(Object.keys(listResponse[0])));
       return listResponse;
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -43,6 +44,23 @@ export default function List(props: {
       }
     }
   }, [props.title]);
+
+  const listStructuring = (form: string[]) => {
+    const newForm: string[] = [];
+    let uniqueIndex: number = 0;
+    for (let i = 0; i < form.length; i++) {
+      if (form[i].charAt(0) === "_") {
+        newForm[0] = form[i].slice(1);
+        uniqueIndex = i;
+      }
+    }
+    for (let i = 0; i < form.length; i++) {
+      if (uniqueIndex !== i) {
+        newForm.push(form[i]);
+      }
+    }
+    return newForm;
+  };
 
   const { isPending, isError, error, isSuccess } = useQuery({
     queryKey: [props.title],
@@ -61,14 +79,16 @@ export default function List(props: {
       <DesktopWindow title={props.title} width={"20rem"} height={""}>
         <ListToolBar
           list={listElements}
-          search={setSearch}
+          setSearch={setSearch}
           form={formElements.toSpliced(formElements.length - 1)}
+          setGroup={setGroupBy}
         />
         <ListedData
           list={listElements}
           form={formElements}
           title={props.title}
           search={search}
+          group={groupBy}
         />
 
         {props.actionNeeded && (

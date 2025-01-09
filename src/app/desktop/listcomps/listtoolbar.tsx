@@ -4,7 +4,8 @@ import { Omit } from "../../omit";
 export default function ListToolBar(props: {
   list: never[];
   form: string[];
-  search: Dispatch<SetStateAction<string>>;
+  setSearch: Dispatch<SetStateAction<string>>;
+  setGroup: Dispatch<SetStateAction<string>>;
 }) {
   return (
     <>
@@ -13,7 +14,7 @@ export default function ListToolBar(props: {
         <input
           id="search"
           onChange={(e) => {
-            props.search(e.target.value);
+            props.setSearch(e.target.value);
           }}
         />
       </div>

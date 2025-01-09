@@ -9,6 +9,7 @@ export default function ListedData(props: {
   form: string[];
   title: string;
   search: string;
+  group: string;
 }) {
   const { openWindow, isOpen } = useContext(TaskbarContext);
   const getData = async (id: string) => {
