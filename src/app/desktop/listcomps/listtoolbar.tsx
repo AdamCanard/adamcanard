@@ -2,10 +2,10 @@ import { Dispatch, SetStateAction } from "react";
 import { Omit } from "../../omit";
 
 export default function ListToolBar(props: {
-  list: never[];
+  list: object[];
   form: string[];
   setSearch: Dispatch<SetStateAction<string>>;
-  setGroup: Dispatch<SetStateAction<string>>;
+  setGroup?: Dispatch<SetStateAction<string>>;
 }) {
   return (
     <>

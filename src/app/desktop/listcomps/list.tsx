@@ -11,11 +11,12 @@ import ListedData from "./listeddata";
 export default function List(props: {
   title: string;
   adminNeeded: boolean;
-  submit: (arg0: never[]) => void;
+  submit: (arg0: object[]) => void;
   actionNeeded: boolean;
 }) {
   const { admin } = useContext(TaskbarContext);
-  const [listElements, setListElements] = useState([]);
+  const [listElements, setListElements] = useState<object[]>([]);
+
   const [formElements, setFormElements] = useState<string[]>([]);
   const [search, setSearch] = useState<string>("");
   const [groupBy, setGroupBy] = useState<string>("");
@@ -27,7 +28,13 @@ export default function List(props: {
       });
       const listResponse = await response.json();
 
-      setListElements(listResponse.toReversed());
+      setListElements(
+        objectStructureing(
+          listStructuring(Object.keys(listResponse[0])),
+          listResponse.toReversed(),
+        ),
+      );
+
       setFormElements(listStructuring(Object.keys(listResponse[0])));
       return listResponse;
     } catch (err: unknown) {
@@ -60,6 +67,25 @@ export default function List(props: {
       }
     }
     return newForm;
+  };
+
+  const objectStructureing = (form: string[], list: never[]) => {
+    const newList: object[] = [];
+    for (let i = 0; i < list.length; i++) {
+      const element = list[i];
+      const newElement = {};
+      const unique = "_" + form[0];
+      const uniqueCorrect = form[0];
+      for (let j = 0; j < Object.values(element).length; j++) {
+        const objectKey = form[j];
+        //@ts-expect-error it needs to be any
+        newElement[objectKey] = element[objectKey];
+      }
+      //@ts-expect-error it needs to be any
+      newElement[uniqueCorrect] = element[unique];
+      newList.push(newElement);
+    }
+    return newList;
   };
 
   const { isPending, isError, error, isSuccess } = useQuery({

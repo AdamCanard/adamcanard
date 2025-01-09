@@ -6,7 +6,7 @@ import ListToolBar from "@/app/desktop/listcomps/listtoolbar";
 import Loading from "@/app/desktop/sitecomps/loading";
 import { Omit } from "@/app/omit";
 export default function MobileList(props: { open: boolean; title: string }) {
-  const [listElements, setListElements] = useState([]);
+  const [listElements, setListElements] = useState<object[]>([]);
   const [formElements, setFormElements] = useState<string[]>([]);
 
   const [search, setSearch] = useState<string>("");
@@ -62,7 +62,7 @@ export default function MobileList(props: { open: boolean; title: string }) {
       <>
         <ListToolBar
           list={listElements}
-          search={setSearch}
+          setSearch={setSearch}
           form={formElements.toSpliced(formElements.length - 1)}
         />
         <div id="listHeight" className={"flex flex-col"}>

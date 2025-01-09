@@ -5,7 +5,7 @@ import { TaskbarContext } from "../taskbarcontext";
 import { Omit } from "@/app/omit";
 
 export default function ListedData(props: {
-  list: never[];
+  list: object[];
   form: string[];
   title: string;
   search: string;
