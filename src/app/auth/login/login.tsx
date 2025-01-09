@@ -50,6 +50,7 @@ export default function Login() {
       formData.append("cookieName", "userId");
       formData.append("cookieData", data.record.id);
       data = await createCookie(formData);
+      console.log("here", data);
       router.push("/desktop");
       if (data.status === 400) {
         setError(data);

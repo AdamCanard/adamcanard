@@ -48,6 +48,7 @@ export default function ListedData(props: {
     }
     return subStringed.indexOf(props.search) !== -1;
   };
+
   return (
     <div className="w-full flex flex-col max-h-60 overflow-y-scroll">
       {props.list.map((listElement) => {
