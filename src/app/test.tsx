@@ -1,9 +1,11 @@
 "use client";
 
+import DesktopWindow from "./desktop/sitecomps/desktopwindow";
+
 export default function Test() {
   return (
-    <div className="w-full h-full">
-      <></>
-    </div>
+    <DesktopWindow title="Test" width="24rem" height="">
+      <></>{" "}
+    </DesktopWindow>
   );
 }
