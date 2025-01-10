@@ -8,7 +8,7 @@ import { Omit } from "@/app/omit";
 export default function MobileList(props: { open: boolean; title: string }) {
   const [listElements, setListElements] = useState<object[]>([]);
   const [formElements, setFormElements] = useState<string[]>([]);
-
+  const [groupBy, setGroupBy] = useState<string>("");
   const [search, setSearch] = useState<string>("");
   const getListElements = async () => {
     try {
@@ -85,7 +85,21 @@ export default function MobileList(props: { open: boolean; title: string }) {
     }
     return newList;
   };
-
+  const group = (list: object[], group: string) => {
+    if (group === "") {
+      return list;
+    } else {
+      return list.sort((a, b) => {
+        if (a[group as keyof object] < b[group as keyof object]) {
+          return -1;
+        } else if (a[group as keyof object] > b[group as keyof object]) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    }
+  };
   const { isPending, isError, error, isSuccess } = useQuery({
     queryKey: [props.title],
     queryFn: getListElements,
@@ -106,10 +120,11 @@ export default function MobileList(props: { open: boolean; title: string }) {
           list={listElements}
           setSearch={setSearch}
           form={formElements.toSpliced(formElements.length - 1)}
+          setGroup={setGroupBy}
         />
         <div id="listHeight" className={"flex flex-col"}>
           <div className="overflow-y-scroll w-full flex flex-col">
-            {listElements.map((listElement) => {
+            {group(listElements, groupBy).map((listElement) => {
               const id: string = Object.values(listElement)[
                 Object.keys(listElement).length - 1
               ] as string;

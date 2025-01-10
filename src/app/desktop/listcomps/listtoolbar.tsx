@@ -5,8 +5,11 @@ export default function ListToolBar(props: {
   list: object[];
   form: string[];
   setSearch: Dispatch<SetStateAction<string>>;
-  setGroup?: Dispatch<SetStateAction<string>>;
+  setGroup: Dispatch<SetStateAction<string>>;
 }) {
+  const handleClick = (value: string) => {
+    props.setGroup(value);
+  };
   return (
     <>
       <div id="boxshadow" className={"flex flex-row  w-full "}>
@@ -22,7 +25,16 @@ export default function ListToolBar(props: {
         <div className={"text-xs flex flex-row justify-between"}>
           {props.form.map((value, index) => {
             if (!Omit.includes(props.form[index])) {
-              return <div key={index}>{value}:</div>;
+              return (
+                <div
+                  onClick={() => {
+                    handleClick(value);
+                  }}
+                  key={index}
+                >
+                  {value}:
+                </div>
+              );
             }
           })}
         </div>
