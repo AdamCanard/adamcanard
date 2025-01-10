@@ -49,9 +49,25 @@ export default function ListedData(props: {
     return subStringed.indexOf(props.search) !== -1;
   };
 
+  const groupBy = (list: object[], group: string) => {
+    if (group === "") {
+      return list;
+    } else {
+      return list.sort((a, b) => {
+        if (a[group as keyof object] < b[group as keyof object]) {
+          return -1;
+        } else if (a[group as keyof object] > b[group as keyof object]) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    }
+  };
+
   return (
     <div className="w-full flex flex-col max-h-60 overflow-y-scroll">
-      {props.list.map((listElement) => {
+      {groupBy(props.list, props.group).map((listElement) => {
         const id: string = Object.values(listElement)[
           props.form.indexOf("id")
         ] as string;
