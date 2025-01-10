@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const cookieData = formData.get("cookieData") as string;
   cookies().set(cookieName, cookieData);
 
-  return new Response(JSON.stringify({}), {
+  return new Response(JSON.stringify({ hello: "hello" }), {
     status: 200,
   });
 }
