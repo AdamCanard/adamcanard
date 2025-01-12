@@ -81,6 +81,7 @@ export default function MobileList(props: { open: boolean; title: string }) {
           setSearch={setSearch}
           form={formElements.toSpliced(formElements.length - 1)}
           setGroup={setGroupBy}
+          group={groupBy}
         />
         <div id="listHeight" className={"flex flex-col"}>
           <div className="overflow-y-scroll w-full flex flex-col">

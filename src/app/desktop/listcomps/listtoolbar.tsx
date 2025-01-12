@@ -6,6 +6,7 @@ export default function ListToolBar(props: {
   form: string[];
   setSearch: Dispatch<SetStateAction<string>>;
   setGroup: Dispatch<SetStateAction<string>>;
+  group: string;
 }) {
   const handleClick = (value: string) => {
     props.setGroup(value);
@@ -24,7 +25,7 @@ export default function ListToolBar(props: {
       <div id="border" className={"h-6 flex flex-col justify-center"}>
         <div className={"text-xs flex flex-row justify-between"}>
           {props.form.map((value, index) => {
-            if (!Omit.includes(props.form[index])) {
+            if (!Omit.includes(props.form[index]) && value !== props.group) {
               return (
                 <div
                   onClick={() => {

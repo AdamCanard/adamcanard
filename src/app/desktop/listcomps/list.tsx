@@ -67,6 +67,7 @@ export default function List(props: {
           setSearch={setSearch}
           form={formElements.toSpliced(formElements.length - 1)}
           setGroup={setGroupBy}
+          group={groupBy}
         />
         <ListedData
           list={listElements}
