@@ -41,9 +41,7 @@ export default function Form(props: { formElements: string[]; title: string }) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const unique = "_" + props.formElements[0];
-    const uniqueData = formData.get(props.formElements[0]);
-    formData.append(unique, uniqueData + "");
+
     await postData(formData);
     setClear(true);
   };

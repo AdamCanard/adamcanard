@@ -92,14 +92,21 @@ export class DatabaseClient {
       }
     }
   }
-  async addValue(data: object, collection: string) {
+  async addValue(data: FormData, collection: string) {
+    const it = data.keys();
+    const uniqueKey = it.next().value;
+    const unqiueData = data.get(uniqueKey);
+    data.append("_" + uniqueKey, unqiueData as string);
+    console.log(data);
     const result = await this.client.collection(collection).create(data);
     return result;
   }
 
   async getList(collection: string) {
-    const List = await this.client.collection(collection).getFullList();
-    return List;
+    const list = await this.client.collection(collection).getFullList();
+    const fixedForm = formFixer(list);
+    const fixedList = listFixer(list, fixedForm);
+    return fixedList;
   }
 
   async delete(collection: string, id: string) {
@@ -121,3 +128,39 @@ export class DatabaseClient {
 const db = new DatabaseClient();
 
 export default db;
+
+const formFixer = (list: object[]) => {
+  const form = Object.keys(list[0]);
+  const newForm: string[] = [];
+  let uniqueIndex: number = 0;
+  for (let i = 0; i < form.length; i++) {
+    if (form[i].charAt(0) === "_") {
+      newForm[0] = form[i].slice(1);
+      uniqueIndex = i;
+    }
+  }
+  for (let i = 0; i < form.length; i++) {
+    if (uniqueIndex !== i) {
+      newForm.push(form[i]);
+    }
+  }
+  return newForm;
+};
+
+const listFixer = (list: object[], form: string[]) => {
+  const newList: object[] = [];
+  for (let i = 0; i < list.length; i++) {
+    const element = list[i];
+    const newElement = {};
+    const unique = "_" + form[0];
+    const uniqueCorrect = form[0];
+    for (let j = 0; j < Object.values(element).length; j++) {
+      const objectKey = form[j];
+      newElement[objectKey as keyof object] =
+        element[objectKey as keyof object];
+    }
+    newElement[uniqueCorrect as keyof object] = element[unique as keyof object];
+    newList.push(newElement);
+  }
+  return newList;
+};
