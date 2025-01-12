@@ -3,6 +3,7 @@ import { useContext } from "react";
 import ListWindow from "./listWindow";
 import { TaskbarContext } from "../taskbarcontext";
 import { Omit } from "@/app/omit";
+import GroupedList from "./groupedList";
 
 export default function ListedData(props: {
   list: object[];
@@ -49,11 +50,11 @@ export default function ListedData(props: {
     return subStringed.indexOf(props.search) !== -1;
   };
 
-  const groupBy = (list: object[], group: string) => {
+  const sortBy = (list: object[], group: string) => {
     if (group === "") {
       return list;
     } else {
-      return list.sort((a, b) => {
+      const sortedList = list.sort((a, b) => {
         if (a[group as keyof object] < b[group as keyof object]) {
           return -1;
         } else if (a[group as keyof object] > b[group as keyof object]) {
@@ -62,42 +63,72 @@ export default function ListedData(props: {
           return 0;
         }
       });
+
+      return sortedList;
     }
+  };
+  const groupData = (list: object[], group: string) => {
+    const sortedList = list.sort((a, b) => {
+      if (a[group as keyof object] < b[group as keyof object]) {
+        return -1;
+      } else if (a[group as keyof object] > b[group as keyof object]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    const groupedData: Record<string, object[]> = {};
+    let str = "";
+    for (let i = 0; i < sortedList.length; i++) {
+      str = sortedList[i][group as keyof object];
+      if (str in groupedData) {
+        groupedData[str].push(sortedList[i]);
+      } else {
+        groupedData[str] = [sortedList[i]];
+      }
+    }
+    return groupedData;
   };
 
   return (
     <div className="w-full flex flex-col max-h-60 overflow-y-scroll">
-      {groupBy(props.list, props.group).map((listElement) => {
-        const id: string = Object.values(listElement)[
-          props.form.indexOf("id")
-        ] as string;
-        return (
-          <>
-            {subStringer(listElement) && (
-              <div
-                id={
-                  isOpen(Object.values(listElement)[0] as string)
-                    ? "border-pressed"
-                    : "border"
-                }
-                className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
-                key={id}
-                onClick={() => getData(id)}
-              >
-                <>
-                  {Object.values(listElement).map((data, index: number) => {
-                    if (!Omit.includes(props.form[index])) {
-                      if ((data as string) !== "") {
-                        return <div key={index + id}>{data as string}</div>;
-                      }
+      {props.group === "" || props.group === Object.keys(props.list[0])[0] ? (
+        <>
+          {sortBy(props.list, props.group).map((listElement) => {
+            const id: string = Object.values(listElement)[
+              props.form.indexOf("id")
+            ] as string;
+            return (
+              <>
+                {subStringer(listElement) && (
+                  <div
+                    id={
+                      isOpen(Object.values(listElement)[0] as string)
+                        ? "border-pressed"
+                        : "border"
                     }
-                  })}
-                </>
-              </div>
-            )}
-          </>
-        );
-      })}
+                    className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
+                    key={id}
+                    onClick={() => getData(id)}
+                  >
+                    <>
+                      {Object.values(listElement).map((data, index: number) => {
+                        if (!Omit.includes(props.form[index])) {
+                          if ((data as string) !== "") {
+                            return <div key={index + id}>{data as string}</div>;
+                          }
+                        }
+                      })}
+                    </>
+                  </div>
+                )}
+              </>
+            );
+          })}
+        </>
+      ) : (
+        <GroupedList data={groupData(props.list, props.group)} />
+      )}
     </div>
   );
 }
