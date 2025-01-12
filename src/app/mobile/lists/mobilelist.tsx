@@ -17,14 +17,9 @@ export default function MobileList(props: { open: boolean; title: string }) {
       });
       const listResponse = await response.json();
 
-      setListElements(
-        objectStructureing(
-          listStructuring(Object.keys(listResponse[0])),
-          listResponse.toReversed(),
-        ),
-      );
+      setListElements(listResponse.toReversed());
 
-      setFormElements(listStructuring(Object.keys(listResponse[0])));
+      setFormElements(Object.keys(listResponse[0]));
       return listResponse;
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -50,41 +45,6 @@ export default function MobileList(props: { open: boolean; title: string }) {
     return subStringed.indexOf(search) !== -1;
   };
 
-  const listStructuring = (form: string[]) => {
-    const newForm: string[] = [];
-    let uniqueIndex: number = 0;
-    for (let i = 0; i < form.length; i++) {
-      if (form[i].charAt(0) === "_") {
-        newForm[0] = form[i].slice(1);
-        uniqueIndex = i;
-      }
-    }
-    for (let i = 0; i < form.length; i++) {
-      if (uniqueIndex !== i) {
-        newForm.push(form[i]);
-      }
-    }
-    return newForm;
-  };
-
-  const objectStructureing = (form: string[], list: never[]) => {
-    const newList: object[] = [];
-    for (let i = 0; i < list.length; i++) {
-      const element = list[i];
-      const newElement = {};
-      const unique = "_" + form[0];
-      const uniqueCorrect = form[0];
-      for (let j = 0; j < Object.values(element).length; j++) {
-        const objectKey = form[j];
-        //@ts-expect-error it needs to be any
-        newElement[objectKey] = element[objectKey];
-      }
-      //@ts-expect-error it needs to be any
-      newElement[uniqueCorrect] = element[unique];
-      newList.push(newElement);
-    }
-    return newList;
-  };
   const group = (list: object[], group: string) => {
     if (group === "") {
       return list;

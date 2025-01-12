@@ -20,9 +20,7 @@ export default function ListWindow(props: {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const unique = "_" + Object.keys(props.data)[0];
-    const uniqueData = formData.get(Object.keys(props.data)[0]);
-    formData.append(unique, uniqueData + "");
+
     await postData(formData);
     setUpdating(false);
     closeWindow(Object.values(props.data)[0]);

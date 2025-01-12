@@ -97,14 +97,13 @@ export class DatabaseClient {
     const uniqueKey = it.next().value;
     const unqiueData = data.get(uniqueKey);
     data.append("_" + uniqueKey, unqiueData as string);
-    console.log(data);
     const result = await this.client.collection(collection).create(data);
     return result;
   }
 
   async getList(collection: string) {
     const list = await this.client.collection(collection).getFullList();
-    const fixedForm = formFixer(list);
+    const fixedForm = formProducer(list);
     const fixedList = listFixer(list, fixedForm);
     return fixedList;
   }
@@ -114,14 +113,20 @@ export class DatabaseClient {
     return result;
   }
 
-  async update(collection: string, id: string, data: object) {
+  async update(collection: string, id: string, data: FormData) {
+    const it = data.keys();
+    const uniqueKey = it.next().value;
+    const unqiueData = data.get(uniqueKey);
+    data.append("_" + uniqueKey, unqiueData as string);
     const result = await this.client.collection(collection).update(id, data);
     return result;
   }
 
   async getById(collection: string, id: string) {
     const record = await this.client.collection(collection).getOne(id, {});
-    return record;
+    const fixedForm = formFixer(Object.keys(record));
+    const fixedRecord = objectFixer(record, fixedForm);
+    return fixedRecord;
   }
 }
 
@@ -129,8 +134,7 @@ const db = new DatabaseClient();
 
 export default db;
 
-const formFixer = (list: object[]) => {
-  const form = Object.keys(list[0]);
+const formFixer = (form: string[]) => {
   const newForm: string[] = [];
   let uniqueIndex: number = 0;
   for (let i = 0; i < form.length; i++) {
@@ -147,20 +151,30 @@ const formFixer = (list: object[]) => {
   return newForm;
 };
 
+const formProducer = (list: object[]) => {
+  const form = Object.keys(list[0]);
+  const newForm: string[] = formFixer(form);
+  return newForm;
+};
+
 const listFixer = (list: object[], form: string[]) => {
   const newList: object[] = [];
   for (let i = 0; i < list.length; i++) {
     const element = list[i];
-    const newElement = {};
-    const unique = "_" + form[0];
-    const uniqueCorrect = form[0];
-    for (let j = 0; j < Object.values(element).length; j++) {
-      const objectKey = form[j];
-      newElement[objectKey as keyof object] =
-        element[objectKey as keyof object];
-    }
-    newElement[uniqueCorrect as keyof object] = element[unique as keyof object];
+    const newElement = objectFixer(element, form);
     newList.push(newElement);
   }
   return newList;
+};
+
+const objectFixer = (element: object, form: string[]) => {
+  const newElement = {};
+  const unique = "_" + form[0];
+  const uniqueCorrect = form[0];
+  for (let j = 0; j < Object.values(element).length; j++) {
+    const objectKey = form[j];
+    newElement[objectKey as keyof object] = element[objectKey as keyof object];
+  }
+  newElement[uniqueCorrect as keyof object] = element[unique as keyof object];
+  return newElement;
 };
