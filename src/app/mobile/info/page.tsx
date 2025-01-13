@@ -45,7 +45,7 @@ export default function Page() {
           <h1
             id="title"
             onClick={() => {
-              router.push("mobile/secret");
+              router.push("/mobile/secret");
             }}
           >
             {" "}
