@@ -1,4 +1,5 @@
 import PocketBase from "pocketbase";
+import { Collections } from "../collections";
 
 export const POCKET_BASE_URL = "http://127.0.0.1:8090";
 export const domain = process.env.PB_DOMAIN;
@@ -127,6 +128,16 @@ export class DatabaseClient {
     const fixedForm = formFixer(Object.keys(record));
     const fixedRecord = objectFixer(record, fixedForm);
     return fixedRecord;
+  }
+
+  async getForms() {
+    const forms: [string[]] = [[]];
+    for (let i = 0; i < Object.keys(Collections).length; i++) {
+      const list = await this.getList(Object.keys(Collections)[i]);
+      console.log(list);
+      forms[i] = Object.keys(list[0]);
+    }
+    return forms;
   }
 }
 
