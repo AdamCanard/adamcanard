@@ -1,8 +1,9 @@
+"use client";
 import { useState } from "react";
 import { LabeledInputStr } from "../../desktop/labeledinputs";
 import SecretForms from "./secretforms";
 
-export default function Secret() {
+export default function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
