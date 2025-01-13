@@ -134,7 +134,6 @@ export class DatabaseClient {
     const forms: [string[]] = [[]];
     for (let i = 0; i < Object.keys(Collections).length; i++) {
       const list = await this.getList(Object.keys(Collections)[i]);
-      console.log(list);
       forms[i] = Object.keys(list[0]);
     }
     return forms;

@@ -11,7 +11,6 @@ export default function SecretForms() {
         method: "GET",
       });
       const forms = await response.json();
-      console.log(forms);
       setFormList(forms);
       return forms;
     } catch (err: unknown) {
@@ -34,7 +33,7 @@ export default function SecretForms() {
   }, [getForm]);
 
   useEffect(() => {
-    formGetter();
+    formGetter(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
