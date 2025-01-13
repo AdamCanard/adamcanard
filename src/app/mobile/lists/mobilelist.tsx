@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Form from "../../desktop/listcomps/form";
 import ListToolBar from "@/app/desktop/listcomps/listtoolbar";
 import Loading from "@/app/desktop/sitecomps/loading";
-import { Omit } from "@/app/omit";
+import MobileListData from "./mobilelistdata";
 export default function MobileList(props: { open: boolean; title: string }) {
   const [listElements, setListElements] = useState<object[]>([]);
   const [formElements, setFormElements] = useState<string[]>([]);
@@ -36,30 +36,6 @@ export default function MobileList(props: { open: boolean; title: string }) {
     }
   };
 
-  const subStringer = (element: object) => {
-    const list = Object.values(element);
-    let subStringed = "";
-    for (let i = 0; i < list.length - 1; i++) {
-      subStringed += list[i] + " ";
-    }
-    return subStringed.indexOf(search) !== -1;
-  };
-
-  const group = (list: object[], group: string) => {
-    if (group === "") {
-      return list;
-    } else {
-      return list.sort((a, b) => {
-        if (a[group as keyof object] < b[group as keyof object]) {
-          return -1;
-        } else if (a[group as keyof object] > b[group as keyof object]) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    }
-  };
   const { isPending, isError, error, isSuccess } = useQuery({
     queryKey: [props.title],
     queryFn: getListElements,
@@ -84,40 +60,13 @@ export default function MobileList(props: { open: boolean; title: string }) {
           group={groupBy}
         />
         <div id="listHeight" className={"flex flex-col"}>
-          <div className="overflow-y-scroll w-full flex flex-col">
-            {group(listElements, groupBy).map((listElement) => {
-              const id: string = Object.values(listElement)[
-                Object.keys(listElement).length - 1
-              ] as string;
-              return (
-                <>
-                  {subStringer(listElement) && (
-                    <>
-                      <div
-                        id="border"
-                        className="flex w-full h-full justify-between items-center p-2"
-                        key={id}
-                      >
-                        <>
-                          {Object.values(listElement).map(
-                            (data, index: number) => {
-                              if (!Omit.includes(formElements[index])) {
-                                if ((data as string) !== "") {
-                                  return (
-                                    <div key={index + id}>{data as string}</div>
-                                  );
-                                }
-                              }
-                            },
-                          )}
-                        </>
-                      </div>
-                    </>
-                  )}
-                </>
-              );
-            })}
-          </div>{" "}
+          <MobileListData
+            list={listElements}
+            form={formElements}
+            title={props.title}
+            search={search}
+            group={groupBy}
+          />
           {props.open && (
             <div id="boxshadow">
               <Form formElements={formElements} title={props.title} />{" "}
