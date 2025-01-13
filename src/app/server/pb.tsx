@@ -29,7 +29,7 @@ export class DatabaseClient {
         username: username,
         password: username,
         passwordConfirm: username,
-        name: username,
+        Name: username,
       });
       return result;
     } catch (err: unknown) {
