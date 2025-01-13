@@ -8,11 +8,10 @@ export default function GroupedList(props: { data: Record<string, object[]> }) {
     <>
       {keys.map((key) => {
         return (
-          <>
+          <div key={key}>
             <div
               className="flex w-full h-full justify-center items-center p-2 hover:cursor-pointer"
               id={opened === key ? "border-pressed" : "border"}
-              key={key}
               onClick={() => {
                 if (opened === key) {
                   setOpened("");
@@ -46,7 +45,7 @@ export default function GroupedList(props: { data: Record<string, object[]> }) {
                 )}
               </>
             )}
-          </>
+          </div>
         );
       })}
     </>
