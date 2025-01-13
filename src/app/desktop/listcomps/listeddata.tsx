@@ -94,12 +94,12 @@ export default function ListedData(props: {
     <div className="w-full flex flex-col max-h-60 overflow-y-scroll">
       {props.group === "" || props.group === Object.keys(props.list[0])[0] ? (
         <>
-          {sortBy(props.list, props.group).map((listElement) => {
+          {sortBy(props.list, props.group).map((listElement, index) => {
             const id: string = Object.values(listElement)[
               props.form.indexOf("id")
             ] as string;
             return (
-              <>
+              <div key={id + index}>
                 {subStringer(listElement) && (
                   <div
                     id={
@@ -108,7 +108,6 @@ export default function ListedData(props: {
                         : "border"
                     }
                     className="flex w-full h-full justify-between items-center p-2 hover:cursor-pointer"
-                    key={id}
                     onClick={() => getData(id)}
                   >
                     <>
@@ -122,7 +121,7 @@ export default function ListedData(props: {
                     </>
                   </div>
                 )}
-              </>
+              </div>
             );
           })}
         </>

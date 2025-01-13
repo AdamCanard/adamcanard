@@ -34,7 +34,6 @@ export default function GroupedList(props: { data: Record<string, object[]> }) {
                         id="border"
                       >
                         {Object.values(data).map((value, index) => {
-                          console.log(value, key);
                           if (
                             !Omit.includes(Object.keys(data)[index]) &&
                             value + "" !== key
