@@ -2,6 +2,7 @@ import { useContext } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
 import List from "./list";
 import { TaskbarContext } from "../taskbarcontext";
+import { Collections } from "@/app/collections";
 
 export default function Lister() {
   const { isOpen, openWindow } = useContext(TaskbarContext);
@@ -11,7 +12,7 @@ export default function Lister() {
   //};
   return (
     <DesktopWindow title="Lists" width={"8rem"} height={""}>
-      {lists.map((collection: string) => {
+      {Object.keys(Collections).map((collection: string, index: number) => {
         return (
           <div
             id={
@@ -23,7 +24,7 @@ export default function Lister() {
                 <List
                   title={collection}
                   key={collection}
-                  adminNeeded={true}
+                  adminNeeded={!Object.values(Collections)[index]}
                   submit={() => {}}
                   actionNeeded={false}
                 />,
@@ -37,5 +38,3 @@ export default function Lister() {
     </DesktopWindow>
   );
 }
-
-const lists = ["Beers", "Suggestion", "Ideas", "Books", "Vinyls"];
