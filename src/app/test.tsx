@@ -9,19 +9,18 @@ export default function Test() {
   const router = useRouter();
 
   return (
-    <DesktopWindow title="Test" width="24rem" height="16rem">
+    <DesktopWindow title="Test" width="20rem" height="32rem">
       <div className={"flex flex-col w-full h-full"}>
         <div id="boxshadow" className={"flex flex-col h-full"}>
-          <h1 id="title">Adam Cunard Website. Thats Me!</h1>
           <div className={"relative w-full h-full"}>
             <Image src={"/AdamBeer1.jpg"} alt="Photo of me" fill={true} />
           </div>
         </div>
 
-        <div id="boxshadow" className={"flex flex-col w-full h-40"}>
+        <div id="boxshadow" className={"flex flex-col w-full h-32"}>
           <h1 id="title">Information</h1>
           <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
-            <div className={"w-full h-full px-2 text-lg "}>
+            <div className={"w-full h-full px-2 text-sm"}>
               If you want to see what im really capable of, visit this site on
               desktop! In the meantime, play some BlackJack or check out my
               links
