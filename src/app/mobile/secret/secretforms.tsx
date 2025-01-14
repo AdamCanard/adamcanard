@@ -38,14 +38,16 @@ export default function SecretForms() {
 
   return (
     <>
-      <div id={"border"} className={"flex flex-col overflow-y-scroll"}>
+      <div className={"flex flex-col overflow-y-scroll"}>
         {formList.map((form: string[], index: number) => {
           return (
-            <Form
-              key={index}
-              title={Object.keys(Collections)[index]}
-              formElements={form}
-            />
+            <div id="boxshadow" key={index}>
+              <h1 id="title">{Object.keys(Collections)[index]}</h1>
+              <Form
+                title={Object.keys(Collections)[index]}
+                formElements={form}
+              />
+            </div>
           );
         })}
       </div>
