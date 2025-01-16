@@ -89,11 +89,7 @@ export default function TaskbarContextWrapper(props: {
         body: formData,
       });
 
-      const data = await response.json();
-
-      if (data.token !== "") {
-        setAdmin(true);
-      }
+      await response.json();
     } catch (err: unknown) {
       if (typeof err === "string") {
         console.log(err);
