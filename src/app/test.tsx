@@ -3,7 +3,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 //import Image from "next/image";
 import DesktopWindow from "./desktop/sitecomps/desktopwindow";
-import ListBar from "./mobile/lists/listbar";
 import MobileList from "./mobile/lists/mobilelist";
 
 export default function Test() {
