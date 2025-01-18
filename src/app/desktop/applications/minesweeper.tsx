@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
 
 export default function Minesweeper() {
   return (
-    <DesktopWindow title="Minesweeper" width="16rem" height="24rem">
+    <DesktopWindow title="Minesweeper" width="20rem" height="20rem">
       <Board rows={9} cols={9} bombs={10} />
     </DesktopWindow>
   );
@@ -16,7 +16,9 @@ function Board(props: { rows: number; cols: number; bombs: number }) {
       return new Array(props.cols).fill(undefined).map((element, index2) => {
         const row = index + "";
         const col = index2 + "";
-        return <Cell row={index} col={index2} key={row + " " + col} />;
+        return (
+          <Cell row={index} col={index2} bomb={false} key={row + " " + col} />
+        );
       });
     }),
   );
@@ -26,9 +28,10 @@ function Board(props: { rows: number; cols: number; bombs: number }) {
   );
 }
 
-function Cell(props: { row: number; col: number }) {
+function Cell(props: { row: number; col: number; bomb: boolean }) {
   return (
-    <div>
+    <div id="cell" className={"flex text-center justify-center flex-wrap"}>
+      {" "}
       {props.row}
       {props.col}
     </div>

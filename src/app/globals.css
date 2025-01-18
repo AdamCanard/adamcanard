@@ -50,6 +50,14 @@
   height: calc(100% - 125px);
 }
 
+#cell {
+  background-color: #c6c6c6;
+  border-left: 3px solid #fefefe;
+  border-top: 3px solid #fefefe;
+  border-right: 3px solid #808080;
+  border-bottom: 3px solid #808080;
+}
+
 #title {
   height: 30px;
   width: 100%;
