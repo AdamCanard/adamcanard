@@ -25,8 +25,6 @@ export default function Lister() {
                   title={collection}
                   key={collection}
                   adminNeeded={!Object.values(Collections)[index]}
-                  submit={() => {}}
-                  actionNeeded={false}
                 />,
               )
             }

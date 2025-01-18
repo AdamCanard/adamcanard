@@ -8,12 +8,7 @@ import ListToolBar from "./listtoolbar";
 import { TaskbarContext } from "../taskbarcontext";
 import ListedData from "./listeddata";
 
-export default function List(props: {
-  title: string;
-  adminNeeded: boolean;
-  submit: (arg0: object[]) => void;
-  actionNeeded: boolean;
-}) {
+export default function List(props: { title: string; adminNeeded: boolean }) {
   const { admin } = useContext(TaskbarContext);
   const [listElements, setListElements] = useState<object[]>([]);
 
@@ -76,16 +71,6 @@ export default function List(props: {
           search={search}
           group={groupBy}
         />
-
-        {props.actionNeeded && (
-          <>
-            <div id="button-i">
-              <div onClick={() => props.submit(listElements)} id="button">
-                Action
-              </div>
-            </div>
-          </>
-        )}
 
         {(admin || !props.adminNeeded) && (
           <Form formElements={formElements} title={props.title} />
