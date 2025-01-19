@@ -7,7 +7,6 @@ import {
   useContext,
 } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
-import { create } from "domain";
 
 export default function Minesweeper() {
   return (
@@ -32,33 +31,37 @@ const randomArray = (amount: number, row: number, col: number) => {
   return newArray;
 };
 
+interface ICellObject {
+  row: number;
+  col: number;
+  bomb: boolean;
+  state: string;
+}
+
 const boardGen = (rows: number, cols: number, bombs: string[]) => {
   const newGrid = new Array(rows).fill(undefined).map((element, index) => {
     return new Array(cols).fill(undefined).map((element, index2) => {
       const row = index + "";
       const col = index2 + "";
       const cellKey = row + " " + col;
+      let cellObj: ICellObject = {} as ICellObject;
       if (bombs.includes(cellKey)) {
-        return (
-          <Cell
-            row={index}
-            col={index2}
-            bomb={true}
-            open={false}
-            key={cellKey}
-          />
-        );
+        cellObj = {
+          row: index,
+          col: index2,
+          bomb: true,
+          state: "closed",
+        };
       } else {
-        return (
-          <Cell
-            row={index}
-            col={index2}
-            bomb={false}
-            open={false}
-            key={cellKey}
-          />
-        );
+        cellObj = {
+          row: index,
+          col: index2,
+          bomb: false,
+          state: "closed",
+        };
       }
+
+      return cellObj;
     });
   });
 
@@ -66,10 +69,9 @@ const boardGen = (rows: number, cols: number, bombs: string[]) => {
 };
 
 interface MinesweeperContextType {
-  grid: JSX.Element[][];
-  setGrid: Dispatch<SetStateAction<JSX.Element[][]>>;
+  grid: ICellObject[][];
+  setGrid: Dispatch<SetStateAction<ICellObject[][]>>;
   getProximity: (arg0: number, arg1: number) => number;
-  openZeros: (arg0: number, arg1: number) => void;
 }
 
 //cast empty object to contexttype
@@ -82,9 +84,15 @@ function Board(props: { rows: number; cols: number; bombs: number }) {
     randomArray(props.bombs, props.rows, props.cols),
   );
 
-  const [grid, setGrid] = useState<JSX.Element[][]>(
+  const [grid, setGrid] = useState<ICellObject[][]>(
     boardGen(props.rows, props.cols, bombArray),
   );
+
+  const [openArray, setOpenArray] = useState<boolean[][]>(
+    new Array(props.rows).fill(new Array(props.cols).fill(false)),
+  );
+
+  console.log(openArray);
 
   const isBomb = (row: number, col: number) => {
     const stringedValue = row + " " + col;
@@ -120,49 +128,43 @@ function Board(props: { rows: number; cols: number; bombs: number }) {
     return bombs;
   };
 
-  const openZeros = (row: number, col: number) => {
-    const newGrid = grid;
-    const newRow = row + "";
-    const newCol = col + 1 + "";
-    const cellKey = newRow + " " + newCol;
-
-    newGrid[row][col + 1] = (
-      <Cell row={row} col={col + 1} bomb={true} open={true} key={cellKey} />
-    );
-    setGrid(newGrid);
-  };
+  //const openZeros = (row: number, col: number) => {
+  //  const newGrid = grid;
+  //  const newRow = row + "";
+  //  const newCol = col + 1 + "";
+  //  const cellKey = newRow + " " + newCol;
+  //
+  //  newGrid[row][col + 1] = (
+  //    <Cell row={row} col={col + 1} bomb={true} open={true} key={cellKey} />
+  //  );
+  //  setGrid(newGrid);
+  //};
 
   return (
     <div className={"grid grid-cols-9 grid-rows-9 w-full h-full"}>
-      <MinesweeperContext.Provider
-        value={{ grid, setGrid, getProximity, openZeros }}
-      >
-        {grid}
+      <MinesweeperContext.Provider value={{ grid, setGrid, getProximity }}>
+        <>
+          {Object.values(grid).map((row, index) => {
+            return Object.values(row).map((cell, index2) => {
+              return <Cell obj={cell} key={index + " " + index2} />;
+            });
+          })}
+        </>
       </MinesweeperContext.Provider>
     </div>
   );
 }
 
-function Cell(props: {
-  row: number;
-  col: number;
-  bomb: boolean;
-  open: boolean;
-}) {
-  const { getProximity, openZeros } = useContext(MinesweeperContext);
-  const [open, setOpen] = useState<boolean>(props.open);
-  const proximity = getProximity(props.row, props.col);
+function Cell(props: { obj: ICellObject }) {
+  const { getProximity } = useContext(MinesweeperContext);
 
   return (
     <div
-      id={open ? "cell-open" : "cell"}
+      id={props.obj.state === "open" ? "cell-open" : "cell"}
       className={"flex text-center justify-center items-center flex-wrap"}
-      onClick={() => {
-        openZeros(props.row, props.col);
-        setOpen(true);
-      }}
+      onClick={() => {}}
     >
-      {open && <>{props.bomb ? "F" : proximity}</>}
+      {props.obj.state === "open" && <>{props.obj.bomb ? "F" : getProximity}</>}
     </div>
   );
 }
