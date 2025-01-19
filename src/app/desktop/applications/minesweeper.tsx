@@ -69,7 +69,6 @@ function Board(props: { rows: number; cols: number; bombs: number }) {
 
 function Cell(props: { row: number; col: number; bomb: boolean }) {
   const [open, setOpen] = useState<boolean>(false);
-  const proximity = 2;
   return (
     <div
       id={open ? "cell-open" : "cell"}
