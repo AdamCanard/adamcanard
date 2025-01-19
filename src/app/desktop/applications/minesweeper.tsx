@@ -72,6 +72,7 @@ interface MinesweeperContextType {
   grid: ICellObject[][];
   setGrid: Dispatch<SetStateAction<ICellObject[][]>>;
   getProximity: (arg0: number, arg1: number) => number;
+  openCell: (arg0: number, arg1: number) => void;
 }
 
 //cast empty object to contexttype
@@ -88,15 +89,18 @@ function Board(props: { rows: number; cols: number; bombs: number }) {
     boardGen(props.rows, props.cols, bombArray),
   );
 
-  const [openArray, setOpenArray] = useState<boolean[][]>(
-    new Array(props.rows).fill(new Array(props.cols).fill(false)),
-  );
-
-  console.log(openArray);
-
   const isBomb = (row: number, col: number) => {
     const stringedValue = row + " " + col;
     return bombArray.includes(stringedValue);
+  };
+
+  const openCell = (row: number, col: number) => {
+    const temp = Array(props.rows)
+      .fill(undefined)
+      .map(() => new Array(props.cols).fill(undefined));
+    Object.assign(temp, grid);
+    temp[row][col].state = "open";
+    setGrid(temp);
   };
 
   const getProximity = (row: number, col: number) => {
@@ -142,7 +146,9 @@ function Board(props: { rows: number; cols: number; bombs: number }) {
 
   return (
     <div className={"grid grid-cols-9 grid-rows-9 w-full h-full"}>
-      <MinesweeperContext.Provider value={{ grid, setGrid, getProximity }}>
+      <MinesweeperContext.Provider
+        value={{ grid, setGrid, getProximity, openCell }}
+      >
         <>
           {Object.values(grid).map((row, index) => {
             return Object.values(row).map((cell, index2) => {
@@ -156,15 +162,18 @@ function Board(props: { rows: number; cols: number; bombs: number }) {
 }
 
 function Cell(props: { obj: ICellObject }) {
-  const { getProximity } = useContext(MinesweeperContext);
-
+  const { openCell, getProximity } = useContext(MinesweeperContext);
   return (
     <div
       id={props.obj.state === "open" ? "cell-open" : "cell"}
       className={"flex text-center justify-center items-center flex-wrap"}
-      onClick={() => {}}
+      onClick={() => {
+        openCell(props.obj.row, props.obj.col);
+      }}
     >
-      {props.obj.state === "open" && <>{props.obj.bomb ? "F" : getProximity}</>}
+      {props.obj.state === "open" && (
+        <>{props.obj.bomb ? "F" : getProximity(props.obj.row, props.obj.col)}</>
+      )}
     </div>
   );
 }
