@@ -57,6 +57,10 @@
   border-right: 3px solid #808080;
   border-bottom: 3px solid #808080;
 }
+#cell-open {
+  background-color: #c6c6c6;
+  border: 1px solid #808080;
+}
 
 #title {
   height: 30px;
