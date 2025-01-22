@@ -10,10 +10,7 @@ export default function Application(props: {
 }) {
   const { openWindow } = useContext(TaskbarContext);
   return (
-    <div
-      onClick={() => openWindow(props.window)}
-      className={"w-full h-full border-2"}
-    >
+    <div onClick={() => openWindow(props.window)} className={"w-full h-full "}>
       <Image
         className={"hover:cursor-pointer"}
         src={props.src}
