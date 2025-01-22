@@ -78,29 +78,35 @@ export default function TaskbarContextWrapper(props: {
   };
 
   const adminEnv = async () => {
-    const email = process.env.EMAIL;
-    const password = process.env.PASSWORD;
-    const formData = new FormData();
-    formData.append("email", email as string);
-    formData.append("password", password as string);
-    try {
-      const response = await fetch("/api/admin/", {
-        method: "POST",
-        body: formData,
-      });
+    const email = process.env.NEXT_PUBLIC_EMAIL;
+    const password = process.env.NEXT_PUBLIC_PASSWORD;
 
-      await response.json();
-    } catch (err: unknown) {
-      if (typeof err === "string") {
-        console.log(err);
-      } else if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
+    if (email !== undefined && password !== undefined) {
+      const formData = new FormData();
+      formData.append("email", email as string);
+      formData.append("password", password as string);
+      try {
+        const response = await fetch("/api/admin/", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        if (data.token) {
+          setAdmin(true);
+        }
+      } catch (err: unknown) {
+        if (typeof err === "string") {
+          console.log(err);
+        } else if (err instanceof Error) {
+          return new Response(
+            JSON.stringify({ error: err.message || err.toString() }),
+            {
+              status: 500,
+              headers: {},
+            },
+          );
+        }
       }
     }
   };
