@@ -11,7 +11,7 @@ import DesktopWindow from "../sitecomps/desktopwindow";
 export default function Minesweeper() {
   return (
     <DesktopWindow title="Minesweeper" width="20rem" height="20rem">
-      <Board rows={9} cols={9} bombs={10} />
+      <Board rows={9} cols={9} bombs={10} bombArray={randomArray(10, 9, 9)} />
     </DesktopWindow>
   );
 }
@@ -80,18 +80,19 @@ export const MinesweeperContext = createContext<MinesweeperContextType>(
   {} as MinesweeperContextType,
 );
 
-function Board(props: { rows: number; cols: number; bombs: number }) {
-  const [bombArray, setBombArray] = useState(
-    randomArray(props.bombs, props.rows, props.cols),
-  );
-
+function Board(props: {
+  rows: number;
+  cols: number;
+  bombs: number;
+  bombArray: string[];
+}) {
   const [grid, setGrid] = useState<ICellObject[][]>(
-    boardGen(props.rows, props.cols, bombArray),
+    boardGen(props.rows, props.cols, props.bombArray),
   );
 
   const isBomb = (row: number, col: number) => {
     const stringedValue = row + " " + col;
-    return bombArray.includes(stringedValue);
+    return props.bombArray.includes(stringedValue);
   };
 
   const openCell = (row: number, col: number) => {
