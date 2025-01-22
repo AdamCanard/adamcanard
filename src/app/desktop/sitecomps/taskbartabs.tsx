@@ -10,7 +10,7 @@ import Test from "@/app/test";
 import { TaskbarButton } from "./taskbarbutton";
 
 export default function TaskbarTabs() {
-  const { admin, user } = useContext(TaskbarContext);
+  const { admin, user, setAdmin } = useContext(TaskbarContext);
 
   return (
     <div className={"flex flex-row w-full justify-between"}>
@@ -24,6 +24,14 @@ export default function TaskbarTabs() {
           <>
             <TaskbarButton window={<Windows key="Windows" />} />
             <TaskbarButton window={<Test key="Test" />} />
+            <div
+              id={"button-taskbar"}
+              onClick={() => {
+                setAdmin(false);
+              }}
+            >
+              UnAuth
+            </div>
           </>
         )}
 
