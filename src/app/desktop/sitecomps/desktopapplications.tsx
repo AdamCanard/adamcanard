@@ -1,9 +1,13 @@
+"use client";
 import RecyclingBin from "../applications/recyclingbin";
 import Application from "./application";
 import RecyclingBinImg from "../../../../public/Windows/RecyclingBin.png";
 import Minesweeper from "../applications/minesweeper";
+import { useContext } from "react";
+import { TaskbarContext } from "../taskbarcontext";
 
 export default function DesktopApplications() {
+  const { admin } = useContext(TaskbarContext);
   return (
     <div
       className={"grid w-full h-full grid-cols-12 grid-rows-7 grid-flow-col"}
@@ -13,11 +17,13 @@ export default function DesktopApplications() {
         src={RecyclingBinImg}
         window={<RecyclingBin key={"Recycling Bin"} />}
       />{" "}
-      <Application
-        title="Minesweeper"
-        src={RecyclingBinImg}
-        window={<Minesweeper key={"Minesweeper"} />}
-      />
+      {admin && (
+        <Application
+          title="Minesweeper"
+          src={RecyclingBinImg}
+          window={<Minesweeper key={"Minesweeper"} />}
+        />
+      )}
     </div>
   );
 }
