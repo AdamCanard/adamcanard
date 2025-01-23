@@ -25,6 +25,20 @@ export default function Board(props: {
     setGrid(temp);
   };
 
+  const flagCell = (row: number, col: number) => {
+    const temp = Array(props.rows)
+      .fill(undefined)
+      .map(() => new Array(props.cols).fill(undefined));
+    Object.assign(temp, grid);
+    if (temp[row][col].state === "flagged") {
+      temp[row][col].state = "closed";
+    } else if (temp[row][col].state === "closed") {
+      temp[row][col].state = "flagged";
+    }
+
+    setGrid(temp);
+  };
+
   const openZeros = (row: number, col: number, grid: ICellObject[][]) => {
     const temp = Array(props.rows)
       .fill(undefined)
@@ -102,7 +116,14 @@ export default function Board(props: {
     <div className={"grid grid-cols-9 grid-rows-9 w-full h-full"}>
       {Object.values(grid).map((row, index) => {
         return Object.values(row).map((cell, index2) => {
-          return <Cell obj={cell} open={openCell} key={index + " " + index2} />;
+          return (
+            <Cell
+              obj={cell}
+              open={openCell}
+              flag={flagCell}
+              key={index + " " + index2}
+            />
+          );
         });
       })}
     </div>

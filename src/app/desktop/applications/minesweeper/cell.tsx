@@ -1,8 +1,11 @@
+import Image from "next/image";
 import { ICellObject } from "./minesweeperfunctions";
+import flag from "../../../../../public/Flag.png";
 
 export default function Cell(props: {
   obj: ICellObject;
   open: (arg0: number, arg1: number) => void;
+  flag: (arg0: number, arg1: number) => void;
 }) {
   return (
     <div
@@ -11,8 +14,17 @@ export default function Cell(props: {
       onClick={() => {
         props.open(props.obj.row, props.obj.col);
       }}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        props.flag(props.obj.row, props.obj.col);
+      }}
     >
       <>{props.obj.state == "open" && props.obj.value}</>
+      <>
+        {props.obj.state == "flagged" && (
+          <Image src={flag} alt="MineSweeper Flag" />
+        )}
+      </>
     </div>
   );
 }
