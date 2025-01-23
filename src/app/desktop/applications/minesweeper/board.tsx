@@ -20,7 +20,9 @@ export default function Board(props: {
     if (temp[row][col].value === "0") {
       openZeros(row, col, grid);
     }
-    temp[row][col].state = "open";
+    if (temp[row][col].state === "closed") {
+      temp[row][col].state = "open";
+    }
 
     setGrid(temp);
   };
