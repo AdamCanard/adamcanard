@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ICellObject } from "./minesweeperfunctions";
-import flag from "../../../../../public/Flag.png";
-
+import flag from "../../../../../public/flag.png";
+import minesweeperImages from "./minesweeperimages";
 export default function Cell(props: {
   obj: ICellObject;
   open: (arg0: number, arg1: number) => void;
@@ -21,7 +21,16 @@ export default function Cell(props: {
         props.flag(props.obj.row, props.obj.col);
       }}
     >
-      <>{props.obj.state == "open" && props.obj.value}</>
+      <>
+        {props.obj.state == "open" && (
+          <>
+            <Image
+              src={minesweeperImages[props.obj.value as keyof object]}
+              alt="MineSweeper Icon"
+            />
+          </>
+        )}
+      </>
       <>
         {props.obj.state == "flagged" && (
           <Image src={flag} alt="MineSweeper Flag" />
