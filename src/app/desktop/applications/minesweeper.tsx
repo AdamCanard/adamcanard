@@ -1,12 +1,7 @@
 "use client";
-import {
-  Dispatch,
-  SetStateAction,
-  useState,
-  createContext,
-  useContext,
-} from "react";
+import { useState } from "react";
 import DesktopWindow from "../sitecomps/desktopwindow";
+import { boardGen, ICellObject, randomArray } from "./minesweeperfunctions";
 
 export default function Minesweeper() {
   return (
@@ -15,70 +10,6 @@ export default function Minesweeper() {
     </DesktopWindow>
   );
 }
-
-const randomArray = (amount: number, row: number, col: number) => {
-  const newArray: string[] = [];
-  for (let i = 0; i < amount; i++) {
-    const newRow = Math.floor(Math.random() * row) + "";
-    const newCol = Math.floor(Math.random() * col) + "";
-    const newValue = newRow + " " + newCol;
-    if (!newArray.includes(newValue)) {
-      newArray.push(newValue);
-    } else {
-      i--;
-    }
-  }
-  return newArray;
-};
-
-interface ICellObject {
-  row: number;
-  col: number;
-  bomb: boolean;
-  state: string;
-}
-
-const boardGen = (rows: number, cols: number, bombs: string[]) => {
-  const newGrid = new Array(rows).fill(undefined).map((element, index) => {
-    return new Array(cols).fill(undefined).map((element, index2) => {
-      const row = index + "";
-      const col = index2 + "";
-      const cellKey = row + " " + col;
-      let cellObj: ICellObject = {} as ICellObject;
-      if (bombs.includes(cellKey)) {
-        cellObj = {
-          row: index,
-          col: index2,
-          bomb: true,
-          state: "closed",
-        };
-      } else {
-        cellObj = {
-          row: index,
-          col: index2,
-          bomb: false,
-          state: "closed",
-        };
-      }
-
-      return cellObj;
-    });
-  });
-
-  return newGrid;
-};
-
-interface MinesweeperContextType {
-  grid: ICellObject[][];
-  setGrid: Dispatch<SetStateAction<ICellObject[][]>>;
-  getProximity: (arg0: number, arg1: number) => number;
-  openCell: (arg0: number, arg1: number) => void;
-}
-
-//cast empty object to contexttype
-export const MinesweeperContext = createContext<MinesweeperContextType>(
-  {} as MinesweeperContextType,
-);
 
 function Board(props: {
   rows: number;
@@ -90,91 +21,116 @@ function Board(props: {
     boardGen(props.rows, props.cols, props.bombArray),
   );
 
-  const isBomb = (row: number, col: number) => {
-    const stringedValue = row + " " + col;
-    return props.bombArray.includes(stringedValue);
-  };
-
   const openCell = (row: number, col: number) => {
     const temp = Array(props.rows)
       .fill(undefined)
       .map(() => new Array(props.cols).fill(undefined));
     Object.assign(temp, grid);
+    if (temp[row][col].value === "0") {
+      openZeros(row, col, grid);
+    }
     temp[row][col].state = "open";
+
     setGrid(temp);
   };
 
-  const getProximity = (row: number, col: number) => {
-    let bombs = 0;
-    if (isBomb(row - 1, col - 1)) {
-      bombs++;
-    }
-    if (isBomb(row - 1, col)) {
-      bombs++;
-    }
-    if (isBomb(row - 1, col + 1)) {
-      bombs++;
-    }
-    if (isBomb(row, col - 1)) {
-      bombs++;
-    }
-    if (isBomb(row, col + 1)) {
-      bombs++;
-    }
-    if (isBomb(row + 1, col - 1)) {
-      bombs++;
-    }
-    if (isBomb(row + 1, col)) {
-      bombs++;
-    }
-    if (isBomb(row + 1, col + 1)) {
-      bombs++;
-    }
-    return bombs;
-  };
+  const openZeros = (row: number, col: number, grid: ICellObject[][]) => {
+    const temp = Array(props.rows)
+      .fill(undefined)
+      .map(() => new Array(props.cols).fill(undefined));
+    Object.assign(temp, grid);
+    temp[row][col].state = "open";
 
-  //const openZeros = (row: number, col: number) => {
-  //  const newGrid = grid;
-  //  const newRow = row + "";
-  //  const newCol = col + 1 + "";
-  //  const cellKey = newRow + " " + newCol;
-  //
-  //  newGrid[row][col + 1] = (
-  //    <Cell row={row} col={col + 1} bomb={true} open={true} key={cellKey} />
-  //  );
-  //  setGrid(newGrid);
-  //};
+    if (row != 0) {
+      if (col != 0 && temp[row - 1][col - 1].state === "closed") {
+        if (temp[row - 1][col - 1].value === "0") {
+          openZeros(row - 1, col - 1, temp);
+        } else {
+          temp[row - 1][col - 1].state = "open";
+        }
+      }
+      if (temp[row - 1][col].state === "closed") {
+        if (temp[row - 1][col].value === "0") {
+          openZeros(row - 1, col, temp);
+        } else {
+          temp[row - 1][col].state = "open";
+        }
+      }
+      if (col != props.cols - 1 && temp[row - 1][col + 1].state === "closed") {
+        if (temp[row - 1][col + 1].value === "0") {
+          openZeros(row - 1, col + 1, temp);
+        } else {
+          temp[row - 1][col + 1].state = "open";
+        }
+      }
+    }
+
+    if (col != 0 && temp[row][col - 1].state === "closed") {
+      if (temp[row][col - 1].value === "0") {
+        openZeros(row, col - 1, temp);
+      } else {
+        temp[row][col - 1].state = "open";
+      }
+    }
+    if (col != props.cols - 1 && temp[row][col + 1].state === "closed") {
+      if (temp[row][col + 1].value === "0") {
+        openZeros(row, col + 1, temp);
+      } else {
+        temp[row][col + 1].state = "open";
+      }
+    }
+
+    if (row != props.rows - 1) {
+      if (col != 0 && temp[row + 1][col - 1].state === "closed") {
+        if (temp[row + 1][col - 1].value === "0") {
+          openZeros(row + 1, col - 1, temp);
+        } else {
+          temp[row + 1][col - 1].state = "open";
+        }
+      }
+      if (temp[row + 1][col].state === "closed") {
+        if (temp[row + 1][col].value === "0") {
+          openZeros(row + 1, col, temp);
+        } else {
+          temp[row + 1][col].state = "open";
+        }
+      }
+      if (col != props.cols - 1 && temp[row + 1][col + 1].state === "closed") {
+        if (temp[row + 1][col + 1].value === "0") {
+          openZeros(row + 1, col + 1, temp);
+        } else {
+          temp[row + 1][col + 1].state = "open";
+        }
+      }
+    }
+
+    setGrid(temp);
+  };
 
   return (
     <div className={"grid grid-cols-9 grid-rows-9 w-full h-full"}>
-      <MinesweeperContext.Provider
-        value={{ grid, setGrid, getProximity, openCell }}
-      >
-        <>
-          {Object.values(grid).map((row, index) => {
-            return Object.values(row).map((cell, index2) => {
-              return <Cell obj={cell} key={index + " " + index2} />;
-            });
-          })}
-        </>
-      </MinesweeperContext.Provider>
+      {Object.values(grid).map((row, index) => {
+        return Object.values(row).map((cell, index2) => {
+          return <Cell obj={cell} open={openCell} key={index + " " + index2} />;
+        });
+      })}
     </div>
   );
 }
 
-function Cell(props: { obj: ICellObject }) {
-  const { openCell, getProximity } = useContext(MinesweeperContext);
+function Cell(props: {
+  obj: ICellObject;
+  open: (arg0: number, arg1: number) => void;
+}) {
   return (
     <div
       id={props.obj.state === "open" ? "cell-open" : "cell"}
       className={"flex text-center justify-center items-center flex-wrap"}
       onClick={() => {
-        openCell(props.obj.row, props.obj.col);
+        props.open(props.obj.row, props.obj.col);
       }}
     >
-      {props.obj.state === "open" && (
-        <>{props.obj.bomb ? "F" : getProximity(props.obj.row, props.obj.col)}</>
-      )}
+      <>{props.obj.state == "open" && props.obj.value}</>
     </div>
   );
 }
