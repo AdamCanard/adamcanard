@@ -2,9 +2,9 @@
 import RecyclingBin from "../applications/recyclingbin";
 import Application from "./application";
 import RecyclingBinImg from "../../../../public/Windows/RecyclingBin.png";
-import Minesweeper from "../applications/minesweeper";
 import { useContext } from "react";
 import { TaskbarContext } from "../taskbarcontext";
+import Minesweeper from "../applications/minesweeper/minesweeper";
 
 export default function DesktopApplications() {
   const { admin } = useContext(TaskbarContext);
