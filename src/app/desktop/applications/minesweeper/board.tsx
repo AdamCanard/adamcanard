@@ -1,17 +1,8 @@
-"use client";
 import { useState } from "react";
-import DesktopWindow from "../sitecomps/desktopwindow";
-import { boardGen, ICellObject, randomArray } from "./minesweeperfunctions";
+import { boardGen, ICellObject } from "./minesweeperfunctions";
+import Cell from "./cell";
 
-export default function Minesweeper() {
-  return (
-    <DesktopWindow title="Minesweeper" width="20rem" height="20rem">
-      <Board rows={9} cols={9} bombs={10} bombArray={randomArray(10, 9, 9)} />
-    </DesktopWindow>
-  );
-}
-
-function Board(props: {
+export default function Board(props: {
   rows: number;
   cols: number;
   bombs: number;
@@ -114,23 +105,6 @@ function Board(props: {
           return <Cell obj={cell} open={openCell} key={index + " " + index2} />;
         });
       })}
-    </div>
-  );
-}
-
-function Cell(props: {
-  obj: ICellObject;
-  open: (arg0: number, arg1: number) => void;
-}) {
-  return (
-    <div
-      id={props.obj.state === "open" ? "cell-open" : "cell"}
-      className={"flex text-center justify-center items-center flex-wrap"}
-      onClick={() => {
-        props.open(props.obj.row, props.obj.col);
-      }}
-    >
-      <>{props.obj.state == "open" && props.obj.value}</>
     </div>
   );
 }
