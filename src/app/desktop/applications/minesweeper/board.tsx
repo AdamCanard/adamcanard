@@ -41,6 +41,101 @@ export default function Board(props: {
     setGrid(temp);
   };
 
+  const flagCheck = (grid: ICellObject[][], row: number, col: number) => {
+    if (grid[row][col].value !== "F") {
+      const value = grid[row][col].value;
+      let flags = 0;
+      if (row != 0) {
+        if (col != 0 && grid[row - 1][col - 1].state === "flagged") {
+          flags++;
+        }
+        if (grid[row - 1][col].state === "flagged") {
+          flags++;
+        }
+        if (
+          col != props.cols - 1 &&
+          grid[row - 1][col + 1].state === "flagged"
+        ) {
+          flags++;
+        }
+      }
+
+      if (col != 0 && grid[row][col - 1].state === "flagged") {
+        flags++;
+      }
+      if (col != props.cols && grid[row][col + 1].state === "flagged") {
+        flags++;
+      }
+
+      if (row != props.rows - 1) {
+        if (col != 0 && grid[row + 1][col - 1].state === "flagged") {
+          flags++;
+        }
+        if (grid[row + 1][col].state === "flagged") {
+          flags++;
+        }
+        if (
+          col != props.cols - 1 &&
+          grid[row + 1][col + 1].state === "flagged"
+        ) {
+          flags++;
+        }
+      }
+
+      if (flags + "" == value) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const clearCells = (row: number, col: number) => {
+    const temp = Array(props.rows)
+      .fill(undefined)
+      .map(() => new Array(props.cols).fill(undefined));
+    Object.assign(temp, grid);
+    if (flagCheck(temp, row, col)) {
+      if (row != 0) {
+        if (col != 0 && temp[row - 1][col - 1].state === "closed") {
+          temp[row - 1][col - 1].state = "open";
+        }
+        if (temp[row - 1][col].state === "closed") {
+          temp[row - 1][col].state = "open";
+        }
+        if (
+          col != props.cols - 1 &&
+          temp[row - 1][col + 1].state === "closed"
+        ) {
+          temp[row - 1][col + 1].state = "open";
+        }
+      }
+
+      if (col != 0 && temp[row][col - 1].state === "closed") {
+        temp[row][col - 1].state = "open";
+      }
+      if (col != props.cols && temp[row][col + 1].state === "closed") {
+        temp[row][col + 1].state = "open";
+      }
+
+      if (row != props.rows - 1) {
+        if (col != 0 && temp[row + 1][col - 1].state === "closed") {
+          temp[row + 1][col - 1].state = "open";
+        }
+        if (temp[row + 1][col].state === "closed") {
+          temp[row + 1][col].state = "open";
+        }
+        if (
+          col != props.cols - 1 &&
+          temp[row + 1][col + 1].state === "closed"
+        ) {
+          temp[row + 1][col + 1].state = "open";
+        }
+      }
+
+      setGrid(temp);
+    }
+  };
+
   const openZeros = (row: number, col: number, grid: ICellObject[][]) => {
     const temp = Array(props.rows)
       .fill(undefined)
@@ -123,6 +218,7 @@ export default function Board(props: {
               obj={cell}
               open={openCell}
               flag={flagCell}
+              clear={clearCells}
               key={index + " " + index2}
             />
           );
