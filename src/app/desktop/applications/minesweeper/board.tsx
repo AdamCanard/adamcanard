@@ -113,7 +113,7 @@ export default function Board(props: {
       if (col != 0 && temp[row][col - 1].state === "closed") {
         temp[row][col - 1].state = "open";
       }
-      if (col != props.cols && temp[row][col + 1].state === "closed") {
+      if (col != props.cols - 1 && temp[row][col + 1].state === "closed") {
         temp[row][col + 1].state = "open";
       }
 
