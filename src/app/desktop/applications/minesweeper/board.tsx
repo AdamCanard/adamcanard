@@ -63,7 +63,7 @@ export default function Board(props: {
       if (col != 0 && grid[row][col - 1].state === "flagged") {
         flags++;
       }
-      if (col != props.cols && grid[row][col + 1].state === "flagged") {
+      if (col != props.cols - 1 && grid[row][col + 1].state === "flagged") {
         flags++;
       }
 
