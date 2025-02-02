@@ -32,7 +32,7 @@ This has evolved my website from just a portfolio, to my testing enviroment. Any
 
 The main function of my website outside of being my portfolio is to store my data. As many of you know I am a famous local beerfluencer in the beautiful Calgary, AB, and my lister was born out of my need for storing my beerpinions. 
 
-The list function is more complicate than it appears, all of the data displayed in the lists are dynamically renders based on the database collections and when an admin is using the site, the lists facilitate full CRUD capabilities. Each list also has a work in progress grouping function that lets you group elements of the list by shared values, the best example of this is on the beers list when you click on "Rating"
+The list function is more complicated than it appears, all of the data displayed in the lists are dynamically renders based on the database collections and when an admin is using the site, the lists facilitate full CRUD capabilities. Each list also has a work in progress grouping function that lets you group elements of the list by shared values, the best example of this is on the beers list when you click on "Rating"
 
 ### Games
 
