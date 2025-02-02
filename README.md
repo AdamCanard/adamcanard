@@ -9,7 +9,7 @@ This website is a demostration of my abilities as a developer, but mainly showca
 
 #### What am I looking at / Rules of engagment
 
-If you are visiting this website on a screen larger than 1000px you are brought to te Desktop site which requires you to create an account providing only a username. I use this to keep track of your interactions with my website and for a small level of security. I use cookies on this website purely to facilitate functionality.
+If you are visiting this website on a screen larger than 1000px you are brought to the Desktop site which requires you to create an account providing only a username. I use this to keep track of your interactions with my website and for a small level of security. I use cookies on this website purely to facilitate functionality.
 
 If you are visiting this website on a smaller device you will be shown my mobile site. This site has many of the same functionality but is lacking more of the _*Cool Factor*_
 
