@@ -80,6 +80,18 @@ export default function Login() {
     }
   };
 
+  const handlePassthrough = async () => {
+    let formData = new FormData();
+    formData.append("cookieName", "authToken");
+    formData.append("cookieData", "letmein");
+    await createCookie(formData);
+    formData = new FormData();
+    formData.append("cookieName", "userId");
+    formData.append("cookieData", "Guest");
+    await createCookie(formData);
+    router.refresh();
+  };
+
   const handleClick = () => {
     router.push("/auth/signup");
   };
@@ -103,6 +115,12 @@ export default function Login() {
                   type="button"
                   value="SignUp"
                   onClick={handleClick}
+                />
+                <input
+                  id="button"
+                  type="button"
+                  value="Join as Guest"
+                  onClick={handlePassthrough}
                 />
                 <input id="button" type="submit" value="Submit" />
               </div>

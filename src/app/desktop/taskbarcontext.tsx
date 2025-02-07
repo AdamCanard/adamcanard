@@ -48,20 +48,37 @@ export default function TaskbarContextWrapper(props: {
         body: formData,
       });
       const cookie = await response.json();
-      formData = new FormData();
-      formData.append("userId", cookie.data.value);
-      response = await fetch("/api/user/", {
-        method: "POST",
-        body: formData,
-      });
-      const username = await response.json();
-      setUser(username);
-      formData = new FormData();
-      formData.append("Logs", username.Logs);
-      response = await fetch("/api/user/" + username.id, {
-        method: "PUT",
-        body: formData,
-      });
+      if (cookie.data.value === "Guest") {
+        formData = new FormData();
+        formData.append("userId", "413f8p29zx130fn");
+        response = await fetch("/api/user/", {
+          method: "POST",
+          body: formData,
+        });
+        const username = await response.json();
+        setUser(username);
+        formData = new FormData();
+        formData.append("Logs", username.Logs);
+        response = await fetch("/api/user/" + "413f8p29zx130fn", {
+          method: "PUT",
+          body: formData,
+        });
+      } else {
+        formData = new FormData();
+        formData.append("userId", cookie.data.value);
+        response = await fetch("/api/user/", {
+          method: "POST",
+          body: formData,
+        });
+        const username = await response.json();
+        setUser(username);
+        formData = new FormData();
+        formData.append("Logs", username.Logs);
+        response = await fetch("/api/user/" + username.id, {
+          method: "PUT",
+          body: formData,
+        });
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
