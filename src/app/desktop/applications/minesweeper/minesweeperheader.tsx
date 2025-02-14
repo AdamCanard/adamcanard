@@ -7,17 +7,23 @@ import { useEffect, useState } from "react";
 export default function MinesweeperHeader(props: {
   bombs: number;
   flags: number;
+  gameState: string;
 }) {
   return (
     <div className={" w-full flex flex-row justify-between items-center "}>
       <FlagCounter bombs={props.bombs} flags={props.flags} />
       <div className={"w-full flex items-center justify-center"}>
         <div id="border">
-          <Image src={Smile} alt="bomb" width={40} height={40} />
+          <Image
+            src={props.gameState === "lost" ? Dead : Smile}
+            alt="bomb"
+            width={40}
+            height={40}
+          />
         </div>
       </div>
 
-      <MinesweeperTimer />
+      <MinesweeperTimer gameState={props.gameState} />
     </div>
   );
 }
@@ -53,17 +59,19 @@ export function FlagCounter(props: { bombs: number; flags: number }) {
   );
 }
 
-export function MinesweeperTimer() {
+export function MinesweeperTimer(props: { gameState: string }) {
   const [startTime, setStartTime] = useState<number>(Date.now());
   const [nowTime, setNowTime] = useState(Date.now());
 
   useEffect(() => {
-    setStartTime(Date.now());
-    const interval = setInterval(() => {
-      setNowTime(Date.now());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    if (props.gameState === "playing") {
+      setStartTime(Date.now());
+      const interval = setInterval(() => {
+        setNowTime(Date.now());
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [props.gameState]);
 
   const secondsPassed = () => {
     return (nowTime - startTime) / 1000;

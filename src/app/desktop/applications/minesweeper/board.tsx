@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { boardGen, ICellObject } from "./minesweeperfunctions";
+import { boardGen, ICellObject, isBomb } from "./minesweeperfunctions";
 import Cell from "./cell";
 import MinesweeperHeader from "./minesweeperheader";
 
@@ -13,6 +13,7 @@ export default function Board(props: {
     boardGen(props.rows, props.cols, props.bombArray),
   );
   const [flags, setFlags] = useState<number>(0);
+  const [gameState, setGameState] = useState<string>("playing");
 
   const openCell = (row: number, col: number) => {
     const temp = Array(props.rows)
@@ -27,6 +28,9 @@ export default function Board(props: {
     }
 
     setGrid(temp);
+    if (isBomb(row, col, props.bombArray)) {
+      setGameState("lost");
+    }
   };
 
   const flagCell = (row: number, col: number) => {
@@ -217,7 +221,11 @@ export default function Board(props: {
 
   return (
     <div className={"flex flex-col h-full w-full"}>
-      <MinesweeperHeader bombs={props.bombs} flags={flags} />
+      <MinesweeperHeader
+        bombs={props.bombs}
+        flags={flags}
+        gameState={gameState}
+      />
       <div className={"grid grid-cols-9 grid-rows-9 w-full h-full"}>
         {Object.values(grid).map((row, index) => {
           return Object.values(row).map((cell, index2) => {
