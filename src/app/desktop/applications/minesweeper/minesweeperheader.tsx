@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { timerListImages } from "./minesweeperimages";
-import Bomb from "../../../../../public/minesweeper/bomb.png";
+import Smile from "../../../../../public/minesweeper/Minesweeper_Smile.png";
+import Dead from "../../../../../public/minesweeper/Minesweeper_Dead.png";
 import { useEffect, useState } from "react";
 
 export default function MinesweeperHeader(props: {
@@ -12,7 +13,7 @@ export default function MinesweeperHeader(props: {
       <FlagCounter bombs={props.bombs} flags={props.flags} />
       <div className={"w-full flex items-center justify-center"}>
         <div id="border">
-          <Image src={Bomb} alt="bomb" />
+          <Image src={Smile} alt="bomb" width={40} height={40} />
         </div>
       </div>
 
