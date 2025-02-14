@@ -42,19 +42,19 @@ export function FlagCounter(props: { bombs: number; flags: number }) {
         {" "}
         <Image
           src={timerListImages[Math.floor((bombTotal() / 100) % 10)]}
-          width={30}
+          width={25}
           height={60}
           alt="hundreth"
         />
         <Image
           src={timerListImages[Math.floor((bombTotal() / 10) % 10)]}
-          width={30}
+          width={25}
           height={60}
           alt="tenth"
         />
         <Image
           src={timerListImages[Math.floor(bombTotal() % 10)]}
-          width={30}
+          width={25}
           height={60}
           alt="oneth"
         />
@@ -88,7 +88,7 @@ export function MinesweeperTimer(props: { gameState: string }) {
             timerListImages[Math.floor((secondsPassed() / 100) % 10)] ||
             timerListImages[0]
           }
-          width={30}
+          width={25}
           height={60}
           alt="hundreth"
         />
@@ -97,7 +97,7 @@ export function MinesweeperTimer(props: { gameState: string }) {
             timerListImages[Math.floor((secondsPassed() / 10) % 10)] ||
             timerListImages[0]
           }
-          width={30}
+          width={25}
           height={60}
           alt="tenth"
         />
@@ -106,7 +106,7 @@ export function MinesweeperTimer(props: { gameState: string }) {
             timerListImages[Math.floor(((nowTime - startTime) / 1000) % 10)] ||
             timerListImages[0]
           }
-          width={30}
+          width={25}
           height={60}
           alt="oneth"
         />

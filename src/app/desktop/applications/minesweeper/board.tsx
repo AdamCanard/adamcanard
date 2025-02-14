@@ -105,6 +105,9 @@ export default function Board(props: {
       .map(() => new Array(props.cols).fill(undefined));
     Object.assign(temp, grid);
     if (flagCheck(temp, row, col)) {
+      if (temp[row][col].value === "0") {
+        openZeros(row, col, temp);
+      }
       if (row != 0) {
         if (col != 0 && temp[row - 1][col - 1].state === "closed") {
           temp[row - 1][col - 1].state = "open";
@@ -250,7 +253,15 @@ export default function Board(props: {
         flags={flags}
         gameState={gameState}
       />
-      <div className={"grid grid-cols-9 grid-rows-9 w-full h-full"}>
+      <div
+        style={{
+          display: "grid",
+          width: "100%",
+          height: "100%",
+          gridTemplateColumns: `repeat(${props.cols}, minmax(0,1fr))`,
+          gridTemplateRows: `repeat(${props.rows}, minmax(0,1fr))`,
+        }}
+      >
         {Object.values(grid).map((row, index) => {
           return Object.values(row).map((cell, index2) => {
             return (

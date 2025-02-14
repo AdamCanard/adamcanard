@@ -12,7 +12,7 @@ export default function Cell(props: {
     <div
       id={props.obj.state === "open" ? "cell-open" : "cell"}
       className={
-        "flex text-center justify-center items-center flex-wrap w-full h-full"
+        "flex text-center justify-center items-center flex-wrap w-8 h-8"
       }
       onClick={() => {
         {
