@@ -2,6 +2,7 @@
 import RecyclingBin from "../applications/recyclingbin";
 import Application from "./application";
 import RecyclingBinImg from "../../../../public/Windows/RecyclingBin.png";
+import MinesweeperImage from "../../../../public/minesweeper/MineSweeperDesktop.png";
 import { useContext } from "react";
 import { TaskbarContext } from "../taskbarcontext";
 import Minesweeper from "../applications/minesweeper/minesweeper";
@@ -20,7 +21,7 @@ export default function DesktopApplications() {
       {admin && (
         <Application
           title="Minesweeper"
-          src={RecyclingBinImg}
+          src={MinesweeperImage}
           window={<Minesweeper key={"Minesweeper"} />}
         />
       )}
