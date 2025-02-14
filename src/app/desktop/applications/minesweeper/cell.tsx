@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ICellObject } from "./minesweeperfunctions";
 import flag from "../../../../../public/flag.png";
-import minesweeperImages from "./minesweeperimages";
+import { minesweeperImages } from "./minesweeperimages";
 export default function Cell(props: {
   obj: ICellObject;
   open: (arg0: number, arg1: number) => void;

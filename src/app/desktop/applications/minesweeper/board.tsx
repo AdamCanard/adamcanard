@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { boardGen, ICellObject } from "./minesweeperfunctions";
 import Cell from "./cell";
+import MinesweeperHeader from "./minesweeperheader";
 
 export default function Board(props: {
   rows: number;
@@ -11,6 +12,7 @@ export default function Board(props: {
   const [grid, setGrid] = useState<ICellObject[][]>(
     boardGen(props.rows, props.cols, props.bombArray),
   );
+  const [flags, setFlags] = useState<number>(0);
 
   const openCell = (row: number, col: number) => {
     const temp = Array(props.rows)
@@ -34,8 +36,12 @@ export default function Board(props: {
     Object.assign(temp, grid);
     if (temp[row][col].state === "flagged") {
       temp[row][col].state = "closed";
+      const newflags = flags - 1;
+      setFlags(newflags);
     } else if (temp[row][col].state === "closed") {
       temp[row][col].state = "flagged";
+      const newflags = flags + 1;
+      setFlags(newflags);
     }
 
     setGrid(temp);
@@ -210,20 +216,23 @@ export default function Board(props: {
   };
 
   return (
-    <div className={"grid grid-cols-9 grid-rows-9 w-full h-full"}>
-      {Object.values(grid).map((row, index) => {
-        return Object.values(row).map((cell, index2) => {
-          return (
-            <Cell
-              obj={cell}
-              open={openCell}
-              flag={flagCell}
-              clear={clearCells}
-              key={index + " " + index2}
-            />
-          );
-        });
-      })}
+    <div className={"flex flex-col h-full w-full"}>
+      <MinesweeperHeader bombs={props.bombs} flags={flags} />
+      <div className={"grid grid-cols-9 grid-rows-9 w-full h-full"}>
+        {Object.values(grid).map((row, index) => {
+          return Object.values(row).map((cell, index2) => {
+            return (
+              <Cell
+                obj={cell}
+                open={openCell}
+                flag={flagCell}
+                clear={clearCells}
+                key={index + " " + index2}
+              />
+            );
+          });
+        })}
+      </div>
     </div>
   );
 }
