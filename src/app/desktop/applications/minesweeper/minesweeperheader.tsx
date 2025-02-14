@@ -30,10 +30,14 @@ export default function MinesweeperHeader(props: {
 
 export function FlagCounter(props: { bombs: number; flags: number }) {
   const bombTotal = () => {
-    return props.bombs - props.flags;
+    const output = props.bombs - props.flags;
+    if (output >= 0) {
+      return output;
+    }
+    return 0;
   };
   return (
-    <div className={"w-full flex"}>
+    <div className={"w-full flex justify-start"}>
       <div id="border" className={"flex flex-row"}>
         {" "}
         <Image
@@ -77,7 +81,7 @@ export function MinesweeperTimer(props: { gameState: string }) {
     return (nowTime - startTime) / 1000;
   };
   return (
-    <div className={"w-full flex"}>
+    <div className={"w-full flex justify-end"}>
       <div id="border" className={"flex flex-row"}>
         <Image
           src={

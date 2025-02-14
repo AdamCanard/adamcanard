@@ -108,37 +108,61 @@ export default function Board(props: {
       if (row != 0) {
         if (col != 0 && temp[row - 1][col - 1].state === "closed") {
           temp[row - 1][col - 1].state = "open";
+          if (isBomb(row - 1, col - 1, props.bombArray)) {
+            setGameState("lost");
+          }
         }
         if (temp[row - 1][col].state === "closed") {
           temp[row - 1][col].state = "open";
+          if (isBomb(row - 1, col, props.bombArray)) {
+            setGameState("lost");
+          }
         }
         if (
           col != props.cols - 1 &&
           temp[row - 1][col + 1].state === "closed"
         ) {
           temp[row - 1][col + 1].state = "open";
+          if (isBomb(row - 1, col + 1, props.bombArray)) {
+            setGameState("lost");
+          }
         }
       }
 
       if (col != 0 && temp[row][col - 1].state === "closed") {
         temp[row][col - 1].state = "open";
+        if (isBomb(row, col - 1, props.bombArray)) {
+          setGameState("lost");
+        }
       }
       if (col != props.cols - 1 && temp[row][col + 1].state === "closed") {
         temp[row][col + 1].state = "open";
+        if (isBomb(row, col + 1, props.bombArray)) {
+          setGameState("lost");
+        }
       }
 
       if (row != props.rows - 1) {
         if (col != 0 && temp[row + 1][col - 1].state === "closed") {
           temp[row + 1][col - 1].state = "open";
+          if (isBomb(row + 1, col - 1, props.bombArray)) {
+            setGameState("lost");
+          }
         }
         if (temp[row + 1][col].state === "closed") {
           temp[row + 1][col].state = "open";
+          if (isBomb(row + 1, col, props.bombArray)) {
+            setGameState("lost");
+          }
         }
         if (
           col != props.cols - 1 &&
           temp[row + 1][col + 1].state === "closed"
         ) {
           temp[row + 1][col + 1].state = "open";
+          if (isBomb(row + 1, col + 1, props.bombArray)) {
+            setGameState("lost");
+          }
         }
       }
 
