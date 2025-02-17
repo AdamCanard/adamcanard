@@ -1,5 +1,6 @@
 import Info from "./info";
 import MobileList from "./listcomps/mobilelist";
+import MobileOpenList from "./listcomps/mobileopenlist";
 import { Renderer } from "./renderer/renderer";
 
 export default function MobilePage() {
@@ -13,9 +14,12 @@ export default function MobilePage() {
             toRender={{
               Beers: <MobileList open={false} title="Beers" key={"Beers"} />,
               Suggestion: (
-                <MobileList open={true} title="Suggestion" key={"Suggestion"} />
+                <MobileOpenList
+                  open={true}
+                  title="Suggestion"
+                  key={"Suggestion"}
+                />
               ),
-
               Vinyls: <MobileList open={false} title="Vinyls" key={"Vinyls"} />,
               Ideas: <MobileList open={false} title="Ideas" key={"Ideas"} />,
             }}

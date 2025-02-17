@@ -1,10 +1,14 @@
 "use client";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import Form from "../../desktop/listcomps/form";
 import MobileListData from "./mobilelistdata";
 import ListToolBar from "@/app/desktop/listcomps/listtoolbar";
 import Loading from "@/app/desktop/sitecomps/loading";
-export default function MobileList(props: { open: boolean; title: string }) {
+export default function MobileOpenList(props: {
+  open: boolean;
+  title: string;
+}) {
   const [listElements, setListElements] = useState<object[]>([]);
   const [formElements, setFormElements] = useState<string[]>([]);
   const [groupBy, setGroupBy] = useState<string>("");
@@ -66,6 +70,9 @@ export default function MobileList(props: { open: boolean; title: string }) {
             search={search}
             group={groupBy}
           />
+          <div id="boxshadow">
+            <Form formElements={formElements} title={props.title} />{" "}
+          </div>
         </div>
       </>
     );
