@@ -1,6 +1,6 @@
 import Image from "next/image";
-import MBlackJackGame from "../desktop/blackjackcomps/mobileblackjack";
 import Photo from "../../../public/AdamBeer1.jpg";
+import MBlackJackGame from "./mobilegames/mobileblackjack";
 
 export default function Info() {
   return (
