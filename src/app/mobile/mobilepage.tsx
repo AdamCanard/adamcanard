@@ -1,3 +1,4 @@
+"use client";
 import Info from "./info";
 import MobileList from "./listcomps/mobilelist";
 import MobileOpenList from "./listcomps/mobileopenlist";
