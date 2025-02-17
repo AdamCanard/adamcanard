@@ -46,8 +46,11 @@
     height: calc(100% - 32px);
   }
 }
+/*#listHeight {*/
+/*  height: calc(100% - 125px);*/
+/*}*/
 #listHeight {
-  height: calc(100% - 125px);
+  height: calc(100% - 157px);
 }
 
 #cell {

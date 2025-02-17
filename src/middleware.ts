@@ -10,10 +10,7 @@ export function middleware(req: NextRequest) {
       } else {
         return NextResponse.rewrite(new URL("/desktop", req.url));
       }
-    case "/mobile":
-      return NextResponse.redirect(new URL("/mobile/info", req.url));
-    case "/mobile/lists":
-      return NextResponse.redirect(new URL("/mobile/lists/beers", req.url));
+
     case "/auth/login":
       if (authToken !== undefined || userId !== undefined) {
         return NextResponse.redirect(new URL("/desktop", req.url));

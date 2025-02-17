@@ -1,3 +1,5 @@
+import MobilePage from "./mobilepage";
+
 export default function Page() {
-  return <></>;
+  return <MobilePage />;
 }

@@ -8,6 +8,7 @@ import { TaskbarContext } from "../taskbarcontext";
 import UserPanel from "../userpanel";
 import Test from "@/app/test";
 import { TaskbarButton } from "./taskbarbutton";
+import WindowedMobile from "../windowedmobile";
 
 export default function TaskbarTabs() {
   const { admin, user, setAdmin } = useContext(TaskbarContext);
@@ -23,6 +24,7 @@ export default function TaskbarTabs() {
         {admin && (
           <>
             <TaskbarButton window={<Windows key="Windows" />} />
+            <TaskbarButton window={<WindowedMobile key="Mobile" />} />
             <TaskbarButton window={<Test key="Test" />} />
             <div
               id={"button-taskbar"}
