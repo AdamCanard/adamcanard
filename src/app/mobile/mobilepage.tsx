@@ -9,11 +9,15 @@ export default function MobilePage() {
         Info: <Info key={"Info"} />,
         Lists: (
           <Renderer
+            key={"Lists"}
             toRender={{
-              Beers: <MobileList open={false} title={"Beers"} />,
-              Suggestion: <MobileList open={true} title={"Suggestion"} />,
-              Vinyls: <MobileList open={false} title={"Vinyls"} />,
-              Ideas: <MobileList open={false} title={"Ideas"} />,
+              Beers: <MobileList open={false} title="Beers" key={"Beers"} />,
+              Suggestion: (
+                <MobileList open={true} title="Suggestion" key={"Suggestion"} />
+              ),
+
+              Vinyls: <MobileList open={false} title="Vinyls" key={"Vinyls"} />,
+              Ideas: <MobileList open={false} title="Ideas" key={"Ideas"} />,
             }}
           />
         ),
