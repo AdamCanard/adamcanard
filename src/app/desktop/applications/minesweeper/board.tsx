@@ -1,24 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { boardGen, ICellObject, isBomb } from "./minesweeperfunctions";
 import Cell from "./cell";
 import MinesweeperHeader from "./minesweeperheader";
-
-export default function Board(props: {
-  rows: number;
-  cols: number;
-  bombs: number;
-  bombArray: string[];
-}) {
+import { MinesweeperContext } from "./minesweeper";
+export default function Board() {
+  const { rows, cols, bombArray, setGameState } =
+    useContext(MinesweeperContext);
   const [grid, setGrid] = useState<ICellObject[][]>(
-    boardGen(props.rows, props.cols, props.bombArray),
+    boardGen(rows, cols, bombArray),
   );
   const [flags, setFlags] = useState<number>(0);
-  const [gameState, setGameState] = useState<string>("playing");
 
   const openCell = (row: number, col: number) => {
-    const temp = Array(props.rows)
+    const temp = Array(rows)
       .fill(undefined)
-      .map(() => new Array(props.cols).fill(undefined));
+      .map(() => new Array(cols).fill(undefined));
     Object.assign(temp, grid);
     if (temp[row][col].value === "0") {
       openZeros(row, col, grid);
@@ -28,15 +24,15 @@ export default function Board(props: {
     }
 
     setGrid(temp);
-    if (isBomb(row, col, props.bombArray)) {
+    if (isBomb(row, col, bombArray)) {
       setGameState("lost");
     }
   };
 
   const flagCell = (row: number, col: number) => {
-    const temp = Array(props.rows)
+    const temp = Array(rows)
       .fill(undefined)
-      .map(() => new Array(props.cols).fill(undefined));
+      .map(() => new Array(cols).fill(undefined));
     Object.assign(temp, grid);
     if (temp[row][col].state === "flagged") {
       temp[row][col].state = "closed";
@@ -62,10 +58,7 @@ export default function Board(props: {
         if (grid[row - 1][col].state === "flagged") {
           flags++;
         }
-        if (
-          col != props.cols - 1 &&
-          grid[row - 1][col + 1].state === "flagged"
-        ) {
+        if (col != cols - 1 && grid[row - 1][col + 1].state === "flagged") {
           flags++;
         }
       }
@@ -73,21 +66,18 @@ export default function Board(props: {
       if (col != 0 && grid[row][col - 1].state === "flagged") {
         flags++;
       }
-      if (col != props.cols - 1 && grid[row][col + 1].state === "flagged") {
+      if (col != cols - 1 && grid[row][col + 1].state === "flagged") {
         flags++;
       }
 
-      if (row != props.rows - 1) {
+      if (row != rows - 1) {
         if (col != 0 && grid[row + 1][col - 1].state === "flagged") {
           flags++;
         }
         if (grid[row + 1][col].state === "flagged") {
           flags++;
         }
-        if (
-          col != props.cols - 1 &&
-          grid[row + 1][col + 1].state === "flagged"
-        ) {
+        if (col != cols - 1 && grid[row + 1][col + 1].state === "flagged") {
           flags++;
         }
       }
@@ -100,9 +90,9 @@ export default function Board(props: {
   };
 
   const clearCells = (row: number, col: number) => {
-    const temp = Array(props.rows)
+    const temp = Array(rows)
       .fill(undefined)
-      .map(() => new Array(props.cols).fill(undefined));
+      .map(() => new Array(cols).fill(undefined));
     Object.assign(temp, grid);
     if (flagCheck(temp, row, col)) {
       if (temp[row][col].value === "0") {
@@ -111,22 +101,19 @@ export default function Board(props: {
       if (row != 0) {
         if (col != 0 && temp[row - 1][col - 1].state === "closed") {
           temp[row - 1][col - 1].state = "open";
-          if (isBomb(row - 1, col - 1, props.bombArray)) {
+          if (isBomb(row - 1, col - 1, bombArray)) {
             setGameState("lost");
           }
         }
         if (temp[row - 1][col].state === "closed") {
           temp[row - 1][col].state = "open";
-          if (isBomb(row - 1, col, props.bombArray)) {
+          if (isBomb(row - 1, col, bombArray)) {
             setGameState("lost");
           }
         }
-        if (
-          col != props.cols - 1 &&
-          temp[row - 1][col + 1].state === "closed"
-        ) {
+        if (col != cols - 1 && temp[row - 1][col + 1].state === "closed") {
           temp[row - 1][col + 1].state = "open";
-          if (isBomb(row - 1, col + 1, props.bombArray)) {
+          if (isBomb(row - 1, col + 1, bombArray)) {
             setGameState("lost");
           }
         }
@@ -134,36 +121,33 @@ export default function Board(props: {
 
       if (col != 0 && temp[row][col - 1].state === "closed") {
         temp[row][col - 1].state = "open";
-        if (isBomb(row, col - 1, props.bombArray)) {
+        if (isBomb(row, col - 1, bombArray)) {
           setGameState("lost");
         }
       }
-      if (col != props.cols - 1 && temp[row][col + 1].state === "closed") {
+      if (col != cols - 1 && temp[row][col + 1].state === "closed") {
         temp[row][col + 1].state = "open";
-        if (isBomb(row, col + 1, props.bombArray)) {
+        if (isBomb(row, col + 1, bombArray)) {
           setGameState("lost");
         }
       }
 
-      if (row != props.rows - 1) {
+      if (row != rows - 1) {
         if (col != 0 && temp[row + 1][col - 1].state === "closed") {
           temp[row + 1][col - 1].state = "open";
-          if (isBomb(row + 1, col - 1, props.bombArray)) {
+          if (isBomb(row + 1, col - 1, bombArray)) {
             setGameState("lost");
           }
         }
         if (temp[row + 1][col].state === "closed") {
           temp[row + 1][col].state = "open";
-          if (isBomb(row + 1, col, props.bombArray)) {
+          if (isBomb(row + 1, col, bombArray)) {
             setGameState("lost");
           }
         }
-        if (
-          col != props.cols - 1 &&
-          temp[row + 1][col + 1].state === "closed"
-        ) {
+        if (col != cols - 1 && temp[row + 1][col + 1].state === "closed") {
           temp[row + 1][col + 1].state = "open";
-          if (isBomb(row + 1, col + 1, props.bombArray)) {
+          if (isBomb(row + 1, col + 1, bombArray)) {
             setGameState("lost");
           }
         }
@@ -174,9 +158,9 @@ export default function Board(props: {
   };
 
   const openZeros = (row: number, col: number, grid: ICellObject[][]) => {
-    const temp = Array(props.rows)
+    const temp = Array(rows)
       .fill(undefined)
-      .map(() => new Array(props.cols).fill(undefined));
+      .map(() => new Array(cols).fill(undefined));
     Object.assign(temp, grid);
     temp[row][col].state = "open";
 
@@ -195,7 +179,7 @@ export default function Board(props: {
           temp[row - 1][col].state = "open";
         }
       }
-      if (col != props.cols - 1 && temp[row - 1][col + 1].state === "closed") {
+      if (col != cols - 1 && temp[row - 1][col + 1].state === "closed") {
         if (temp[row - 1][col + 1].value === "0") {
           openZeros(row - 1, col + 1, temp);
         } else {
@@ -211,7 +195,7 @@ export default function Board(props: {
         temp[row][col - 1].state = "open";
       }
     }
-    if (col != props.cols - 1 && temp[row][col + 1].state === "closed") {
+    if (col != cols - 1 && temp[row][col + 1].state === "closed") {
       if (temp[row][col + 1].value === "0") {
         openZeros(row, col + 1, temp);
       } else {
@@ -219,7 +203,7 @@ export default function Board(props: {
       }
     }
 
-    if (row != props.rows - 1) {
+    if (row != rows - 1) {
       if (col != 0 && temp[row + 1][col - 1].state === "closed") {
         if (temp[row + 1][col - 1].value === "0") {
           openZeros(row + 1, col - 1, temp);
@@ -234,7 +218,7 @@ export default function Board(props: {
           temp[row + 1][col].state = "open";
         }
       }
-      if (col != props.cols - 1 && temp[row + 1][col + 1].state === "closed") {
+      if (col != cols - 1 && temp[row + 1][col + 1].state === "closed") {
         if (temp[row + 1][col + 1].value === "0") {
           openZeros(row + 1, col + 1, temp);
         } else {
@@ -248,18 +232,14 @@ export default function Board(props: {
 
   return (
     <div className={"flex flex-col h-full w-full"}>
-      <MinesweeperHeader
-        bombs={props.bombs}
-        flags={flags}
-        gameState={gameState}
-      />
+      <MinesweeperHeader flags={flags} />
       <div
         style={{
           display: "grid",
           width: "100%",
           height: "100%",
-          gridTemplateColumns: `repeat(${props.cols}, minmax(0,1fr))`,
-          gridTemplateRows: `repeat(${props.rows}, minmax(0,1fr))`,
+          gridTemplateColumns: `repeat(${cols}, minmax(0,1fr))`,
+          gridTemplateRows: `repeat(${rows}, minmax(0,1fr))`,
         }}
       >
         {Object.values(grid).map((row, index) => {

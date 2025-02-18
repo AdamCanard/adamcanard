@@ -2,20 +2,18 @@ import Image from "next/image";
 import { timerListImages } from "./minesweeperimages";
 import Smile from "../../../../../public/minesweeper/Minesweeper_Smile.png";
 import Dead from "../../../../../public/minesweeper/Minesweeper_Dead.png";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MinesweeperContext } from "./minesweeper";
 
-export default function MinesweeperHeader(props: {
-  bombs: number;
-  flags: number;
-  gameState: string;
-}) {
+export default function MinesweeperHeader(props: { flags: number }) {
+  const { gameState, bombs } = useContext(MinesweeperContext);
   return (
     <div className={" w-full flex flex-row justify-between items-center "}>
-      <FlagCounter bombs={props.bombs} flags={props.flags} />
+      <FlagCounter bombs={bombs} flags={props.flags} />
       <div className={"w-full flex items-center justify-center"}>
         <div id="border">
           <Image
-            src={props.gameState === "lost" ? Dead : Smile}
+            src={gameState === "lost" ? Dead : Smile}
             alt="bomb"
             width={40}
             height={40}
@@ -23,7 +21,7 @@ export default function MinesweeperHeader(props: {
         </div>
       </div>
 
-      <MinesweeperTimer gameState={props.gameState} />
+      <MinesweeperTimer />
     </div>
   );
 }
@@ -63,19 +61,20 @@ export function FlagCounter(props: { bombs: number; flags: number }) {
   );
 }
 
-export function MinesweeperTimer(props: { gameState: string }) {
+export function MinesweeperTimer() {
   const [startTime, setStartTime] = useState<number>(Date.now());
   const [nowTime, setNowTime] = useState(Date.now());
 
+  const { gameState } = useContext(MinesweeperContext);
   useEffect(() => {
-    if (props.gameState === "playing") {
+    if (gameState === "playing") {
       setStartTime(Date.now());
       const interval = setInterval(() => {
         setNowTime(Date.now());
       }, 1000);
       return () => clearInterval(interval);
     }
-  }, [props.gameState]);
+  }, [gameState]);
 
   const secondsPassed = () => {
     return (nowTime - startTime) / 1000;
