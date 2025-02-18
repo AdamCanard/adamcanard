@@ -113,7 +113,7 @@ export default function DraggableWindow(props: {
         style={point}
       >
         <div id="window">
-          <div className="flex justify-between w-full relative">
+          <div className="flex justify-between w-full relative h-8">
             <h1
               id="title"
               className=" w-full"

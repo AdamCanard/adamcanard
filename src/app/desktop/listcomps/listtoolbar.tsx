@@ -12,8 +12,8 @@ export default function ListToolBar(props: {
     props.setGroup(value);
   };
   return (
-    <>
-      <div id="boxshadow" className={"flex flex-row  w-full "}>
+    <div className={"h-16"}>
+      <div id="boxshadow" className={"flex flex-row w-full "}>
         <div className={"mt-1"}>Search:</div>
         <input
           id="search"
@@ -40,6 +40,6 @@ export default function ListToolBar(props: {
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 }
