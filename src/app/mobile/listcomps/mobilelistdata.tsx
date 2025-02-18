@@ -58,7 +58,7 @@ export default function MobileListData(props: {
   };
 
   return (
-    <div className="w-full flex flex-col overflow-y-scroll">
+    <div className="w-full flex flex-col ">
       {props.group === "" || props.group === Object.keys(props.list[0])[0] ? (
         <>
           {sortBy(props.list, props.group).map((listElement, index) => {

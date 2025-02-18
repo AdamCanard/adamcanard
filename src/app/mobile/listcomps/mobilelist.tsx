@@ -58,7 +58,7 @@ export default function MobileList(props: { open: boolean; title: string }) {
           setGroup={setGroupBy}
           group={groupBy}
         />
-        <div className={"flex flex-col h-fit overflow-scroll"}>
+        <div className={"flex flex-col h-fit overflow-y-scroll"}>
           <MobileListData
             list={listElements}
             form={formElements}
