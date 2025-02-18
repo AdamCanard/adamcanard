@@ -13,7 +13,7 @@ export default function ListToolBar(props: {
   };
   return (
     <div className={"h-16"}>
-      <div id="boxshadow" className={"flex flex-row w-full "}>
+      <div id="boxshadow" className={"flex flex-row w-full h-10"}>
         <div className={"mt-1"}>Search:</div>
         <input
           id="search"
