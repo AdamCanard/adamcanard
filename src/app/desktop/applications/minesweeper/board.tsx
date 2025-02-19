@@ -1,10 +1,15 @@
 import { useContext, useState } from "react";
-import { boardGen, ICellObject, isBomb } from "./minesweeperfunctions";
+import {
+  boardGen,
+  checkWin,
+  ICellObject,
+  isBomb,
+} from "./minesweeperfunctions";
 import Cell from "./cell";
 import MinesweeperHeader from "./minesweeperheader";
 import { MinesweeperContext } from "./minesweeper";
 export default function Board() {
-  const { rows, cols, bombArray, setGameState } =
+  const { rows, cols, bombArray, setGameState, bombs } =
     useContext(MinesweeperContext);
   const [grid, setGrid] = useState<ICellObject[][]>(
     boardGen(rows, cols, bombArray),
@@ -26,6 +31,9 @@ export default function Board() {
     setGrid(temp);
     if (isBomb(row, col, bombArray)) {
       setGameState("lost");
+    }
+    if (checkWin(temp, bombs)) {
+      setGameState("won");
     }
   };
 
@@ -154,6 +162,9 @@ export default function Board() {
       }
 
       setGrid(temp);
+      if (checkWin(temp, bombs)) {
+        setGameState("won");
+      }
     }
   };
 

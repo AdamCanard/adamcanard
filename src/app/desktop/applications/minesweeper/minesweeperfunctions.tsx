@@ -13,6 +13,21 @@ export const randomArray = (amount: number, row: number, col: number) => {
   return newArray;
 };
 
+export const checkWin = (grid: ICellObject[][], bombs: number) => {
+  let counter = 0;
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j].state === "closed" || grid[i][j].state === "flagged") {
+        counter++;
+      }
+    }
+  }
+  if (counter === bombs) {
+    return true;
+  }
+  return false;
+};
+
 export const getProximity = (row: number, col: number, bombArray: string[]) => {
   let bombs = 0;
   if (isBomb(row - 1, col - 1, bombArray)) {

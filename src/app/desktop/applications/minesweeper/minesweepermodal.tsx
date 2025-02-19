@@ -7,7 +7,7 @@ export default function MinesweeperModal(props: { message: string }) {
     <div
       id="border"
       className={
-        "z-10 absolute w-32 h-16 left-0 right-0 top-0 bottom-0 mx-auto my-auto flex justify-center items-center"
+        "z-10 absolute w-36 h-12 left-0 right-0 top-0 bottom-0 mx-auto my-auto flex justify-center items-center"
       }
       onClick={() => {
         setGameState("starting");
