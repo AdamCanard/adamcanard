@@ -109,8 +109,10 @@ export default function GameContainer() {
 
   return (
     <GridContext.Provider value={{ grid, setGrid, move }}>
-      <Grid />
-      <Controller />
+      <div className={"bg-[#505090] w-full h-full flex flex-col"}>
+        <Grid />
+        <Controller />
+      </div>
     </GridContext.Provider>
   );
 }
