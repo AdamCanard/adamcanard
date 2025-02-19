@@ -53,6 +53,18 @@
   height: calc(100% - 125px);
 }
 
+#PlayerTile {
+  width: 100%;
+  height: 100%;
+  background-color: gray;
+}
+
+#EmptyTile {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
 #cell {
   background-color: #c6c6c6;
   border-left: 3px solid #fefefe;
