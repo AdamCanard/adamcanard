@@ -18,13 +18,12 @@ export default function DesktopApplications() {
         src={RecyclingBinImg}
         window={<RecyclingBin key={"Recycling Bin"} />}
       />{" "}
-      {admin && (
-        <Application
-          title="Minesweeper"
-          src={MinesweeperImage}
-          window={<Minesweeper key={"Minesweeper"} />}
-        />
-      )}
+      <Application
+        title="Minesweeper"
+        src={MinesweeperImage}
+        window={<Minesweeper key={"Minesweeper"} />}
+      />
+      {admin && <></>}
     </div>
   );
 }
