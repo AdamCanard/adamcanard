@@ -3,40 +3,34 @@ export default function Controller(props: { move: (arg0: string) => void }) {
     <div className={"h-52 flex flex-col"}>
       <div className={"flex flex-row justify-around items-center pt-8"}>
         {" "}
-        <div className={"grid grid-cols-3 grid-rows-3 w-24 h-16"}>
+        <div className={"grid grid-cols-3 grid-rows-3 w-24 h-24"}>
           {" "}
           <button
-            className={
-              "col-start-2  row-start-1 justify-center items-center flex w-8 h-full border-2"
-            }
+            id="DPadButtonUp"
+            className={"col-start-2  row-start-1 rounded-t DPad DPadButtonUp "}
             onClick={() => props.move("u")}
           >
             U
           </button>
           <button
-            className={
-              "col-start-2  row-start-3  justify-center items-center flex w-8 h-full border-2"
-            }
+            id="DPadButtonDown"
+            className={"col-start-2 row-start-3 rounded-b DPad DPadButtonDown"}
             onClick={() => props.move("d")}
           >
             D
           </button>
+          <button className={"col-start-2 row-start-2 DPad"}></button>
           <button
-            className={
-              "col-start-2 row-start-2 justify-center items-center flex w-8 h-full border-2"
-            }
-          ></button>
-          <button
-            className={
-              "col-start-1 row-start-2 justify-center items-center flex w-8 h-full border-2"
-            }
+            id="DPadButtonLeft"
+            className={"col-start-1 row-start-2 rounded-l DPad DPadButtonLeft "}
             onClick={() => props.move("l")}
           >
             L
           </button>
           <button
+            id="DPadButtonRight"
             className={
-              "col-start-3 row-start-2 justify-center items-center flex w-8 h-full border-2"
+              "col-start-3 row-start-2 rounded-r DPad DPadButtonRight "
             }
             onClick={() => props.move("r")}
           >
