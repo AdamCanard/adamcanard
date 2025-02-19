@@ -5,7 +5,7 @@ import GameContainer from "./testcomps/gamecontainer";
 
 export default function Test() {
   return (
-    <DesktopWindow title="Test" width="14rem" height="">
+    <DesktopWindow title="Test" width="16rem" height="">
       <GameContainer />
     </DesktopWindow>
   );

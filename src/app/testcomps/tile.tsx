@@ -10,12 +10,7 @@ export default function Tile(props: { tileObj: ITileObject }) {
     }
   };
   return (
-    <div
-      id={getColour(props.tileObj.value)}
-      className={
-        "flex text-center justify-center items-center flex-wrap w-8 h-8 border-2"
-      }
-    >
+    <div className={`GridTile ${getColour(props.tileObj.value)}`}>
       {props.tileObj.value}
     </div>
   );

@@ -134,15 +134,23 @@
 }
 
 /* GRID STYLES */
-#PlayerTile {
-  width: 100%;
-  height: 100%;
+
+.GridTile {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  justify-content: center;
+  align-items: center;
+  box-shadow:
+    inset -1px -1px #808080,
+    inset -2px -2px #808080;
+}
+
+.PlayerTile {
   background-color: gray;
 }
 
-#EmptyTile {
-  width: 100%;
-  height: 100%;
+.EmptyTile {
   background-color: black;
 }
 
