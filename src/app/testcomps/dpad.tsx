@@ -14,7 +14,7 @@ export default function DPad() {
         className={"col-start-2 row-start-3 rounded-b DPad DPadButtonDown"}
         onClick={() => move("d")}
       ></button>
-      <button className={"col-start-2 row-start-2 DPad"}></button>
+      <div className={"col-start-2 row-start-2 DPad"}></div>
       <button
         className={"col-start-1 row-start-2 rounded-l DPad DPadButtonLeft "}
         onClick={() => move("l")}

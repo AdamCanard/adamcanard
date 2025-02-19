@@ -4,7 +4,7 @@ import { GridContext } from "./gamecontainer";
 export default function ActionButtons() {
   const { move } = useContext(GridContext);
   return (
-    <div className={"grid grid-cols-2 grid-rows-2"}>
+    <div className={"w-20 h-20 grid grid-cols-2 grid-rows-2 "}>
       {" "}
       <button
         className={"col-start-1 row-start-1 ControllerButton"}
