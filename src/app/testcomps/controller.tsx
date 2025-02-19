@@ -1,43 +1,44 @@
 export default function Controller(props: { move: (arg0: string) => void }) {
   return (
     <div className={"h-64"}>
-      <div className={"grid grid-cols-3 grid-rows-2 w-full h-16"}>
+      <div className={"grid grid-cols-3 grid-rows-3 w-24 h-16"}>
         {" "}
         <button
-          id="button"
           className={
-            "col-start-2 col-span-1 row-start-1 row-span-1 justify-center items-center flex w-full h-full "
+            "col-start-2  row-start-1 justify-center items-center flex w-8 h-full border-2"
           }
           onClick={() => props.move("u")}
         >
-          UP
+          U
         </button>
         <button
-          id="button"
           className={
-            "col-start-2 col-span-1 row-start-2 row-span-1 justify-center items-center flex w-full h-full "
+            "col-start-2  row-start-3  justify-center items-center flex w-8 h-full border-2"
           }
           onClick={() => props.move("d")}
         >
-          DOWN
+          D
         </button>
         <button
-          id="button"
           className={
-            "col-start-1 col-span-1 row-start-2 row-span-2 justify-center items-center flex w-full h-full "
+            "col-start-2 row-start-2 justify-center items-center flex w-8 h-full border-2"
+          }
+        ></button>
+        <button
+          className={
+            "col-start-1 row-start-2 justify-center items-center flex w-8 h-full border-2"
           }
           onClick={() => props.move("l")}
         >
-          LEFT
+          L
         </button>
         <button
-          id="button"
           className={
-            "col-start-3 col-span-1 row-start-2 row-span-2 justify-center items-center flex w-full h-full "
+            "col-start-3 row-start-2 justify-center items-center flex w-8 h-full border-2"
           }
           onClick={() => props.move("r")}
         >
-          RIGHT
+          R{" "}
         </button>
       </div>
 

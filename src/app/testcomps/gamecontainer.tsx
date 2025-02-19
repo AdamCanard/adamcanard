@@ -68,7 +68,7 @@ export default function GameContainer() {
   };
 
   const tryMove = (player: IPlayerType, direction: string) => {
-    const newGrid = Array()
+    const newGrid = Array(undefined)
       .fill(undefined)
       .map(() => new Array(cols).fill(undefined));
     Object.assign(newGrid, grid);
