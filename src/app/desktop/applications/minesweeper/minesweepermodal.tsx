@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { MinesweeperContext } from "./minesweeper";
 
-export default function MinesweeperModal() {
+export default function MinesweeperModal(props: { message: string }) {
   const { setGameState } = useContext(MinesweeperContext);
   return (
     <div
@@ -15,7 +15,7 @@ export default function MinesweeperModal() {
     >
       <div>
         <button id="button" type="submit" value="Submit">
-          Try Again?
+          {props.message}
         </button>
       </div>
     </div>

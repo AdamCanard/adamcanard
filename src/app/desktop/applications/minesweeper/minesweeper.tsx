@@ -73,7 +73,8 @@ export default function Minesweeper() {
           </div>
         ) : (
           <>
-            {gameState === "lost" && <MinesweeperModal />}
+            {gameState === "lost" && <MinesweeperModal message="Try Again?" />}
+            {gameState === "won" && <MinesweeperModal message="Awesome Job!" />}
             <Board />
           </>
         )}
