@@ -30,6 +30,7 @@ export const gridGen = (rows: number, cols: number) => {
 export interface GridContextType {
   grid: ITileObject[][];
   setGrid: Dispatch<SetStateAction<ITileObject[][]>>;
+  move: (arg0: string) => void;
 }
 
 interface IPlayerType {
@@ -107,9 +108,9 @@ export default function GameContainer() {
   };
 
   return (
-    <GridContext.Provider value={{ grid, setGrid }}>
+    <GridContext.Provider value={{ grid, setGrid, move }}>
       <Grid />
-      <Controller move={move} />
+      <Controller />
     </GridContext.Provider>
   );
 }
