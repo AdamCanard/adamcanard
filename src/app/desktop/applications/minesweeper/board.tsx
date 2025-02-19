@@ -106,11 +106,15 @@ export default function Board() {
       if (temp[row][col].value === "0") {
         openZeros(row, col, temp);
       }
+
       if (row != 0) {
         if (col != 0 && temp[row - 1][col - 1].state === "closed") {
           temp[row - 1][col - 1].state = "open";
           if (isBomb(row - 1, col - 1, bombArray)) {
             setGameState("lost");
+          }
+          if (temp[row - 1][col - 1].value === "0") {
+            openZeros(row - 1, col - 1, temp);
           }
         }
         if (temp[row - 1][col].state === "closed") {
@@ -118,11 +122,17 @@ export default function Board() {
           if (isBomb(row - 1, col, bombArray)) {
             setGameState("lost");
           }
+          if (temp[row - 1][col].value === "0") {
+            openZeros(row - 1, col, temp);
+          }
         }
         if (col != cols - 1 && temp[row - 1][col + 1].state === "closed") {
           temp[row - 1][col + 1].state = "open";
           if (isBomb(row - 1, col + 1, bombArray)) {
             setGameState("lost");
+          }
+          if (temp[row - 1][col + 1].value === "0") {
+            openZeros(row - 1, col + 1, temp);
           }
         }
       }
@@ -132,11 +142,17 @@ export default function Board() {
         if (isBomb(row, col - 1, bombArray)) {
           setGameState("lost");
         }
+        if (temp[row][col - 1].value === "0") {
+          openZeros(row, col - 1, temp);
+        }
       }
       if (col != cols - 1 && temp[row][col + 1].state === "closed") {
         temp[row][col + 1].state = "open";
         if (isBomb(row, col + 1, bombArray)) {
           setGameState("lost");
+        }
+        if (temp[row][col + 1].value === "0") {
+          openZeros(row, col + 1, temp);
         }
       }
 
@@ -146,17 +162,26 @@ export default function Board() {
           if (isBomb(row + 1, col - 1, bombArray)) {
             setGameState("lost");
           }
+          if (temp[row + 1][col - 1].value === "0") {
+            openZeros(row + 1, col - 1, temp);
+          }
         }
         if (temp[row + 1][col].state === "closed") {
           temp[row + 1][col].state = "open";
           if (isBomb(row + 1, col, bombArray)) {
             setGameState("lost");
           }
+          if (temp[row + 1][col].value === "0") {
+            openZeros(row + 1, col, temp);
+          }
         }
         if (col != cols - 1 && temp[row + 1][col + 1].state === "closed") {
           temp[row + 1][col + 1].state = "open";
           if (isBomb(row + 1, col + 1, bombArray)) {
             setGameState("lost");
+          }
+          if (temp[row + 1][col + 1].value === "0") {
+            openZeros(row + 1, col + 1, temp);
           }
         }
       }
