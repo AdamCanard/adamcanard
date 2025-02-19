@@ -3,6 +3,7 @@ import DesktopWindow from "../../sitecomps/desktopwindow";
 import { randomArray } from "./minesweeperfunctions";
 import Board from "./board";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
+import MinesweeperModal from "./minesweepermodal";
 
 interface MinesweeperContextType {
   gameState: string;
@@ -32,7 +33,7 @@ export default function Minesweeper() {
       >
         {" "}
         {gameState === "starting" ? (
-          <>
+          <div>
             <button
               onClick={() => {
                 setRows(9);
@@ -69,9 +70,10 @@ export default function Minesweeper() {
             >
               Hard
             </button>
-          </>
+          </div>
         ) : (
           <>
+            {gameState === "lost" && <MinesweeperModal />}
             <Board />
           </>
         )}
