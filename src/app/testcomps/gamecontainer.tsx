@@ -1,5 +1,11 @@
 "use client";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import Grid from "./grid";
 import Controller from "./controller";
 
@@ -8,12 +14,17 @@ export interface ITileObject {
   col: number;
   value: string;
 }
-export const gridGen = (rows: number, cols: number) => {
+export const referenceGridGen = (rows: number, cols: number) => {
   const newGrid = new Array(rows).fill(undefined).map((element, rowIndex) => {
     return new Array(cols).fill(undefined).map((element, colIndex) => {
       let value = "E";
-      if (rowIndex === 0 && colIndex === 0) {
-        value = "P";
+      if (
+        rowIndex === 0 ||
+        colIndex === 0 ||
+        rowIndex === rows - 1 ||
+        colIndex === cols - 1
+      ) {
+        value = "W";
       }
       const tileObj: ITileObject = {
         row: rowIndex,
@@ -24,13 +35,42 @@ export const gridGen = (rows: number, cols: number) => {
       return tileObj;
     });
   });
-
   return newGrid;
 };
+const placePlayer = (grid: ITileObject[][], rows: number, cols: number) => {
+  console.log(grid);
+  const newGrid = Array(rows)
+    .fill(undefined)
+    .map(() => new Array(cols).fill(undefined));
+  Object.assign(newGrid, grid);
+
+  for (let i = 0; i < newGrid.length; i++) {
+    for (let j = 0; j < newGrid[i].length; j++) {
+      if (newGrid[i][j].value === "E") {
+        newGrid[i][j].value = "P";
+        return newGrid;
+      }
+    }
+  }
+  return grid;
+};
+const getPlayer = (grid: ITileObject[][]) => {
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j].value === "P") {
+        return { row: i, col: j } as IPlayerType;
+      }
+    }
+  }
+  return { row: -1, col: -1 } as IPlayerType;
+};
 export interface GridContextType {
-  grid: ITileObject[][];
-  setGrid: Dispatch<SetStateAction<ITileObject[][]>>;
+  currentGrid: ITileObject[][];
+  setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
+  referenceGrid: ITileObject[][];
   move: (arg0: string) => void;
+  rows: number;
+  cols: number;
 }
 
 interface IPlayerType {
@@ -44,24 +84,14 @@ export const GridContext = createContext<GridContextType>(
 );
 
 export default function GameContainer() {
-  const rows = 8;
-  const cols = 8;
-  const [grid, setGrid] = useState<ITileObject[][]>(gridGen(rows, cols));
-
-  const getPlayer = () => {
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid[i].length; j++) {
-        if (grid[i][j].value === "P") {
-          return { row: i, col: j } as IPlayerType;
-        }
-      }
-    }
-    return { row: -1, col: -1 } as IPlayerType;
-  };
+  const rows = 9;
+  const cols = 9;
+  const referenceGrid = referenceGridGen(rows, cols);
+  const [currentGrid, setCurrentGrid] =
+    useState<ITileObject[][]>(referenceGrid);
 
   const move = (direction: string) => {
-    //Gives "[row]:[col]"
-    const player: IPlayerType = getPlayer();
+    const player: IPlayerType = getPlayer(currentGrid);
     if (player.col === -1 || player.row === -1) {
       console.log("Can't find player'");
     }
@@ -69,10 +99,10 @@ export default function GameContainer() {
   };
 
   const tryMove = (player: IPlayerType, direction: string) => {
-    const newGrid = Array(undefined)
+    const newGrid = Array(rows)
       .fill(undefined)
       .map(() => new Array(cols).fill(undefined));
-    Object.assign(newGrid, grid);
+    Object.assign(newGrid, currentGrid);
 
     switch (direction) {
       case "a":
@@ -80,35 +110,48 @@ export default function GameContainer() {
       case "u":
         if (player.row != 0) {
           newGrid[player.row - 1][player.col].value = "P";
-          newGrid[player.row][player.col].value = "E";
+          newGrid[player.row][player.col].value =
+            referenceGrid[player.row][player.col].value;
         }
         break;
       case "d":
         if (player.row != rows - 1) {
           newGrid[player.row + 1][player.col].value = "P";
-          newGrid[player.row][player.col].value = "E";
+          newGrid[player.row][player.col].value =
+            referenceGrid[player.row][player.col].value;
         }
         break;
       case "l":
         if (player.col != 0) {
           newGrid[player.row][player.col - 1].value = "P";
-          newGrid[player.row][player.col].value = "E";
+          newGrid[player.row][player.col].value =
+            referenceGrid[player.row][player.col].value;
         }
         break;
       case "r":
         if (player.col != cols - 1) {
           newGrid[player.row][player.col + 1].value = "P";
-          newGrid[player.row][player.col].value = "E";
+          newGrid[player.row][player.col].value =
+            referenceGrid[player.row][player.col].value;
         }
         break;
 
       default:
     }
-    setGrid(newGrid);
+    setCurrentGrid(newGrid);
   };
 
+  useEffect(() => {
+    const player = getPlayer(currentGrid);
+    if (player.row === -1 || player.col === -1) {
+      setCurrentGrid(placePlayer(currentGrid, rows, cols));
+    }
+  }, [setCurrentGrid, currentGrid]);
+
   return (
-    <GridContext.Provider value={{ grid, setGrid, move }}>
+    <GridContext.Provider
+      value={{ currentGrid, setCurrentGrid, referenceGrid, move, rows, cols }}
+    >
       <div className={"bg-[#505090] w-full h-full flex flex-col"}>
         <Grid />
         <Controller />
