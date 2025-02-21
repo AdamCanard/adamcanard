@@ -8,33 +8,29 @@ import {
 } from "react";
 import Grid from "./grid";
 import Controller from "./controller";
+import { start } from "./rooms";
 
 export interface ITileObject {
   row: number;
   col: number;
   value: string;
 }
-export const referenceGridGen = (rows: number, cols: number) => {
-  const newGrid = new Array(rows).fill(undefined).map((element, rowIndex) => {
-    return new Array(cols).fill(undefined).map((element, colIndex) => {
-      let value = "E";
-      if (
-        rowIndex === 0 ||
-        colIndex === 0 ||
-        rowIndex === rows - 1 ||
-        colIndex === cols - 1
-      ) {
-        value = "W";
-      }
-      const tileObj: ITileObject = {
-        row: rowIndex,
-        col: colIndex,
-        value: value,
-      };
+export const referenceGridGen = (room: string[][]) => {
+  const newGrid = new Array(room.length)
+    .fill(undefined)
+    .map((element, rowIndex) => {
+      return new Array(room[0].length)
+        .fill(undefined)
+        .map((element, colIndex) => {
+          const tileObj: ITileObject = {
+            row: rowIndex,
+            col: colIndex,
+            value: room[rowIndex][colIndex],
+          };
 
-      return tileObj;
+          return tileObj;
+        });
     });
-  });
   return newGrid;
 };
 const placePlayer = (grid: ITileObject[][], rows: number, cols: number) => {
@@ -85,7 +81,7 @@ export const GridContext = createContext<GridContextType>(
 export default function GameContainer() {
   const rows = 9;
   const cols = 9;
-  const referenceGrid = referenceGridGen(rows, cols);
+  const referenceGrid = referenceGridGen(start);
   const [currentGrid, setCurrentGrid] =
     useState<ITileObject[][]>(referenceGrid);
 
