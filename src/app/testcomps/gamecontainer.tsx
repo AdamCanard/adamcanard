@@ -38,7 +38,6 @@ export const referenceGridGen = (rows: number, cols: number) => {
   return newGrid;
 };
 const placePlayer = (grid: ITileObject[][], rows: number, cols: number) => {
-  console.log(grid);
   const newGrid = Array(rows)
     .fill(undefined)
     .map(() => new Array(cols).fill(undefined));
@@ -108,28 +107,40 @@ export default function GameContainer() {
       case "a":
         break;
       case "u":
-        if (player.row != 0) {
+        if (
+          player.row != 0 &&
+          newGrid[player.row - 1][player.col].value === "E"
+        ) {
           newGrid[player.row - 1][player.col].value = "P";
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
         }
         break;
       case "d":
-        if (player.row != rows - 1) {
+        if (
+          player.row != rows - 1 &&
+          newGrid[player.row + 1][player.col].value === "E"
+        ) {
           newGrid[player.row + 1][player.col].value = "P";
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
         }
         break;
       case "l":
-        if (player.col != 0) {
+        if (
+          player.col != 0 &&
+          newGrid[player.row][player.col - 1].value === "E"
+        ) {
           newGrid[player.row][player.col - 1].value = "P";
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
         }
         break;
       case "r":
-        if (player.col != cols - 1) {
+        if (
+          player.col != cols - 1 &&
+          newGrid[player.row][player.col + 1].value === "E"
+        ) {
           newGrid[player.row][player.col + 1].value = "P";
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;

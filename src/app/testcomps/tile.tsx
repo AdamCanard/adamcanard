@@ -11,9 +11,5 @@ export default function Tile(props: { tileObj: ITileObject }) {
         return "WallTile";
     }
   };
-  return (
-    <div className={`GridTile ${getColour(props.tileObj.value)}`}>
-      {props.tileObj.value}
-    </div>
-  );
+  return <div className={`GridTile ${getColour(props.tileObj.value)}`}></div>;
 }
