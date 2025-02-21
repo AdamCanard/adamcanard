@@ -149,12 +149,14 @@
 .PlayerTile {
   background-color: blue;
 }
-
 .EmptyTile {
   background-color: black;
 }
 .WallTile {
   background-color: darkgray;
+}
+.ActionTile {
+  background-color: green;
 }
 
 #cell {

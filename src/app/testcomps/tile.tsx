@@ -9,6 +9,8 @@ export default function Tile(props: { tileObj: ITileObject }) {
         return "PlayerTile";
       case "W":
         return "WallTile";
+      case "A":
+        return "ActionTile";
     }
   };
   return <div className={`GridTile ${getColour(props.tileObj.value)}`}></div>;
