@@ -7,6 +7,8 @@ export default function Tile(props: { tileObj: ITileObject }) {
         return "EmptyTile";
       case "P":
         return "PlayerTile";
+      case "W":
+        return "WallTile";
     }
   };
   return (
