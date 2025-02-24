@@ -9,3 +9,7 @@ export const start = [
   ["W", "E", "E", "E", "E", "E", "E", "E", "W"],
   ["W", "W", "W", "W", "W", "W", "W", "W", "W"],
 ];
+
+export const actions: Record<string, JSX.Element> = {
+  "2:2": <></>,
+};

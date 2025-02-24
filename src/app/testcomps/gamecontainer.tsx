@@ -9,7 +9,7 @@ import {
 } from "react";
 import Grid from "./grid";
 import Controller from "./controller";
-import { start } from "./rooms";
+import { actions, start } from "./rooms";
 
 export interface ITileObject {
   row: number;
@@ -119,22 +119,30 @@ export default function GameContainer() {
         switch (player.direction) {
           case "u":
             if (player.row != 0) {
-              console.log(newGrid[player.row - 1][player.col].value);
+              if (newGrid[player.row - 1][player.col].value === "A") {
+                action(player.row - 1, player.col);
+              }
             }
             break;
           case "d":
             if (player.row != rows - 1) {
-              console.log(newGrid[player.row + 1][player.col].value);
+              if (newGrid[player.row + 1][player.col].value === "A") {
+                action(player.row + 1, player.col);
+              }
             }
             break;
           case "l":
             if (player.col != 0) {
-              console.log(newGrid[player.row][player.col - 1].value);
+              if (newGrid[player.row][player.col - 1].value === "A") {
+                action(player.row, player.col - 1);
+              }
             }
             break;
           case "r":
             if (player.col != cols - 1) {
-              console.log(newGrid[player.row][player.col + 1].value);
+              if (newGrid[player.row][player.col + 1].value === "A") {
+                action(player.row, player.col + 1);
+              }
             }
             break;
         }
@@ -193,6 +201,12 @@ export default function GameContainer() {
     setCurrentGrid(newGrid);
   };
 
+  const action = (row: number, col: number) => {
+    const actionKey = row + ":" + col;
+    if (Object.keys(actions).includes(actionKey)) {
+      console.log(actions[actionKey]);
+    }
+  };
   useEffect(() => {
     if (player.row === -1 || player.col === -1) {
       placePlayer();
