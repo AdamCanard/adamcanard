@@ -3,6 +3,7 @@ import {
   createContext,
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -33,32 +34,7 @@ export const referenceGridGen = (room: string[][]) => {
     });
   return newGrid;
 };
-const placePlayer = (grid: ITileObject[][], rows: number, cols: number) => {
-  const newGrid = Array(rows)
-    .fill(undefined)
-    .map(() => new Array(cols).fill(undefined));
-  Object.assign(newGrid, grid);
 
-  for (let i = 0; i < newGrid.length; i++) {
-    for (let j = 0; j < newGrid[i].length; j++) {
-      if (newGrid[i][j].value === "E") {
-        newGrid[i][j].value = "P";
-        return newGrid;
-      }
-    }
-  }
-  return grid;
-};
-const getPlayer = (grid: ITileObject[][]) => {
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[i].length; j++) {
-      if (grid[i][j].value === "P") {
-        return { row: i, col: j } as IPlayerType;
-      }
-    }
-  }
-  return { row: -1, col: -1 } as IPlayerType;
-};
 export interface GridContextType {
   currentGrid: ITileObject[][];
   setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
@@ -71,6 +47,7 @@ export interface GridContextType {
 interface IPlayerType {
   row: number;
   col: number;
+  direction: string;
 }
 
 //cast empty object to contexttype
@@ -84,16 +61,54 @@ export default function GameContainer() {
   const referenceGrid = referenceGridGen(start);
   const [currentGrid, setCurrentGrid] =
     useState<ITileObject[][]>(referenceGrid);
+  const [player, setPlayer] = useState<IPlayerType>({
+    row: -1,
+    col: -1,
+    direction: "u",
+  });
+  const setPlayerDirection = (direction: string) => {
+    const newPlayer = player;
+    newPlayer.direction = direction;
+    setPlayer(newPlayer);
+  };
+
+  const setPlayerLocation = useCallback(
+    (row: number, col: number) => {
+      const newPlayer = player;
+      newPlayer.row = row;
+      newPlayer.col = col;
+      setPlayer(newPlayer);
+    },
+    [player],
+  );
 
   const move = (direction: string) => {
-    const player: IPlayerType = getPlayer(currentGrid);
     if (player.col === -1 || player.row === -1) {
       console.log("Can't find player'");
     }
-    tryMove(player, direction);
+    tryMove(direction);
   };
+  const placePlayer = useCallback(() => {
+    const newGrid = Array(rows)
+      .fill(undefined)
+      .map(() => new Array(cols).fill(undefined));
+    Object.assign(newGrid, currentGrid);
 
-  const tryMove = (player: IPlayerType, direction: string) => {
+    for (let i = 0; i < newGrid.length; i++) {
+      for (let j = 0; j < newGrid[i].length; j++) {
+        if (newGrid[i][j].value === "E") {
+          newGrid[i][j].value = "P";
+          setPlayerLocation(i, j);
+          setCurrentGrid(newGrid);
+          return;
+        }
+      }
+    }
+    setCurrentGrid(newGrid);
+    return;
+  }, [currentGrid, setPlayerLocation]);
+
+  const tryMove = (direction: string) => {
     const newGrid = Array(rows)
       .fill(undefined)
       .map(() => new Array(cols).fill(undefined));
@@ -101,6 +116,7 @@ export default function GameContainer() {
 
     switch (direction) {
       case "a":
+        console.log(player.direction);
         break;
       case "u":
         if (
@@ -110,6 +126,8 @@ export default function GameContainer() {
           newGrid[player.row - 1][player.col].value = "P";
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
+          setPlayerLocation(player.row - 1, player.col);
+          setPlayerDirection("u");
         }
         break;
       case "d":
@@ -120,6 +138,8 @@ export default function GameContainer() {
           newGrid[player.row + 1][player.col].value = "P";
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
+          setPlayerLocation(player.row + 1, player.col);
+          setPlayerDirection("d");
         }
         break;
       case "l":
@@ -130,6 +150,8 @@ export default function GameContainer() {
           newGrid[player.row][player.col - 1].value = "P";
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
+          setPlayerLocation(player.row, player.col - 1);
+          setPlayerDirection("l");
         }
         break;
       case "r":
@@ -140,6 +162,8 @@ export default function GameContainer() {
           newGrid[player.row][player.col + 1].value = "P";
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
+          setPlayerLocation(player.row, player.col + 1);
+          setPlayerDirection("r");
         }
         break;
 
@@ -149,11 +173,10 @@ export default function GameContainer() {
   };
 
   useEffect(() => {
-    const player = getPlayer(currentGrid);
     if (player.row === -1 || player.col === -1) {
-      setCurrentGrid(placePlayer(currentGrid, rows, cols));
+      placePlayer();
     }
-  }, [setCurrentGrid, currentGrid]);
+  }, [player.col, player.row, placePlayer]);
 
   return (
     <GridContext.Provider
