@@ -116,7 +116,28 @@ export default function GameContainer() {
 
     switch (direction) {
       case "a":
-        console.log(player.direction);
+        switch (player.direction) {
+          case "u":
+            if (player.row != 0) {
+              console.log(newGrid[player.row - 1][player.col].value);
+            }
+            break;
+          case "d":
+            if (player.row != rows - 1) {
+              console.log(newGrid[player.row + 1][player.col].value);
+            }
+            break;
+          case "l":
+            if (player.col != 0) {
+              console.log(newGrid[player.row][player.col - 1].value);
+            }
+            break;
+          case "r":
+            if (player.col != cols - 1) {
+              console.log(newGrid[player.row][player.col + 1].value);
+            }
+            break;
+        }
         break;
       case "u":
         if (
@@ -127,8 +148,8 @@ export default function GameContainer() {
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
           setPlayerLocation(player.row - 1, player.col);
-          setPlayerDirection("u");
         }
+        setPlayerDirection("u");
         break;
       case "d":
         if (
@@ -139,8 +160,8 @@ export default function GameContainer() {
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
           setPlayerLocation(player.row + 1, player.col);
-          setPlayerDirection("d");
         }
+        setPlayerDirection("d");
         break;
       case "l":
         if (
@@ -151,8 +172,8 @@ export default function GameContainer() {
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
           setPlayerLocation(player.row, player.col - 1);
-          setPlayerDirection("l");
         }
+        setPlayerDirection("l");
         break;
       case "r":
         if (
@@ -163,8 +184,8 @@ export default function GameContainer() {
           newGrid[player.row][player.col].value =
             referenceGrid[player.row][player.col].value;
           setPlayerLocation(player.row, player.col + 1);
-          setPlayerDirection("r");
         }
+        setPlayerDirection("r");
         break;
 
       default:
