@@ -24,7 +24,6 @@ export default function TaskbarTabs() {
         {admin && (
           <>
             <TaskbarButton window={<Windows key="Windows" />} />
-            <TaskbarButton window={<WindowedMobile key="Mobile" />} />
             <TaskbarButton window={<Test key="Test" />} />
             <div
               id={"button-taskbar"}
@@ -37,6 +36,7 @@ export default function TaskbarTabs() {
           </>
         )}
 
+        <TaskbarButton window={<WindowedMobile key="Mobile" />} />
         <TaskbarButton window={<UserPanel key={user.Name} />} />
         <TaskbarButton window={<AdminPanel key="Admin" />} />
       </div>
