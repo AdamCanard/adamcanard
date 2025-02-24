@@ -4,12 +4,14 @@ import {
   Dispatch,
   SetStateAction,
   useCallback,
+  useContext,
   useEffect,
   useState,
 } from "react";
 import Grid from "./grid";
 import Controller from "./controller";
 import { actions, start } from "./rooms";
+import { GameRenderContext } from "./gamerenderer";
 
 export interface ITileObject {
   row: number;
@@ -66,6 +68,8 @@ export default function GameContainer() {
     col: -1,
     direction: "u",
   });
+
+  const { setNewWindow } = useContext(GameRenderContext);
   const setPlayerDirection = (direction: string) => {
     const newPlayer = player;
     newPlayer.direction = direction;
@@ -204,7 +208,7 @@ export default function GameContainer() {
   const action = (row: number, col: number) => {
     const actionKey = row + ":" + col;
     if (Object.keys(actions).includes(actionKey)) {
-      console.log(actions[actionKey]);
+      setNewWindow(actions[actionKey]);
     }
   };
   useEffect(() => {

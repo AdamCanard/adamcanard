@@ -1,3 +1,5 @@
+import MobilePage from "../mobile/mobilepage";
+
 export const start = [
   ["W", "W", "W", "W", "W", "W", "W", "W", "W"],
   ["W", "E", "E", "E", "E", "E", "E", "E", "W"],
@@ -11,5 +13,5 @@ export const start = [
 ];
 
 export const actions: Record<string, JSX.Element> = {
-  "2:2": <></>,
+  "2:2": <MobilePage />,
 };
