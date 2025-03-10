@@ -35,6 +35,14 @@ function Chest() {
     </div>
   );
 }
+function Door() {
+  return (
+    <div className={"flex flex-col h-full w-full"}>
+      <div className={"h-full w-full bg-orange-300"}></div>
+      <ScreenBar />
+    </div>
+  );
+}
 
 const wall: Record<string, JSX.Element> = {
   W: <Wall />,
@@ -46,13 +54,31 @@ const empty: Record<string, JSX.Element> = {
 const chest: Record<string, JSX.Element> = {
   C: <Chest />,
 };
+const doorToRight: Record<string, JSX.Element> = {
+  D: <Door />,
+};
+const doorToLeft: Record<string, JSX.Element> = {
+  D: <Door />,
+};
 
 export const start: Record<string, JSX.Element>[][] = [
   [wall, wall, wall, wall, wall, wall, wall, wall, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, chest, empty, empty, empty, wall],
+  [wall, empty, empty, empty, chest, empty, empty, empty, doorToRight],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
+];
+
+export const right: Record<string, JSX.Element>[][] = [
+  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [doorToLeft, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],

@@ -158,6 +158,9 @@
 .ChestTile {
   background-color: brown;
 }
+.DoorTile {
+  background-color: orangered;
+}
 
 #cell {
   background-color: #c6c6c6;

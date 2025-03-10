@@ -109,6 +109,7 @@ export default function GameContainer() {
     }
     tryMove(direction);
   };
+
   const placePlayer = useCallback(() => {
     const newGrid = Array(rows)
       .fill(undefined)
