@@ -140,30 +140,22 @@ export default function GameContainer() {
         switch (player.direction) {
           case "u":
             if (player.row != 0) {
-              if (newGrid[player.row - 1][player.col].value === "A") {
-                action(player.row - 1, player.col);
-              }
+              action(player.row - 1, player.col);
             }
             break;
           case "d":
             if (player.row != rows - 1) {
-              if (newGrid[player.row + 1][player.col].value === "A") {
-                action(player.row + 1, player.col);
-              }
+              action(player.row + 1, player.col);
             }
             break;
           case "l":
             if (player.col != 0) {
-              if (newGrid[player.row][player.col - 1].value === "A") {
-                action(player.row, player.col - 1);
-              }
+              action(player.row, player.col - 1);
             }
             break;
           case "r":
             if (player.col != cols - 1) {
-              if (newGrid[player.row][player.col + 1].value === "A") {
-                action(player.row, player.col + 1);
-              }
+              action(player.row, player.col + 1);
             }
             break;
         }
