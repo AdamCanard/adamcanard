@@ -4,33 +4,34 @@ import {
   Dispatch,
   SetStateAction,
   useCallback,
-  useContext,
   useEffect,
   useState,
 } from "react";
 import Grid from "./grid";
 import Controller from "./controller";
-import { actions, start } from "./rooms";
-import { GameRenderContext } from "./gamerenderer";
+import { start } from "./rooms";
 
 export interface ITileObject {
   row: number;
   col: number;
   value: string;
+  element: JSX.Element;
 }
-export const referenceGridGen = (room: string[][]) => {
+export const referenceGridGen = (room: Record<string, JSX.Element>[][]) => {
   const newGrid = new Array(room.length)
     .fill(undefined)
     .map((element, rowIndex) => {
       return new Array(room[0].length)
         .fill(undefined)
         .map((element, colIndex) => {
+          const key = Object.keys(room[rowIndex][colIndex])[0];
+          const toRender = Object.values(room[rowIndex][colIndex])[0];
           const tileObj: ITileObject = {
             row: rowIndex,
             col: colIndex,
-            value: room[rowIndex][colIndex],
+            value: key,
+            element: toRender,
           };
-
           return tileObj;
         });
     });
@@ -38,6 +39,8 @@ export const referenceGridGen = (room: string[][]) => {
 };
 
 export interface GridContextType {
+  setNewWindow: (arg0: JSX.Element) => void;
+  resetWindow: () => void;
   currentGrid: ITileObject[][];
   setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
   referenceGrid: ITileObject[][];
@@ -60,7 +63,9 @@ export const GridContext = createContext<GridContextType>(
 export default function GameContainer() {
   const rows = 9;
   const cols = 9;
-  const referenceGrid = referenceGridGen(start);
+  const referenceGrid: ITileObject[][] = referenceGridGen(start);
+
+  const [window, setWindow] = useState<JSX.Element>(<Grid />);
   const [currentGrid, setCurrentGrid] =
     useState<ITileObject[][]>(referenceGrid);
   const [player, setPlayer] = useState<IPlayerType>({
@@ -69,7 +74,13 @@ export default function GameContainer() {
     direction: "u",
   });
 
-  const { setNewWindow } = useContext(GameRenderContext);
+  const setNewWindow = (newWindow: JSX.Element) => {
+    setWindow(newWindow);
+  };
+  const resetWindow = () => {
+    setWindow(<GameContainer />);
+  };
+
   const setPlayerDirection = (direction: string) => {
     const newPlayer = player;
     newPlayer.direction = direction;
@@ -206,10 +217,7 @@ export default function GameContainer() {
   };
 
   const action = (row: number, col: number) => {
-    const actionKey = row + ":" + col;
-    if (Object.keys(actions).includes(actionKey)) {
-      setNewWindow(actions[actionKey]);
-    }
+    setNewWindow(currentGrid[row][col].element);
   };
   useEffect(() => {
     if (player.row === -1 || player.col === -1) {
@@ -219,10 +227,19 @@ export default function GameContainer() {
 
   return (
     <GridContext.Provider
-      value={{ currentGrid, setCurrentGrid, referenceGrid, move, rows, cols }}
+      value={{
+        currentGrid,
+        setCurrentGrid,
+        referenceGrid,
+        move,
+        rows,
+        cols,
+        setNewWindow,
+        resetWindow,
+      }}
     >
       <div className={"bg-[#505090] w-full h-full flex flex-col"}>
-        <Grid />
+        {window}
         <Controller />
       </div>
     </GridContext.Provider>

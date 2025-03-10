@@ -1,5 +1,5 @@
 "use client";
-import GameRenderer from "../testcomps/gamerenderer";
+import GameContainer from "../testcomps/gamecontainer";
 import Info from "./info";
 import MobileList from "./listcomps/mobilelist";
 import MobileOpenList from "./listcomps/mobileopenlist";
@@ -27,7 +27,7 @@ export default function MobilePage() {
             }}
           />
         ),
-        WIP: <GameRenderer key={"WIP"} />,
+        WIP: <GameContainer key={"WIP"} />,
       }}
     />
   );
