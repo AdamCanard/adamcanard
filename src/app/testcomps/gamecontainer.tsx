@@ -39,7 +39,7 @@ export const referenceGridGen = (room: Record<string, JSX.Element>[][]) => {
 };
 
 export interface GridContextType {
-  setNewWindow: (arg0: JSX.Element) => void;
+  setNewWindow: (arg0: JSX.Element, arg1: string) => void;
   resetWindow: () => void;
   currentGrid: ITileObject[][];
   setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
@@ -64,8 +64,10 @@ export default function GameContainer() {
   const rows = 9;
   const cols = 9;
   const referenceGrid: ITileObject[][] = referenceGridGen(start);
+  const [window, setWindow] = useState<Record<string, JSX.Element>>({
+    main: <Grid />,
+  });
 
-  const [window, setWindow] = useState<JSX.Element>(<Grid />);
   const [currentGrid, setCurrentGrid] =
     useState<ITileObject[][]>(referenceGrid);
   const [player, setPlayer] = useState<IPlayerType>({
@@ -74,11 +76,15 @@ export default function GameContainer() {
     direction: "u",
   });
 
-  const setNewWindow = (newWindow: JSX.Element) => {
-    setWindow(newWindow);
+  const setNewWindow = (newWindow: JSX.Element, value: string) => {
+    const newWindowRecord: Record<string, JSX.Element> = {};
+    newWindowRecord[value] = newWindow;
+    setWindow(newWindowRecord);
   };
   const resetWindow = () => {
-    setWindow(<GameContainer />);
+    setWindow({
+      main: <Grid />,
+    });
   };
 
   const setPlayerDirection = (direction: string) => {
@@ -162,10 +168,15 @@ export default function GameContainer() {
             break;
         }
         break;
+      case "b":
+        resetWindow();
+        break;
+
       case "u":
         if (
           player.row != 0 &&
-          newGrid[player.row - 1][player.col].value === "E"
+          newGrid[player.row - 1][player.col].value === "E" &&
+          Object.keys(window)[0] === "main"
         ) {
           newGrid[player.row - 1][player.col].value = "P";
           newGrid[player.row][player.col].value =
@@ -177,7 +188,8 @@ export default function GameContainer() {
       case "d":
         if (
           player.row != rows - 1 &&
-          newGrid[player.row + 1][player.col].value === "E"
+          newGrid[player.row + 1][player.col].value === "E" &&
+          Object.keys(window)[0] === "main"
         ) {
           newGrid[player.row + 1][player.col].value = "P";
           newGrid[player.row][player.col].value =
@@ -189,7 +201,8 @@ export default function GameContainer() {
       case "l":
         if (
           player.col != 0 &&
-          newGrid[player.row][player.col - 1].value === "E"
+          newGrid[player.row][player.col - 1].value === "E" &&
+          Object.keys(window)[0] === "main"
         ) {
           newGrid[player.row][player.col - 1].value = "P";
           newGrid[player.row][player.col].value =
@@ -201,7 +214,8 @@ export default function GameContainer() {
       case "r":
         if (
           player.col != cols - 1 &&
-          newGrid[player.row][player.col + 1].value === "E"
+          newGrid[player.row][player.col + 1].value === "E" &&
+          Object.keys(window)[0] === "main"
         ) {
           newGrid[player.row][player.col + 1].value = "P";
           newGrid[player.row][player.col].value =
@@ -217,7 +231,7 @@ export default function GameContainer() {
   };
 
   const action = (row: number, col: number) => {
-    setNewWindow(currentGrid[row][col].element);
+    setNewWindow(currentGrid[row][col].element, currentGrid[row][col].value);
   };
   useEffect(() => {
     if (player.row === -1 || player.col === -1) {
@@ -239,7 +253,7 @@ export default function GameContainer() {
       }}
     >
       <div className={"bg-[#505090] w-full h-full flex flex-col"}>
-        {window}
+        {Object.values(window)[0]}
         <Controller />
       </div>
     </GridContext.Provider>
