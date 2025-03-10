@@ -166,8 +166,9 @@ export default function GameContainer() {
         break;
 
       case "u":
-        if (
-          player.row != 0 &&
+        if (player.row === 0) {
+          console.log("change room up");
+        } else if (
           newGrid[player.row - 1][player.col].value === "E" &&
           Object.keys(window)[0] === "main"
         ) {
@@ -179,8 +180,9 @@ export default function GameContainer() {
         setPlayerDirection("u");
         break;
       case "d":
-        if (
-          player.row != rows - 1 &&
+        if (player.row === rows - 1) {
+          console.log("change room down");
+        } else if (
           newGrid[player.row + 1][player.col].value === "E" &&
           Object.keys(window)[0] === "main"
         ) {
@@ -192,8 +194,9 @@ export default function GameContainer() {
         setPlayerDirection("d");
         break;
       case "l":
-        if (
-          player.col != 0 &&
+        if (player.col === 0) {
+          console.log("change room left");
+        } else if (
           newGrid[player.row][player.col - 1].value === "E" &&
           Object.keys(window)[0] === "main"
         ) {
@@ -205,8 +208,9 @@ export default function GameContainer() {
         setPlayerDirection("l");
         break;
       case "r":
-        if (
-          player.col != cols - 1 &&
+        if (player.col === cols - 1) {
+          console.log("change room right");
+        } else if (
           newGrid[player.row][player.col + 1].value === "E" &&
           Object.keys(window)[0] === "main"
         ) {
