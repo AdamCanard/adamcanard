@@ -63,15 +63,17 @@ export const GridContext = createContext<GridContextType>(
 export default function GameContainer() {
   const rows = 9;
   const cols = 9;
-  const [currentMap, setCurrentMap] =
-    useState<Record<string, JSX.Element>[][]>(right);
-  const referenceGrid = referenceGridGen(currentMap);
   const [window, setWindow] = useState<Record<string, JSX.Element>>({
     main: <Grid />,
   });
 
-  const [currentGrid, setCurrentGrid] =
-    useState<ITileObject[][]>(referenceGrid);
+  const [referenceGrid, setReferenceGrid] = useState<ITileObject[][]>(
+    referenceGridGen(start),
+  );
+
+  const [currentGrid, setCurrentGrid] = useState<ITileObject[][]>(
+    referenceGrid.map((row) => row.map((tile) => ({ ...tile }))),
+  );
   const [player, setPlayer] = useState<IPlayerType>({
     row: -1,
     col: -1,
@@ -113,10 +115,7 @@ export default function GameContainer() {
   };
 
   const placePlayer = useCallback(() => {
-    const newGrid = Array(rows)
-      .fill(undefined)
-      .map(() => new Array(cols).fill(undefined));
-    Object.assign(newGrid, currentGrid);
+    const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
 
     for (let i = 0; i < newGrid.length; i++) {
       for (let j = 0; j < newGrid[i].length; j++) {
@@ -133,10 +132,7 @@ export default function GameContainer() {
   }, [currentGrid, setPlayerLocation]);
 
   const tryMove = (direction: string) => {
-    const newGrid = Array(rows)
-      .fill(undefined)
-      .map(() => new Array(cols).fill(undefined));
-    Object.assign(newGrid, currentGrid);
+    const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
 
     switch (direction) {
       case "a":
@@ -197,7 +193,7 @@ export default function GameContainer() {
         break;
       case "l":
         if (player.col === 0) {
-          console.log("change room left");
+          setReferenceGrid(referenceGridGen(left));
         } else if (
           newGrid[player.row][player.col - 1].value === "E" &&
           Object.keys(window)[0] === "main"
@@ -234,10 +230,15 @@ export default function GameContainer() {
   };
 
   useEffect(() => {
-    if ((player.row === -1 || player.col === -1) && currentGrid.length !== 0) {
+    if (player.row === -1 || player.col === -1) {
       placePlayer();
     }
   }, [player.col, player.row, placePlayer, currentGrid]);
+  useEffect(() => {
+    setCurrentGrid(
+      referenceGrid.map((row) => row.map((tile) => ({ ...tile }))),
+    );
+  }, [referenceGrid]);
 
   return (
     <GridContext.Provider
