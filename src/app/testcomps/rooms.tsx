@@ -46,6 +46,7 @@ const empty: Record<string, JSX.Element> = {
 const chest: Record<string, JSX.Element> = {
   C: <Chest />,
 };
+
 export const start: Record<string, JSX.Element>[][] = [
   [wall, wall, wall, wall, empty, wall, wall, wall, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
@@ -68,4 +69,21 @@ export const right: Record<string, JSX.Element>[][] = [
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, wall, wall, wall, wall, wall, wall, wall, wall],
+];
+export const left: Record<string, JSX.Element>[][] = [
+  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, empty],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
+  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
+];
+
+export const map: Record<string, JSX.Element>[][][][] = [
+  [[], [], []],
+  [left, start, right],
+  [[], [], []],
 ];

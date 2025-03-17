@@ -9,7 +9,7 @@ import {
 } from "react";
 import Grid from "./grid";
 import Controller from "./controller";
-import { start } from "./rooms";
+import { left, right, start } from "./rooms";
 
 export interface ITileObject {
   row: number;
@@ -63,7 +63,9 @@ export const GridContext = createContext<GridContextType>(
 export default function GameContainer() {
   const rows = 9;
   const cols = 9;
-  const referenceGrid: ITileObject[][] = referenceGridGen(start);
+  const [currentMap, setCurrentMap] =
+    useState<Record<string, JSX.Element>[][]>(right);
+  const referenceGrid = referenceGridGen(currentMap);
   const [window, setWindow] = useState<Record<string, JSX.Element>>({
     main: <Grid />,
   });
@@ -230,11 +232,12 @@ export default function GameContainer() {
   const action = (row: number, col: number) => {
     setNewWindow(currentGrid[row][col].element, currentGrid[row][col].value);
   };
+
   useEffect(() => {
-    if (player.row === -1 || player.col === -1) {
+    if ((player.row === -1 || player.col === -1) && currentGrid.length !== 0) {
       placePlayer();
     }
-  }, [player.col, player.row, placePlayer]);
+  }, [player.col, player.row, placePlayer, currentGrid]);
 
   return (
     <GridContext.Provider
