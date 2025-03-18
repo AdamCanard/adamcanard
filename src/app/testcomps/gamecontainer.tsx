@@ -9,7 +9,7 @@ import {
 } from "react";
 import Grid from "./grid";
 import Controller from "./controller";
-import { left, right, start } from "./rooms";
+import { left, start } from "./rooms";
 
 export interface ITileObject {
   row: number;
@@ -18,23 +18,19 @@ export interface ITileObject {
   element: JSX.Element;
 }
 export const referenceGridGen = (room: Record<string, JSX.Element>[][]) => {
-  const newGrid = new Array(room.length)
-    .fill(undefined)
-    .map((element, rowIndex) => {
-      return new Array(room[0].length)
-        .fill(undefined)
-        .map((element, colIndex) => {
-          const key = Object.keys(room[rowIndex][colIndex])[0];
-          const toRender = Object.values(room[rowIndex][colIndex])[0];
-          const tileObj: ITileObject = {
-            row: rowIndex,
-            col: colIndex,
-            value: key,
-            element: toRender,
-          };
-          return tileObj;
-        });
-    });
+  const newGrid = room.map((row, rowIndex) =>
+    row.map((tile, tileIndex) => {
+      const key = Object.keys(room[rowIndex][tileIndex])[0];
+      const toRender = Object.values(room[rowIndex][tileIndex])[0];
+      const tileObj: ITileObject = {
+        row: rowIndex,
+        col: tileIndex,
+        value: key,
+        element: toRender,
+      };
+      return tileObj;
+    }),
+  );
   return newGrid;
 };
 
