@@ -9,7 +9,7 @@ import {
 } from "react";
 import Grid from "./grid";
 import Controller from "./controller";
-import { left, start } from "./rooms";
+import { left, right, start } from "./rooms";
 
 export interface ITileObject {
   row: number;
@@ -110,22 +110,38 @@ export default function GameContainer() {
     tryMove(direction);
   };
 
+  const hasPlayer = useCallback((grid: ITileObject[][]) => {
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[i].length; j++) {
+        if (grid[i][j].value === "P") {
+          return true;
+        }
+      }
+    }
+    return false;
+  }, []);
+
   const placePlayer = useCallback(() => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
-
-    for (let i = 0; i < newGrid.length; i++) {
-      for (let j = 0; j < newGrid[i].length; j++) {
-        if (newGrid[i][j].value === "E") {
-          newGrid[i][j].value = "P";
-          setPlayerLocation(i, j);
-          setCurrentGrid(newGrid);
-          return;
+    if (!hasPlayer(newGrid)) {
+      if (player.row !== -1 && player.col !== -1) {
+        newGrid[player.row][player.col].value = "P";
+      } else {
+        for (let i = 0; i < newGrid.length; i++) {
+          for (let j = 0; j < newGrid[i].length; j++) {
+            if (newGrid[i][j].value === "E") {
+              newGrid[i][j].value = "P";
+              setPlayerLocation(i, j);
+              setCurrentGrid(newGrid);
+              return;
+            }
+          }
         }
       }
     }
     setCurrentGrid(newGrid);
     return;
-  }, [currentGrid, setPlayerLocation]);
+  }, [currentGrid, setPlayerLocation, hasPlayer, player.col, player.row]);
 
   const tryMove = (direction: string) => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
@@ -161,7 +177,7 @@ export default function GameContainer() {
 
       case "u":
         if (player.row === 0) {
-          console.log("change room up");
+          changeRoom("d");
         } else if (
           newGrid[player.row - 1][player.col].value === "E" &&
           Object.keys(window)[0] === "main"
@@ -175,7 +191,7 @@ export default function GameContainer() {
         break;
       case "d":
         if (player.row === rows - 1) {
-          console.log("change room down");
+          changeRoom("d");
         } else if (
           newGrid[player.row + 1][player.col].value === "E" &&
           Object.keys(window)[0] === "main"
@@ -189,7 +205,7 @@ export default function GameContainer() {
         break;
       case "l":
         if (player.col === 0) {
-          setReferenceGrid(referenceGridGen(left));
+          changeRoom("l");
         } else if (
           newGrid[player.row][player.col - 1].value === "E" &&
           Object.keys(window)[0] === "main"
@@ -203,7 +219,7 @@ export default function GameContainer() {
         break;
       case "r":
         if (player.col === cols - 1) {
-          console.log("change room right");
+          changeRoom("r");
         } else if (
           newGrid[player.row][player.col + 1].value === "E" &&
           Object.keys(window)[0] === "main"
@@ -221,21 +237,37 @@ export default function GameContainer() {
     setCurrentGrid(newGrid);
   };
 
+  const changeRoom = (direction: string) => {
+    switch (direction) {
+      case "l":
+        setPlayerLocation(4, 8);
+        setReferenceGrid(referenceGridGen(left));
+        break;
+      case "r":
+        setPlayerLocation(4, 0);
+        setReferenceGrid(referenceGridGen(right));
+        break;
+      case "u":
+        break;
+      case "d":
+        break;
+    }
+  };
+
   const action = (row: number, col: number) => {
     setNewWindow(currentGrid[row][col].element, currentGrid[row][col].value);
   };
 
   useEffect(() => {
-    if (player.row === -1 || player.col === -1) {
-      placePlayer();
-    }
-  }, [player.col, player.row, placePlayer, currentGrid]);
-  useEffect(() => {
     setCurrentGrid(
       referenceGrid.map((row) => row.map((tile) => ({ ...tile }))),
     );
   }, [referenceGrid]);
-
+  useEffect(() => {
+    if (!hasPlayer(currentGrid)) {
+      placePlayer();
+    }
+  }, [currentGrid, hasPlayer, placePlayer]);
   return (
     <GridContext.Provider
       value={{
