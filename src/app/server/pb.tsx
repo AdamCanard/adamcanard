@@ -95,7 +95,7 @@ export class DatabaseClient {
   }
   async addValue(data: FormData, collection: string) {
     const it = data.keys();
-    const uniqueKey = it.next().value;
+    const uniqueKey = it.next().value as string;
     const unqiueData = data.get(uniqueKey);
     data.append("_" + uniqueKey, unqiueData as string);
     const result = await this.client.collection(collection).create(data);
@@ -116,7 +116,7 @@ export class DatabaseClient {
 
   async update(collection: string, id: string, data: FormData) {
     const it = data.keys();
-    const uniqueKey = it.next().value;
+    const uniqueKey = it.next().value as string;
     const unqiueData = data.get(uniqueKey);
     data.append("_" + uniqueKey, unqiueData as string);
     const result = await this.client.collection(collection).update(id, data);
