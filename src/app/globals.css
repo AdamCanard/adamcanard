@@ -144,11 +144,9 @@
   box-shadow:
     inset -1px -1px #808080,
     inset -2px -2px #808080;
+  background-color: black;
 }
 
-.PlayerTile {
-  background-color: blue;
-}
 .EmptyTile {
   background-color: black;
 }

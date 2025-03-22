@@ -1,12 +1,12 @@
+import Image from "next/image";
 import { ITileObject } from "./gametypes";
+import Character from "../../../public/Game/Character.png";
 
 export default function Tile(props: { tileObj: ITileObject }) {
   const getColour = (value: string) => {
     switch (value) {
       case "E":
         return "EmptyTile";
-      case "P":
-        return "PlayerTile";
       case "W":
         return "WallTile";
       case "C":
@@ -15,5 +15,11 @@ export default function Tile(props: { tileObj: ITileObject }) {
         return "DoorTile";
     }
   };
-  return <div className={`GridTile ${getColour(props.tileObj.value)}`}></div>;
+  return (
+    <div className={`GridTile ${getColour(props.tileObj.value)}`}>
+      {props.tileObj.value === "P" && (
+        <Image src={Character} alt="little guys" />
+      )}
+    </div>
+  );
 }
