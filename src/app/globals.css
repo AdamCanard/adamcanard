@@ -163,6 +163,7 @@
 }
 
 .GridCase {
+  border-radius: 2%;
   background-color: #505090;
   border-left: 8px solid #7070b0;
   border-top: 8px solid #7070b0;
@@ -175,6 +176,7 @@
   width: 288px;
   height: 288px;
 }
+
 .GridInner {
   background-color: #505090;
   border-left: 8px solid #303070;
@@ -182,6 +184,7 @@
   border-right: 8px solid #7070b0;
   border-bottom: 8px solid #7070b0;
 }
+
 #cell {
   background-color: #c6c6c6;
   border-left: 3px solid #fefefe;
