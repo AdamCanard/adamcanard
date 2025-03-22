@@ -10,13 +10,8 @@ import {
 import Grid from "./grid";
 import Controller from "./controller";
 import { map } from "./rooms";
+import { IPlayerType, IRoomCoord, ITileObject } from "./gametypes";
 
-export interface ITileObject {
-  row: number;
-  col: number;
-  value: string;
-  element: JSX.Element;
-}
 export const referenceGridGen = (room: Record<string, JSX.Element>[][]) => {
   const newGrid = room.map((row, rowIndex) =>
     row.map((tile, tileIndex) => {
@@ -34,6 +29,16 @@ export const referenceGridGen = (room: Record<string, JSX.Element>[][]) => {
   return newGrid;
 };
 
+const hasPlayer = (grid: ITileObject[][]) => {
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j].value === "P") {
+        return true;
+      }
+    }
+  }
+  return false;
+};
 export interface GridContextType {
   setNewWindow: (arg0: Record<string, JSX.Element>) => void;
   resetWindow: () => void;
@@ -43,17 +48,6 @@ export interface GridContextType {
   move: (arg0: string) => void;
   rows: number;
   cols: number;
-}
-
-interface IPlayerType {
-  row: number;
-  col: number;
-  direction: string;
-}
-
-interface IRoomCoord {
-  row: number;
-  col: number;
 }
 
 //cast empty object to contexttype
@@ -114,46 +108,6 @@ export default function GameContainer() {
   );
 
   const move = (direction: string) => {
-    if (player.col === -1 || player.row === -1) {
-      console.log("Can't find player'");
-    }
-    tryMove(direction);
-  };
-
-  const hasPlayer = useCallback((grid: ITileObject[][]) => {
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid[i].length; j++) {
-        if (grid[i][j].value === "P") {
-          return true;
-        }
-      }
-    }
-    return false;
-  }, []);
-
-  const placePlayer = useCallback(() => {
-    const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
-    if (!hasPlayer(newGrid)) {
-      if (player.row !== -1 && player.col !== -1) {
-        newGrid[player.row][player.col].value = "P";
-      } else {
-        for (let i = 0; i < newGrid.length; i++) {
-          for (let j = 0; j < newGrid[i].length; j++) {
-            if (newGrid[i][j].value === "E") {
-              newGrid[i][j].value = "P";
-              setPlayerLocation(i, j);
-              setCurrentGrid(newGrid);
-              return;
-            }
-          }
-        }
-      }
-    }
-    setCurrentGrid(newGrid);
-    return;
-  }, [currentGrid, setPlayerLocation, hasPlayer, player.col, player.row]);
-
-  const tryMove = (direction: string) => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
 
     switch (direction) {
@@ -247,6 +201,28 @@ export default function GameContainer() {
     setCurrentGrid(newGrid);
   };
 
+  const placePlayer = useCallback(() => {
+    const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
+    if (!hasPlayer(newGrid)) {
+      if (player.row !== -1 && player.col !== -1) {
+        newGrid[player.row][player.col].value = "P";
+      } else {
+        for (let i = 0; i < newGrid.length; i++) {
+          for (let j = 0; j < newGrid[i].length; j++) {
+            if (newGrid[i][j].value === "E") {
+              newGrid[i][j].value = "P";
+              setPlayerLocation(i, j);
+              setCurrentGrid(newGrid);
+              return;
+            }
+          }
+        }
+      }
+    }
+    setCurrentGrid(newGrid);
+    return;
+  }, [currentGrid, setPlayerLocation, player.col, player.row]);
+
   const changeRoom = (direction: string) => {
     const newRoomCoord: IRoomCoord = currentRoom;
     switch (direction) {
@@ -261,8 +237,14 @@ export default function GameContainer() {
         setCurrentRoom(newRoomCoord);
         break;
       case "u":
+        setPlayerLocation(8, 4);
+        newRoomCoord.col = currentRoom.row - 1;
+        setCurrentRoom(newRoomCoord);
         break;
       case "d":
+        setPlayerLocation(0, 4);
+        newRoomCoord.col = currentRoom.row + 1;
+        setCurrentRoom(newRoomCoord);
         break;
     }
   };
@@ -272,6 +254,7 @@ export default function GameContainer() {
     newWindow[currentGrid[row][col].value] = currentGrid[row][col].element;
     setNewWindow(newWindow);
   };
+
   useEffect(() => {
     setReferenceGrid(referenceGridGen(map[currentRoom.row][currentRoom.col]));
   }, [currentRoom.row, currentRoom.col]);
@@ -286,7 +269,7 @@ export default function GameContainer() {
     if (!hasPlayer(currentGrid)) {
       placePlayer();
     }
-  }, [currentGrid, hasPlayer, placePlayer]);
+  }, [currentGrid, placePlayer]);
 
   return (
     <GridContext.Provider

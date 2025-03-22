@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { GridContext, ITileObject } from "./gamecontainer";
+import { GridContext } from "./gamecontainer";
 import Tile from "./tile";
+import { ITileObject } from "./gametypes";
 
 export default function Grid() {
   const { currentGrid, rows, cols } = useContext(GridContext);

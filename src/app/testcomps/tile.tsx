@@ -1,4 +1,4 @@
-import { ITileObject } from "./gamecontainer";
+import { ITileObject } from "./gametypes";
 
 export default function Tile(props: { tileObj: ITileObject }) {
   const getColour = (value: string) => {
