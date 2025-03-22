@@ -4,8 +4,8 @@ import OptionButtons from "./optionbuttons";
 
 export default function Controller() {
   return (
-    <div className={"h-full flex flex-col"}>
-      <div className={"flex flex-row justify-around items-center pt-20"}>
+    <div className={"h-full w-full flex flex-col"}>
+      <div className={"flex flex-row justify-around items-center h-full "}>
         <DPad />
         <ActionButtons />
       </div>

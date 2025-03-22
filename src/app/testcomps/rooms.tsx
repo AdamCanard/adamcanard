@@ -2,7 +2,7 @@ function ScreenBar() {
   return (
     <div
       className={
-        "h-8 w-full bg-black flex justify-around items-center text-white flex-row"
+        "h-8 w-full bg-black flex justify-around items-center text-white flex-row absolute bottom-0"
       }
     >
       <div>{"Press A to interact"}</div>
@@ -13,25 +13,28 @@ function ScreenBar() {
 
 function Wall() {
   return (
-    <div className={"flex flex-col h-full w-full"}>
-      <div className={"h-full w-full bg-gray-500"}></div>
-      <ScreenBar />
+    <div className={"flex flex-col GridInner"}>
+      <div className={"GridSize bg-gray-500"}>
+        <ScreenBar />
+      </div>
     </div>
   );
 }
 function Empty() {
   return (
-    <div className={"flex flex-col h-full w-full"}>
-      <div className={"h-full w-full bg-black"}></div>
-      <ScreenBar />
+    <div className={"flex flex-col GridInner"}>
+      <div className={"GridSize bg-black"}>
+        <ScreenBar />
+      </div>
     </div>
   );
 }
 function Chest() {
   return (
-    <div className={"flex flex-col h-full w-full"}>
-      <div className={"h-full w-full bg-orange-900"}></div>
-      <ScreenBar />
+    <div className={"flex flex-col GridInner"}>
+      <div className={"GridSize bg-orange-900"}>
+        <ScreenBar />
+      </div>
     </div>
   );
 }

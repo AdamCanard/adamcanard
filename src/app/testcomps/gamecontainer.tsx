@@ -284,8 +284,14 @@ export default function GameContainer() {
         resetWindow,
       }}
     >
-      <div className={"bg-[#505090] w-full h-full flex flex-col"}>
-        {Object.values(window)[0]}
+      <div
+        className={
+          "GridCase w-full h-full flex flex-col items-center justify-around"
+        }
+      >
+        <div className={"flex items-center justify-center h-full w-full"}>
+          {Object.values(window)[0]}
+        </div>
         <Controller />
       </div>
     </GridContext.Provider>
