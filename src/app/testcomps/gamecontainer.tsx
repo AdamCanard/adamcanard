@@ -9,7 +9,7 @@ import {
 } from "react";
 import Grid from "./grid";
 import Controller from "./controller";
-import { left, right, start } from "./rooms";
+import { map } from "./rooms";
 
 export interface ITileObject {
   row: number;
@@ -35,7 +35,7 @@ export const referenceGridGen = (room: Record<string, JSX.Element>[][]) => {
 };
 
 export interface GridContextType {
-  setNewWindow: (arg0: JSX.Element, arg1: string) => void;
+  setNewWindow: (arg0: Record<string, JSX.Element>) => void;
   resetWindow: () => void;
   currentGrid: ITileObject[][];
   setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
@@ -51,6 +51,11 @@ interface IPlayerType {
   direction: string;
 }
 
+interface IRoomCoord {
+  row: number;
+  col: number;
+}
+
 //cast empty object to contexttype
 export const GridContext = createContext<GridContextType>(
   {} as GridContextType,
@@ -59,12 +64,18 @@ export const GridContext = createContext<GridContextType>(
 export default function GameContainer() {
   const rows = 9;
   const cols = 9;
+
   const [window, setWindow] = useState<Record<string, JSX.Element>>({
     main: <Grid />,
   });
 
+  const [currentRoom, setCurrentRoom] = useState<IRoomCoord>({
+    row: 1,
+    col: 1,
+  } as IRoomCoord);
+
   const [referenceGrid, setReferenceGrid] = useState<ITileObject[][]>(
-    referenceGridGen(start),
+    referenceGridGen(map[currentRoom.row][currentRoom.col]),
   );
 
   const [currentGrid, setCurrentGrid] = useState<ITileObject[][]>(
@@ -76,11 +87,10 @@ export default function GameContainer() {
     direction: "u",
   });
 
-  const setNewWindow = (newWindow: JSX.Element, value: string) => {
-    const newWindowRecord: Record<string, JSX.Element> = {};
-    newWindowRecord[value] = newWindow;
-    setWindow(newWindowRecord);
+  const setNewWindow = (newWindow: Record<string, JSX.Element>) => {
+    setWindow(newWindow);
   };
+
   const resetWindow = () => {
     setWindow({
       main: <Grid />,
@@ -238,14 +248,17 @@ export default function GameContainer() {
   };
 
   const changeRoom = (direction: string) => {
+    const newRoomCoord: IRoomCoord = currentRoom;
     switch (direction) {
       case "l":
         setPlayerLocation(4, 8);
-        setReferenceGrid(referenceGridGen(left));
+        newRoomCoord.col = currentRoom.col - 1;
+        setCurrentRoom(newRoomCoord);
         break;
       case "r":
         setPlayerLocation(4, 0);
-        setReferenceGrid(referenceGridGen(right));
+        newRoomCoord.col = currentRoom.col + 1;
+        setCurrentRoom(newRoomCoord);
         break;
       case "u":
         break;
@@ -255,19 +268,26 @@ export default function GameContainer() {
   };
 
   const action = (row: number, col: number) => {
-    setNewWindow(currentGrid[row][col].element, currentGrid[row][col].value);
+    const newWindow: Record<string, JSX.Element> = {};
+    newWindow[currentGrid[row][col].value] = currentGrid[row][col].element;
+    setNewWindow(newWindow);
   };
+  useEffect(() => {
+    setReferenceGrid(referenceGridGen(map[currentRoom.row][currentRoom.col]));
+  }, [currentRoom.row, currentRoom.col]);
 
   useEffect(() => {
     setCurrentGrid(
       referenceGrid.map((row) => row.map((tile) => ({ ...tile }))),
     );
   }, [referenceGrid]);
+
   useEffect(() => {
     if (!hasPlayer(currentGrid)) {
       placePlayer();
     }
   }, [currentGrid, hasPlayer, placePlayer]);
+
   return (
     <GridContext.Provider
       value={{

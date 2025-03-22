@@ -48,7 +48,7 @@ const chest: Record<string, JSX.Element> = {
 };
 
 export const start: Record<string, JSX.Element>[][] = [
-  [wall, wall, wall, wall, empty, wall, wall, wall, wall],
+  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
@@ -56,7 +56,7 @@ export const start: Record<string, JSX.Element>[][] = [
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
   [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, wall, wall, wall, empty, wall, wall, wall, wall],
+  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
 ];
 
 export const right: Record<string, JSX.Element>[][] = [
