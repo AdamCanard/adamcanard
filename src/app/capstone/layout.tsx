@@ -8,9 +8,8 @@ export default function CapstoneLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div id="capstone" className={"h-full w-full flex flex-col"}>
+    <div id="capstone" className={"h-dvh w-dvw flex flex-col"}>
       <CapstoneHeader />
-
       <div className={"flex h-full"}> {children}</div>
     </div>
   );
