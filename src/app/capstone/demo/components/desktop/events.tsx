@@ -6,18 +6,15 @@ export default function EventsPage() {
     console.log(elementId);
   };
   const completeValuesToDisplay: Record<string, string> = {};
-  completeValuesToDisplay["functionNumber"] = "Function Number";
-  completeValuesToDisplay["eventType"] = "Event Type";
+  completeValuesToDisplay["functionNumber"] = "Function";
   completeValuesToDisplay["clientName"] = "Client Name";
   completeValuesToDisplay["locationId"] = "Location";
 
   const notCompleteValuesToDisplay: Record<string, string> = {};
-  notCompleteValuesToDisplay["functionNumber"] = "Function Number";
-  notCompleteValuesToDisplay["eventType"] = "Event Type";
+  notCompleteValuesToDisplay["functionNumber"] = "Function";
   notCompleteValuesToDisplay["clientName"] = "Client Name";
   notCompleteValuesToDisplay["status"] = "Event Status";
   notCompleteValuesToDisplay["locationId"] = "Location";
-  notCompleteValuesToDisplay["currentUserId"] = "Current User";
 
   return (
     <div className={"w-full h-full bg-background flex flex-col"}>

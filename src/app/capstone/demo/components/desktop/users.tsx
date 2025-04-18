@@ -10,7 +10,7 @@ export default function UsersPage() {
   valuesToDisplay["firstName"] = "First Name";
   valuesToDisplay["lastName"] = "Last Name";
   valuesToDisplay["email"] = "Email";
-  valuesToDisplay["admin"] = "Admin Privilages";
+  valuesToDisplay["admin"] = "Admin";
   return (
     <div className={"w-full h-full bg-background flex flex-col relative"}>
       <List

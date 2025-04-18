@@ -17,7 +17,7 @@ export function TabButton(props: { title: string; set: JSX.Element }) {
             : "RenderButton"
         }
         className={
-          "w-full h-12 flex justify-center items-center leading-8 hover:cursor-pointer rounded-md"
+          "w-32 h-8 flex justify-center items-center  hover:cursor-pointer rounded-md"
         }
         onClick={handleClick}
       >

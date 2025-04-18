@@ -13,7 +13,9 @@ export default function Home() {
       }
     >
       <div
-        className={"flex flex-col justify-around items-center h-full w-[90%]"}
+        className={
+          "flex flex-col justify-center gap-12 items-center h-full w-[90%]"
+        }
       >
         <div
           className={
