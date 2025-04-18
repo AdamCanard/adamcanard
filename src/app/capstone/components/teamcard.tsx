@@ -58,10 +58,7 @@ export default function TeamCard(props: {
           </div>
         </>
       ) : (
-        <div
-          id="border"
-          className={"w-full flex flex-col h-full justify-center items-center"}
-        >
+        <div id="border" className={"w-full flex flex-col items-center h-fit"}>
           <h2 id="border" className={"text-3xl w-full text-center"}>
             {props.name}
           </h2>
