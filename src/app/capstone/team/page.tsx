@@ -1,6 +1,7 @@
 "use client";
 import TeamCard from "../components/teamcard";
 import Adam from "../../../../public/AdamBeer1.jpg";
+import Jovie from "../../../../public/Jovie.jpeg";
 import { useEffect, useState } from "react";
 export default function Page() {
   const [mobile, setMobile] = useState<boolean>();
@@ -14,6 +15,42 @@ export default function Page() {
     }
   }, []);
 
+  const team = [
+    {
+      name: "Adam Cunard",
+      image: Adam,
+      contribution: "",
+      desc: "",
+      linkedin: "",
+      github: "",
+    },
+    {
+      name: "Jovie LaRue",
+      image: Jovie,
+      contribution:
+        "I designed and implemented the database schema, functions, and triggers in this project, as well as worked on the frontend.",
+      desc: "I'm a fast-learning motivated individual who can pick up new technologies easily. My main goal is to work with people who need software, and have great ideas, but are unable to create it themselves. I am personable and great at working in diverse teams.",
+      linkedin: "https://www.linkedin.com/in/jovie-larue-swd",
+      github: "https://github.com/jovielarue",
+    },
+    {
+      name: "Adam",
+      image: Adam,
+      contribution: "",
+      desc: "",
+      linkedin: "",
+      github: "",
+    },
+    {
+      name: "Adam",
+      image: Adam,
+      contribution: "",
+      desc: "",
+      linkedin: "",
+      github: "",
+    },
+  ];
+
   return (
     <>
       {mobile !== undefined && (
@@ -21,71 +58,17 @@ export default function Page() {
           {mobile ? (
             <>
               <div className={"flex flex-col "}>
-                <TeamCard
-                  name="Adam Cunard"
-                  image={Adam}
-                  desc=""
-                  linkdin=""
-                  github=""
-                  mobile={true}
-                />
-                <TeamCard
-                  name="Jovie LaRue"
-                  image={Adam}
-                  desc=""
-                  linkdin=""
-                  github=""
-                  mobile={true}
-                />
-                <TeamCard
-                  name="Jaryd Hibbert"
-                  image={Adam}
-                  desc=""
-                  linkdin=""
-                  github=""
-                  mobile={true}
-                />
-                <TeamCard
-                  name="Mitchell Miller"
-                  image={Adam}
-                  desc=""
-                  linkdin=""
-                  github=""
-                  mobile={true}
-                />
+                {team.map((member, index) => {
+                  return <TeamCard {...member} mobile={true} key={index} />;
+                })}
               </div>
             </>
           ) : (
             <>
               <div className={"flex flex-row justify-around"}>
-                <TeamCard
-                  name="Adam Cunard"
-                  image={Adam}
-                  desc=""
-                  linkdin=""
-                  github=""
-                />
-                <TeamCard
-                  name="Jovie LaRue"
-                  image={Adam}
-                  desc=""
-                  linkdin=""
-                  github=""
-                />
-                <TeamCard
-                  name="Jaryd Hibbert"
-                  image={Adam}
-                  desc=""
-                  linkdin=""
-                  github=""
-                />
-                <TeamCard
-                  name="Mitchell Miller"
-                  image={Adam}
-                  desc=""
-                  linkdin=""
-                  github=""
-                />
+                {team.map((member, index) => {
+                  return <TeamCard {...member} key={index} />;
+                })}{" "}
               </div>
             </>
           )}
