@@ -13,7 +13,7 @@ export default function EventsPage() {
   const notCompleteValuesToDisplay: Record<string, string> = {};
   notCompleteValuesToDisplay["functionNumber"] = "Function";
   notCompleteValuesToDisplay["clientName"] = "Client Name";
-  notCompleteValuesToDisplay["status"] = "Event Status";
+  notCompleteValuesToDisplay["status"] = "Status";
   notCompleteValuesToDisplay["locationId"] = "Location";
 
   return (
