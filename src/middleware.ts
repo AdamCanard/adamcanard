@@ -18,5 +18,6 @@ export function middleware(req: NextRequest) {
       break;
 
     default:
+      return NextResponse.next();
   }
 }
