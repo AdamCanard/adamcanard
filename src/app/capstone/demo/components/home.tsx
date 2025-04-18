@@ -21,7 +21,7 @@ export default function Home() {
           }
         >
           <Image src={hpLogo} alt={"Heritage Park logo"} />
-          <h1 className={"text-2xl"}>Hello Guest!</h1>
+          <p className={"text-2xl"}>Hello Guest!</p>
         </div>
 
         <div className={"flex flex-col gap-5 w-full"}>
@@ -29,22 +29,14 @@ export default function Home() {
             runFunction={() =>
               renderer.setWindowToRender(renderer.toRender["Location"])
             }
-            text="Pick Location for Count"
+            text="Bartender"
           />
-        </div>
-        <div className={"flex flex-row gap-2"}>
-          {" "}
-          <button
-            name="desktop-btn"
-            className={
-              "w-full p-2 text-accent text-center font-semibold border-2 border-accent rounded-md"
-            }
-            onClick={() =>
+          <BigButton
+            runFunction={() =>
               renderer.setWindowToRender(renderer.toRender["Desktop"])
             }
-          >
-            Desktop
-          </button>
+            text="Admin Portal"
+          />
         </div>
       </div>
     </div>
