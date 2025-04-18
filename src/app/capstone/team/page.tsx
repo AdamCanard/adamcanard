@@ -58,7 +58,7 @@ export default function Page() {
         <>
           {mobile ? (
             <>
-              <div className={"flex flex-col overflow-y-scroll"}>
+              <div className={"flex flex-col"}>
                 {team.map((member, index) => {
                   return <TeamCard {...member} mobile={true} key={index} />;
                 })}

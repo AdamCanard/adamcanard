@@ -7,7 +7,7 @@ export default function HeaderButton(props: { title: string; route: string }) {
   return (
     <div
       id={props.route === currentRoute ? "MTabButtonPressed" : "MTabButton"}
-      className={`flex w-full h-full justify-center items-center text-3xl xhover:cursor-pointer`}
+      className={`flex w-full h-full justify-center items-center text-2xl xhover:cursor-pointer`}
       onClick={() => router.push("/capstone/" + props.route)}
     >
       {props.title}
