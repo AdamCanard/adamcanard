@@ -1,11 +1,9 @@
 "use client";
-import { useRouter } from "next/navigation";
 import List from "../components/list";
 
 export default function CountsPage() {
-  const router = useRouter();
   const logId = (elementId: number) => {
-    router.push("desktop/counts/" + elementId);
+    console.log(elementId);
   };
   const valuesToDisplay: Record<string, string> = {};
   valuesToDisplay["userId"] = "User Name";

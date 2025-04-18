@@ -1,11 +1,9 @@
 "use client";
-import { useRouter } from "next/navigation";
 
 import List from "../components/list";
 export default function EventsPage() {
-  const router = useRouter();
   const logId = (elementId: number) => {
-    router.push("desktop/events/" + elementId);
+    console.log(elementId);
   };
   const completeValuesToDisplay: Record<string, string> = {};
   completeValuesToDisplay["functionNumber"] = "Function Number";
@@ -22,7 +20,7 @@ export default function EventsPage() {
   notCompleteValuesToDisplay["currentUserId"] = "Current User";
 
   return (
-    <div className={"w-full h-full bg-[#fefefe] flex flex-col"}>
+    <div className={"w-full h-full bg-background flex flex-col"}>
       <div className={"h-1/2"}>
         {" "}
         <List

@@ -1,11 +1,9 @@
 "use client";
-import { useRouter } from "next/navigation";
 import List from "../components/list";
 
 export default function UsersPage() {
-  const router = useRouter();
   const logId = (elementId: number) => {
-    router.push("desktop/users/" + elementId);
+    console.log(elementId);
   };
   const valuesToDisplay: Record<string, string> = {};
   valuesToDisplay["firstName"] = "First Name";

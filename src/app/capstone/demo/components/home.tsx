@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div
       className={
-        "flex flex-col min-h-svh max-h-svh w-screen items-center bg-[#fefefe]"
+        "flex flex-col min-h-svh max-h-svh w-screen items-center bg-background"
       }
     >
       <div

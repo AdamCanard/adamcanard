@@ -1,12 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
 
 import List from "../components/list";
 
 export default function DrinksPage() {
-  const router = useRouter();
   const logId = (elementId: number) => {
-    router.push("desktop/drinks/" + elementId);
+    console.log(elementId);
   };
   const valuesToDisplay: Record<string, string> = {};
   valuesToDisplay["drinkName"] = "Name";

@@ -8,7 +8,7 @@ export default function BigButton(props: IBigButton) {
     <button
       name={props.text}
       className={
-        "bg-[#FFF8E9] border-2 border-text text-center p-5 w-full shadow-md rounded-md font-semibold"
+        "bg-primary border-2 border-text text-center p-5 w-full shadow-md rounded-md font-semibold"
       }
       onClick={() => props.runFunction()}
     >

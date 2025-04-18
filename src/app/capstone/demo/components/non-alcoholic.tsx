@@ -1,11 +1,9 @@
 "use client";
-import { useRouter } from "next/navigation";
 import List from "../components/list";
 
 export default function NonAlcoholicPage() {
-  const router = useRouter();
   const logId = (elementId: number) => {
-    router.push("desktop/nonalcoholic/" + elementId);
+    console.log(elementId);
   };
   const valuesToDisplay: Record<string, string> = {};
   valuesToDisplay["locationName"] = "Location Name";
