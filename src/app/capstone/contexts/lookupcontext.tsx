@@ -10,13 +10,11 @@ import {
 import { getLocationNames } from "../serverfunctions/locations";
 import { getUserNames } from "../serverfunctions/users";
 import { getDrinkNames } from "../serverfunctions/drinks";
-import { getNonAlcNames } from "../serverfunctions/nonalcoholic";
 
 interface LookupContextType {
   locationLookup: Record<number, string>;
   userLookup: Record<number, string>;
   drinkLookup: Record<number, string>;
-  nonAlcLookup: Record<number, string>;
 }
 export const LookupContext = createContext({} as LookupContextType);
 
@@ -26,7 +24,6 @@ export default function LookupContextProvider(props: { children: ReactNode }) {
   );
   const [userLookup, setUserLookup] = useState<Record<number, string>>({});
   const [drinkLookup, setDrinkLookup] = useState<Record<number, string>>({});
-  const [nonAlcLookup, setNonAlcLookup] = useState<Record<number, string>>({});
 
   const getLocationLookup = useCallback(async () => {
     const data = await getLocationNames("letmein");
@@ -52,25 +49,14 @@ export default function LookupContextProvider(props: { children: ReactNode }) {
     }
   }, []);
 
-  const getNonAlcLookup = useCallback(async () => {
-    const data = await getNonAlcNames("letmein");
-    if (data instanceof Error) {
-    } else {
-      setNonAlcLookup(data);
-    }
-  }, []);
-
   useEffect(() => {
     getLocationLookup();
     getUserLookup();
     getDrinkLookup();
-    getNonAlcLookup();
-  }, [getLocationLookup, getUserLookup, getDrinkLookup, getNonAlcLookup]);
+  }, [getLocationLookup, getUserLookup, getDrinkLookup]);
 
   return (
-    <LookupContext.Provider
-      value={{ locationLookup, userLookup, drinkLookup, nonAlcLookup }}
-    >
+    <LookupContext.Provider value={{ locationLookup, userLookup, drinkLookup }}>
       {props.children}
     </LookupContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { IDrink } from "../types";
+import { IDrink } from "./types";
 
 export const postDrink = async (authToken: string, drinkData: object) => {
   try {

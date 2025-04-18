@@ -1,4 +1,4 @@
-import { ILocation, ILocationEvent } from "../types";
+import { ILocation, ILocationEvent } from "./types";
 export const getLocationById = async (
   authToken: string,
   locationId: string,

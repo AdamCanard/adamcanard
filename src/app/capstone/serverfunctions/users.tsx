@@ -1,4 +1,4 @@
-import { IUser } from "../types";
+import { IUser } from "./types";
 export const postUser = async (authToken: string, userData: object) => {
   try {
     const response = await fetch(

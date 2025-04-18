@@ -1,4 +1,4 @@
-import { IEvent, ILocationEvent } from "../types";
+import { IEvent, ILocationEvent } from "./types";
 
 //Called in location/page.tsx
 //If active event at location return event data
