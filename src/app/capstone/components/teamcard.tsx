@@ -22,7 +22,7 @@ export default function TeamCard(props: {
           >
             <div className={"flex flex-row h-[400px] "}>
               <Image
-                className={"w-full h-full"}
+                className={"w-32 h-full"}
                 id="border"
                 src={props.image}
                 alt="Team Image"
