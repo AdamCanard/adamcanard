@@ -13,17 +13,52 @@ export default function TeamCard(props: {
   return (
     <>
       {props.mobile ? (
-        <div
-          className={"w-full flex flex-col h-full justify-center items-center"}
-        >
-          <h2 className={"text-3xl"}>{props.name}</h2>
-          <Image height={"500"} src={props.image} alt="Team Image" />
-          <p className={"h-24"}>{props.desc}</p>
-          <div className={"flex flex-row justify-around w-full"}>
-            <button className={"text-2xl"}>LinkedIn</button>
-            <button className={"text-2xl"}>Github</button>
+        <>
+          <div
+            id="border"
+            className={
+              "w-full flex flex-col h-full justify-center items-center"
+            }
+          >
+            <div className={"flex flex-row h-[400px] "}>
+              <Image
+                className={"w-full h-full"}
+                id="border"
+                src={props.image}
+                alt="Team Image"
+              />
+              <div className={"flex flex-col w-full h-full"}>
+                <div className={"h-full"}>
+                  <h2 id="border" className={"text-3xl"}>
+                    {props.name}
+                  </h2>{" "}
+                  <p id="border" className={" text-lg"}>
+                    {props.contribution}
+                  </p>
+                  <p id="border" className={""}>
+                    {props.desc}
+                  </p>
+                </div>
+                <div
+                  className={
+                    "flex flex-row w-full bottom-0 justify-end items-end"
+                  }
+                >
+                  <Link
+                    id="button"
+                    href={props.linkedin}
+                    className={"text-lg  "}
+                  >
+                    LinkedIn
+                  </Link>
+                  <Link id="button" href={props.github} className={"text-lg"}>
+                    Github
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       ) : (
         <div
           id="border"

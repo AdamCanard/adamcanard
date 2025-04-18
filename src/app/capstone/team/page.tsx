@@ -19,10 +19,11 @@ export default function Page() {
     {
       name: "Adam Cunard",
       image: Adam,
-      contribution: "",
-      desc: "",
-      linkedin: "",
-      github: "",
+      contribution:
+        "I was the project manager and lead frontend developer, leading the team in system design",
+      desc: "Passionate frontend developer, specialized in project management. Local Calgary Beerfluencer, holds the title of Brand Ambassador at Establishment Brewing and CEO of Scaled Software Solutions",
+      linkedin: "https://www.linkedin.com/in/adam-cunard/",
+      github: "https://github.com/AdamCanard",
     },
     {
       name: "Jovie LaRue",
@@ -57,7 +58,7 @@ export default function Page() {
         <>
           {mobile ? (
             <>
-              <div className={"flex flex-col "}>
+              <div className={"flex flex-col overflow-y-scroll"}>
                 {team.map((member, index) => {
                   return <TeamCard {...member} mobile={true} key={index} />;
                 })}
