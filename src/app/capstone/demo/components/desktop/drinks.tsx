@@ -1,6 +1,6 @@
 "use client";
 
-import List from "../components/list";
+import List from "./list";
 
 export default function DrinksPage() {
   const logId = (elementId: number) => {

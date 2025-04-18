@@ -25,11 +25,12 @@ export default function Home() {
         </div>
 
         <div className={"flex flex-col gap-5 w-full"}>
-          <BigButton runFunction={() => {}} text="Pick Location for Count" />
-
-          <BigButton runFunction={() => {}} text="Non-Alcoholic Count" />
-
-          <BigButton runFunction={() => {}} text="Transfer" />
+          <BigButton
+            runFunction={() =>
+              renderer.setWindowToRender(renderer.toRender["Location"])
+            }
+            text="Pick Location for Count"
+          />
         </div>
         <div className={"flex flex-row gap-2"}>
           {" "}

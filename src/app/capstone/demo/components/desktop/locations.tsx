@@ -1,7 +1,7 @@
 "use client";
-import List from "../components/list";
+import List from "./list";
 
-export default function InventoryPage() {
+export default function LocationsPage() {
   const logId = (elementId: number) => {
     console.log(elementId);
   };
@@ -10,7 +10,7 @@ export default function InventoryPage() {
   return (
     <div className={"w-full h-full bg-background flex flex-col"}>
       <List
-        name="Inventory"
+        name="Locations"
         api="locations"
         passId={logId}
         valuesToDisplay={valuesToDisplay}

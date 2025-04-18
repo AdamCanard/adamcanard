@@ -1,12 +1,12 @@
-import CountsPage from "./counts";
-import DrinksPage from "./drinks";
-import EventsPage from "./events";
-import InventoryPage from "./inventory";
-import LocationsPage from "./locations";
-import NonAlcoholicPage from "./non-alcoholic";
-import { DesktopRenderer } from "./renderer/renderer";
-import TransfersPage from "./transfers";
-import UsersPage from "./users";
+import CountsPage from "./desktop/counts";
+import DrinksPage from "./desktop/drinks";
+import EventsPage from "./desktop/events";
+import InventoryPage from "./desktop/inventory";
+import LocationsPage from "./desktop/locations";
+import NonAlcoholicPage from "./desktop/non-alcoholic";
+import { DesktopRenderer } from "./desktop/renderer/renderer";
+import TransfersPage from "./desktop/transfers";
+import UsersPage from "./desktop/users";
 
 export default function Desktop() {
   return (

@@ -1,5 +1,5 @@
 "use client";
-import List from "../components/list";
+import List from "./list";
 
 export default function TransfersPage() {
   const logId = (elementId: number) => {

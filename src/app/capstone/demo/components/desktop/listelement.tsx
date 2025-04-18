@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import { ListContext } from "./list";
-import { LookupContext } from "../../contexts/lookupcontext";
+import { LookupContext } from "@/app/capstone/contexts/lookupcontext";
 
 export default function ListElement(props: { dataObject: object }) {
   const { passId, valuesToDisplay } = useContext(ListContext);

@@ -1,20 +1,20 @@
 "use client";
-import List from "../components/list";
+import List from "./list";
 
-export default function CountsPage() {
+export default function NonAlcoholicPage() {
   const logId = (elementId: number) => {
     console.log(elementId);
   };
   const valuesToDisplay: Record<string, string> = {};
-  valuesToDisplay["userId"] = "User Name";
-  valuesToDisplay["time"] = "Time of Count Completion";
+  valuesToDisplay["locationName"] = "Location Name";
+
   return (
     <div className={"w-full h-full bg-background flex flex-col relative"}>
       <List
-        name="Counts"
-        api="counts"
-        valuesToDisplay={valuesToDisplay}
+        name="Non-Alcoholic"
+        api="locations"
         passId={logId}
+        valuesToDisplay={valuesToDisplay}
       />
     </div>
   );

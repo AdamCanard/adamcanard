@@ -22,7 +22,6 @@ export function DesktopRenderer(props: {
   const [windowToRender, setWindowToRender] = useState<JSX.Element>(
     renderValues[0],
   );
-  console.log();
   return (
     <RenderContext.Provider
       value={{ windowToRender, setWindowToRender, toRender }}

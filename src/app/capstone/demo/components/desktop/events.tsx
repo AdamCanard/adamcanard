@@ -1,6 +1,6 @@
 "use client";
 
-import List from "../components/list";
+import List from "./list";
 export default function EventsPage() {
   const logId = (elementId: number) => {
     console.log(elementId);
