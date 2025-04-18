@@ -15,7 +15,7 @@ export default function Counting() {
     renderer.setWindowToRender(renderer.toRender["Active"]);
   };
   return (
-    <div className={"p-5"}>
+    <div className={""}>
       <p className={"text-2xl"}>Count</p>
       <div className={"w-full flex flex-col gap-3"}></div>
       <form
