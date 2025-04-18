@@ -582,6 +582,13 @@ body {
   user-select: none; /* Standard syntax */
 }
 
+#RenderButton {
+  background: #fff8e9;
+}
+
+#RenderButtonPressed {
+  background: #ffda86;
+}
 @keyframes roll {
   from {
     transform: translate(-100px, 0px);
