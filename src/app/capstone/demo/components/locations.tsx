@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import List from "../components/list";
-import LocationForm from "../components/locationform";
 
 export default function LocationsPage() {
   const router = useRouter();
@@ -16,7 +15,6 @@ export default function LocationsPage() {
         name="Locations"
         api="locations"
         passId={logId}
-        form={<LocationForm />}
         valuesToDisplay={valuesToDisplay}
       />
     </div>

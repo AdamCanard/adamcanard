@@ -1,14 +1,11 @@
 "use client";
 import { JSX, useContext } from "react";
 import { RenderContext } from "./renderer";
-import { useRouter } from "next/navigation";
 
 export function TabButton(props: { title: string; set: JSX.Element }) {
   const { windowToRender, setWindowToRender } = useContext(RenderContext);
-  const router = useRouter();
   const handleClick = () => {
     setWindowToRender(props.set);
-    router.push("/desktop");
   };
   return (
     <>

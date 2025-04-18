@@ -22,7 +22,7 @@ export default function EventsPage() {
   notCompleteValuesToDisplay["currentUserId"] = "Current User";
 
   return (
-    <div className={"w-full h-full bg-background flex flex-col"}>
+    <div className={"w-full h-full bg-[#fefefe] flex flex-col"}>
       <div className={"h-1/2"}>
         {" "}
         <List

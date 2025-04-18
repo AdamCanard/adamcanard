@@ -8,7 +8,7 @@ export function ScreenPicker() {
   const { toRender } = useContext(RenderContext);
   return (
     <>
-      <div className={"flex flex-row justify-center w-48 h-full"}>
+      <div className={"flex flex-row justify-center w-48 h-full bg-[#E01828]"}>
         <div className={"w-36 flex flex-col h-full justify-around"}>
           {Object.keys(toRender).map((title: string, index: number) => {
             return (

@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import List from "../components/list";
-import UserForm from "../components/userform";
 
 export default function UsersPage() {
   const router = useRouter();
@@ -19,7 +18,6 @@ export default function UsersPage() {
         name="Users"
         api="users"
         passId={logId}
-        form={<UserForm />}
         valuesToDisplay={valuesToDisplay}
       />
     </div>

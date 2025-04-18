@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 
 import List from "../components/list";
-import DrinkForm from "../components/drinkform";
 
 export default function DrinksPage() {
   const router = useRouter();
@@ -19,7 +18,6 @@ export default function DrinksPage() {
         name="Drinks"
         api="Drinks"
         passId={logId}
-        form={<DrinkForm />}
         valuesToDisplay={valuesToDisplay}
       />
     </div>

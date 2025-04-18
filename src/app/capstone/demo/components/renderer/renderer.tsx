@@ -1,7 +1,7 @@
 "use client";
 import { createContext, Dispatch, JSX, SetStateAction, useState } from "react";
-import { ScreenPicker } from "../../renderer/screenpicker";
-import { ScreenRenderer } from "../../renderer/screenrenderer";
+import { ScreenPicker } from "./screenpicker";
+import { ScreenRenderer } from "./screenrenderer";
 
 interface RenderContextType {
   windowToRender: JSX.Element;
@@ -16,14 +16,13 @@ export const RenderContext = createContext<RenderContextType>(
 
 export function DesktopRenderer(props: {
   toRender: Record<string, JSX.Element>;
-  children: React.ReactNode;
 }) {
   const renderValues = Object.values(props.toRender);
   const { toRender } = props;
   const [windowToRender, setWindowToRender] = useState<JSX.Element>(
     renderValues[0],
   );
-
+  console.log();
   return (
     <RenderContext.Provider
       value={{ windowToRender, setWindowToRender, toRender }}
