@@ -10,6 +10,7 @@ export default function CapstoneLayout({
   return (
     <div id="capstone" className={"h-full w-full flex flex-col"}>
       <CapstoneHeader />
+
       <div className={"flex h-full"}> {children}</div>
     </div>
   );
