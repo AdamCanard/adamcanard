@@ -19,8 +19,12 @@ export default function SignUp() {
         method: "POST",
         body: formData,
       });
-
-      return response.json();
+      if (response.status === 201) {
+        router.push("/auth/login");
+      } else {
+        const data = await response.json();
+        setError(data.message);
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -40,15 +44,7 @@ export default function SignUp() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const data = await postData(formData);
-    console.log(data);
-    //if (data.data.status === undefined) {
-    //  //api returned new user data
-    //  router.push("/auth/login");
-    //} else if (data.data.status === 400) {
-    //  setError(data.data.response.data);
-    //  setPopup(true);
-    //}
+    await postData(formData);
   };
 
   const handleClick = () => {

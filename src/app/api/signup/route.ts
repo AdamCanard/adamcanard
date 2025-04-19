@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const formData = await req.formData();
   const username = formData.get("username") as string;
-  console.log(username);
   try {
     await connectMongo();
     const body: IUser = { username: username, losses: 0, logs: 0, lists: [] };
