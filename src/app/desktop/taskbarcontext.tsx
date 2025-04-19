@@ -6,8 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { IError, IUser } from "../types";
-import ErrorPopup from "./errorpopup";
+import { IUser } from "../types";
 
 interface TaskbarContextType {
   user: IUser;
@@ -19,8 +18,6 @@ interface TaskbarContextType {
   openWindow: (window: JSX.Element) => void;
   isOpen: (name: string) => boolean;
   closeWindow: (name: string) => void;
-  setError: React.Dispatch<SetStateAction<IError>>;
-  setErrorTrigger: React.Dispatch<SetStateAction<boolean>>;
 }
 
 //cast empty object to contexttype
@@ -34,10 +31,6 @@ export default function TaskbarContextWrapper(props: {
   const [windows, setWindows] = useState<JSX.Element[]>([]);
   const [admin, setAdmin] = useState(false);
   const [user, setUser] = useState<IUser>({} as IUser);
-  const [error, setError] = useState<IError>({
-    admin: { code: "123", message: "You are not Admin" },
-  });
-  const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
 
   const loginUser = async () => {
     try {
@@ -170,22 +163,13 @@ export default function TaskbarContextWrapper(props: {
           setAdmin,
           windows,
           setWindows,
-          setErrorTrigger,
-          setError,
           openWindow,
           isOpen,
           closeWindow,
           setUser,
         }}
       >
-        {" "}
-        <ErrorPopup
-          error={error}
-          trigger={errorTrigger}
-          setTrigger={setErrorTrigger}
-        >
-          {props.children}
-        </ErrorPopup>
+        {props.children}
       </TaskbarContext.Provider>
     </>
   );

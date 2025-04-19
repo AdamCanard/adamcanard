@@ -1,18 +1,15 @@
 "use client";
-import ErrorPopup from "@/app/desktop/errorpopup";
+import { ErrorContext } from "@/app/desktop/errorprovider";
 import { LabeledInputStr } from "@/app/desktop/labeledinputs";
 import Window from "@/app/desktop/semanticcomps/window";
-import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function Login() {
   const [username, setUsername] = useState("");
-  const [error, setError] = useState<IError>();
-  const [popup, setPopup] = useState<boolean>(false);
-
   const router = useRouter();
 
+  const { raiseError } = useContext(ErrorContext);
   const postData = async (formData: FormData) => {
     try {
       const response = await fetch("/api/login/", {
@@ -52,8 +49,7 @@ export default function Login() {
       data = await createCookie(formData);
       router.refresh();
       if (data.status === 400) {
-        setError(data);
-        setPopup(true);
+        raiseError({ status: data.status, message: data.message });
       }
     }
   };
@@ -98,36 +94,34 @@ export default function Login() {
 
   return (
     <>
-      <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
-        <Window title="Login">
-          <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
-            <LabeledInputStr
-              title="username"
-              type="text"
-              state={username}
-              setState={setUsername}
-              required={true}
-            />
-            <div id="button-i">
-              <div className={"flex justify-between w-full pl-0.5"}>
-                <input
-                  id="button"
-                  type="button"
-                  value="SignUp"
-                  onClick={handleClick}
-                />
-                <input
-                  id="button"
-                  type="button"
-                  value="Join as Guest"
-                  onClick={handlePassthrough}
-                />
-                <input id="button" type="submit" value="Submit" />
-              </div>
+      <Window title="Login">
+        <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
+          <LabeledInputStr
+            title="username"
+            type="text"
+            state={username}
+            setState={setUsername}
+            required={true}
+          />
+          <div id="button-i">
+            <div className={"flex justify-between w-full pl-0.5"}>
+              <input
+                id="button"
+                type="button"
+                value="SignUp"
+                onClick={handleClick}
+              />
+              <input
+                id="button"
+                type="button"
+                value="Join as Guest"
+                onClick={handlePassthrough}
+              />
+              <input id="button" type="submit" value="Submit" />
             </div>
-          </form>
-        </Window>
-      </ErrorPopup>
+          </div>
+        </form>
+      </Window>
     </>
   );
 }

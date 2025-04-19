@@ -1,18 +1,16 @@
 "use client";
-import ErrorPopup from "@/app/desktop/errorpopup";
+import { ErrorContext } from "@/app/desktop/errorprovider";
 import { LabeledInputStr } from "@/app/desktop/labeledinputs";
 import Window from "@/app/desktop/semanticcomps/window";
 import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function SignUp() {
   const [username, setUsername] = useState<string>("");
-  const [error, setError] = useState<IError>();
-  const [popup, setPopup] = useState<boolean>(false);
-
   const router = useRouter();
 
+  const { raiseError } = useContext(ErrorContext);
   const postData = async (formData: FormData) => {
     try {
       const response = await fetch("/api/signup/", {
@@ -23,7 +21,8 @@ export default function SignUp() {
         router.push("/auth/login");
       } else {
         const data = await response.json();
-        setError(data.message);
+        const newError: IError = { status: data.status, message: data.message };
+        raiseError(newError);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -53,30 +52,28 @@ export default function SignUp() {
 
   return (
     <>
-      <ErrorPopup error={error} trigger={popup} setTrigger={setPopup}>
-        <Window title="SignUp">
-          <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
-            <LabeledInputStr
-              title="username"
-              type="text"
-              state={username}
-              setState={setUsername}
-              required={true}
-            />
-            <div id="button-i">
-              <div className={"flex justify-between w-full pl-0.5"}>
-                <input
-                  id="button"
-                  type="button"
-                  value="Login"
-                  onClick={handleClick}
-                />
-                <input id="button" type="submit" value="Submit" />
-              </div>
+      <Window title="SignUp">
+        <form autoComplete="off" onSubmit={(e) => handleSubmit(e)}>
+          <LabeledInputStr
+            title="username"
+            type="text"
+            state={username}
+            setState={setUsername}
+            required={true}
+          />
+          <div id="button-i">
+            <div className={"flex justify-between w-full pl-0.5"}>
+              <input
+                id="button"
+                type="button"
+                value="Login"
+                onClick={handleClick}
+              />
+              <input id="button" type="submit" value="Submit" />
             </div>
-          </form>
-        </Window>
-      </ErrorPopup>
+          </div>
+        </form>
+      </Window>
     </>
   );
 }
