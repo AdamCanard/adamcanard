@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.60.2",
+    "mongoose": "^8.13.2",
     "next": "^14.2.13",
     "pocketbase": "^0.21.5",
     "react": "^18",

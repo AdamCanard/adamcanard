@@ -41,14 +41,14 @@ export default function SignUp() {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const data = await postData(formData);
-
-    if (data.data.status === undefined) {
-      //api returned new user data
-      router.push("/auth/login");
-    } else if (data.data.status === 400) {
-      setError(data.data.response.data);
-      setPopup(true);
-    }
+    console.log(data);
+    //if (data.data.status === undefined) {
+    //  //api returned new user data
+    //  router.push("/auth/login");
+    //} else if (data.data.status === 400) {
+    //  setError(data.data.response.data);
+    //  setPopup(true);
+    //}
   };
 
   const handleClick = () => {
