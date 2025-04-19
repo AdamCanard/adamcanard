@@ -24,7 +24,7 @@ export default function ErrorProvider(props: { children: React.ReactNode }) {
     <ErrorContext.Provider value={{ raiseError }}>
       {popup ? (
         <>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center w-full h-full">
             <Window
               title="Error"
               close={() => {

@@ -21,7 +21,10 @@ export default function SignUp() {
         router.push("/auth/login");
       } else {
         const data = await response.json();
-        const newError: IError = { status: data.status, message: data.message };
+        const newError: IError = {
+          status: response.status,
+          message: data.message,
+        };
         raiseError(newError);
       }
     } catch (err: unknown) {
