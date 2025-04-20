@@ -7,7 +7,10 @@ export default function Page() {
         References:{" "}
       </p>
       <div id="border" className={"h-full"}>
-        <p id="border" className={"flex flex-row justify-between text-center "}>
+        <div
+          id="border"
+          className={"flex flex-row justify-between text-center "}
+        >
           <span className={"font-bold text-start"}>Sait PNG:</span> SAIT
           Catalyst Symbol. [Online image]. (n.d.). SAIT Our Brand.
           <Link
@@ -16,8 +19,11 @@ export default function Page() {
           >
             https://www.sait.ca/about-sait/our-brand
           </Link>
-        </p>{" "}
-        <p id="border" className={"flex flex-row justify-between text-center "}>
+        </div>{" "}
+        <div
+          id="border"
+          className={"flex flex-row justify-between text-center "}
+        >
           <span className={"font-bold text-start"}>C# PNG:</span> imgbin.com.
           (n.d.). C programming language logo Microsoft Visual Studio .NET
           Framework [PNG image]. ImgBin.
@@ -29,8 +35,11 @@ export default function Page() {
           >
             https://imgbin.com/png/BTmFxA0c/c-programming-language-logo-microsoft-visual-studio-net-framework-png
           </Link>
-        </p>
-        <p id="border" className={"flex flex-row justify-between text-center "}>
+        </div>
+        <div
+          id="border"
+          className={"flex flex-row justify-between text-center "}
+        >
           <span className={"font-bold text-start"}>.NET PNG:</span> Wikimedia
           Commons. (n.d.). File: .NET Core Logo.svg. Wikimedia Foundation.{" "}
           <Link
@@ -39,8 +48,11 @@ export default function Page() {
           >
             https://commons.wikimedia.org/wiki/File:.NET_Core_Logo.svg{" "}
           </Link>
-        </p>
-        <p id="border" className={"flex flex-row justify-between text-center "}>
+        </div>
+        <div
+          id="border"
+          className={"flex flex-row justify-between text-center "}
+        >
           <span className={"font-bold text-start"}>Next JS PNG:</span> Iconduck.
           (n.d.). Next.js icon.
           <Link
@@ -49,8 +61,11 @@ export default function Page() {
           >
             https://iconduck.com/icons/94662/nextjs{" "}
           </Link>
-        </p>
-        <p id="border" className={"flex flex-row justify-between text-center "}>
+        </div>
+        <div
+          id="border"
+          className={"flex flex-row justify-between text-center "}
+        >
           <span className={"font-bold text-start"}>React PNG:</span> Wikipedia.
           (n.d.). File: React-icon.svg. Wikimedia Foundation.
           <Link
@@ -59,8 +74,11 @@ export default function Page() {
           >
             https://en.m.wikipedia.org/wiki/File:React-icon.svg{" "}
           </Link>
-        </p>
-        <p id="border" className={"flex flex-row justify-between text-center "}>
+        </div>
+        <div
+          id="border"
+          className={"flex flex-row justify-between text-center "}
+        >
           <span className={"font-bold text-start"}>PostgreSQL PNG:</span>{" "}
           CleanPNG. (n.d.). PostgreSQL transparent background PNG.{" "}
           <Link
@@ -69,8 +87,11 @@ export default function Page() {
           >
             https://www.cleanpng.com/free/postgresql.html
           </Link>
-        </p>
-        <p id="border" className={"flex flex-row justify-between text-center "}>
+        </div>
+        <div
+          id="border"
+          className={"flex flex-row justify-between text-center "}
+        >
           <span className={"font-bold text-start"}>EF Core PNG:</span> McKenzie,
           D. (2020, May 18). Porting to Entity Framework Core. CodeOpinion.
           <Link
@@ -79,7 +100,7 @@ export default function Page() {
           >
             https://codeopinion.com/porting-to-entity-framework-core/
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );
