@@ -2,6 +2,7 @@
 import TeamCard from "../components/teamcard";
 import Adam from "../../../../public/AdamBeer1.jpg";
 import Jovie from "../../../../public/Jovie.jpeg";
+import Jaryd from "../../../../public/Jaryd.jpeg";
 import { useEffect, useState } from "react";
 export default function Page() {
   const [mobile, setMobile] = useState<boolean>();
@@ -35,12 +36,13 @@ export default function Page() {
       github: "https://github.com/jovielarue",
     },
     {
-      name: "Adam",
-      image: Adam,
-      contribution: "",
-      desc: "",
-      linkedin: "",
-      github: "",
+      name: "Jaryd Hibbert",
+      image: Jaryd,
+      contribution:
+        "I worked on the backend which included: controllers, APIs, CRUD, request and response data!",
+      desc: "I am a team oriented and motivated individual always open to learn new things and experience new adventures. I hope to learn as much as I can in every aspect of life and programming to become the best person I can be. ",
+      linkedin: "www.linkedin.com/in/jaryd-hibbert",
+      github: "https://github.com/Hibbs18",
     },
     {
       name: "Adam",
