@@ -6,7 +6,7 @@ export default function Page() {
       <p id="border" className={"text-xl"}>
         References:{" "}
       </p>
-      <div id="border" className={"h-full"}>
+      <div id="border" className={"h-full overflow-y-scroll"}>
         <div
           id="border"
           className={"flex flex-row justify-between text-center "}
