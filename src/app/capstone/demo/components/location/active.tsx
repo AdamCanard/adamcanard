@@ -10,11 +10,7 @@ export default function Active() {
   };
 
   return (
-    <div
-      className={
-        "w-full h-full flex justify-center items-center flex-col gap-2"
-      }
-    >
+    <div className={"w-full h-full flex items-center flex-col gap-2"}>
       <HostedPop />
       <ActiveCalculator />
       <button

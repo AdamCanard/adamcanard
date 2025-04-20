@@ -32,13 +32,15 @@ export default function CountingList(props: { locationId: string }) {
       }
     >
       {Object.keys(items).map((category: string, index: number) => {
-        return (
-          <CountingCategory
-            category={category}
-            data={Object.values(items)[index]}
-            key={category}
-          />
-        );
+        if (Object.values(items)[index].length > 0) {
+          return (
+            <CountingCategory
+              category={category}
+              data={Object.values(items)[index]}
+              key={category}
+            />
+          );
+        }
       })}{" "}
     </div>
   );
