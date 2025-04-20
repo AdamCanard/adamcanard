@@ -5,13 +5,28 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const formData = await req.formData();
   const username = formData.get("username") as string;
+
+  if (username === "") {
+    return NextResponse.json(
+      { message: "Username cannot be empty" },
+      { status: 400 },
+    );
+  }
+
   try {
     await connectMongo();
+    const user = await User.findOne({ username: username }).exec();
+    if (user !== null) {
+      return NextResponse.json(
+        { message: "Username already exists" },
+        { status: 409 },
+      );
+    }
     const body: IUser = { username: username, losses: 0, logs: 0, lists: [] };
-    const user = new User(body);
-    user.save();
+    const newUser = new User(body);
+    newUser.save();
     return NextResponse.json(
-      { user, message: "Your product has been created" },
+      { newUser, message: "Your product has been created" },
       { status: 201 },
     );
   } catch (error) {
