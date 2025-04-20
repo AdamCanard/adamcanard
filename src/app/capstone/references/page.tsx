@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className={"h-full w-full"}>
+    <div className={"h-full w-full flex flex-col"}>
       <p id="border" className={"text-xl"}>
         References:{" "}
       </p>
