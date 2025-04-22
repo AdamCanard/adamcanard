@@ -45,10 +45,11 @@ export default function Page() {
       github: "https://github.com/Hibbs18",
     },
     {
-      name: "Adam",
+      name: "Mitchell Miller",
       image: Adam,
-      contribution: "",
-      desc: "",
+      contribution:
+        "Mitchell did not provide me with the information for this section",
+      desc: "Mitchell did not provide me with the information for this section",
       linkedin: "",
       github: "",
     },
