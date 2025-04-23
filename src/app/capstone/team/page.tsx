@@ -3,6 +3,7 @@ import TeamCard from "../components/teamcard";
 import Adam from "../../../../public/AdamBeer1.jpg";
 import Jovie from "../../../../public/Jovie.jpeg";
 import Jaryd from "../../../../public/Jaryd.jpeg";
+import Mitchell from "../../../../public/Mitchell.jpeg";
 import { useEffect, useState } from "react";
 export default function Page() {
   const [mobile, setMobile] = useState<boolean>();
@@ -46,12 +47,12 @@ export default function Page() {
     },
     {
       name: "Mitchell Miller",
-      image: Adam,
+      image: Mitchell,
       contribution:
-        "Mitchell did not provide me with the information for this section",
-      desc: "Mitchell did not provide me with the information for this section",
-      linkedin: "",
-      github: "",
+        "I designed and implemented most of the backend, implementing the DB connection, authentication as well as implementing the transfer logic.",
+      desc: "I am the lead developer at Telos One, a software company based out of Ontario. I lead a team of two other developers to build innovative software for clients in several different industries. I learn and adapt to my environment quickly, and quick to come up with new solutions.",
+      linkedin: "https://www.linkedin.com/in/mitchell-dev/",
+      github: "https://www.github.com/untold-titan/",
     },
   ];
 
