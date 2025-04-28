@@ -99,41 +99,33 @@ export default function Grid() {
     },
     [player],
   );
-  const lookAt = useCallback(
-    (row: number, col: number) => {
-      changeScreen(currentGrid[row][col].value);
-    },
-    [currentGrid, changeScreen],
-  );
-  const changeRoom = useCallback(
-    (direction: string) => {
-      const newRoomCoord: IRoomCoord = currentRoom;
-      switch (direction) {
-        case "l":
-          setPlayerLocation(4, 8);
-          newRoomCoord.col = currentRoom.col - 1;
-          setCurrentRoom(newRoomCoord);
-          break;
-        case "r":
-          setPlayerLocation(4, 0);
-          newRoomCoord.col = currentRoom.col + 1;
-          setCurrentRoom(newRoomCoord);
-          break;
-        case "u":
-          setPlayerLocation(8, 4);
-          newRoomCoord.col = currentRoom.row - 1;
-          setCurrentRoom(newRoomCoord);
-          break;
-        case "d":
-          setPlayerLocation(0, 4);
-          newRoomCoord.col = currentRoom.row + 1;
-          setCurrentRoom(newRoomCoord);
-          break;
-      }
-    },
-    [currentRoom, setPlayerLocation],
-  );
-  const look = useCallback(() => {
+  const lookAt = (row: number, col: number) => {
+    changeScreen(currentGrid[row][col].value);
+  };
+  const changeRoom = (direction: string) => {
+    const newRoomCoord: IRoomCoord = { ...currentRoom };
+    switch (direction) {
+      case "l":
+        setPlayerLocation(4, 8);
+        newRoomCoord.col = currentRoom.col - 1;
+        break;
+      case "r":
+        setPlayerLocation(4, 0);
+        newRoomCoord.col = currentRoom.col + 1;
+        break;
+      case "u":
+        setPlayerLocation(8, 4);
+        newRoomCoord.col = currentRoom.row - 1;
+        break;
+      case "d":
+        setPlayerLocation(0, 4);
+        newRoomCoord.col = currentRoom.row + 1;
+        break;
+    }
+
+    setCurrentRoom(newRoomCoord);
+  };
+  const look = () => {
     localStorage.setItem("player", JSON.stringify(player));
     switch (player.direction) {
       case "u":
@@ -157,9 +149,9 @@ export default function Grid() {
         }
         break;
     }
-  }, [lookAt, player]);
+  };
 
-  const up = useCallback(() => {
+  const up = () => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
     if (player.row === 0) {
       changeRoom("d");
@@ -171,16 +163,9 @@ export default function Grid() {
     }
     setPlayerDirection("u");
     setCurrentGrid(newGrid);
-  }, [
-    currentGrid,
-    referenceGrid,
-    setPlayerLocation,
-    setPlayerDirection,
-    changeRoom,
-    player.col,
-    player.row,
-  ]);
-  const down = useCallback(() => {
+  };
+
+  const down = () => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
     if (player.row === rows - 1) {
       changeRoom("d");
@@ -192,17 +177,9 @@ export default function Grid() {
     }
     setPlayerDirection("d");
     setCurrentGrid(newGrid);
-  }, [
-    currentGrid,
-    referenceGrid,
-    setPlayerLocation,
-    setPlayerDirection,
-    changeRoom,
-    player.col,
-    player.row,
-  ]);
+  };
 
-  const left = useCallback(() => {
+  const left = () => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
     if (player.col === 0) {
       changeRoom("l");
@@ -214,16 +191,9 @@ export default function Grid() {
     }
     setPlayerDirection("l");
     setCurrentGrid(newGrid);
-  }, [
-    currentGrid,
-    referenceGrid,
-    setPlayerLocation,
-    setPlayerDirection,
-    changeRoom,
-    player.col,
-    player.row,
-  ]);
-  const right = useCallback(() => {
+  };
+
+  const right = () => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
     if (player.col === cols - 1) {
       changeRoom("r");
@@ -235,15 +205,7 @@ export default function Grid() {
     }
     setPlayerDirection("r");
     setCurrentGrid(newGrid);
-  }, [
-    currentGrid,
-    referenceGrid,
-    setPlayerLocation,
-    setPlayerDirection,
-    changeRoom,
-    player.col,
-    player.row,
-  ]);
+  };
 
   const placePlayer = useCallback(() => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
@@ -268,13 +230,15 @@ export default function Grid() {
   }, [currentGrid, setPlayerLocation, player.col, player.row]);
 
   useEffect(() => {
-    setReferenceGrid(referenceGridGen(map[currentRoom.row][currentRoom.col]));
+    const newgrid = referenceGridGen(map[currentRoom.row][currentRoom.col]);
+    setReferenceGrid(newgrid);
   }, [currentRoom.row, currentRoom.col]);
 
   useEffect(() => {
-    setCurrentGrid(
-      referenceGrid.map((row) => row.map((tile) => ({ ...tile }))),
+    const newGrid = referenceGrid.map((row) =>
+      row.map((tile) => ({ ...tile })),
     );
+    setCurrentGrid(newGrid);
   }, [referenceGrid]);
 
   useEffect(() => {
