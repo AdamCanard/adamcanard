@@ -17,7 +17,6 @@ export interface GridContextType {
   currentGrid: ITileObject[][];
   setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
   referenceGrid: ITileObject[][];
-  move: (arg0: string) => void;
   rows: number;
   cols: number;
 }
@@ -118,97 +117,69 @@ export default function Grid() {
     }
   };
 
-  const move = (direction: string) => {
+  const up = () => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
-
-    switch (direction) {
-      case "a":
-        switch (player.direction) {
-          case "u":
-            if (player.row != 0) {
-              action(player.row - 1, player.col);
-            }
-            break;
-          case "d":
-            if (player.row != rows - 1) {
-              action(player.row + 1, player.col);
-            }
-            break;
-          case "l":
-            if (player.col != 0) {
-              action(player.row, player.col - 1);
-            }
-            break;
-          case "r":
-            if (player.col != cols - 1) {
-              action(player.row, player.col + 1);
-            }
-            break;
-        }
-        break;
-      case "b":
-        changeScreen("grid");
-        break;
-
-      case "u":
-        if (player.row === 0) {
-          changeRoom("d");
-        } else if (
-          newGrid[player.row - 1][player.col].value === "E" &&
-          Object.keys(window)[0] === "main"
-        ) {
-          newGrid[player.row - 1][player.col].value = "P";
-          newGrid[player.row][player.col].value =
-            referenceGrid[player.row][player.col].value;
-          setPlayerLocation(player.row - 1, player.col);
-        }
-        setPlayerDirection("u");
-        break;
-      case "d":
-        if (player.row === rows - 1) {
-          changeRoom("d");
-        } else if (
-          newGrid[player.row + 1][player.col].value === "E" &&
-          Object.keys(window)[0] === "main"
-        ) {
-          newGrid[player.row + 1][player.col].value = "P";
-          newGrid[player.row][player.col].value =
-            referenceGrid[player.row][player.col].value;
-          setPlayerLocation(player.row + 1, player.col);
-        }
-        setPlayerDirection("d");
-        break;
-      case "l":
-        if (player.col === 0) {
-          changeRoom("l");
-        } else if (
-          newGrid[player.row][player.col - 1].value === "E" &&
-          Object.keys(window)[0] === "main"
-        ) {
-          newGrid[player.row][player.col - 1].value = "P";
-          newGrid[player.row][player.col].value =
-            referenceGrid[player.row][player.col].value;
-          setPlayerLocation(player.row, player.col - 1);
-        }
-        setPlayerDirection("l");
-        break;
-      case "r":
-        if (player.col === cols - 1) {
-          changeRoom("r");
-        } else if (
-          newGrid[player.row][player.col + 1].value === "E" &&
-          Object.keys(window)[0] === "main"
-        ) {
-          newGrid[player.row][player.col + 1].value = "P";
-          newGrid[player.row][player.col].value =
-            referenceGrid[player.row][player.col].value;
-          setPlayerLocation(player.row, player.col + 1);
-        }
-        setPlayerDirection("r");
-        break;
-
-      default:
+    if (player.row === 0) {
+      changeRoom("d");
+    } else if (
+      newGrid[player.row - 1][player.col].value === "E" &&
+      Object.keys(window)[0] === "main"
+    ) {
+      newGrid[player.row - 1][player.col].value = "P";
+      newGrid[player.row][player.col].value =
+        referenceGrid[player.row][player.col].value;
+      setPlayerLocation(player.row - 1, player.col);
     }
+    setPlayerDirection("u");
+    setCurrentGrid(newGrid);
+  };
+  const down = () => {
+    const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
+    if (player.row === rows - 1) {
+      changeRoom("d");
+    } else if (
+      newGrid[player.row + 1][player.col].value === "E" &&
+      Object.keys(window)[0] === "main"
+    ) {
+      newGrid[player.row + 1][player.col].value = "P";
+      newGrid[player.row][player.col].value =
+        referenceGrid[player.row][player.col].value;
+      setPlayerLocation(player.row + 1, player.col);
+    }
+    setPlayerDirection("d");
+    setCurrentGrid(newGrid);
+  };
+
+  const left = () => {
+    const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
+    if (player.col === 0) {
+      changeRoom("l");
+    } else if (
+      newGrid[player.row][player.col - 1].value === "E" &&
+      Object.keys(window)[0] === "main"
+    ) {
+      newGrid[player.row][player.col - 1].value = "P";
+      newGrid[player.row][player.col].value =
+        referenceGrid[player.row][player.col].value;
+      setPlayerLocation(player.row, player.col - 1);
+    }
+    setPlayerDirection("l");
+    setCurrentGrid(newGrid);
+  };
+  const right = () => {
+    const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
+    if (player.col === cols - 1) {
+      changeRoom("r");
+    } else if (
+      newGrid[player.row][player.col + 1].value === "E" &&
+      Object.keys(window)[0] === "main"
+    ) {
+      newGrid[player.row][player.col + 1].value = "P";
+      newGrid[player.row][player.col].value =
+        referenceGrid[player.row][player.col].value;
+      setPlayerLocation(player.row, player.col + 1);
+    }
+    setPlayerDirection("r");
     setCurrentGrid(newGrid);
   };
 
@@ -284,6 +255,10 @@ export default function Grid() {
 
   const gridControls: IScreenActions = {
     a: look,
+    up: up,
+    down: down,
+    left: left,
+    right: right,
   };
 
   setControls(gridControls);
@@ -294,7 +269,6 @@ export default function Grid() {
         currentGrid,
         setCurrentGrid,
         referenceGrid,
-        move,
         rows,
         cols,
       }}
