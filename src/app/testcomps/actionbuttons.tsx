@@ -8,13 +8,13 @@ export default function ActionButtons() {
       {" "}
       <button
         className={"col-start-1 row-start-1 ControllerButton"}
-        onClick={() => screenControls.a}
+        onClick={() => screenControls.a()}
       >
         A
       </button>
       <button
         className={"col-start-2 row-start-2 ControllerButton"}
-        onClick={() => screenControls.b}
+        onClick={() => screenControls.b()}
       >
         B
       </button>

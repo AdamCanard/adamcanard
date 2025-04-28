@@ -4,20 +4,30 @@ import Controller from "./controller";
 import { screens } from "./screens";
 
 export interface IScreenActions {
-  a?: () => void;
-  b?: () => void;
-  up?: () => void;
-  down?: () => void;
-  left?: () => void;
-  right?: () => void;
-  select?: () => void;
-  start?: () => void;
+  a: () => void;
+  b: () => void;
+  up: () => void;
+  down: () => void;
+  left: () => void;
+  right: () => void;
+  select: () => void;
+  start: () => void;
 }
 export interface ScreenContextType {
   changeScreen: (screenKey: string) => void;
   setControls: (screenControls: IScreenActions) => void;
   screenControls: IScreenActions;
 }
+export const emptyActions = {
+  a: () => {},
+  b: () => {},
+  up: () => {},
+  down: () => {},
+  left: () => {},
+  right: () => {},
+  select: () => {},
+  start: () => {},
+};
 
 //cast empty object to contexttype
 export const ScreenContext = createContext<ScreenContextType>(
@@ -25,7 +35,8 @@ export const ScreenContext = createContext<ScreenContextType>(
 );
 export default function GameContainer() {
   const [screen, setScreen] = useState<JSX.Element>(screens["grid"]);
-  const [screenControls, setScreenControls] = useState<IScreenActions>({});
+  const [screenControls, setScreenControls] =
+    useState<IScreenActions>(emptyActions);
   const changeScreen = (screenKey: string) => {
     setScreen(screens[screenKey]);
   };
