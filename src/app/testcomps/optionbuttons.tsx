@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GridContext } from "./gamecontainer";
+import { GridContext } from "./grid";
 
 export default function OptionButtons() {
   const { move } = useContext(GridContext);
