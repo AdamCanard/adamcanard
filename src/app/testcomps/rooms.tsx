@@ -1,3 +1,6 @@
+import { useContext, useEffect } from "react";
+import { IScreenActions, ScreenContext } from "./gamecontainer";
+
 function ScreenBar() {
   return (
     <div
@@ -12,6 +15,21 @@ function ScreenBar() {
 }
 
 export function Wall() {
+  const { changeScreen, setControls } = useContext(ScreenContext);
+  useEffect(() => {
+    const gridControls: IScreenActions = {
+      a: () => console.log("interact"),
+      b: () => changeScreen("grid"),
+      up: () => {},
+      down: () => {},
+      left: () => {},
+      right: () => {},
+      start: () => {},
+      select: () => {},
+    };
+    setControls(gridControls);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className={"flex flex-col GridInner"}>
       <div className={"GridSize bg-gray-500"}>
@@ -21,6 +39,21 @@ export function Wall() {
   );
 }
 export function Empty() {
+  const { changeScreen, setControls } = useContext(ScreenContext);
+  useEffect(() => {
+    const gridControls: IScreenActions = {
+      a: () => console.log("interact"),
+      b: () => changeScreen("grid"),
+      up: () => {},
+      down: () => {},
+      left: () => {},
+      right: () => {},
+      start: () => {},
+      select: () => {},
+    };
+    setControls(gridControls);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className={"flex flex-col GridInner"}>
       <div className={"GridSize bg-black"}>
@@ -30,6 +63,21 @@ export function Empty() {
   );
 }
 export function Chest() {
+  const { changeScreen, setControls } = useContext(ScreenContext);
+  useEffect(() => {
+    const gridControls: IScreenActions = {
+      a: () => console.log("interact"),
+      b: () => changeScreen("grid"),
+      up: () => {},
+      down: () => {},
+      left: () => {},
+      right: () => {},
+      start: () => {},
+      select: () => {},
+    };
+    setControls(gridControls);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className={"flex flex-col GridInner"}>
       <div className={"GridSize bg-orange-900"}>

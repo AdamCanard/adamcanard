@@ -66,14 +66,20 @@ export default function Grid() {
     referenceGrid.map((row) => row.map((tile) => ({ ...tile }))),
   );
 
-  const [player, setPlayer] = useState<IPlayerType>({
-    row: -1,
-    col: -1,
-    direction: "u",
+  const [player, setPlayer] = useState<IPlayerType>(() => {
+    const oldPlayerStr = localStorage.getItem("player");
+    if (oldPlayerStr === null) {
+      return {
+        row: -1,
+        col: -1,
+        direction: "u",
+      };
+    } else {
+      return JSON.parse(oldPlayerStr);
+    }
   });
 
-  const { changeScreen, setControls, screenControls } =
-    useContext(ScreenContext);
+  const { changeScreen, setControls } = useContext(ScreenContext);
 
   const setPlayerDirection = useCallback(
     (direction: string) => {
@@ -93,11 +99,9 @@ export default function Grid() {
     },
     [player],
   );
-  const action = useCallback(
+  const lookAt = useCallback(
     (row: number, col: number) => {
-      const newWindow: Record<string, JSX.Element> = {};
-      newWindow[currentGrid[row][col].value] = currentGrid[row][col].element;
-      changeScreen("");
+      changeScreen(currentGrid[row][col].value);
     },
     [currentGrid, changeScreen],
   );
@@ -130,29 +134,30 @@ export default function Grid() {
     [currentRoom, setPlayerLocation],
   );
   const look = useCallback(() => {
+    localStorage.setItem("player", JSON.stringify(player));
     switch (player.direction) {
       case "u":
         if (player.row != 0) {
-          action(player.row - 1, player.col);
+          lookAt(player.row - 1, player.col);
         }
         break;
       case "d":
         if (player.row != rows - 1) {
-          action(player.row + 1, player.col);
+          lookAt(player.row + 1, player.col);
         }
         break;
       case "l":
         if (player.col != 0) {
-          action(player.row, player.col - 1);
+          lookAt(player.row, player.col - 1);
         }
         break;
       case "r":
         if (player.col != cols - 1) {
-          action(player.row, player.col + 1);
+          lookAt(player.row, player.col + 1);
         }
         break;
     }
-  }, [action, player]);
+  }, [lookAt, player]);
 
   const up = useCallback(() => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
@@ -228,7 +233,6 @@ export default function Grid() {
         referenceGrid[player.row][player.col].value;
       setPlayerLocation(player.row, player.col + 1);
     }
-    console.log(newGrid);
     setPlayerDirection("r");
     setCurrentGrid(newGrid);
   }, [
@@ -291,7 +295,9 @@ export default function Grid() {
       select: () => {},
     };
     setControls(gridControls);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <GridContext.Provider
       value={{
