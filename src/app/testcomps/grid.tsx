@@ -13,7 +13,6 @@ import { IPlayerType, IRoomCoord, ITileObject } from "./gametypes";
 import { screens } from "./screens";
 import { map } from "./rooms";
 
-export const gridActions: IScreenActions = {};
 export interface GridContextType {
   currentGrid: ITileObject[][];
   setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
@@ -36,7 +35,7 @@ export const referenceGridGen = (room: string[][]) => {
         row: rowIndex,
         col: tileIndex,
         value: key,
-        element: screens[toRender].window,
+        element: screens[toRender],
       };
       return tileObj;
     }),
@@ -76,7 +75,7 @@ export default function Grid() {
     direction: "u",
   });
 
-  const { changeScreen } = useContext(ScreenContext);
+  const { changeScreen, setControls } = useContext(ScreenContext);
 
   const setPlayerDirection = (direction: string) => {
     const newPlayer = player;
@@ -93,6 +92,31 @@ export default function Grid() {
     },
     [player],
   );
+
+  const look = () => {
+    switch (player.direction) {
+      case "u":
+        if (player.row != 0) {
+          action(player.row - 1, player.col);
+        }
+        break;
+      case "d":
+        if (player.row != rows - 1) {
+          action(player.row + 1, player.col);
+        }
+        break;
+      case "l":
+        if (player.col != 0) {
+          action(player.row, player.col - 1);
+        }
+        break;
+      case "r":
+        if (player.col != cols - 1) {
+          action(player.row, player.col + 1);
+        }
+        break;
+    }
+  };
 
   const move = (direction: string) => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
@@ -257,6 +281,12 @@ export default function Grid() {
       placePlayer();
     }
   }, [currentGrid, placePlayer]);
+
+  const gridControls: IScreenActions = {
+    a: look,
+  };
+
+  setControls(gridControls);
 
   return (
     <GridContext.Provider
