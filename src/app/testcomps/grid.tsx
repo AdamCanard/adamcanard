@@ -1,10 +1,13 @@
 import { useContext } from "react";
-import { GridContext } from "./gamecontainer";
+import { GridContext, IScreenActions } from "./gamecontainer";
 import Tile from "./tile";
 import { ITileObject } from "./gametypes";
 
+export const gridActions: IScreenActions = {};
+
 export default function Grid() {
   const { currentGrid, rows, cols } = useContext(GridContext);
+
   return (
     <div className={"GridInner"}>
       {" "}

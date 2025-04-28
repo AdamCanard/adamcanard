@@ -11,7 +11,7 @@ function ScreenBar() {
   );
 }
 
-function Wall() {
+export function Wall() {
   return (
     <div className={"flex flex-col GridInner"}>
       <div className={"GridSize bg-gray-500"}>
@@ -20,7 +20,7 @@ function Wall() {
     </div>
   );
 }
-function Empty() {
+export function Empty() {
   return (
     <div className={"flex flex-col GridInner"}>
       <div className={"GridSize bg-black"}>
@@ -29,7 +29,7 @@ function Empty() {
     </div>
   );
 }
-function Chest() {
+export function Chest() {
   return (
     <div className={"flex flex-col GridInner"}>
       <div className={"GridSize bg-orange-900"}>
@@ -39,53 +39,252 @@ function Chest() {
   );
 }
 
-const wall: Record<string, JSX.Element> = {
-  W: <Wall />,
-};
-const empty: Record<string, JSX.Element> = {
-  E: <Empty />,
-};
-
-const chest: Record<string, JSX.Element> = {
-  C: <Chest />,
-};
-
-export const start: Record<string, JSX.Element>[][] = [
-  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [empty, empty, empty, empty, chest, empty, empty, empty, empty],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
+export const start: string[][] = [
+  ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "chest",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
 ];
 
-export const right: Record<string, JSX.Element>[][] = [
-  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [empty, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
+export const right: string[][] = [
+  ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
 ];
-export const left: Record<string, JSX.Element>[][] = [
-  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, empty],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, empty, empty, empty, empty, empty, empty, empty, wall],
-  [wall, wall, wall, wall, wall, wall, wall, wall, wall],
+export const left: string[][] = [
+  ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  [
+    "wall",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "empty",
+    "wall",
+  ],
+  ["wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall", "wall"],
 ];
 
-export const map: Record<string, JSX.Element>[][][][] = [
+export const map: string[][][][] = [
   [[], [], []],
   [left, start, right],
   [[], [], []],

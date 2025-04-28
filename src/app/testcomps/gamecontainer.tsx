@@ -7,12 +7,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import Grid from "./grid";
 import Controller from "./controller";
 import { map } from "./rooms";
 import { IPlayerType, IRoomCoord, ITileObject } from "./gametypes";
+import { screens } from "./screens";
 
-export const referenceGridGen = (room: Record<string, JSX.Element>[][]) => {
+export const referenceGridGen = (room: string[][]) => {
   const newGrid = room.map((row, rowIndex) =>
     row.map((tile, tileIndex) => {
       const key = Object.keys(room[rowIndex][tileIndex])[0];
@@ -21,7 +21,7 @@ export const referenceGridGen = (room: Record<string, JSX.Element>[][]) => {
         row: rowIndex,
         col: tileIndex,
         value: key,
-        element: toRender,
+        element: screens[toRender].window,
       };
       return tileObj;
     }),
@@ -39,9 +39,9 @@ const hasPlayer = (grid: ITileObject[][]) => {
   }
   return false;
 };
+
 export interface GridContextType {
-  setNewWindow: (arg0: Record<string, JSX.Element>) => void;
-  resetWindow: () => void;
+  changeScreen: (screenKey: string) => void;
   currentGrid: ITileObject[][];
   setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
   referenceGrid: ITileObject[][];
@@ -55,13 +55,27 @@ export const GridContext = createContext<GridContextType>(
   {} as GridContextType,
 );
 
+export interface IScreen {
+  window: JSX.Element;
+  actions: IScreenActions;
+}
+
+export interface IScreenActions {
+  a?: () => void;
+  b?: () => void;
+  up?: () => void;
+  down?: () => void;
+  left?: () => void;
+  right?: () => void;
+  select?: () => void;
+  start?: () => void;
+}
+
 export default function GameContainer() {
   const rows = 9;
   const cols = 9;
 
-  const [window, setWindow] = useState<Record<string, JSX.Element>>({
-    main: <Grid />,
-  });
+  const [screen, setScreen] = useState<IScreen>(screens["grid"]);
 
   const [currentRoom, setCurrentRoom] = useState<IRoomCoord>({
     row: 1,
@@ -75,20 +89,15 @@ export default function GameContainer() {
   const [currentGrid, setCurrentGrid] = useState<ITileObject[][]>(
     referenceGrid.map((row) => row.map((tile) => ({ ...tile }))),
   );
+
   const [player, setPlayer] = useState<IPlayerType>({
     row: -1,
     col: -1,
     direction: "u",
   });
 
-  const setNewWindow = (newWindow: Record<string, JSX.Element>) => {
-    setWindow(newWindow);
-  };
-
-  const resetWindow = () => {
-    setWindow({
-      main: <Grid />,
-    });
+  const changeScreen = (screenKey: string) => {
+    setScreen(screens[screenKey]);
   };
 
   const setPlayerDirection = (direction: string) => {
@@ -136,7 +145,7 @@ export default function GameContainer() {
         }
         break;
       case "b":
-        resetWindow();
+        changeScreen("grid");
         break;
 
       case "u":
@@ -252,7 +261,7 @@ export default function GameContainer() {
   const action = (row: number, col: number) => {
     const newWindow: Record<string, JSX.Element> = {};
     newWindow[currentGrid[row][col].value] = currentGrid[row][col].element;
-    setNewWindow(newWindow);
+    changeScreen("");
   };
 
   useEffect(() => {
@@ -280,8 +289,7 @@ export default function GameContainer() {
         move,
         rows,
         cols,
-        setNewWindow,
-        resetWindow,
+        changeScreen,
       }}
     >
       <div
@@ -290,7 +298,7 @@ export default function GameContainer() {
         }
       >
         <div className={"flex items-center justify-center h-full w-full"}>
-          {Object.values(window)[0]}
+          {screen.window}
         </div>
         <Controller />
       </div>
