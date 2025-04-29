@@ -120,11 +120,11 @@ export default function Grid() {
           break;
         case "u":
           setPlayerLocation(8, 4);
-          newRoomCoord.col = currentRoom.row - 1;
+          newRoomCoord.row = currentRoom.row - 1;
           break;
         case "d":
           setPlayerLocation(0, 4);
-          newRoomCoord.col = currentRoom.row + 1;
+          newRoomCoord.row = currentRoom.row + 1;
           break;
       }
 
@@ -267,23 +267,23 @@ export default function Grid() {
 
   useEffect(() => {
     setReferenceGrid(referenceGridGen(map[currentRoom.row][currentRoom.col]));
-    console.log("1");
-  }, [currentRoom.row, currentRoom.col]);
+  }, [currentRoom]);
 
   useEffect(() => {
     const newGrid = referenceGrid.map((row) =>
       row.map((tile) => ({ ...tile })),
     );
-    console.log("2");
     setCurrentGrid(newGrid);
   }, [referenceGrid]);
 
   useEffect(() => {
-    console.log("3");
     if (!hasPlayer(currentGrid)) {
       placePlayer();
     }
+    setControls(gridControls);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentGrid, placePlayer]);
+
   const gridControls: IScreenActions = useMemo(
     () => ({
       a: look,
@@ -297,9 +297,6 @@ export default function Grid() {
     }),
     [look, up, down, left, right],
   );
-  useEffect(() => {
-    setControls(gridControls);
-  }, []);
 
   return (
     <GridContext.Provider
@@ -311,7 +308,7 @@ export default function Grid() {
         cols,
       }}
     >
-      <div className={"GridInner"} onClick={() => console.log(referenceGrid)}>
+      <div className={"GridInner"}>
         {" "}
         <div
           style={{
