@@ -1,20 +1,20 @@
 import { useContext } from "react";
-import { GridContext } from "./gamecontainer";
+import { ScreenContext } from "./gamecontainer";
 
 export default function ActionButtons() {
-  const { move } = useContext(GridContext);
+  const { screenControls } = useContext(ScreenContext);
   return (
     <div className={"w-20 h-20 grid grid-cols-2 grid-rows-2 "}>
       {" "}
       <button
         className={"col-start-1 row-start-1 ControllerButton"}
-        onClick={() => move("a")}
+        onClick={() => screenControls.a()}
       >
         A
       </button>
       <button
         className={"col-start-2 row-start-2 ControllerButton"}
-        onClick={() => move("b")}
+        onClick={() => screenControls.b()}
       >
         B
       </button>

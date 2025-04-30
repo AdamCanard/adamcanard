@@ -5,19 +5,19 @@ import Character from "../../../public/Game/Character.png";
 export default function Tile(props: { tileObj: ITileObject }) {
   const getColour = (value: string) => {
     switch (value) {
-      case "E":
+      case "empty":
         return "EmptyTile";
-      case "W":
+      case "wall":
         return "WallTile";
-      case "C":
+      case "chest":
         return "ChestTile";
-      case "D":
+      case "door":
         return "DoorTile";
     }
   };
   return (
     <div className={`GridTile ${getColour(props.tileObj.value)}`}>
-      {props.tileObj.value === "P" && (
+      {props.tileObj.value === "player" && (
         <Image src={Character} alt="little guys" />
       )}
     </div>
