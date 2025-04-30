@@ -2,21 +2,32 @@
 import { ErrorContext } from "@/app/desktop/errorprovider";
 import { LabeledInputStr } from "@/app/desktop/labeledinputs";
 import Window from "@/app/desktop/semanticcomps/window";
+import { IError } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const router = useRouter();
-
   const { raiseError } = useContext(ErrorContext);
+
   const postData = async (formData: FormData) => {
     try {
       const response = await fetch("/api/login/", {
         method: "POST",
         body: formData,
       });
-      return response.json();
+      if (response.status === 200) {
+        router.refresh();
+        return response.json();
+      } else {
+        const data = await response.json();
+        const newError: IError = {
+          status: response.status,
+          message: data.message,
+        };
+        raiseError(newError);
+      }
     } catch (err: unknown) {
       if (typeof err === "string") {
         console.log(err);
@@ -35,57 +46,14 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    let formData = new FormData(form);
-    let data = await postData(formData);
-    if (data.status === undefined) {
-      //api returned user data
-      formData = new FormData();
-      formData.append("cookieName", "authToken");
-      formData.append("cookieData", data.token);
-      await createCookie(formData);
-      formData = new FormData();
-      formData.append("cookieName", "userId");
-      formData.append("cookieData", data.record.id);
-      data = await createCookie(formData);
-      router.refresh();
-      if (data.status === 400) {
-        raiseError({ status: data.status, message: data.message });
-      }
-    }
-  };
-
-  const createCookie = async (formData: FormData) => {
-    try {
-      const response = await fetch("/api/setcookie", {
-        method: "POST",
-        body: formData,
-      });
-      return response;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
+    const formData = new FormData(form);
+    await postData(formData);
   };
 
   const handlePassthrough = async () => {
-    let formData = new FormData();
-    formData.append("cookieName", "authToken");
-    formData.append("cookieData", "letmein");
-    await createCookie(formData);
-    formData = new FormData();
-    formData.append("cookieName", "userId");
-    formData.append("cookieData", "Guest");
-    await createCookie(formData);
-    router.refresh();
+    const formData = new FormData();
+    formData.set("username", "Guest");
+    await postData(formData);
   };
 
   const handleClick = () => {
