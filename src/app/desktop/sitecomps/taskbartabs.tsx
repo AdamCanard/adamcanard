@@ -37,7 +37,7 @@ export default function TaskbarTabs() {
         )}
 
         <TaskbarButton window={<WindowedMobile key="Mobile" />} />
-        <TaskbarButton window={<UserPanel key={user.Name} />} />
+        <TaskbarButton window={<UserPanel key={user.username} />} />
         <TaskbarButton window={<AdminPanel key="Admin" />} />
       </div>
     </div>

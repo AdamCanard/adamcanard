@@ -130,12 +130,12 @@ export function BlackJackGame() {
   const postGame = useCallback(
     async (wager: number) => {
       const formData = new FormData();
-      formData.append("Losses", user.Losses + wager + "");
+      formData.append("Losses", user.losses + wager + "");
       const newUser = user;
-      newUser.Losses = user.Losses + wager;
+      newUser.losses = user.losses + wager;
       setUser(newUser);
       try {
-        const response = await fetch("/api/user/" + user.id, {
+        const response = await fetch("/api/user/" + user.username, {
           method: "PUT",
           body: formData,
         });

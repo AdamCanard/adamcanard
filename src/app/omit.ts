@@ -1,4 +1,6 @@
 export const Omit = [
+  "_id",
+  "__v",
   "Start",
   "End",
   "collectionId",

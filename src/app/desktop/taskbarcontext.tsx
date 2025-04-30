@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { IUser } from "../types";
+import { useRouter } from "next/navigation";
 
 interface TaskbarContextType {
   user: IUser;
@@ -32,46 +33,66 @@ export default function TaskbarContextWrapper(props: {
   const [admin, setAdmin] = useState(false);
   const [user, setUser] = useState<IUser>({} as IUser);
 
-  const loginUser = async () => {
+  const router = useRouter();
+
+  const getUsername = async () => {
     try {
-      let formData = new FormData();
-      formData.append("cookie", "userId");
-      let response = await fetch("/api/getcookie/", {
+      const formData = new FormData();
+      formData.append("cookie", "username");
+      const response = await fetch("/api/getcookie/", {
         method: "POST",
         body: formData,
       });
-      const cookie = await response.json();
-      if (cookie.data.value === "Guest") {
-        formData = new FormData();
-        formData.append("userId", "413f8p29zx130fn");
-        response = await fetch("/api/user/", {
-          method: "POST",
-          body: formData,
-        });
-        const username = await response.json();
-        setUser(username);
-        formData = new FormData();
-        formData.append("Logs", username.Logs);
-        response = await fetch("/api/user/" + "413f8p29zx130fn", {
-          method: "PUT",
-          body: formData,
-        });
+      return await response.json();
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          },
+        );
       } else {
-        formData = new FormData();
-        formData.append("userId", cookie.data.value);
-        response = await fetch("/api/user/", {
-          method: "POST",
-          body: formData,
-        });
-        const username = await response.json();
-        setUser(username);
-        formData = new FormData();
-        formData.append("Logs", username.Logs);
-        response = await fetch("/api/user/" + username.id, {
-          method: "PUT",
-          body: formData,
-        });
+        console.log(err);
       }
+    }
+  };
+  const getUser = async (username: string) => {
+    try {
+      const formData = new FormData();
+      formData.append("username", username);
+      const response = await fetch("/api/user/", {
+        method: "POST",
+        body: formData,
+      });
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        router.push("/logout");
+      }
+      return await response.json();
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          },
+        );
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
+  const loginUser = async () => {
+    try {
+      const data: Record<string, string> = await getUsername();
+      const username = data["username"];
+      const user = await getUser(username);
+      setUser(user);
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(

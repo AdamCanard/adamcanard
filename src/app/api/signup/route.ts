@@ -1,5 +1,6 @@
-import { IUser, User } from "@/app/server/models/user";
+import { User } from "@/app/server/models/user";
 import connectMongo from "@/app/server/mongoose";
+import { IUser } from "@/app/types";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
