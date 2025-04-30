@@ -1,12 +1,5 @@
 import mongoose from "mongoose";
 
-export interface IUser {
-  username: string;
-  losses: number;
-  logs: number;
-  lists: string[];
-}
-
 const UserSchema = new mongoose.Schema({
   username: String,
   losses: Number,

@@ -33,8 +33,8 @@ export interface IIdea {
 }
 
 export interface IUser {
-  id: string;
-  Name: string;
-  Logs: number;
-  Losses: number;
+  username: string;
+  losses: number;
+  logs: number;
+  lists: string[];
 }
