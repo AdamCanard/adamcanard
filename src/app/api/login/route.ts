@@ -17,9 +17,7 @@ export async function POST(req: Request) {
     }
     const logsUpdate = { logs: user.logs + 1 };
     await User.updateOne({ username: username }, logsUpdate);
-    user.logs = logsUpdate;
-    await user.save();
-    cookies().set(username, username);
+    cookies().set("username", username);
     return NextResponse.json(
       { user, message: "Username found, Logging you in" },
       { status: 200 },
