@@ -20,13 +20,13 @@ export default function Home() {
     }
   }, [selected, setSelected]);
 
-  const select = useCallback(() => {
+  const a = useCallback(() => {
     changeScreen(buttons[selected]);
   }, [buttons, changeScreen, selected]);
 
   const gridControls: IScreenActions = useMemo(
     () => ({
-      a: select,
+      a,
       b: () => {},
       up,
       down,
@@ -35,7 +35,7 @@ export default function Home() {
       start: () => {},
       select: () => {},
     }),
-    [up, down, select],
+    [up, down, a],
   );
 
   useEffect(() => {
