@@ -34,7 +34,7 @@ export const ScreenContext = createContext<ScreenContextType>(
   {} as ScreenContextType,
 );
 export default function GameContainer() {
-  const [screen, setScreen] = useState<JSX.Element>(screens["grid"]);
+  const [screen, setScreen] = useState<JSX.Element>(screens["home"]);
   const [screenControls, setScreenControls] =
     useState<IScreenActions>(emptyActions);
   const changeScreen = (screenKey: string) => {
