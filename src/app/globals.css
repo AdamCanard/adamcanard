@@ -117,15 +117,16 @@
   color: #404040;
   font-weight: 500;
 }
-.HomeButton:active {
+.HomeButtonSelected {
   border-left: 3px solid #fefefe;
-  border-top: 3px solid #808080;
-  border-right: 3px solid #fefefe;
-  border-bottom: 3px solid #fefefe;
-  background-color: #c6c6c6;
-  color: #404040;
+  border-top: 3px solid #fefefe;
+  border-right: 3px solid #808080;
+  border-bottom: 3px solid #808080;
+  background-color: #949494;
+  color: #202020;
   font-weight: 500;
 }
+
 .ControllerButton {
   display: flex;
   justify-content: center;
