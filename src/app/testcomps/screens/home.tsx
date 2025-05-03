@@ -1,41 +1,47 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { IScreenActions, ScreenContext } from "../gamecontainer";
 
 export default function Home() {
   const [selected, setSelected] = useState(0);
   const { setControls, changeScreen } = useContext(ScreenContext);
-  const buttons = ["play", "skip", "credits"];
+  const buttons = useMemo(() => ["play", "skip", "credits"], []);
+
+  const up = useCallback(() => {
+    if (selected !== 0) {
+      const newIndex = selected - 1;
+      setSelected(newIndex);
+    }
+  }, [setSelected, selected]);
+
+  const down = useCallback(() => {
+    if (selected !== 2) {
+      const newIndex = selected + 1;
+      setSelected(newIndex);
+    }
+  }, [selected, setSelected]);
+
+  const select = useCallback(() => {
+    changeScreen(buttons[selected]);
+  }, [buttons, changeScreen, selected]);
+
   const gridControls: IScreenActions = useMemo(
     () => ({
-      a: () => {
-        changeScreen(buttons[selected]);
-      },
+      a: select,
       b: () => {},
-      up: () => {
-        if (selected !== 0) {
-          const newIndex = selected - 1;
-          setSelected(newIndex);
-        }
-      },
-      down: () => {
-        if (selected !== 2) {
-          const newIndex = selected + 1;
-          setSelected(newIndex);
-        }
-      },
+      up,
+      down,
       left: () => {},
       right: () => {},
       start: () => {},
       select: () => {},
     }),
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setSelected, selected, changeScreen],
+    [up, down, select],
   );
 
   useEffect(() => {
     setControls(gridControls);
-  }, [gridControls, setControls]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   return (
     <div className={"GridSize border-2 flex flex-col justify-around"}>
