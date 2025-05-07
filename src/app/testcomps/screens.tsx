@@ -4,6 +4,7 @@ import Credits from "./screens/credits";
 import { Empty } from "./screens/empty";
 import FullSite from "./screens/fullsite";
 import Home from "./screens/home";
+import Map from "./screens/map";
 import Wall from "./screens/wall";
 
 export const screens: Record<string, JSX.Element> = {
@@ -15,4 +16,5 @@ export const screens: Record<string, JSX.Element> = {
   wall: <Wall />,
   empty: <Empty />,
   chest: <Chest />,
+  map: <Map />,
 };

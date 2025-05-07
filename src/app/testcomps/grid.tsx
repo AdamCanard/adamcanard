@@ -258,6 +258,9 @@ export default function Grid() {
     setPlayerLocation,
     setPlayerDirection,
   ]);
+  const select = useCallback(() => {
+    changeFromGrid("map");
+  }, [changeFromGrid]);
   const placePlayer = useCallback(() => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
     if (!hasPlayer(newGrid)) {
@@ -307,8 +310,9 @@ export default function Grid() {
       down,
       left,
       right,
+      select,
     }),
-    [look, up, down, left, right],
+    [look, up, down, left, right, select],
   );
 
   return (
