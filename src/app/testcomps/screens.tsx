@@ -1,8 +1,10 @@
 import Grid from "./grid";
-import { Chest, Empty, Wall } from "./rooms";
+import Chest from "./screens/chest";
 import Credits from "./screens/credits";
+import { Empty } from "./screens/empty";
 import FullSite from "./screens/fullsite";
 import Home from "./screens/home";
+import Wall from "./screens/wall";
 
 export const screens: Record<string, JSX.Element> = {
   home: <Home />,
