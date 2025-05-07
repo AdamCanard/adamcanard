@@ -16,14 +16,7 @@ export default function Credits() {
 
   const gridControls: IScreenActions = useMemo(
     () => ({
-      a: () => {},
       b,
-      up: () => {},
-      down: () => {},
-      left: () => {},
-      right: () => {},
-      start: () => {},
-      select: () => {},
     }),
     [b],
   );

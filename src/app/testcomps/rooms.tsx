@@ -20,12 +20,6 @@ export function Wall() {
     const gridControls: IScreenActions = {
       a: () => console.log("interact"),
       b: () => changeScreen("grid"),
-      up: () => {},
-      down: () => {},
-      left: () => {},
-      right: () => {},
-      start: () => {},
-      select: () => {},
     };
     setControls(gridControls);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,12 +38,6 @@ export function Empty() {
     const gridControls: IScreenActions = {
       a: () => console.log("interact"),
       b: () => changeScreen("grid"),
-      up: () => {},
-      down: () => {},
-      left: () => {},
-      right: () => {},
-      start: () => {},
-      select: () => {},
     };
     setControls(gridControls);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,12 +56,6 @@ export function Chest() {
     const gridControls: IScreenActions = {
       a: () => console.log("interact"),
       b: () => changeScreen("grid"),
-      up: () => {},
-      down: () => {},
-      left: () => {},
-      right: () => {},
-      start: () => {},
-      select: () => {},
     };
     setControls(gridControls);
     // eslint-disable-next-line react-hooks/exhaustive-deps

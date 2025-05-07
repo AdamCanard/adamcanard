@@ -9,13 +9,13 @@ export default function OptionButtons() {
         {" "}
         <button
           className={"ControllerButton"}
-          onClick={() => screenControls.select()}
+          onClick={() => screenControls.select && screenControls.select()}
         >
           Sel
         </button>
         <button
           className={"ControllerButton"}
-          onClick={() => screenControls.start()}
+          onClick={() => screenControls.start && screenControls.start()}
         >
           Sta
         </button>

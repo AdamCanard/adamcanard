@@ -4,14 +4,14 @@ import Controller from "./controller";
 import { screens } from "./screens";
 
 export interface IScreenActions {
-  a: () => void;
-  b: () => void;
-  up: () => void;
-  down: () => void;
-  left: () => void;
-  right: () => void;
-  select: () => void;
-  start: () => void;
+  a?: () => void;
+  b?: () => void;
+  up?: () => void;
+  down?: () => void;
+  left?: () => void;
+  right?: () => void;
+  select?: () => void;
+  start?: () => void;
 }
 export interface ScreenContextType {
   changeScreen: (screenKey: string) => void;

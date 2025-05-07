@@ -307,8 +307,6 @@ export default function Grid() {
       down,
       left,
       right,
-      start: () => {},
-      select: () => {},
     }),
     [look, up, down, left, right],
   );

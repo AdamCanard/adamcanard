@@ -27,13 +27,8 @@ export default function Home() {
   const gridControls: IScreenActions = useMemo(
     () => ({
       a,
-      b: () => {},
       up,
       down,
-      left: () => {},
-      right: () => {},
-      start: () => {},
-      select: () => {},
     }),
     [up, down, a],
   );
