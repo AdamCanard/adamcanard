@@ -55,10 +55,17 @@ const hasPlayer = (grid: ITileObject[][]) => {
 export default function Grid() {
   const rows = 9;
   const cols = 9;
-  const [currentRoom, setCurrentRoom] = useState<IRoomCoord>({
-    row: 1,
-    col: 1,
-  } as IRoomCoord);
+  const [currentRoom, setCurrentRoom] = useState<IRoomCoord>(() => {
+    const oldRoomStr = localStorage.getItem("room");
+    if (oldRoomStr === null) {
+      return {
+        row: 1,
+        col: 1,
+      } as IRoomCoord;
+    } else {
+      return JSON.parse(oldRoomStr);
+    }
+  });
   const [referenceGrid, setReferenceGrid] = useState<ITileObject[][]>(
     referenceGridGen(map[currentRoom.row][currentRoom.col]),
   );
@@ -82,6 +89,15 @@ export default function Grid() {
 
   const { changeScreen, setControls } = useContext(ScreenContext);
 
+  const changeFromGrid = useCallback(
+    (screenKey: string) => {
+      localStorage.setItem("player", JSON.stringify(player));
+      localStorage.setItem("room", JSON.stringify(currentRoom));
+      changeScreen(screenKey);
+    },
+    [changeScreen, currentRoom, player],
+  );
+
   const setPlayerDirection = useCallback(
     (direction: string) => {
       const newPlayer = player;
@@ -102,9 +118,9 @@ export default function Grid() {
   );
   const lookAt = useCallback(
     (row: number, col: number) => {
-      changeScreen(currentGrid[row][col].value);
+      changeFromGrid(currentGrid[row][col].value);
     },
-    [changeScreen, currentGrid],
+    [changeFromGrid, currentGrid],
   );
   const changeRoom = useCallback(
     (direction: string) => {
@@ -133,7 +149,6 @@ export default function Grid() {
     [currentRoom, setPlayerLocation],
   );
   const look = useCallback(() => {
-    localStorage.setItem("player", JSON.stringify(player));
     switch (player.direction) {
       case "u":
         if (player.row != 0) {
