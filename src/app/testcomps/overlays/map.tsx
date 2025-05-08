@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { IScreenActions, ScreenContext } from "../gamecontainer";
 import { IRoomCoord } from "../gametypes";
 import { map } from "../rooms";
@@ -10,10 +10,18 @@ export default function Map() {
     row: 1,
     col: 1,
   };
-  const { changeOverlay, setControls } = useContext(ScreenContext);
+  const { changeOverlay, setControls, screenControls } =
+    useContext(ScreenContext);
+  const storedControls: IScreenActions = screenControls;
+
+  const b = useCallback(() => {
+    setControls(storedControls);
+    changeOverlay("");
+  }, [changeOverlay, setControls, storedControls]);
+
   useEffect(() => {
     const gridControls: IScreenActions = {
-      b: () => changeOverlay(""),
+      b,
     };
     setControls(gridControls);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,8 +31,8 @@ export default function Map() {
       style={{
         display: "grid",
         gap: "8px",
-        gridTemplateColumns: `repeat(${3}, minmax(0,1fr))`,
-        gridTemplateRows: `repeat(${3}, minmax(0,1fr))`,
+        gridTemplateColumns: `repeat(${map.length}, minmax(0,1fr))`,
+        gridTemplateRows: `repeat(${map[0].length}, minmax(0,1fr))`,
       }}
     >
       {map.map((row, rowIndex) => {
