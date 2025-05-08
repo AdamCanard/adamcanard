@@ -1,11 +1,13 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { IScreenActions, ScreenContext } from "../gamecontainer";
-import HomeButton from "./screenscomps/homebutton";
+import HomeButton from "../screens/screenscomps/homebutton";
 
-export default function Home() {
+export default function Pause() {
   const [selected, setSelected] = useState(0);
-  const { setControls, changeScreen } = useContext(ScreenContext);
-  const buttons = useMemo(() => ["play", "skip", "credits"], []);
+  const { setControls, changeScreen, screenControls, changeOverlay } =
+    useContext(ScreenContext);
+  const storedControls: IScreenActions = screenControls;
+  const buttons = useMemo(() => ["play", "home"], []);
 
   const up = useCallback(() => {
     if (selected !== 0) {
@@ -15,15 +17,24 @@ export default function Home() {
   }, [setSelected, selected]);
 
   const down = useCallback(() => {
-    if (selected !== 2) {
+    if (selected !== 1) {
       const newIndex = selected + 1;
       setSelected(newIndex);
     }
   }, [selected, setSelected]);
 
   const a = useCallback(() => {
+    setControls(storedControls);
+    changeOverlay("");
     changeScreen(buttons[selected]);
-  }, [buttons, changeScreen, selected]);
+  }, [
+    buttons,
+    changeScreen,
+    selected,
+    changeOverlay,
+    setControls,
+    storedControls,
+  ]);
 
   const gridControls: IScreenActions = useMemo(
     () => ({
@@ -41,7 +52,6 @@ export default function Home() {
 
   return (
     <div className={"GridSize flex flex-col justify-around"}>
-      <div className={"w-full text-3xl text-center"}>Made Games</div>
       <div className={"w-full flex flex-col gap-4  items-center"}>
         {buttons.map((button) => {
           return (

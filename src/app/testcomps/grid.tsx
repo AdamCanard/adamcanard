@@ -262,6 +262,11 @@ export default function Grid() {
   const select = useCallback(() => {
     changeOverlay("map");
   }, [changeOverlay]);
+
+  const start = useCallback(() => {
+    changeOverlay("pause");
+  }, [changeOverlay]);
+
   const placePlayer = useCallback(() => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
     if (!hasPlayer(newGrid)) {
@@ -312,8 +317,9 @@ export default function Grid() {
       left,
       right,
       select,
+      start,
     }),
-    [look, up, down, left, right, select],
+    [look, up, down, left, right, select, start],
   );
 
   return (
