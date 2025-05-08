@@ -11,8 +11,8 @@ import {
 import { IScreenActions, ScreenContext } from "./gamecontainer";
 import Tile from "./tile";
 import { IPlayerType, IRoomCoord, ITileObject } from "./gametypes";
-import { screens } from "./screens";
 import { map } from "./rooms";
+import { screens } from "./screens/screens";
 
 export interface GridContextType {
   currentGrid: ITileObject[][];
@@ -87,7 +87,8 @@ export default function Grid() {
     }
   });
 
-  const { changeScreen, setControls } = useContext(ScreenContext);
+  const { changeScreen, changeOverlay, setControls } =
+    useContext(ScreenContext);
 
   const changeFromGrid = useCallback(
     (screenKey: string) => {
@@ -259,8 +260,8 @@ export default function Grid() {
     setPlayerDirection,
   ]);
   const select = useCallback(() => {
-    changeFromGrid("map");
-  }, [changeFromGrid]);
+    changeOverlay("map");
+  }, [changeOverlay]);
   const placePlayer = useCallback(() => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
     if (!hasPlayer(newGrid)) {
@@ -325,24 +326,22 @@ export default function Grid() {
         cols,
       }}
     >
-      <div className={"GridInner"}>
-        {" "}
-        <div
-          style={{
-            display: "grid",
-            width: "288px",
-            height: "288px",
-            gridTemplateColumns: `repeat(${cols}, minmax(0,1fr))`,
-            gridTemplateRows: `repeat(${rows}, minmax(0,1fr))`,
-            backgroundColor: " #505090",
-          }}
-        >
-          {Object.values(currentGrid).map((row: ITileObject[], index) => {
-            return Object.values(row).map((tile: ITileObject, index2) => {
-              return <Tile tileObj={tile} key={index + " " + index2} />;
-            });
-          })}
-        </div>
+      {" "}
+      <div
+        style={{
+          display: "grid",
+          width: "288px",
+          height: "288px",
+          gridTemplateColumns: `repeat(${cols}, minmax(0,1fr))`,
+          gridTemplateRows: `repeat(${rows}, minmax(0,1fr))`,
+          backgroundColor: " #505090",
+        }}
+      >
+        {Object.values(currentGrid).map((row: ITileObject[], index) => {
+          return Object.values(row).map((tile: ITileObject, index2) => {
+            return <Tile tileObj={tile} key={index + " " + index2} />;
+          });
+        })}
       </div>
     </GridContext.Provider>
   );
