@@ -13,10 +13,8 @@ export default function Wall() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className={"flex flex-col GridInner"}>
-      <div className={"GridSize bg-gray-500"}>
-        <ScreenBar />
-      </div>
+    <div className={"GridSize bg-gray-500"}>
+      <ScreenBar />
     </div>
   );
 }

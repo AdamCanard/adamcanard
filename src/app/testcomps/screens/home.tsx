@@ -39,21 +39,19 @@ export default function Home() {
   }, [selected]);
 
   return (
-    <div className={"GridInner"}>
-      <div className={"GridSize flex flex-col justify-around"}>
-        <div className={"w-full text-3xl text-center"}>Made Games</div>
-        <div className={"w-full flex flex-col gap-4  items-center"}>
-          {buttons.map((button) => {
-            return (
-              <HomeButton
-                title={button}
-                buttons={buttons}
-                selected={selected}
-                key={button}
-              />
-            );
-          })}
-        </div>
+    <div className={"GridSize flex flex-col justify-around"}>
+      <div className={"w-full text-3xl text-center"}>Made Games</div>
+      <div className={"w-full flex flex-col gap-4  items-center"}>
+        {buttons.map((button) => {
+          return (
+            <HomeButton
+              title={button}
+              buttons={buttons}
+              selected={selected}
+              key={button}
+            />
+          );
+        })}
       </div>
     </div>
   );

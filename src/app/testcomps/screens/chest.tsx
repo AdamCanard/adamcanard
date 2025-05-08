@@ -13,10 +13,8 @@ export default function Chest() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className={"flex flex-col GridInner"}>
-      <div className={"GridSize bg-orange-900"}>
-        <ScreenBar />
-      </div>
+    <div className={"GridSize bg-orange-900"}>
+      <ScreenBar />
     </div>
   );
 }
