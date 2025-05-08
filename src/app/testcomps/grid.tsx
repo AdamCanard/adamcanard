@@ -98,6 +98,14 @@ export default function Grid() {
     },
     [changeScreen, currentRoom, player],
   );
+  const overlayOnGrid = useCallback(
+    (overlayKey: string) => {
+      localStorage.setItem("player", JSON.stringify(player));
+      localStorage.setItem("room", JSON.stringify(currentRoom));
+      changeOverlay(overlayKey);
+    },
+    [changeOverlay, currentRoom, player],
+  );
 
   const setPlayerDirection = useCallback(
     (direction: string) => {
@@ -260,12 +268,12 @@ export default function Grid() {
     setPlayerDirection,
   ]);
   const select = useCallback(() => {
-    changeOverlay("map");
-  }, [changeOverlay]);
+    overlayOnGrid("map");
+  }, [overlayOnGrid]);
 
   const start = useCallback(() => {
-    changeOverlay("pause");
-  }, [changeOverlay]);
+    overlayOnGrid("pause");
+  }, [overlayOnGrid]);
 
   const placePlayer = useCallback(() => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
