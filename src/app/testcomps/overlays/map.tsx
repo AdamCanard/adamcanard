@@ -18,10 +18,15 @@ export default function Map() {
     setControls(storedControls);
     changeOverlay("");
   }, [changeOverlay, setControls, storedControls]);
+  const select = useCallback(() => {
+    setControls(storedControls);
+    changeOverlay("");
+  }, [changeOverlay, setControls, storedControls]);
 
   useEffect(() => {
     const gridControls: IScreenActions = {
       b,
+      select,
     };
     setControls(gridControls);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,27 +41,23 @@ export default function Map() {
       }}
     >
       {map.map((row, rowIndex) => {
-        return (
-          <>
-            {row.map((room, colIndex) => {
-              if (room.length > 0) {
-                return (
-                  <div
-                    className={`${rowIndex === playerRoom.row && colIndex === playerRoom.col ? "bg-yellow-500" : "bg-white"} w-8 h-8 `}
-                    key={rowIndex + " " + colIndex}
-                  ></div>
-                );
-              } else {
-                return (
-                  <div
-                    className={" w-8 h-8 border-2"}
-                    key={rowIndex + " " + colIndex}
-                  ></div>
-                );
-              }
-            })}
-          </>
-        );
+        return row.map((room, colIndex) => {
+          if (room.length > 0) {
+            return (
+              <div
+                className={`${rowIndex === playerRoom.row && colIndex === playerRoom.col ? "bg-yellow-500" : "bg-white"} w-8 h-8 `}
+                key={rowIndex + " " + colIndex}
+              ></div>
+            );
+          } else {
+            return (
+              <div
+                className={" w-8 h-8 border-2"}
+                key={rowIndex + " " + colIndex}
+              ></div>
+            );
+          }
+        });
       })}
     </div>
   );

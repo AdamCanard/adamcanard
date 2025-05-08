@@ -35,14 +35,20 @@ export default function Pause() {
     setControls,
     storedControls,
   ]);
+  const start = useCallback(() => {
+    setControls(storedControls);
+    changeOverlay("");
+    changeScreen("play");
+  }, [changeScreen, changeOverlay, setControls, storedControls]);
 
   const gridControls: IScreenActions = useMemo(
     () => ({
       a,
       up,
       down,
+      start,
     }),
-    [up, down, a],
+    [up, down, a, start],
   );
 
   useEffect(() => {
