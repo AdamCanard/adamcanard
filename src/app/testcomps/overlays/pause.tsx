@@ -7,7 +7,7 @@ export default function Pause() {
   const { setControls, changeScreen, screenControls, changeOverlay } =
     useContext(ScreenContext);
   const storedControls: IScreenActions = screenControls;
-  const buttons = useMemo(() => ["play", "home"], []);
+  const buttons = useMemo(() => ["back", "home"], []);
 
   const up = useCallback(() => {
     if (selected !== 0) {
@@ -38,7 +38,7 @@ export default function Pause() {
   const start = useCallback(() => {
     setControls(storedControls);
     changeOverlay("");
-    changeScreen("play");
+    changeScreen("back");
   }, [changeScreen, changeOverlay, setControls, storedControls]);
 
   const gridControls: IScreenActions = useMemo(

@@ -10,6 +10,7 @@ import Wall from "./wall";
 export const screens: Record<string, JSX.Element> = {
   home: <Home />,
   play: <Grid />,
+  back: <Grid />,
   skip: <FullSite />,
   credits: <Credits />,
   grid: <Grid />,
