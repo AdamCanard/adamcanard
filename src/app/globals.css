@@ -617,7 +617,14 @@ body {
     transform: translate(0px, 0px);
   }
 }
-
+@keyframes crawl {
+  0% {
+    top: 90%;
+  }
+  100% {
+    top: -235%;
+  }
+}
 ::-webkit-scrollbar {
   width: 16px;
 }

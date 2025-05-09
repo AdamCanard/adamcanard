@@ -5,11 +5,12 @@ import Credits from "./credits";
 import { Empty } from "./empty";
 import FullSite from "./fullsite";
 import Home from "./home";
+import Opening from "./opening";
 import Wall from "./wall";
 
 export const screens: Record<string, JSX.Element> = {
   home: <Home />,
-  play: <Grid />,
+  play: <Opening />,
   back: <Grid />,
   skip: <FullSite />,
   credits: <Credits />,

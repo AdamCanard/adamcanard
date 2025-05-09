@@ -15,6 +15,9 @@ const config: Config = {
         text: "#131D4E",
         accent: "#E01828",
       },
+      animation: {
+        crawl: "crawl 40s linear forwards",
+      },
     },
   },
   plugins: [],
