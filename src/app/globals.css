@@ -1,8 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
+@import "tailwindcss";
+root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -617,14 +614,18 @@ body {
     transform: translate(0px, 0px);
   }
 }
-@keyframes crawl {
-  0% {
-    top: 90%;
-  }
-  100% {
-    top: -235%;
+@theme {
+  --animate-crawl: crawl 40s linear forwards;
+  @keyframes crawl {
+    0% {
+      top: 90%;
+    }
+    100% {
+      top: -235%;
+    }
   }
 }
+
 ::-webkit-scrollbar {
   width: 16px;
 }
