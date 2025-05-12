@@ -75,7 +75,7 @@ export default function GameContainer() {
               <div className={"absolute flex justify-center items-center "}>
                 <div
                   className={
-                    "bg-gray-900 bg-opacity-75 GridSize absolute flex items-center justify-center z-50"
+                    "bg-gray-900/75 GridSize absolute flex items-center justify-center z-50"
                   }
                 >
                   {overlay}

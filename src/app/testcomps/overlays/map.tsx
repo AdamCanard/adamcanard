@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { IScreenActions, ScreenContext } from "../gamecontainer";
 import { IRoomCoord } from "../gametypes";
 import { map } from "../rooms";
@@ -12,7 +12,8 @@ export default function Map() {
   };
   const { changeOverlay, setControls, screenControls } =
     useContext(ScreenContext);
-  const storedControls: IScreenActions = screenControls;
+
+  const [storedControls] = useState(screenControls);
 
   const b = useCallback(() => {
     setControls(storedControls);
@@ -45,14 +46,14 @@ export default function Map() {
           if (room.length > 0) {
             return (
               <div
-                className={`${rowIndex === playerRoom.row && colIndex === playerRoom.col ? "bg-yellow-500" : "bg-white"} w-8 h-8 `}
+                className={`${rowIndex === playerRoom.row && colIndex === playerRoom.col ? "bg-yellow-500" : "bg-white"} w-8 h-8 border-2 border-white `}
                 key={rowIndex + " " + colIndex}
               ></div>
             );
           } else {
             return (
               <div
-                className={" w-8 h-8 border-2"}
+                className={" w-8 h-8 border-2 border-white"}
                 key={rowIndex + " " + colIndex}
               ></div>
             );
