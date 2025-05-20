@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export interface IBeer {
+  _id: string;
   name: string;
   brewery: string;
   keywords: string[];
@@ -44,16 +45,17 @@ export default function Beer() {
       <div className={"flex flex-col h-fit overflow-y-scroll"}>
         <div className="w-full flex flex-col ">
           {beers.map((beer, index) => {
+            const id: string = beer._id;
             return (
-              <div key={index}>
+              <div key={index + id}>
                 <div
                   id={"border"}
                   className="flex w-full h-full justify-between items-center p-2 "
                 >
                   <>
                     {Object.values(beer).map((data, index: number) => {
-                      if ((data as string) !== "") {
-                        return <div key={index}>{data as string}</div>;
+                      if ((data as string) !== "" && index !== 0) {
+                        return <div key={id + index}>{data as string}</div>;
                       }
                     })}
                   </>
