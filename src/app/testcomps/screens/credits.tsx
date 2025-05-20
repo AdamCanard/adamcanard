@@ -16,14 +16,7 @@ export default function Credits() {
 
   const gridControls: IScreenActions = useMemo(
     () => ({
-      a: () => {},
       b,
-      up: () => {},
-      down: () => {},
-      left: () => {},
-      right: () => {},
-      start: () => {},
-      select: () => {},
     }),
     [b],
   );
@@ -33,7 +26,7 @@ export default function Credits() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className={"GridSize border-2 flex flex-col justify-around"}>
+    <div className={"GridSize flex flex-col justify-around"}>
       <div className={"w-full text-3xl text-center"}>Made Games</div>
       <div className={"w-full flex flex-col gap-4 items-center"}>
         {credits.map((person) => {

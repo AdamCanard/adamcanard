@@ -11,13 +11,12 @@ import {
 import { IScreenActions, ScreenContext } from "./gamecontainer";
 import Tile from "./tile";
 import { IPlayerType, IRoomCoord, ITileObject } from "./gametypes";
-import { screens } from "./screens";
 import { map } from "./rooms";
+import { screens } from "./screens/screens";
 
 export interface GridContextType {
   currentGrid: ITileObject[][];
   setCurrentGrid: Dispatch<SetStateAction<ITileObject[][]>>;
-  referenceGrid: ITileObject[][];
   rows: number;
   cols: number;
 }
@@ -26,7 +25,7 @@ export interface GridContextType {
 export const GridContext = createContext<GridContextType>(
   {} as GridContextType,
 );
-export const referenceGridGen = (room: string[][]) => {
+export const gridGen = (room: string[][]) => {
   const newGrid = room.map((row, rowIndex) =>
     row.map((tile, tileIndex) => {
       const tileObj: ITileObject = {
@@ -39,6 +38,9 @@ export const referenceGridGen = (room: string[][]) => {
     }),
   );
   return newGrid;
+};
+export const tileUnderPlayer = (room: string[][], player: IPlayerType) => {
+  return room[player.row][player.col];
 };
 
 const hasPlayer = (grid: ITileObject[][]) => {
@@ -55,16 +57,19 @@ const hasPlayer = (grid: ITileObject[][]) => {
 export default function Grid() {
   const rows = 9;
   const cols = 9;
-  const [currentRoom, setCurrentRoom] = useState<IRoomCoord>({
-    row: 1,
-    col: 1,
-  } as IRoomCoord);
-  const [referenceGrid, setReferenceGrid] = useState<ITileObject[][]>(
-    referenceGridGen(map[currentRoom.row][currentRoom.col]),
-  );
-
+  const [currentRoom, setCurrentRoom] = useState<IRoomCoord>(() => {
+    const oldRoomStr = localStorage.getItem("room");
+    if (oldRoomStr === null) {
+      return {
+        row: 1,
+        col: 1,
+      } as IRoomCoord;
+    } else {
+      return JSON.parse(oldRoomStr);
+    }
+  });
   const [currentGrid, setCurrentGrid] = useState<ITileObject[][]>(
-    referenceGrid.map((row) => row.map((tile) => ({ ...tile }))),
+    gridGen(map[currentRoom.row][currentRoom.col]),
   );
 
   const [player, setPlayer] = useState<IPlayerType>(() => {
@@ -80,7 +85,25 @@ export default function Grid() {
     }
   });
 
-  const { changeScreen, setControls } = useContext(ScreenContext);
+  const { changeScreen, changeOverlay, setControls } =
+    useContext(ScreenContext);
+
+  const changeFromGrid = useCallback(
+    (screenKey: string) => {
+      localStorage.setItem("player", JSON.stringify(player));
+      localStorage.setItem("room", JSON.stringify(currentRoom));
+      changeScreen(screenKey);
+    },
+    [changeScreen, currentRoom, player],
+  );
+  const overlayOnGrid = useCallback(
+    (overlayKey: string) => {
+      localStorage.setItem("player", JSON.stringify(player));
+      localStorage.setItem("room", JSON.stringify(currentRoom));
+      changeOverlay(overlayKey);
+    },
+    [changeOverlay, currentRoom, player],
+  );
 
   const setPlayerDirection = useCallback(
     (direction: string) => {
@@ -102,9 +125,9 @@ export default function Grid() {
   );
   const lookAt = useCallback(
     (row: number, col: number) => {
-      changeScreen(currentGrid[row][col].value);
+      changeFromGrid(currentGrid[row][col].value);
     },
-    [changeScreen, currentGrid],
+    [changeFromGrid, currentGrid],
   );
   const changeRoom = useCallback(
     (direction: string) => {
@@ -133,7 +156,6 @@ export default function Grid() {
     [currentRoom, setPlayerLocation],
   );
   const look = useCallback(() => {
-    localStorage.setItem("player", JSON.stringify(player));
     switch (player.direction) {
       case "u":
         if (player.row != 0) {
@@ -164,8 +186,10 @@ export default function Grid() {
       changeRoom("d");
     } else if (newGrid[player.row - 1][player.col].value === "empty") {
       newGrid[player.row - 1][player.col].value = "player";
-      newGrid[player.row][player.col].value =
-        referenceGrid[player.row][player.col].value;
+      newGrid[player.row][player.col].value = tileUnderPlayer(
+        map[currentRoom.row][currentRoom.col],
+        player,
+      );
       setPlayerLocation(player.row - 1, player.col);
     }
     setPlayerDirection("u");
@@ -173,10 +197,10 @@ export default function Grid() {
   }, [
     currentGrid,
     player,
-    referenceGrid,
     changeRoom,
     setPlayerLocation,
     setPlayerDirection,
+    currentRoom,
   ]);
 
   const down = useCallback(() => {
@@ -185,8 +209,10 @@ export default function Grid() {
       changeRoom("d");
     } else if (newGrid[player.row + 1][player.col].value === "empty") {
       newGrid[player.row + 1][player.col].value = "player";
-      newGrid[player.row][player.col].value =
-        referenceGrid[player.row][player.col].value;
+      newGrid[player.row][player.col].value = tileUnderPlayer(
+        map[currentRoom.row][currentRoom.col],
+        player,
+      );
       setPlayerLocation(player.row + 1, player.col);
     }
     setPlayerDirection("d");
@@ -194,11 +220,11 @@ export default function Grid() {
   }, [
     currentGrid,
     player,
-    referenceGrid,
     rows,
     changeRoom,
     setPlayerLocation,
     setPlayerDirection,
+    currentRoom,
   ]);
 
   const left = useCallback(() => {
@@ -207,8 +233,10 @@ export default function Grid() {
       changeRoom("l");
     } else if (newGrid[player.row][player.col - 1].value === "empty") {
       newGrid[player.row][player.col - 1].value = "player";
-      newGrid[player.row][player.col].value =
-        referenceGrid[player.row][player.col].value;
+      newGrid[player.row][player.col].value = tileUnderPlayer(
+        map[currentRoom.row][currentRoom.col],
+        player,
+      );
       setPlayerLocation(player.row, player.col - 1);
     }
     setPlayerDirection("l");
@@ -216,10 +244,10 @@ export default function Grid() {
   }, [
     currentGrid,
     player,
-    referenceGrid,
     changeRoom,
     setPlayerLocation,
     setPlayerDirection,
+    currentRoom,
   ]);
 
   const right = useCallback(() => {
@@ -228,8 +256,10 @@ export default function Grid() {
       changeRoom("r");
     } else if (newGrid[player.row][player.col + 1].value === "empty") {
       newGrid[player.row][player.col + 1].value = "player";
-      newGrid[player.row][player.col].value =
-        referenceGrid[player.row][player.col].value;
+      newGrid[player.row][player.col].value = tileUnderPlayer(
+        map[currentRoom.row][currentRoom.col],
+        player,
+      );
       setPlayerLocation(player.row, player.col + 1);
     }
     setPlayerDirection("r");
@@ -237,12 +267,25 @@ export default function Grid() {
   }, [
     currentGrid,
     player,
-    referenceGrid,
     cols,
     changeRoom,
     setPlayerLocation,
     setPlayerDirection,
+    currentRoom,
   ]);
+
+  const b = useCallback(() => {
+    console.log("b");
+  }, []);
+
+  const select = useCallback(() => {
+    overlayOnGrid("map");
+  }, [overlayOnGrid]);
+
+  const start = useCallback(() => {
+    overlayOnGrid("pause");
+  }, [overlayOnGrid]);
+
   const placePlayer = useCallback(() => {
     const newGrid = currentGrid.map((row) => row.map((tile) => ({ ...tile })));
     if (!hasPlayer(newGrid)) {
@@ -266,15 +309,11 @@ export default function Grid() {
   }, [currentGrid, setPlayerLocation, player.col, player.row]);
 
   useEffect(() => {
-    setReferenceGrid(referenceGridGen(map[currentRoom.row][currentRoom.col]));
-  }, [currentRoom]);
-
-  useEffect(() => {
-    const newGrid = referenceGrid.map((row) =>
+    const newGrid = gridGen(map[currentRoom.row][currentRoom.col]).map((row) =>
       row.map((tile) => ({ ...tile })),
     );
     setCurrentGrid(newGrid);
-  }, [referenceGrid]);
+  }, [currentRoom]);
 
   useEffect(() => {
     if (!hasPlayer(currentGrid)) {
@@ -287,15 +326,15 @@ export default function Grid() {
   const gridControls: IScreenActions = useMemo(
     () => ({
       a: look,
-      b: () => console.log("here"),
+      b,
       up,
       down,
       left,
       right,
-      start: () => {},
-      select: () => {},
+      select,
+      start,
     }),
-    [look, up, down, left, right],
+    [look, b, up, down, left, right, select, start],
   );
 
   return (
@@ -303,29 +342,26 @@ export default function Grid() {
       value={{
         currentGrid,
         setCurrentGrid,
-        referenceGrid,
         rows,
         cols,
       }}
     >
-      <div className={"GridInner"}>
-        {" "}
-        <div
-          style={{
-            display: "grid",
-            width: "288px",
-            height: "288px",
-            gridTemplateColumns: `repeat(${cols}, minmax(0,1fr))`,
-            gridTemplateRows: `repeat(${rows}, minmax(0,1fr))`,
-            backgroundColor: " #505090",
-          }}
-        >
-          {Object.values(currentGrid).map((row: ITileObject[], index) => {
-            return Object.values(row).map((tile: ITileObject, index2) => {
-              return <Tile tileObj={tile} key={index + " " + index2} />;
-            });
-          })}
-        </div>
+      {" "}
+      <div
+        style={{
+          display: "grid",
+          width: "288px",
+          height: "288px",
+          gridTemplateColumns: `repeat(${cols}, minmax(0,1fr))`,
+          gridTemplateRows: `repeat(${rows}, minmax(0,1fr))`,
+          backgroundColor: " #505090",
+        }}
+      >
+        {Object.values(currentGrid).map((row: ITileObject[], index) => {
+          return Object.values(row).map((tile: ITileObject, index2) => {
+            return <Tile tileObj={tile} key={index + " " + index2} />;
+          });
+        })}
       </div>
     </GridContext.Provider>
   );

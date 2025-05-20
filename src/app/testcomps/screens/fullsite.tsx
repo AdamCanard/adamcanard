@@ -1,3 +1,3 @@
 export default function FullSite() {
-  return <></>;
+  return <div className={"flex flex-col GridSize bg-white"}></div>;
 }
