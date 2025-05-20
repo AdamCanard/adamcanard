@@ -353,33 +353,33 @@ button:focus {
   outline-offset: -4px;
 }
 
-/*input[type="submit"]:focus {*/
-/*  outline: 1px dotted #000000;*/
-/*  outline-offset: -4px;*/
-/*}*/
-/**/
-/*input[type="text"],*/
-/*input[type="password"],*/
-/*input[type="email"],*/
-/*input[type="tel"],*/
-/*input[type="number"],*/
-/*input[type="search"],*/
-/*select,*/
-/*textarea {*/
-/*  padding: 3px 4px;*/
-/*  border: none;*/
-/*  box-shadow:*/
-/*    inset -1px -1px #fafafa,*/
-/*    inset 1px 1px #808080,*/
-/*    inset -2px -2px #dfdfdf,*/
-/*    inset 2px 2px #0a0a0a;*/
-/*  background-color: #fafafa;*/
-/*  box-sizing: border-box;*/
-/*  -webkit-appearance: none;*/
-/*  -moz-appearance: none;*/
-/*  appearance: none;*/
-/*  border-radius: 0;*/
-/*}*/
+input[type="submit"]:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+select,
+textarea {
+  padding: 3px 4px;
+  border: none;
+  box-shadow:
+    inset -1px -1px #fafafa,
+    inset 1px 1px #808080,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px #0a0a0a;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
 
 /*label {*/
 /*  display: inline-flex;*/
