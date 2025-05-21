@@ -3,7 +3,7 @@ import { BeerContext } from "../beer";
 import { IBeer } from "@/app/server/models/beer";
 
 export default function BeerList() {
-  const { chooseBeer } = useContext(BeerContext);
+  const { chooseBeer, back, keyword } = useContext(BeerContext);
   const [beers, setBeers] = useState<IBeer[]>([]);
 
   const getListElements = async () => {
@@ -35,27 +35,41 @@ export default function BeerList() {
     getListElements();
   }, []);
   return (
-    <div className={"flex flex-col h-fit overflow-y-scroll"}>
-      <div className="w-full flex flex-col ">
-        {beers.map((beer, index) => {
-          const id: string = beer._id || "";
-          return (
-            <div
-              key={index + id}
-              className="flex w-full h-full justify-between items-center Beer"
-              onClick={() => chooseBeer(id)}
-            >
-              <>
-                {Object.values(beer).map((data, index: number) => {
-                  if ((data as string) !== "" && index !== 0) {
-                    return <div key={id + index}>{data as string}</div>;
-                  }
-                })}
-              </>
-            </div>
-          );
-        })}
+    <>
+      {" "}
+      {keyword && (
+        <div id="border" className={"w-full flex h-9 "}>
+          <button
+            className={"w-6 text-3xl leading-0 hover:cursor-pointer"}
+            onClick={back}
+          >
+            {"<"}
+          </button>
+          <div className={"w-full text-center"}>{keyword}</div>
+        </div>
+      )}
+      <div className={"flex flex-col h-fit overflow-y-scroll"}>
+        <div className="w-full flex flex-col ">
+          {beers.map((beer, index) => {
+            const id: string = beer._id || "";
+            return (
+              <div
+                key={index + id}
+                className="flex w-full h-full justify-between items-center Beer"
+                onClick={() => chooseBeer(id)}
+              >
+                <>
+                  {Object.values(beer).map((data, index: number) => {
+                    if ((data as string) !== "" && index !== 0) {
+                      return <div key={id + index}>{data as string}</div>;
+                    }
+                  })}
+                </>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

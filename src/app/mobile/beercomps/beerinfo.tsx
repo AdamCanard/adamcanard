@@ -3,7 +3,7 @@ import { BeerContext } from "../beer";
 import { IBeer } from "@/app/server/models/beer";
 
 export default function BeerInfo() {
-  const { beerId, back } = useContext(BeerContext);
+  const { beerId, back, chooseKeyword } = useContext(BeerContext);
   const [beer, setBeer] = useState({} as IBeer);
   const getBeer = useCallback(async () => {
     try {
@@ -70,7 +70,11 @@ export default function BeerInfo() {
         {beer.keywords &&
           beer.keywords.map((keyword) => {
             return (
-              <div className={"Keyword"} key={keyword}>
+              <div
+                className={"Keyword"}
+                key={keyword}
+                onClick={() => chooseKeyword(keyword)}
+              >
                 {keyword}
               </div>
             );
