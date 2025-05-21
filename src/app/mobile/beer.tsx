@@ -17,6 +17,7 @@ export default function Beer() {
   const [beer, setBeer] = useState({} as IBeer);
   const [keyword, setKeyword] = useState("");
   const chooseBeer = (beer: IBeer) => {
+    setKeyword("");
     setBeer(beer);
   };
   const chooseKeyword = (keyword: string) => {
