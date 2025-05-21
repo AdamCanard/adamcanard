@@ -65,6 +65,17 @@ export default function BeerInfo() {
         <label>Rating:</label>
         <div>{beer.rating}</div>
       </div>
+      <div className={"flex gap-2 flex-wrap"}>
+        {" "}
+        {beer.keywords &&
+          beer.keywords.map((keyword) => {
+            return (
+              <div className={"Keyword"} key={keyword}>
+                {keyword}
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
