@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { BeerContext } from "../beer";
 
 export default function BeerInfo() {
   const { beerId } = useContext(BeerContext);
   const [beer, setBeer] = useState();
-  const getBeer = async () => {
+  const getBeer = useCallback(async () => {
     try {
       const response = await fetch("/api/beer/" + beerId, {
         method: "GET",
@@ -26,11 +26,11 @@ export default function BeerInfo() {
         console.log(err);
       }
     }
-  };
+  }, [beerId]);
 
   useEffect(() => {
     getBeer();
-  });
+  }, [getBeer]);
 
   return <>{JSON.stringify(beer)}</>;
 }
