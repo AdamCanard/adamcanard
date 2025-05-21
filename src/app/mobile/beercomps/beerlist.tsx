@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { BeerContext, IBeer } from "../beer";
+import { BeerContext } from "../beer";
+import { IBeer } from "@/app/server/models/beer";
 
 export default function BeerList() {
   const { chooseBeer } = useContext(BeerContext);

@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 export interface IBeer {
+  _id?: string;
   name: string;
   brewery: string;
-  keywords: string[];
-  recommended: string;
-  desc: string;
+  time: string;
   rating: number;
+  keywords?: string[];
+  recommended?: string;
+  desc?: string;
 }
 
 const BeerSchema = new mongoose.Schema({
@@ -13,6 +15,7 @@ const BeerSchema = new mongoose.Schema({
   brewery: String,
   keywords: [String],
   recommended: String,
+  time: String,
   desc: String,
   rating: Number,
 });

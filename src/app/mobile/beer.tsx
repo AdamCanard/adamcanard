@@ -2,16 +2,6 @@ import { createContext, useState } from "react";
 import BeerList from "./beercomps/beerlist";
 import BeerInfo from "./beercomps/beerinfo";
 
-export interface IBeer {
-  _id?: string;
-  name: string;
-  brewery: string;
-  time: string;
-  rating: number;
-  keywords?: string[];
-  recommended?: string;
-  desc?: string;
-}
 export interface BeerContextType {
   beerId: string;
   chooseBeer: (beerId: string) => void;
