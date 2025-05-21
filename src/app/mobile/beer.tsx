@@ -1,70 +1,39 @@
-import { useEffect, useState } from "react";
+import { createContext, useState } from "react";
+import BeerList from "./beercomps/beerlist";
+import BeerInfo from "./beercomps/beerinfo";
 
 export interface IBeer {
-  _id: string;
+  _id?: string;
   name: string;
   brewery: string;
-  keywords: string[];
-  recommended: string;
-  desc: string;
+  time: string;
   rating: number;
+  keywords?: string[];
+  recommended?: string;
+  desc?: string;
 }
-
+export interface BeerContextType {
+  beerId: string;
+  chooseBeer: (beerId: string) => void;
+  back: () => void;
+}
+export const BeerContext = createContext<BeerContextType>(
+  {} as BeerContextType,
+);
 export default function Beer() {
-  const [beers, setBeers] = useState<IBeer[]>([]);
-  const getListElements = async () => {
-    try {
-      const response = await fetch("/api/beer/", {
-        method: "GET",
-      });
-      const listResponse = await response.json();
-
-      setBeers(listResponse.toReversed());
-
-      return listResponse;
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
+  const [beerId, setBeerId] = useState("");
+  const chooseBeer = (beerId: string) => {
+    setBeerId(beerId);
   };
-
-  useEffect(() => {
-    getListElements();
-  }, []);
+  const back = () => {
+    setBeerId("");
+  };
   return (
-    <div className={"flex flex-col w-full h-full"}>
-      <div className={"flex flex-col h-fit overflow-y-scroll"}>
-        <div className="w-full flex flex-col ">
-          {beers.map((beer, index) => {
-            const id: string = beer._id;
-            return (
-              <div key={index + id}>
-                <div
-                  id={"border"}
-                  className="flex w-full h-full justify-between items-center p-2 "
-                >
-                  <>
-                    {Object.values(beer).map((data, index: number) => {
-                      if ((data as string) !== "" && index !== 0) {
-                        return <div key={id + index}>{data as string}</div>;
-                      }
-                    })}
-                  </>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+    <BeerContext.Provider value={{ beerId, chooseBeer, back }}>
+      {" "}
+      <div className={"flex flex-col w-full h-full"}>
+        {beerId === "" ? <BeerList /> : <BeerInfo />}
       </div>
-    </div>
+    </BeerContext.Provider>
   );
 }
