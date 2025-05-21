@@ -48,21 +48,26 @@ function BasicBeerInfo() {
 function BeerKeyword() {
   const { beer, chooseKeyword } = useContext(BeerContext);
   return (
-    <div id="border" className={"flex gap-2 flex-wrap"}>
+    <div id="border" className={"flex gap-x-2 flex-wrap"}>
       <h1 id="title"> Keywords</h1>
 
-      {beer.keywords &&
-        beer.keywords.map((keyword) => {
-          return (
-            <div
-              className={"Keyword"}
-              key={keyword}
-              onClick={() => chooseKeyword(keyword)}
-            >
-              {keyword}
-            </div>
-          );
-        })}
+      {beer.keywords && beer.keywords.length !== 0 ? (
+        <>
+          {beer.keywords.map((keyword) => {
+            return (
+              <div
+                className={"Keyword"}
+                key={keyword}
+                onClick={() => chooseKeyword(keyword)}
+              >
+                {keyword}
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        <>Beer Has No Keywords</>
+      )}
     </div>
   );
 }
