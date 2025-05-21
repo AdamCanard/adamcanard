@@ -1,11 +1,12 @@
 import { createContext, useState } from "react";
 import BeerList from "./beercomps/beerlist";
 import BeerInfo from "./beercomps/beerinfo";
+import { IBeer } from "../server/models/beer";
 
 export interface BeerContextType {
-  beerId: string;
+  beer: IBeer;
   keyword: string;
-  chooseBeer: (beerId: string) => void;
+  chooseBeer: (beer: IBeer) => void;
   chooseKeyword: (keyword: string) => void;
   back: () => void;
 }
@@ -13,10 +14,10 @@ export const BeerContext = createContext<BeerContextType>(
   {} as BeerContextType,
 );
 export default function Beer() {
-  const [beerId, setBeerId] = useState("");
+  const [beer, setBeer] = useState({} as IBeer);
   const [keyword, setKeyword] = useState("");
-  const chooseBeer = (beerId: string) => {
-    setBeerId(beerId);
+  const chooseBeer = (beer: IBeer) => {
+    setBeer(beer);
   };
   const chooseKeyword = (keyword: string) => {
     setKeyword(keyword);
@@ -26,16 +27,20 @@ export default function Beer() {
     if (keyword !== "") {
       setKeyword("");
     } else {
-      setBeerId("");
+      setBeer({} as IBeer);
     }
   };
   return (
     <BeerContext.Provider
-      value={{ beerId, keyword, chooseBeer, chooseKeyword, back }}
+      value={{ beer, keyword, chooseBeer, chooseKeyword, back }}
     >
       {" "}
       <div className={"flex flex-col w-full h-full"}>
-        {beerId === "" || keyword !== "" ? <BeerList /> : <BeerInfo />}
+        {Object.keys(beer).length === 0 || keyword !== "" ? (
+          <BeerList />
+        ) : (
+          <BeerInfo />
+        )}
       </div>
     </BeerContext.Provider>
   );

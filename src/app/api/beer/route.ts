@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connectMongo();
-    const beers = await Beer.find().select("name brewery rating");
+    const beers = await Beer.find();
     return new NextResponse(JSON.stringify(beers), {
       status: 200,
     });

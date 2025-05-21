@@ -56,15 +56,11 @@ export default function BeerList() {
               <div
                 key={index + id}
                 className="flex w-full h-full justify-between items-center Beer"
-                onClick={() => chooseBeer(id)}
+                onClick={() => chooseBeer(beers[index])}
               >
-                <>
-                  {Object.values(beer).map((data, index: number) => {
-                    if ((data as string) !== "" && index !== 0) {
-                      return <div key={id + index}>{data as string}</div>;
-                    }
-                  })}
-                </>
+                <div>{beer.name}</div>
+                <div>{beer.brewery}</div>
+                <div>{beer.rating}</div>
               </div>
             );
           })}
