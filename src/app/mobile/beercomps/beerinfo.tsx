@@ -3,7 +3,7 @@ import { BeerContext } from "../beer";
 import { IBeer } from "@/app/server/models/beer";
 
 export default function BeerInfo() {
-  const { beerId, back, chooseKeyword } = useContext(BeerContext);
+  const { beerId, back } = useContext(BeerContext);
   const [beer, setBeer] = useState({} as IBeer);
   const getBeer = useCallback(async () => {
     try {
@@ -45,41 +45,38 @@ export default function BeerInfo() {
         <div>Beer Info:</div>
         <button className={"w-6 text-3xl leading-0"}>{"+"}</button>
       </div>
-      <div id={"border"} className={"w-full flex justify-between"}>
-        {" "}
-        <label>Name:</label>
-        <div>{beer.name}</div>
-      </div>{" "}
-      <div id={"border"} className={"w-full flex justify-between"}>
-        {" "}
-        <label>Brewery:</label>
-        <div>{beer.brewery}</div>
-      </div>
-      <div id={"border"} className={"w-full flex justify-between"}>
-        {" "}
-        <label>Time:</label>
-        <div>{beer.time}</div>
-      </div>
-      <div id={"border"} className={"w-full flex justify-between"}>
-        {" "}
-        <label>Rating:</label>
-        <div>{beer.rating}</div>
-      </div>
-      <div className={"flex gap-2 flex-wrap"}>
-        {" "}
-        {beer.keywords &&
-          beer.keywords.map((keyword) => {
-            return (
-              <div
-                className={"Keyword"}
-                key={keyword}
-                onClick={() => chooseKeyword(keyword)}
-              >
-                {keyword}
-              </div>
-            );
-          })}
-      </div>
+      <LabeledBeerData label={"Name"} data={beer.name} />
+      <LabeledBeerData label={"Brewery"} data={beer.brewery} />
+      <LabeledBeerData label={"Time"} data={beer.time} />
+      <LabeledBeerData label={"Rating"} data={beer.rating} />
+      <BeerKeyword keywords={beer.keywords || []} />
+    </div>
+  );
+}
+function LabeledBeerData(props: { label: string; data: string | number }) {
+  return (
+    <div id={"border"} className={"w-full flex justify-between"}>
+      <label>{props.label}:</label>
+      <div>{props.data}</div>
+    </div>
+  );
+}
+function BeerKeyword(props: { keywords: string[] }) {
+  const { chooseKeyword } = useContext(BeerContext);
+  return (
+    <div id="border" className={"flex gap-2 flex-wrap"}>
+      {" "}
+      {props.keywords.map((keyword) => {
+        return (
+          <div
+            className={"Keyword"}
+            key={keyword}
+            onClick={() => chooseKeyword(keyword)}
+          >
+            {keyword}
+          </div>
+        );
+      })}
     </div>
   );
 }
