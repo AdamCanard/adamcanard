@@ -38,11 +38,11 @@ export default function BeerList() {
   const inSearch = (beer: IBeer) => {
     //const time = search["time"];
     const brewery = search["brewery"];
-    const keyword = search["keyword"];
+    const keywords = search["keyword"] as string[];
     const rating = search["rating"];
     if (
       beer.brewery === brewery ||
-      beer.keywords?.includes(keyword as string) ||
+      keywords.every((child) => beer.keywords?.includes(child)) ||
       beer.rating === rating
     ) {
       return true;
@@ -58,24 +58,24 @@ export default function BeerList() {
             className={"h-10 flex items-center overflow-x-scroll"}
           >
             <div>Filter: </div>
-            {Object.values(search).map((searchTerm, index) => {
+
+            {Object.keys(search).map((searchKey, index) => {
               return (
                 <div key={index} className={"flex"}>
                   <div
                     className={"Keyword"}
-                    onClick={() => removeSearch(Object.keys(search)[index])}
+                    onClick={() => removeSearch(searchKey)}
                   >
-                    {searchTerm}
+                    {Object.values(search)[index]}
                   </div>
                 </div>
               );
             })}
-          </div>{" "}
+          </div>
           <div className={"flex flex-col h-fit overflow-y-scroll"}>
             <div className="w-full flex flex-col ">
               {beers.map((beer, index) => {
                 const id: string = beer._id || "";
-                console.log(inSearch(beer));
                 if (inSearch(beer))
                   return (
                     <div

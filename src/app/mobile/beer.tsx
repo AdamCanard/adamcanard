@@ -5,9 +5,9 @@ import { IBeer } from "../server/models/beer";
 
 export interface BeerContextType {
   beer: IBeer;
-  search: Record<string, string | number>;
+  search: Record<string, string | number | string[]>;
   chooseBeer: (beer: IBeer) => void;
-  addSearch: (key: string, value: string | number) => void;
+  addSearch: (key: string, value: string | number | string[]) => void;
   removeSearch: (key: string) => void;
   back: () => void;
 }
@@ -17,13 +17,22 @@ export const BeerContext = createContext<BeerContextType>(
 
 export default function Beer() {
   const [beer, setBeer] = useState({} as IBeer);
-  const [search, setSearch] = useState<Record<string, string | number>>({});
+  const [search, setSearch] = useState<
+    Record<string, string | number | string[]>
+  >({});
   const chooseBeer = (beer: IBeer) => {
     setBeer(beer);
   };
-  const addSearch = (key: string, value: string | number) => {
+  const addSearch = (key: string, value: string | number | string[]) => {
     const newSearch = { ...search };
-    newSearch[key] = value;
+    if (key === "keyword") {
+      const keywords = (newSearch[key] as string[]) || [];
+
+      keywords.push(value as string);
+      newSearch[key] = keywords;
+    } else {
+      newSearch[key] = value;
+    }
     setSearch(newSearch);
   };
   const removeSearch = (key: string) => {
