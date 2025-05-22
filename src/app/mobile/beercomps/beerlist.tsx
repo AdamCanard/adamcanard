@@ -3,7 +3,7 @@ import { BeerContext } from "../beer";
 import { IBeer } from "@/app/server/models/beer";
 
 export default function BeerList() {
-  const { chooseBeer, back, keyword } = useContext(BeerContext);
+  const { chooseBeer, search, removeSearch } = useContext(BeerContext);
   const [beers, setBeers] = useState<IBeer[]>([]);
 
   const getListElements = async () => {
@@ -36,59 +36,41 @@ export default function BeerList() {
   }, []);
   return (
     <>
-      {" "}
-      {keyword ? (
-        <>
-          {" "}
-          <div id="border" className={"w-full flex h-9 "}>
-            <button
-              className={"w-6 text-3xl leading-0 hover:cursor-pointer"}
-              onClick={back}
-            >
-              {"<"}
-            </button>
-            <div className={"w-full text-center"}>{keyword}</div>{" "}
-          </div>{" "}
-          <div className={"flex flex-col h-fit overflow-y-scroll"}>
-            <div className="w-full flex flex-col ">
-              {beers.map((beer, index) => {
-                const id: string = beer._id || "";
-                if (beer.keywords?.includes(keyword))
-                  return (
-                    <div
-                      key={index + id}
-                      className="flex w-full h-full justify-between items-center Beer"
-                      onClick={() => chooseBeer(beers[index])}
-                    >
-                      <div>{beer.name}</div>
-                      <div>{beer.brewery}</div>
-                      <div>{beer.rating}</div>
-                    </div>
-                  );
-              })}
-            </div>
-          </div>
-        </>
-      ) : (
-        <div className={"flex flex-col h-fit overflow-y-scroll"}>
-          <div className="w-full flex flex-col ">
-            {beers.map((beer, index) => {
-              const id: string = beer._id || "";
-              return (
+      {Object.keys(search).length !== 0 && (
+        <div id="border" className={"h-10 flex items-center overflow-x-scroll"}>
+          <div>Filter: </div>
+          {Object.values(search).map((searchTerm, index) => {
+            return (
+              <div key={index} className={"flex"}>
                 <div
-                  key={index + id}
-                  className="flex w-full h-full justify-between items-center Beer"
-                  onClick={() => chooseBeer(beers[index])}
+                  className={"Keyword"}
+                  onClick={() => removeSearch(Object.keys(search)[index])}
                 >
-                  <div>{beer.name}</div>
-                  <div>{beer.brewery}</div>
-                  <div>{beer.rating}</div>
+                  {searchTerm}
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       )}
+      <div className={"flex flex-col h-fit overflow-y-scroll"}>
+        <div className="w-full flex flex-col ">
+          {beers.map((beer, index) => {
+            const id: string = beer._id || "";
+            return (
+              <div
+                key={index + id}
+                className="flex w-full h-full justify-between items-center Beer"
+                onClick={() => chooseBeer(beers[index])}
+              >
+                <div>{beer.name}</div>
+                <div>{beer.brewery}</div>
+                <div>{beer.rating}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }
