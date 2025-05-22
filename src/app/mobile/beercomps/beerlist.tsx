@@ -34,43 +34,84 @@ export default function BeerList() {
   useEffect(() => {
     getListElements();
   }, []);
+
+  const inSearch = (beer: IBeer) => {
+    //const time = search["time"];
+    const brewery = search["brewery"];
+    const keyword = search["keyword"];
+    const rating = search["rating"];
+    if (
+      beer.brewery === brewery ||
+      beer.keywords?.includes(keyword as string) ||
+      beer.rating === rating
+    ) {
+      return true;
+    }
+    return false;
+  };
   return (
     <>
-      {Object.keys(search).length !== 0 && (
-        <div id="border" className={"h-10 flex items-center overflow-x-scroll"}>
-          <div>Filter: </div>
-          {Object.values(search).map((searchTerm, index) => {
-            return (
-              <div key={index} className={"flex"}>
-                <div
-                  className={"Keyword"}
-                  onClick={() => removeSearch(Object.keys(search)[index])}
-                >
-                  {searchTerm}
+      {Object.keys(search).length !== 0 ? (
+        <>
+          <div
+            id="border"
+            className={"h-10 flex items-center overflow-x-scroll"}
+          >
+            <div>Filter: </div>
+            {Object.values(search).map((searchTerm, index) => {
+              return (
+                <div key={index} className={"flex"}>
+                  <div
+                    className={"Keyword"}
+                    onClick={() => removeSearch(Object.keys(search)[index])}
+                  >
+                    {searchTerm}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>{" "}
+          <div className={"flex flex-col h-fit overflow-y-scroll"}>
+            <div className="w-full flex flex-col ">
+              {beers.map((beer, index) => {
+                const id: string = beer._id || "";
+                console.log(inSearch(beer));
+                if (inSearch(beer))
+                  return (
+                    <div
+                      key={index + id}
+                      className="flex w-full h-full justify-between items-center Beer"
+                      onClick={() => chooseBeer(beers[index])}
+                    >
+                      <div>{beer.name}</div>
+                      <div>{beer.brewery}</div>
+                      <div>{beer.rating}</div>
+                    </div>
+                  );
+              })}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className={"flex flex-col h-fit overflow-y-scroll"}>
+          <div className="w-full flex flex-col ">
+            {beers.map((beer, index) => {
+              const id: string = beer._id || "";
+              return (
+                <div
+                  key={index + id}
+                  className="flex w-full h-full justify-between items-center Beer"
+                  onClick={() => chooseBeer(beers[index])}
+                >
+                  <div>{beer.name}</div>
+                  <div>{beer.brewery}</div>
+                  <div>{beer.rating}</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
-      <div className={"flex flex-col h-fit overflow-y-scroll"}>
-        <div className="w-full flex flex-col ">
-          {beers.map((beer, index) => {
-            const id: string = beer._id || "";
-            return (
-              <div
-                key={index + id}
-                className="flex w-full h-full justify-between items-center Beer"
-                onClick={() => chooseBeer(beers[index])}
-              >
-                <div>{beer.name}</div>
-                <div>{beer.brewery}</div>
-                <div>{beer.rating}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </>
   );
 }

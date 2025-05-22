@@ -58,7 +58,7 @@ function BeerKeyword() {
               <div
                 className={"Keyword"}
                 key={keyword}
-                onClick={() => addSearch("Keyword", keyword)}
+                onClick={() => addSearch("keyword", keyword)}
               >
                 {keyword}
               </div>
