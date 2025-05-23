@@ -46,7 +46,7 @@ function BasicBeerInfo() {
   );
 }
 function BeerKeyword() {
-  const { beer, addSearch } = useContext(BeerContext);
+  const { beer, addKeyword } = useContext(BeerContext);
   return (
     <div id="border" className={"flex gap-x-2 flex-wrap"}>
       <h1 id="title"> Keywords</h1>
@@ -58,7 +58,7 @@ function BeerKeyword() {
               <div
                 className={"Keyword"}
                 key={keyword}
-                onClick={() => addSearch("keyword", keyword)}
+                onClick={() => addKeyword(keyword)}
               >
                 {keyword}
               </div>

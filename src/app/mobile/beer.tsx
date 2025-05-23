@@ -1,14 +1,17 @@
 import { createContext, useState } from "react";
-import BeerList from "./beercomps/beerlist";
 import BeerInfo from "./beercomps/beerinfo";
 import { IBeer } from "../server/models/beer";
+import BeerProvider from "./beercomps/beerprovider";
 
 export interface BeerContextType {
   beer: IBeer;
-  search: Record<string, string | number | string[]>;
   chooseBeer: (beer: IBeer) => void;
-  addSearch: (key: string, value: string | number | string[]) => void;
-  removeSearch: (key: string) => void;
+  filter: Record<string, string | number>;
+  addFilter: (key: string, value: string | number) => void;
+  removeFilter: (key: string) => void;
+  keywords: string[];
+  addKeyword: (value: string) => void;
+  removeKeyword: (value: string) => void;
   back: () => void;
 }
 export const BeerContext = createContext<BeerContextType>(
@@ -17,40 +20,57 @@ export const BeerContext = createContext<BeerContextType>(
 
 export default function Beer() {
   const [beer, setBeer] = useState({} as IBeer);
-  const [search, setSearch] = useState<
-    Record<string, string | number | string[]>
-  >({});
+  const [filter, setFilter] = useState<Record<string, string | number>>({});
+  const [keywords, setKeywords] = useState<string[]>([]);
   const chooseBeer = (beer: IBeer) => {
     setBeer(beer);
   };
-  const addSearch = (key: string, value: string | number | string[]) => {
-    const newSearch = { ...search };
-    if (key === "keyword") {
-      const keywords = (newSearch[key] as string[]) || [];
-
-      keywords.push(value as string);
-      newSearch[key] = keywords;
-    } else {
-      newSearch[key] = value;
+  const addFilter = (key: string, value: string | number) => {
+    const newFilter = { ...filter };
+    newFilter[key] = value;
+    setFilter(newFilter);
+  };
+  const removeFilter = (key: string) => {
+    const newFilter = { ...filter };
+    delete newFilter[key];
+    setFilter(newFilter);
+  };
+  const addKeyword = (value: string) => {
+    const newKeywords = [...keywords];
+    if (!newKeywords.includes(value)) {
+      newKeywords.push(value);
     }
-    setSearch(newSearch);
-  };
-  const removeSearch = (key: string) => {
-    const newSearch = { ...search };
-    delete newSearch[key];
-    setSearch(newSearch);
+    setKeywords(newKeywords);
   };
 
+  const removeKeyword = (value: string) => {
+    const newKeywords = [...keywords];
+    if (newKeywords.includes(value)) {
+      newKeywords.splice(newKeywords.indexOf(value), 1);
+    }
+    setKeywords(newKeywords);
+  };
   const back = () => {
     setBeer({} as IBeer);
   };
+
   return (
     <BeerContext.Provider
-      value={{ beer, search, chooseBeer, addSearch, removeSearch, back }}
+      value={{
+        beer,
+        chooseBeer,
+        filter,
+        addFilter,
+        removeFilter,
+        keywords,
+        addKeyword,
+        removeKeyword,
+        back,
+      }}
     >
       {" "}
       <div className={"flex flex-col w-full h-full"}>
-        {Object.keys(beer).length === 0 ? <BeerList /> : <BeerInfo />}
+        {Object.keys(beer).length === 0 ? <BeerProvider /> : <BeerInfo />}
       </div>
     </BeerContext.Provider>
   );
