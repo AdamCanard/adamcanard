@@ -46,7 +46,7 @@ function BasicBeerInfo() {
   );
 }
 function BeerKeyword() {
-  const { beer, addKeyword } = useContext(BeerContext);
+  const { beer, keywords, addKeyword, removeKeyword } = useContext(BeerContext);
   return (
     <div id="border" className={"flex gap-x-2 flex-wrap"}>
       <h1 id="title"> Keywords</h1>
@@ -56,9 +56,15 @@ function BeerKeyword() {
           {beer.keywords.map((keyword) => {
             return (
               <div
-                className={"Keyword"}
+                className={`${keywords.includes(keyword) ? "Keyword-active" : "Keyword"}`}
                 key={keyword}
-                onClick={() => addKeyword(keyword)}
+                onClick={() => {
+                  if (keywords.includes(keyword)) {
+                    removeKeyword(keyword);
+                  } else {
+                    addKeyword(keyword);
+                  }
+                }}
               >
                 {keyword}
               </div>
