@@ -60,16 +60,36 @@ export default function BeerList() {
             <div>Filter: </div>
 
             {Object.keys(search).map((searchKey, index) => {
-              return (
-                <div key={index} className={"flex"}>
-                  <div
-                    className={"Keyword"}
-                    onClick={() => removeSearch(searchKey)}
-                  >
-                    {Object.values(search)[index]}
+              if (searchKey === "keyword") {
+                const keywords = search[searchKey] as string[];
+                return (
+                  <>
+                    {keywords.map((keyword) => {
+                      return (
+                        <div key={index} className={"flex"}>
+                          <div
+                            className={"Keyword"}
+                            onClick={() => removeSearch(searchKey)}
+                          >
+                            {keyword}{" "}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
+                );
+              } else {
+                return (
+                  <div key={index} className={"flex"}>
+                    <div
+                      className={"Keyword"}
+                      onClick={() => removeSearch(searchKey)}
+                    >
+                      {Object.values(search)[index]}
+                    </div>
                   </div>
-                </div>
-              );
+                );
+              }
             })}
           </div>
           <div className={"flex flex-col h-fit overflow-y-scroll"}>
