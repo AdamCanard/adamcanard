@@ -12,6 +12,7 @@ export interface BeerContextType {
   keywords: string[];
   addKeyword: (value: string) => void;
   removeKeyword: (value: string) => void;
+  clear: () => void;
   back: () => void;
 }
 export const BeerContext = createContext<BeerContextType>(
@@ -53,6 +54,10 @@ export default function Beer() {
   const back = () => {
     setBeer({} as IBeer);
   };
+  const clear = () => {
+    setFilter({});
+    setKeywords([]);
+  };
 
   return (
     <BeerContext.Provider
@@ -65,6 +70,7 @@ export default function Beer() {
         keywords,
         addKeyword,
         removeKeyword,
+        clear,
         back,
       }}
     >

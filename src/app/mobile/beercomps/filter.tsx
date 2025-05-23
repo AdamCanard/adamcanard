@@ -2,11 +2,13 @@ import { useContext } from "react";
 import { BeerContext } from "../beer";
 
 export default function Filter() {
-  const { filter, removeFilter, keywords, removeKeyword } =
+  const { filter, removeFilter, keywords, removeKeyword, clear } =
     useContext(BeerContext);
   return (
     <div id="border" className={"h-fit w-full flex items-center gap-x-2"}>
-      <div className={"Keyword"}>Filter:</div>
+      <div className={"Keyword"} onClick={clear}>
+        Filter:
+      </div>
       <div className={"flex flex-wrap"}>
         {" "}
         {Object.keys(filter).map((searchKey, index) => {
