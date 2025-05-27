@@ -3,7 +3,7 @@ import Map from "../overlays/map";
 import Chest from "./chest";
 import Credits from "./credits";
 import { Empty } from "./empty";
-import FullSite from "./fullsite";
+import Homepage from "./fullsite/homepage";
 import Home from "./home";
 import Opening from "./opening";
 import Wall from "./wall";
@@ -12,7 +12,7 @@ export const screens: Record<string, JSX.Element> = {
   home: <Home />,
   play: <Opening />,
   back: <Grid />,
-  skip: <FullSite />,
+  skip: <Homepage />,
   credits: <Credits />,
   grid: <Grid />,
   wall: <Wall />,
