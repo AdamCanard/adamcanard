@@ -1,7 +1,47 @@
 import Image from "next/image";
 import MadeLogo from "../../../../../public/Mitchell.jpeg";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { IScreenActions, ScreenContext } from "../../gamecontainer";
 
 export default function Homepage() {
+  const { setControls, changeScreen } = useContext(ScreenContext);
+  const buttons = useMemo(() => ["about", "games"], []);
+  const [selected, setSelected] = useState(0);
+  const left = useCallback(() => {
+    if (selected !== 0) {
+      const newIndex = selected - 1;
+      setSelected(newIndex);
+    }
+  }, [setSelected, selected]);
+
+  const right = useCallback(() => {
+    if (selected !== 1) {
+      const newIndex = selected + 1;
+      setSelected(newIndex);
+    }
+  }, [selected, setSelected]);
+
+  const a = useCallback(() => {
+    changeScreen(buttons[selected]);
+  }, [buttons, changeScreen, selected]);
+  const b = useCallback(() => {
+    changeScreen("home");
+  }, [changeScreen]);
+
+  const gridControls: IScreenActions = useMemo(
+    () => ({
+      a,
+      b,
+      left,
+      right,
+    }),
+    [left, right, a, b],
+  );
+
+  useEffect(() => {
+    setControls(gridControls);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
   //things to find
   // 1. logo
   // 2. about us page
@@ -24,16 +64,12 @@ export default function Homepage() {
       <div className={"flex flex-row justify-around w-full"}>
         {" "}
         <div
-          className={
-            "w-20 h-12 bg-black text-white flex justify-center items-center"
-          }
+          className={`${selected === 0 ? "HomeButtonSelected" : "HomeButton"} w-20 h-12 flex justify-center items-center`}
         >
           About
         </div>
         <div
-          className={
-            "w-20 h-12 bg-black text-white flex justify-center items-center"
-          }
+          className={`${selected === 1 ? "HomeButtonSelected" : "HomeButton"} w-20 h-12 flex justify-center items-center`}
         >
           Games
         </div>

@@ -3,6 +3,8 @@ import Map from "../overlays/map";
 import Chest from "./chest";
 import Credits from "./credits";
 import { Empty } from "./empty";
+import About from "./fullsite/about/about";
+import Games from "./fullsite/games/games";
 import Homepage from "./fullsite/homepage";
 import Home from "./home";
 import Opening from "./opening";
@@ -13,6 +15,8 @@ export const screens: Record<string, JSX.Element> = {
   play: <Opening />,
   back: <Grid />,
   skip: <Homepage />,
+  about: <About />,
+  games: <Games />,
   credits: <Credits />,
   grid: <Grid />,
   wall: <Wall />,
