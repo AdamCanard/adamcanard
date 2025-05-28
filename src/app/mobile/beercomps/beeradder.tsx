@@ -13,8 +13,10 @@ export default function BeerAdder() {
           <div id="close-dr" className="absolute" onClick={back}></div>
         </div>
         <div className={"w-full"}>
-          <LabeledBeerInput label="Name" name="Name" type="text" />
+          <LabeledBeerInput label="Name" name="name" type="text" />
           <BrewerySelect />
+          <RatingInput />
+          <LabeledBeerInput label="Suggested" name="recommended" type="text" />
         </div>
       </div>
     </div>
@@ -29,6 +31,26 @@ function LabeledBeerInput(props: {
     <div id={"border"} className={"w-full flex justify-between items-center"}>
       <label className={"pl-1 w-full"}>{props.label}:</label>
       <input className={"w-full"} type={props.type} name={props.name} />{" "}
+    </div>
+  );
+}
+function RatingInput() {
+  const [rating, setRating] = useState(0);
+  const changeRating = (newRating: number) => {
+    if (newRating > 0 && newRating <= 10) {
+      setRating(newRating);
+    }
+  };
+  return (
+    <div id={"border"} className={"w-full flex justify-between items-center"}>
+      <label className={"pl-1 w-full"}>Rating:</label>
+      <input
+        className={"w-full"}
+        type="number"
+        name={"rating"}
+        value={rating}
+        onChange={(e) => changeRating(+e.target.value)}
+      />{" "}
     </div>
   );
 }
