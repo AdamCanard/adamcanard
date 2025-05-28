@@ -74,8 +74,7 @@ export default function Beer() {
         back,
       }}
     >
-      {" "}
-      <div className={"flex flex-col w-full h-full"}>
+      <div className={"flex flex-col w-full h-full relative overflow-y-hidden"}>
         {Object.keys(beer).length === 0 ? <BeerProvider /> : <BeerInfo />}
       </div>
     </BeerContext.Provider>

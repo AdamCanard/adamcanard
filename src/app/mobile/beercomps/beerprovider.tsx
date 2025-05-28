@@ -1,12 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BeerList from "./beerlist";
-import Filter from "./filter";
-import FilteredList from "./filteredlist";
 import { IBeer } from "@/app/server/models/beer";
-import { BeerContext } from "../beer";
+import NewBeer from "./newbeer";
 
 export default function BeerProvider() {
-  const { filter, keywords } = useContext(BeerContext);
   const [beers, setBeers] = useState<IBeer[]>([]);
 
   const getListElements = async () => {
@@ -40,14 +37,8 @@ export default function BeerProvider() {
 
   return (
     <>
-      {Object.keys(filter).length + keywords.length !== 0 ? (
-        <>
-          <Filter />
-          <FilteredList beers={beers} />
-        </>
-      ) : (
-        <BeerList beers={beers} />
-      )}
+      <BeerList beers={beers} />
+      <NewBeer />
     </>
   );
 }

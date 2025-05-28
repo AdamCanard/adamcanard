@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { BeerContext } from "../beer";
 import { IBeer } from "@/app/server/models/beer";
 import BeerElement from "./beerelement";
+import Filter from "./filter";
 
 export default function BeerList(props: { beers: IBeer[] }) {
   const { filter, keywords } = useContext(BeerContext);
@@ -19,27 +20,26 @@ export default function BeerList(props: { beers: IBeer[] }) {
     return false;
   };
   return (
-    <>
-      <div className={"flex flex-col h-fit overflow-y-scroll"}>
-        <div className="w-full flex flex-col ">
-          {Object.keys(filter).length + keywords.length !== 0 ? (
-            <>
-              {props.beers.map((beer) => {
-                const id: string = beer._id || "";
-                return <BeerElement beer={beer} key={id} />;
-              })}
-            </>
-          ) : (
-            <>
-              {props.beers.map((beer) => {
-                const id: string = beer._id || "";
-
-                if (inSearch(beer)) return <BeerElement beer={beer} key={id} />;
-              })}
-            </>
-          )}
-        </div>
+    <div className={"flex flex-col h-full overflow-y-scroll"}>
+      <div className="w-full flex flex-col ">
+        {Object.keys(filter).length + keywords.length === 0 ? (
+          <>
+            {props.beers.map((beer) => {
+              const id: string = beer._id || "";
+              return <BeerElement beer={beer} key={id} />;
+            })}
+          </>
+        ) : (
+          <>
+            <Filter />
+            {props.beers.map((beer) => {
+              const id: string = beer._id || "";
+              console.log("here");
+              if (inSearch(beer)) return <BeerElement beer={beer} key={id} />;
+            })}
+          </>
+        )}
       </div>
-    </>
+    </div>
   );
 }
