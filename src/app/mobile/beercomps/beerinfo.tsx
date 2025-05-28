@@ -1,24 +1,10 @@
 import { useContext } from "react";
 import { BeerContext } from "../beer";
+import Image from "next/image";
 
 export default function BeerInfo() {
-  const { back } = useContext(BeerContext);
-
   return (
     <div className={"w-full h-full flex flex-col"}>
-      <div
-        id="border"
-        className={"w-full flex justify-between h-9 items-start"}
-      >
-        <button
-          className={"w-6 h-full text-3xl leading-0 hover:cursor-pointer"}
-          onClick={back}
-        >
-          {"<"}
-        </button>
-        <div className={"h-9 w-full"}></div>
-        <button className={"w-6 h-full text-3xl leading-0"}>{"+"}</button>
-      </div>
       <BasicBeerInfo />
       <BeerKeyword />
       <BeerDescription />
@@ -34,14 +20,35 @@ function LabeledBeerData(props: { label: string; data: string | number }) {
   );
 }
 function BasicBeerInfo() {
-  const { beer } = useContext(BeerContext);
+  const { beer, back } = useContext(BeerContext);
   return (
     <div id="border" className={"flex flex-col"}>
-      <h1 id="title"> Beer Info:</h1>{" "}
-      <LabeledBeerData label={"Name"} data={beer.name} />
-      <LabeledBeerData label={"Brewery"} data={beer.brewery} />
-      <LabeledBeerData label={"Time"} data={beer.time} />
-      <LabeledBeerData label={"Rating"} data={beer.rating} />
+      <div className="flex justify-between w-full relative h-8">
+        <h1 id="title" className="w-full">
+          Beer Info:
+        </h1>
+
+        <div id="close-dr" className="absolute" onClick={back}></div>
+      </div>
+
+      <div className={"flex flex-row w-full"}>
+        {beer.image && (
+          <div id="border" className={"w-full"}>
+            <Image src={beer.image} alt="beer" />
+          </div>
+        )}
+        <div className={"w-full"}>
+          {" "}
+          <LabeledBeerData label={"Name"} data={beer.name} />
+          <LabeledBeerData label={"Brewery"} data={beer.brewery} />
+          <LabeledBeerData label={"Drank"} data={beer.drank} />
+          <LabeledBeerData label={"Rating"} data={beer.rating} />
+          <LabeledBeerData
+            label={"Suggested"}
+            data={beer.recommended || "N/A"}
+          />
+        </div>
+      </div>
     </div>
   );
 }
