@@ -1,8 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IBeer } from "../server/models/beer";
 import { beerScreens } from "./beercomps/beerscreens";
 
 export interface BeerContextType {
+  beers: IBeer[];
   beer: IBeer;
   chooseBeer: (beer: IBeer) => void;
   filter: Record<string, string | number>;
@@ -21,6 +22,7 @@ export const BeerContext = createContext<BeerContextType>(
 
 export default function Beer() {
   const [beer, setBeer] = useState({} as IBeer);
+  const [beers, setBeers] = useState([]);
   const [filter, setFilter] = useState<Record<string, string | number>>({});
   const [keywords, setKeywords] = useState<string[]>([]);
   const [render, setRender] = useState<JSX.Element>(beerScreens["list"]);
@@ -64,10 +66,38 @@ export default function Beer() {
     setFilter({});
     setKeywords([]);
   };
+  const getListElements = async () => {
+    try {
+      const response = await fetch("/api/beer/", {
+        method: "GET",
+      });
+      const listResponse = await response.json();
 
+      setBeers(listResponse.toReversed());
+
+      return listResponse;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          },
+        );
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getListElements();
+  }, []);
   return (
     <BeerContext.Provider
       value={{
+        beers,
         beer,
         chooseBeer,
         filter,

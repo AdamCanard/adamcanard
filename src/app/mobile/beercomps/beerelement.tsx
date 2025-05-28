@@ -6,7 +6,7 @@ export default function BeerElement(props: { beer: IBeer }) {
   const { chooseBeer } = useContext(BeerContext);
   return (
     <div
-      className="flex w-full h-9 justify-between items-center Beer"
+      className="flex w-full h-9 justify-between items-center Border"
       onClick={() => chooseBeer(props.beer)}
     >
       <div>{props.beer.name}</div>

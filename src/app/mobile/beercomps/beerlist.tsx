@@ -4,8 +4,8 @@ import { IBeer } from "@/app/server/models/beer";
 import BeerElement from "./beerelement";
 import Filter from "./filter";
 
-export default function BeerList(props: { beers: IBeer[] }) {
-  const { filter, keywords } = useContext(BeerContext);
+export default function BeerList() {
+  const { filter, keywords, beers } = useContext(BeerContext);
   const inSearch = (beer: IBeer) => {
     //const time = search["time"];
     const brewery = filter["brewery"];
@@ -24,7 +24,7 @@ export default function BeerList(props: { beers: IBeer[] }) {
       <div className="w-full flex flex-col ">
         {Object.keys(filter).length + keywords.length === 0 ? (
           <>
-            {props.beers.map((beer) => {
+            {beers.map((beer) => {
               const id: string = beer._id || "";
               return <BeerElement beer={beer} key={id} />;
             })}
@@ -32,7 +32,7 @@ export default function BeerList(props: { beers: IBeer[] }) {
         ) : (
           <>
             <Filter />
-            {props.beers.map((beer) => {
+            {beers.map((beer) => {
               const id: string = beer._id || "";
               console.log("here");
               if (inSearch(beer)) return <BeerElement beer={beer} key={id} />;
