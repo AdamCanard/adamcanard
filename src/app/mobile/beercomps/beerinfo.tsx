@@ -21,6 +21,7 @@ function LabeledBeerData(props: { label: string; data: string | number }) {
 }
 function BasicBeerInfo() {
   const { beer, back } = useContext(BeerContext);
+  console.log(beer.image);
   return (
     <div id="border" className={"flex flex-col"}>
       <div className="flex justify-between w-full relative h-8">
@@ -32,9 +33,9 @@ function BasicBeerInfo() {
       </div>
 
       <div className={"flex flex-row w-full"}>
-        {beer.image && (
+        {beer.image.length > 0 && (
           <div id="border" className={"w-full"}>
-            <Image src={beer.image} alt="beer" />
+            <Image src={beer.image[0]} alt="beer" />
           </div>
         )}
         <div className={"w-full"}>

@@ -9,7 +9,7 @@ export interface IBeer {
   keywords?: string[];
   recommended?: string;
   desc?: string;
-  image: StaticImageData;
+  image: StaticImageData[];
 }
 
 const BeerSchema = new mongoose.Schema({
