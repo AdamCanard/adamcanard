@@ -11,6 +11,7 @@ export interface BeerContextType {
   keywords: string[];
   addKeyword: (value: string) => void;
   removeKeyword: (value: string) => void;
+  addBeer: () => void;
   clear: () => void;
   back: () => void;
 }
@@ -52,6 +53,9 @@ export default function Beer() {
     }
     setKeywords(newKeywords);
   };
+  const addBeer = () => {
+    setRender(beerScreens["add"]);
+  };
   const back = () => {
     setBeer({} as IBeer);
     setRender(beerScreens["list"]);
@@ -72,6 +76,7 @@ export default function Beer() {
         keywords,
         addKeyword,
         removeKeyword,
+        addBeer,
         clear,
         back,
       }}
