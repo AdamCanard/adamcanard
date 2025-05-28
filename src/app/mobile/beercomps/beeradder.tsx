@@ -1,9 +1,5 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { BeerContext } from "../beer";
-
-enum BeerSelect {
-  "brewery" = "brewery",
-}
 
 export default function BeerAdder() {
   const { back } = useContext(BeerContext);
@@ -18,7 +14,7 @@ export default function BeerAdder() {
         </div>
         <div className={"w-full"}>
           <LabeledBeerInput label="Name" name="Name" type="text" />
-          <LabeledBeerSelect category={BeerSelect.brewery} />
+          <BrewerySelect />
         </div>
       </div>
     </div>
@@ -37,14 +33,43 @@ function LabeledBeerInput(props: {
   );
 }
 
-function LabeledBeerSelect(props: { category: string }) {
-  const capitalize = (word: string) => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  };
+function BrewerySelect() {
+  const { beers } = useContext(BeerContext);
+  const [selected, setSelected] = useState("");
+  const breweries = [...new Set(beers.map((beer) => beer.brewery))];
   return (
     <div id={"border"} className={"w-full flex justify-between items-center"}>
-      <label className={"pl-1 w-full"}>{capitalize(props.category)}:</label>
-      <select name={""} className={"w-full Border"}></select>
+      <label className={"pl-1 w-full"}>Brewery:</label>
+      {selected === "~" ? (
+        <div className={"w-full relative"}>
+          {" "}
+          <input className={"w-full"} type="text" name="brewery" />{" "}
+          <div
+            id="close-dr"
+            className="absolute"
+            onClick={() => setSelected("")}
+          ></div>
+        </div>
+      ) : (
+        <select
+          name={"brewery"}
+          className={"w-full Border"}
+          value={selected}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          <option value={""} disabled selected>
+            -- Select a Brewery --
+          </option>
+          <option value="~">-- New Brewery --</option>
+          {breweries.map((brewery) => {
+            return (
+              <option value={brewery} key={brewery}>
+                {brewery}
+              </option>
+            );
+          })}
+        </select>
+      )}
     </div>
   );
 }
