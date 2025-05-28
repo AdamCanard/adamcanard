@@ -1,7 +1,6 @@
 import { createContext, useState } from "react";
-import BeerInfo from "./beercomps/beerinfo";
 import { IBeer } from "../server/models/beer";
-import BeerProvider from "./beercomps/beerprovider";
+import { beerScreens } from "./beercomps/beerscreens";
 
 export interface BeerContextType {
   beer: IBeer;
@@ -23,8 +22,10 @@ export default function Beer() {
   const [beer, setBeer] = useState({} as IBeer);
   const [filter, setFilter] = useState<Record<string, string | number>>({});
   const [keywords, setKeywords] = useState<string[]>([]);
+  const [render, setRender] = useState<JSX.Element>(beerScreens["list"]);
   const chooseBeer = (beer: IBeer) => {
     setBeer(beer);
+    setRender(beerScreens["info"]);
   };
   const addFilter = (key: string, value: string | number) => {
     const newFilter = { ...filter };
@@ -53,6 +54,7 @@ export default function Beer() {
   };
   const back = () => {
     setBeer({} as IBeer);
+    setRender(beerScreens["list"]);
   };
   const clear = () => {
     setFilter({});
@@ -75,7 +77,7 @@ export default function Beer() {
       }}
     >
       <div className={"flex flex-col w-full h-full relative overflow-y-hidden"}>
-        {Object.keys(beer).length === 0 ? <BeerProvider /> : <BeerInfo />}
+        {render}
       </div>
     </BeerContext.Provider>
   );
