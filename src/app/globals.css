@@ -734,3 +734,6 @@ body {
   width: 16px;
   background-image: url("../../public/Windows/button-right.svg");
 }
+::file-selector-button {
+  display: none;
+}

@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
-import { StaticImageData } from "next/image";
 export interface IBeer {
   _id?: string;
   name: string;
   brewery: string;
-  drank: number;
+  drank?: number;
   rating: number;
   keywords?: string[];
   recommended?: string;
   desc?: string;
-  image: StaticImageData[];
+  image: string[];
 }
 
 const BeerSchema = new mongoose.Schema({
@@ -20,7 +19,7 @@ const BeerSchema = new mongoose.Schema({
   drank: Number,
   desc: String,
   rating: Number,
-  image: [Buffer],
+  image: [{ data: Buffer, contentType: String }],
 });
 
 export const Beer =

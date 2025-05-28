@@ -41,7 +41,7 @@ function BasicBeerInfo() {
           {" "}
           <LabeledBeerData label={"Name"} data={beer.name} />
           <LabeledBeerData label={"Brewery"} data={beer.brewery} />
-          <LabeledBeerData label={"Drank"} data={beer.drank} />
+          <LabeledBeerData label={"Drank"} data={beer.drank || 0} />
           <LabeledBeerData label={"Rating"} data={beer.rating} />
           <LabeledBeerData
             label={"Suggested"}
