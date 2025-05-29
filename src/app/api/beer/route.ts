@@ -24,6 +24,7 @@ export async function POST(req: Request) {
     rating: +(formData.get("rating") as string),
     keywords: formData.getAll("keywords") as string[],
     recommended: formData.get("recommended") as string,
+    review: formData.get("review") as string,
     desc: formData.get("desc") as string,
     image: [],
   };

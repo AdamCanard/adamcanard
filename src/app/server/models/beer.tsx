@@ -7,6 +7,7 @@ export interface IBeer {
   rating: number;
   keywords?: string[];
   recommended?: string;
+  review?: string;
   desc?: string;
   image: string[];
 }
@@ -17,6 +18,7 @@ const BeerSchema = new mongoose.Schema({
   keywords: [String],
   recommended: String,
   drank: Number,
+  review: String,
   desc: String,
   rating: Number,
   image: [String],

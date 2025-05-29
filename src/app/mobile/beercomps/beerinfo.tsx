@@ -1,16 +1,34 @@
 import { useContext } from "react";
 import { BeerContext } from "../beer";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function BeerInfo() {
   return (
     <div className={"w-full h-full flex flex-col"}>
       <BasicBeerInfo />
       <BeerKeyword />
+      <BeerReview />
       <BeerDescription />
     </div>
   );
 }
+
+function BeerReview() {
+  const { beer } = useContext(BeerContext);
+  console.log(beer);
+  return (
+    <div id="border" className={"w-full flex flex-col "}>
+      <h1 id="title">Beer Review:</h1>{" "}
+      {beer.review === "" ? (
+        "No Review For This Beer"
+      ) : (
+        <Link href={beer.review || ""} />
+      )}
+    </div>
+  );
+}
+
 function LabeledBeerData(props: { label: string; data: string | number }) {
   return (
     <div id={"border"} className={"w-full flex justify-between"}>
