@@ -19,7 +19,7 @@ const BeerSchema = new mongoose.Schema({
   drank: Number,
   desc: String,
   rating: Number,
-  image: [{ data: Buffer, contentType: String }],
+  image: [String],
 });
 
 export const Beer =

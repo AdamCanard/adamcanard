@@ -33,8 +33,8 @@ function BasicBeerInfo() {
 
       <div className={"flex flex-row w-full"}>
         {beer.image.length > 0 && (
-          <div id="border" className={"w-full"}>
-            <Image src={beer.image[0]} alt="beer" />
+          <div id="border" className={"w-full relative"}>
+            <Image src={beer.image[0]} alt="beer" fill />
           </div>
         )}
         <div className={"w-full"}>

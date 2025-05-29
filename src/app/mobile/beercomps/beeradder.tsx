@@ -1,15 +1,41 @@
 import { FormEvent, useContext, useState } from "react";
 import { BeerContext } from "../beer";
 
+const fileToB64 = (file: File) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+
 export default function BeerAdder() {
   const { back } = useContext(BeerContext);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const image = formData.get("image") as File;
-    const bytes = await image.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    console.log(buffer);
+    const image = await fileToB64(formData.get("image") as File);
+    console.log(image as string);
+    formData.set("image", image as string);
+    try {
+      const response = await fetch("/api/beer/", {
+        method: "POST",
+        body: formData,
+      });
+      return await response.json();
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return new Response(
+          JSON.stringify({ error: err.message || err.toString() }),
+          {
+            status: 500,
+            headers: {},
+          },
+        );
+      } else {
+        console.log(err);
+      }
+    }
   };
   return (
     <div className={"w-full h-full flex flex-col"}>
