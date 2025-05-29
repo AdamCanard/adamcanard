@@ -7,7 +7,6 @@ import Filter from "./filter";
 export default function BeerList() {
   const { filter, keywords, beers } = useContext(BeerContext);
   const inSearch = (beer: IBeer) => {
-    //const time = search["time"];
     const brewery = filter["brewery"];
     const rating = filter["rating"];
     if (

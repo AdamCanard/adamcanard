@@ -25,8 +25,11 @@ export async function POST(req: Request) {
     keywords: formData.getAll("keywords") as string[],
     recommended: formData.get("recommended") as string,
     desc: formData.get("desc") as string,
-    image: [formData.get("image") as string],
+    image: [],
   };
+  if ((formData.get("image") as string) !== null) {
+    beer.image.push(formData.get("image") as string);
+  }
   try {
     await connectMongo();
     const newBeer = new Beer(beer);

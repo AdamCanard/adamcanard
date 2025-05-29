@@ -6,6 +6,7 @@ export interface BeerContextType {
   beers: IBeer[];
   beer: IBeer;
   chooseBeer: (beer: IBeer) => void;
+  mutateBeer: (beer: IBeer) => void;
   filter: Record<string, string | number>;
   addFilter: (key: string, value: string | number) => void;
   removeFilter: (key: string) => void;
@@ -22,10 +23,17 @@ export const BeerContext = createContext<BeerContextType>(
 
 export default function Beer() {
   const [beer, setBeer] = useState({} as IBeer);
-  const [beers, setBeers] = useState([]);
+  const [beers, setBeers] = useState<IBeer[]>([]);
   const [filter, setFilter] = useState<Record<string, string | number>>({});
   const [keywords, setKeywords] = useState<string[]>([]);
   const [render, setRender] = useState<JSX.Element>(beerScreens["list"]);
+
+  const mutateBeer = (beer: IBeer) => {
+    const newBeers = [...beers];
+    newBeers.push(beer);
+    setBeers(newBeers);
+  };
+
   const chooseBeer = (beer: IBeer) => {
     setBeer(beer);
     setRender(beerScreens["info"]);
@@ -100,6 +108,7 @@ export default function Beer() {
         beers,
         beer,
         chooseBeer,
+        mutateBeer,
         filter,
         addFilter,
         removeFilter,

@@ -10,19 +10,27 @@ const fileToB64 = (file: File) =>
   });
 
 export default function BeerAdder() {
-  const { back } = useContext(BeerContext);
+  const { back, mutateBeer } = useContext(BeerContext);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const image = await fileToB64(formData.get("image") as File);
-    console.log(image as string);
-    formData.set("image", image as string);
+    console.log(formData);
+    const file = formData.get("image") as File;
+    if (file.size > 0) {
+      const image = await fileToB64(formData.get("image") as File);
+      formData.set("image", image as string);
+    } else {
+      formData.delete("image");
+    }
+
     try {
       const response = await fetch("/api/beer/", {
         method: "POST",
         body: formData,
       });
-      return await response.json();
+      const data = await response.json();
+      mutateBeer(data.newBeer);
+      back();
     } catch (err: unknown) {
       if (err instanceof Error) {
         return new Response(
@@ -59,9 +67,24 @@ export default function BeerAdder() {
           <LabeledBeerInput label="Suggested" name="recommended" type="text" />
         </div>
         <KeywordSelect />
+        <BeerReview />
         <BeerDesc />
         <button>handleSubmit</button>
       </form>
+    </div>
+  );
+}
+
+function BeerReview() {
+  return (
+    <div id="border" className={" flex-col flex"}>
+      {" "}
+      <div className="flex justify-between w-full relative h-8">
+        <h1 id="title" className="w-full">
+          Beer Review:
+        </h1>
+      </div>
+      <input type={"url"} name={"review"} />
     </div>
   );
 }
