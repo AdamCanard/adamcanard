@@ -5,6 +5,7 @@ import BeerImageInput from "./inputs/beerimageinput";
 import BeerRatingInput from "./inputs/beerratinginput";
 import LabeledBeerInput from "./inputs/labeledbeerinput";
 import { fileToB64 } from "./beeradder";
+import AdminSubmit from "./inputs/adminsubmit";
 
 export default function BeerDrink() {
   const { beer, back, mutateBeer } = useContext(BeerContext);
@@ -20,13 +21,13 @@ export default function BeerDrink() {
       } else {
         formData.delete("image");
       }
-
       try {
         const response = await fetch("/api/beer/" + beer._id, {
           method: "PATCH",
           body: formData,
         });
         const data = await response.json();
+        console.log(data);
         mutateBeer(data.newBeer);
         back();
       } catch (err: unknown) {
@@ -56,6 +57,7 @@ export default function BeerDrink() {
         {beer.review === "" && <BeerReviewInput />}
 
         <BeerDescription />
+        <AdminSubmit />
       </form>
     </div>
   );

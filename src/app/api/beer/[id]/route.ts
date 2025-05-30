@@ -45,8 +45,8 @@ export async function PATCH(
       brewery: beer.brewery,
       drank: beer.drank + 1,
       rating:
-        beer.rating * beer.drank +
-        (+(formData.get("rating") as string) / beer.drank + 1),
+        (beer.rating * beer.drank + +(formData.get("rating") as string)) /
+        (beer.drank + 1),
       keywords: formData.getAll("keywords") as string[],
       recommended: (formData.get("recommended") as string) || beer.recommended,
       review: (formData.get("review") as string) || beer.review,
@@ -56,7 +56,11 @@ export async function PATCH(
     if ((formData.get("image") as string) !== null) {
       beer.image.push(formData.get("image") as string);
     }
-    const newBeer = await Beer.findOneAndUpdate({ _id: id }, update);
+    console.log(formData);
+    console.log(update);
+    const newBeer = await Beer.findOneAndUpdate({ _id: id }, update, {
+      returnDocument: "after",
+    });
     return NextResponse.json(
       { newBeer, message: "Your Beer has been updated" },
       { status: 201 },
