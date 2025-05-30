@@ -7,8 +7,8 @@ export default function Info() {
     <div className={"flex flex-col w-full h-full"}>
       <div id="boxshadow" className={"flex flex-col h-full "}>
         <h1 id="title">Adam Cunard Website. Thats Me!</h1>
-        <div className={"relative w-full h-full"}>
-          <Image src={Photo} alt="Photo of me" fill={true} priority={false} />
+        <div className={"flex relative w-full h-full"}>
+          <Image src={Photo} alt="Photo of me" fill={true} />
         </div>
       </div>
 
