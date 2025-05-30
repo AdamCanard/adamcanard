@@ -5,9 +5,9 @@ import MBlackJackGame from "./mobilegames/mobileblackjack";
 export default function Info() {
   return (
     <div className={"flex flex-col w-full h-full"}>
-      <div id="boxshadow" className={"flex flex-col h-full "}>
+      <div id="boxshadow" className={"flex flex-col h-full max-h-1/2"}>
         <h1 id="title">Adam Cunard Website. Thats Me!</h1>
-        <div className={"flex relative w-full h-full"}>
+        <div className={"relative w-full h-full"}>
           <Image src={Photo} alt="Photo of me" fill={true} />
         </div>
       </div>
