@@ -19,7 +19,7 @@ export default function BeerList() {
     return false;
   };
   return (
-    <div className={"flex flex-col h-full overflow-y-scroll"}>
+    <div className={"flex flex-col h-full overflow-y-auto"}>
       <div className="w-full flex flex-col h-full">
         {beers.length === 0 ? (
           <div className={" flex justify-center items-center w-full h-full"}>
