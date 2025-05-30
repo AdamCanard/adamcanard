@@ -11,7 +11,7 @@
     "@tailwindcss/postcss": "^4.1.6",
     "@tanstack/react-query": "^5.76.0",
     "mongoose": "^8.15.0",
-    "next": "^14.2.28",
+    "next": "*",
     "pocketbase": "^0.26.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
