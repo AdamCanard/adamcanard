@@ -1,31 +1,28 @@
 import { useContext, useState } from "react";
 import { BeerContext } from "../beer";
+import BeerReviewInput from "./inputs/beerreviewinput";
+import BeerImageInput from "./inputs/beerimageinput";
+import BeerRatingInput from "./inputs/beerratinginput";
+import LabeledBeerInput from "./inputs/labeledbeerinput";
 
 export default function BeerDrink() {
   const { beer } = useContext(BeerContext);
 
   return (
     <div className={"w-full h-full flex flex-col"}>
+      <BeerRatingInput />
+      {beer.recommended === "" && (
+        <LabeledBeerInput label="Suggested" name="recommended" type="text" />
+      )}
       <KeywordSelect />
-      {beer.review === "" && <BeerReview />}
+      <BeerImageInput />
+      {beer.review === "" && <BeerReviewInput />}
 
       <BeerDescription />
     </div>
   );
 }
-function BeerReview() {
-  return (
-    <div id="border" className={" flex-col flex"}>
-      {" "}
-      <div className="flex justify-between w-full relative h-8">
-        <h1 id="title" className="w-full">
-          Beer Review:
-        </h1>
-      </div>
-      <input type={"url"} name={"review"} />
-    </div>
-  );
-}
+
 function BeerDescription() {
   const { beer } = useContext(BeerContext);
   const [desc, setDesc] = useState(beer.desc);

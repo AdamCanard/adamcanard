@@ -1,5 +1,9 @@
 import { FormEvent, useContext, useState } from "react";
 import { BeerContext } from "../beer";
+import BeerReviewInput from "./inputs/beerreviewinput";
+import BeerImageInput from "./inputs/beerimageinput";
+import BeerRatingInput from "./inputs/beerratinginput";
+import LabeledBeerInput from "./inputs/labeledbeerinput";
 
 const fileToB64 = (file: File) =>
   new Promise((resolve, reject) => {
@@ -66,12 +70,12 @@ export default function BeerAdder() {
             required={true}
           />
           <BrewerySelect />
-          <RatingInput />
+          <BeerRatingInput />
           <LabeledBeerInput label="Suggested" name="recommended" type="text" />
         </div>
         <BeerImageInput />
         <KeywordSelect />
-        <BeerReview />
+        <BeerReviewInput />
         <BeerDesc />
         <AdminSubmit />
       </form>
@@ -84,34 +88,6 @@ function AdminSubmit() {
     <div className={"flex justify-around"}>
       <input type="password" name="admin" />
       <button id="button">Add Beer</button>
-    </div>
-  );
-}
-
-function BeerReview() {
-  return (
-    <div id="border" className={" flex-col flex"}>
-      {" "}
-      <div className="flex justify-between w-full relative h-8">
-        <h1 id="title" className="w-full">
-          Beer Review:
-        </h1>
-      </div>
-      <input type={"url"} name={"review"} />
-    </div>
-  );
-}
-
-function BeerImageInput() {
-  return (
-    <div id="border" className={" flex-col flex"}>
-      {" "}
-      <div className="flex justify-between w-full relative h-8">
-        <h1 id="title" className="w-full">
-          Add Photo of Beer:
-        </h1>
-      </div>
-      <input className={"Border"} name="image" type="file" />
     </div>
   );
 }
@@ -233,49 +209,6 @@ function KeywordSelect() {
           </div>
         );
       })}
-    </div>
-  );
-}
-
-function LabeledBeerInput(props: {
-  type: string;
-  label: string;
-  name: string;
-  required?: boolean;
-}) {
-  return (
-    <div id={"border"} className={"w-full flex justify-between items-center"}>
-      <label className={"pl-1 w-full"}>{props.label}:</label>
-      {props.required ? (
-        <input
-          className={"w-full"}
-          type={props.type}
-          name={props.name}
-          required
-        />
-      ) : (
-        <input className={"w-full"} type={props.type} name={props.name} />
-      )}
-    </div>
-  );
-}
-function RatingInput() {
-  const [rating, setRating] = useState(0);
-  const changeRating = (newRating: number) => {
-    if (newRating > 0 && newRating <= 10) {
-      setRating(newRating);
-    }
-  };
-  return (
-    <div id={"border"} className={"w-full flex justify-between items-center"}>
-      <label className={"pl-1 w-full"}>Rating:</label>
-      <input
-        className={"w-full"}
-        type="number"
-        name={"rating"}
-        value={rating}
-        onChange={(e) => changeRating(+e.target.value)}
-      />{" "}
     </div>
   );
 }
