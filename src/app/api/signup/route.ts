@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const formData = await req.formData();
   const username = formData.get("username") as string;
-
+  console.log(username);
   if (username === "") {
     return NextResponse.json(
       { message: "Username cannot be empty" },
