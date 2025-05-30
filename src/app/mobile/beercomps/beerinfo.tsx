@@ -30,7 +30,9 @@ function BeerReview() {
       {beer.review === "" ? (
         "No Review For This Beer"
       ) : (
-        <Link href={beer.review || ""} />
+        <Link href={beer.review || ""} className={"Border"}>
+          {beer.review}
+        </Link>
       )}
     </div>
   );

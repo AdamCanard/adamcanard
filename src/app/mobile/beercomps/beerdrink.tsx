@@ -7,7 +7,8 @@ export default function BeerDrink() {
   return (
     <div className={"w-full h-full flex flex-col"}>
       <KeywordSelect />
-      {beer.review !== "" && <BeerReview />}
+      {beer.review === "" && <BeerReview />}
+
       <BeerDescription />
     </div>
   );
