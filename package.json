@@ -13,9 +13,9 @@
     "mongoose": "^8.15.0",
     "next": "*",
     "pocketbase": "^0.26.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "sharp": "^0.34.1"
+    "react": "*",
+    "react-dom": "*",
+    "sharp": "*"
   },
   "devDependencies": {
     "@types/node": "^20.17.46",
