@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { BeerContext } from "../beer";
 import Image from "next/image";
 import Link from "next/link";
@@ -46,6 +46,31 @@ function LabeledBeerData(props: { label: string; data: string | number }) {
     </div>
   );
 }
+function BeerImage() {
+  const { beer } = useContext(BeerContext);
+  const [beerIndex, setBeerIndex] = useState(0);
+  const next = () => {
+    if (beerIndex === beer.image.length - 1) {
+      setBeerIndex(0);
+    } else {
+      const newBeerIndex = beerIndex + 1;
+      setBeerIndex(newBeerIndex);
+    }
+  };
+  return (
+    <>
+      {beer.image.length > 0 && (
+        <div
+          id="border"
+          className={"w-full relative cursor-pointer"}
+          onClick={next}
+        >
+          <Image src={beer.image[beerIndex]} alt="beer" fill />
+        </div>
+      )}
+    </>
+  );
+}
 function BasicBeerInfo() {
   const { beer, back } = useContext(BeerContext);
   return (
@@ -59,11 +84,7 @@ function BasicBeerInfo() {
       </div>
 
       <div className={"flex flex-row w-full"}>
-        {beer.image.length > 0 && (
-          <div id="border" className={"w-full relative"}>
-            <Image src={beer.image[0]} alt="beer" fill />
-          </div>
-        )}
+        <BeerImage />
         <div className={"w-full"}>
           {" "}
           <LabeledBeerData label={"Name"} data={beer.name} />
