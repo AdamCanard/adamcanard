@@ -16,7 +16,6 @@ export default function BeerInfo() {
 
 function BeerReview() {
   const { beer } = useContext(BeerContext);
-  console.log(beer);
   return (
     <div id="border" className={"w-full flex flex-col "}>
       <h1 id="title">Beer Review:</h1>{" "}
