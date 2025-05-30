@@ -5,6 +5,7 @@ import { beerScreens } from "./beercomps/beerscreens";
 export interface BeerContextType {
   beers: IBeer[];
   beer: IBeer;
+  drinkBeer: () => void;
   chooseBeer: (beer: IBeer) => void;
   mutateBeer: (beer: IBeer) => void;
   filter: Record<string, string | number>;
@@ -32,6 +33,10 @@ export default function Beer() {
     const newBeers = [...beers];
     newBeers.push(beer);
     setBeers(newBeers);
+  };
+
+  const drinkBeer = () => {
+    setRender(beerScreens["drink"]);
   };
 
   const chooseBeer = (beer: IBeer) => {
@@ -109,6 +114,7 @@ export default function Beer() {
         beer,
         chooseBeer,
         mutateBeer,
+        drinkBeer,
         filter,
         addFilter,
         removeFilter,

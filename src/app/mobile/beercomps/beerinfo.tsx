@@ -4,12 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function BeerInfo() {
+  const { drinkBeer } = useContext(BeerContext);
   return (
     <div className={"w-full h-full flex flex-col"}>
       <BasicBeerInfo />
       <BeerKeyword />
       <BeerReview />
       <BeerDescription />
+      <div
+        id="button"
+        className={"absolute bottom-3 right-3"}
+        onClick={drinkBeer}
+      >
+        Drink Beer
+      </div>
     </div>
   );
 }
