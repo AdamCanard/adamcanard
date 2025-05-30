@@ -10,12 +10,12 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.6",
     "@tanstack/react-query": "^5.76.0",
-    "mongoose": "^8.15.0",
-    "next": "*",
+    "mongoose": "^8.15.1",
+    "next": "^15.3.3",
     "pocketbase": "^0.26.0",
-    "react": "*",
-    "react-dom": "*",
-    "sharp": "*"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sharp": "^0.34.2"
   },
   "devDependencies": {
     "@types/node": "^20.17.46",
