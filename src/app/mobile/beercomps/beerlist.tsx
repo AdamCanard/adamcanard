@@ -20,22 +20,31 @@ export default function BeerList() {
   };
   return (
     <div className={"flex flex-col h-full overflow-y-scroll"}>
-      <div className="w-full flex flex-col ">
-        {Object.keys(filter).length + keywords.length === 0 ? (
-          <>
-            {beers.map((beer) => {
-              const id: string = beer._id || "";
-              return <BeerElement beer={beer} key={id} />;
-            })}
-          </>
+      <div className="w-full flex flex-col h-full">
+        {beers.length === 0 ? (
+          <div className={" flex justify-center items-center w-full h-full"}>
+            <div className={"Border"}>Loading Beers...</div>{" "}
+          </div>
         ) : (
           <>
-            <Filter />
-            {beers.map((beer) => {
-              const id: string = beer._id || "";
-              console.log("here");
-              if (inSearch(beer)) return <BeerElement beer={beer} key={id} />;
-            })}
+            {Object.keys(filter).length + keywords.length === 0 ? (
+              <>
+                {beers.map((beer) => {
+                  const id: string = beer._id || "";
+                  return <BeerElement beer={beer} key={id} />;
+                })}
+              </>
+            ) : (
+              <>
+                <Filter />
+                {beers.map((beer) => {
+                  const id: string = beer._id || "";
+                  console.log("here");
+                  if (inSearch(beer))
+                    return <BeerElement beer={beer} key={id} />;
+                })}
+              </>
+            )}
           </>
         )}
       </div>
