@@ -14,7 +14,6 @@ export default function BeerAdder() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log(formData);
     const file = formData.get("image") as File;
     if (file.size > 0) {
       const image = await fileToB64(formData.get("image") as File);
