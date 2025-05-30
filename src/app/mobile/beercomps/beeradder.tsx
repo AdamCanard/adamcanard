@@ -52,7 +52,6 @@ export default function BeerAdder() {
   return (
     <div className={"w-full h-full flex flex-col"}>
       <form id="border" className={"flex flex-col"} onSubmit={handleSubmit}>
-        <BeerImageInput />
         <div className="flex justify-between w-full relative h-8">
           <h1 id="title" className="w-full">
             Enter Beer Info:
@@ -70,6 +69,7 @@ export default function BeerAdder() {
           <RatingInput />
           <LabeledBeerInput label="Suggested" name="recommended" type="text" />
         </div>
+        <BeerImageInput />
         <KeywordSelect />
         <BeerReview />
         <BeerDesc />
@@ -228,7 +228,7 @@ function KeywordSelect() {
               }
             }}
           >
-            <input value={keyword} name="keywords" hidden />
+            <input value={keyword} name="keywords" hidden onChange={() => {}} />
             {keyword}
           </div>
         );
