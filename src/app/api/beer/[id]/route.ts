@@ -36,9 +36,7 @@ export async function PATCH(
   //  desc: formData.get("desc") as string,
   //  image: [],
   //};
-  //if ((formData.get("image") as string) !== null) {
-  //  beer.image.push(formData.get("image") as string);
-  //}
+
   try {
     await connectMongo();
     const beer = await Beer.findOne({ _id: id });
@@ -50,12 +48,14 @@ export async function PATCH(
         beer.rating * beer.drank +
         (+(formData.get("rating") as string) / beer.drank + 1),
       keywords: formData.getAll("keywords") as string[],
-      recommended: formData.get("recommended") as string,
-      review: formData.get("review") as string,
+      recommended: (formData.get("recommended") as string) || beer.recommended,
+      review: (formData.get("review") as string) || beer.review,
       desc: formData.get("desc") as string,
       image: beer.image,
     };
-
+    if ((formData.get("image") as string) !== null) {
+      beer.image.push(formData.get("image") as string);
+    }
     const newBeer = await Beer.findOneAndUpdate({ _id: id }, update);
     return NextResponse.json(
       { newBeer, message: "Your Beer has been updated" },
