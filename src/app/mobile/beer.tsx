@@ -120,7 +120,11 @@ export default function Beer() {
         back,
       }}
     >
-      <div className={"flex flex-col w-full h-full relative overflow-y-hidden"}>
+      <div
+        className={
+          "bg-[#c6c6c6] flex flex-col w-full h-full relative overflow-y-hidden"
+        }
+      >
         {render}
       </div>
     </BeerContext.Provider>
