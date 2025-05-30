@@ -14,34 +14,40 @@ export default function BeerAdder() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const file = formData.get("image") as File;
-    if (file.size > 0) {
-      const image = await fileToB64(formData.get("image") as File);
-      formData.set("image", image as string);
-    } else {
-      formData.delete("image");
-    }
-
-    try {
-      const response = await fetch("/api/beer/", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      mutateBeer(data.newBeer);
-      back();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
+    const admin = formData.get("admin") as string;
+    console.log(formData);
+    if (admin === process.env.ADMINPASS) {
+      const file = formData.get("image") as File;
+      if (file.size > 0) {
+        const image = await fileToB64(formData.get("image") as File);
+        formData.set("image", image as string);
       } else {
-        console.log(err);
+        formData.delete("image");
       }
+
+      try {
+        const response = await fetch("/api/beer/", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        mutateBeer(data.newBeer);
+        back();
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          return new Response(
+            JSON.stringify({ error: err.message || err.toString() }),
+            {
+              status: 500,
+              headers: {},
+            },
+          );
+        } else {
+          console.log(err);
+        }
+      }
+    } else {
+      console.log(process.env.ADMINPASS, admin);
     }
   };
   return (
@@ -68,8 +74,17 @@ export default function BeerAdder() {
         <KeywordSelect />
         <BeerReview />
         <BeerDesc />
-        <button>handleSubmit</button>
+        <AdminSubmit />
       </form>
+    </div>
+  );
+}
+
+function AdminSubmit() {
+  return (
+    <div className={"flex justify-around"}>
+      <input type="password" name="admin" />
+      <button id="button">Add Beer</button>
     </div>
   );
 }
@@ -189,7 +204,7 @@ function KeywordSelect() {
           }}
           className={"w-full Border"}
         >
-          <option value={""} disabled selected>
+          <option value={""} disabled>
             -- Select Keywords --
           </option>
           <option value="~">-- New Keyword --</option>
@@ -291,7 +306,7 @@ function BrewerySelect() {
           onChange={(e) => setSelected(e.target.value)}
           required
         >
-          <option value={""} disabled selected>
+          <option value={""} disabled>
             -- Select a Brewery --
           </option>
           <option value="~">-- New Brewery --</option>
