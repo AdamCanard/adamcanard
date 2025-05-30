@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const formData = await req.formData();
   const username = formData.get("username") as string;
+  const cookieStore = await cookies();
   try {
     await connectMongo();
     const user = await User.findOne({ username: username });
@@ -17,7 +18,7 @@ export async function POST(req: Request) {
     }
     const logsUpdate = { logs: user.logs + 1 };
     await User.updateOne({ username: username }, logsUpdate);
-    cookies().set("username", username);
+    cookieStore.set("username", username);
     return NextResponse.json(
       { user, message: "Username found, Logging you in" },
       { status: 200 },

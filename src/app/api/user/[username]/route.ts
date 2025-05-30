@@ -4,12 +4,13 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  { params }: { params: { username: string } },
+  { params }: { params: Promise<{ username: string }> },
 ) {
+  const { username } = await params;
   const formData = await req.formData();
   try {
     await connectMongo();
-    const user = await User.findOneAndUpdate({ username: params.username }, {});
+    const user = await User.findOneAndUpdate({ username: username }, {});
     if (user === null) {
       return NextResponse.json(
         { message: "User does not exist" },
@@ -20,7 +21,7 @@ export async function PUT(
       logs: formData.get("logs") as string,
       losses: formData.get("losses") as string,
     };
-    await User.updateOne({ username: params.username }, userUpdate);
+    await User.updateOne({ username: username }, userUpdate);
     return NextResponse.json(
       { user, message: "Username found, Logging you in" },
       { status: 200 },

@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const formData = await req.formData();
   const cookie = formData.get("cookie") as string;
-  const data = cookies().get(cookie)?.value;
+  const cookieStore = await cookies();
+  const data = cookieStore.get(cookie)?.value;
   if (data === undefined) {
     return NextResponse.json(
       { message: "No cookie with name: " + cookie },
