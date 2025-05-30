@@ -4,8 +4,9 @@ import BeerReviewInput from "./inputs/beerreviewinput";
 import BeerImageInput from "./inputs/beerimageinput";
 import BeerRatingInput from "./inputs/beerratinginput";
 import LabeledBeerInput from "./inputs/labeledbeerinput";
+import AdminSubmit from "./inputs/adminsubmit";
 
-const fileToB64 = (file: File) =>
+export const fileToB64 = (file: File) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -49,8 +50,6 @@ export default function BeerAdder() {
           console.log(err);
         }
       }
-    } else {
-      back();
     }
   };
   return (
@@ -79,15 +78,6 @@ export default function BeerAdder() {
         <BeerDesc />
         <AdminSubmit />
       </form>
-    </div>
-  );
-}
-
-function AdminSubmit() {
-  return (
-    <div className={"flex justify-around"}>
-      <input type="password" name="admin" />
-      <button id="button">Add Beer</button>
     </div>
   );
 }

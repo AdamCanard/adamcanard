@@ -1,24 +1,62 @@
-import { useContext, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { BeerContext } from "../beer";
 import BeerReviewInput from "./inputs/beerreviewinput";
 import BeerImageInput from "./inputs/beerimageinput";
 import BeerRatingInput from "./inputs/beerratinginput";
 import LabeledBeerInput from "./inputs/labeledbeerinput";
+import { fileToB64 } from "./beeradder";
 
 export default function BeerDrink() {
-  const { beer } = useContext(BeerContext);
+  const { beer, back, mutateBeer } = useContext(BeerContext);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const admin = formData.get("admin") as string;
+    if (admin === process.env.NEXT_PUBLIC_ADMINPASS) {
+      const file = formData.get("image") as File;
+      if (file.size > 0) {
+        const image = await fileToB64(formData.get("image") as File);
+        formData.set("image", image as string);
+      } else {
+        formData.delete("image");
+      }
 
+      try {
+        const response = await fetch("/api/beer/" + beer._id, {
+          method: "PATCH",
+          body: formData,
+        });
+        const data = await response.json();
+        mutateBeer(data.newBeer);
+        back();
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          return new Response(
+            JSON.stringify({ error: err.message || err.toString() }),
+            {
+              status: 500,
+              headers: {},
+            },
+          );
+        } else {
+          console.log(err);
+        }
+      }
+    }
+  };
   return (
     <div className={"w-full h-full flex flex-col"}>
-      <BeerRatingInput />
-      {beer.recommended === "" && (
-        <LabeledBeerInput label="Suggested" name="recommended" type="text" />
-      )}
-      <KeywordSelect />
-      <BeerImageInput />
-      {beer.review === "" && <BeerReviewInput />}
+      <form id="border" className={"flex flex-col"} onSubmit={handleSubmit}>
+        <BeerRatingInput />
+        {beer.recommended === "" && (
+          <LabeledBeerInput label="Suggested" name="recommended" type="text" />
+        )}
+        <KeywordSelect />
+        <BeerImageInput />
+        {beer.review === "" && <BeerReviewInput />}
 
-      <BeerDescription />
+        <BeerDescription />
+      </form>
     </div>
   );
 }
