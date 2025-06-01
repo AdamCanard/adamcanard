@@ -31,12 +31,14 @@ export default function BeerAdder() {
       }
 
       try {
-        setError("try entered");
         const response = await fetch("/api/beer/", {
           method: "POST",
           body: formData,
         });
+
+        setError(response.ok ? "true" : "false");
         const data = await response.json();
+
         mutateBeer(data.newBeer);
         back();
       } catch (err: unknown) {

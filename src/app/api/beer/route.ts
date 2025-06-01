@@ -16,7 +16,7 @@ export async function GET() {
 }
 export async function POST(req: Request) {
   const formData = await req.formData();
-
+  console.log("POSTED");
   const beer: IBeer = {
     name: formData.get("name") as string,
     brewery: formData.get("brewery") as string,
