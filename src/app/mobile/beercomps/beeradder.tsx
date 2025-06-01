@@ -15,11 +15,13 @@ export const fileToB64 = (file: File) =>
   });
 
 export default function BeerAdder() {
+  const [error, setError] = useState("");
   const { back, mutateBeer } = useContext(BeerContext);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const admin = formData.get("admin") as string;
+    setError(process.env.NEXT_PUBLIC_ADMINPASS + ", " + admin);
     if (admin === process.env.NEXT_PUBLIC_ADMINPASS) {
       const file = formData.get("image") as File;
       if (file.size > 0) {
@@ -72,6 +74,7 @@ export default function BeerAdder() {
           <BeerRatingInput />
           <LabeledBeerInput label="Suggested" name="recommended" type="text" />
         </div>
+        <div>{error}</div>
         <BeerImageInput />
         <KeywordSelect />
         <BeerReviewInput />

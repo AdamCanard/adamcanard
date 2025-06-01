@@ -20,9 +20,7 @@ export default function BeerList() {
     return false;
   };
   useEffect(() => {
-    console.log("one");
     const interval = setInterval(() => {
-      console.log("two");
       setEmpty(true);
     }, 5000);
     return () => clearInterval(interval);
