@@ -21,7 +21,6 @@ export default function BeerAdder() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const admin = formData.get("admin") as string;
-    setError(process.env.NEXT_PUBLIC_ADMINPASS + ", " + admin);
     if (admin === process.env.NEXT_PUBLIC_ADMINPASS) {
       const file = formData.get("image") as File;
       if (file.size > 0) {
@@ -52,6 +51,8 @@ export default function BeerAdder() {
           console.log(err);
         }
       }
+    } else {
+      setError(formData.toString());
     }
   };
   return (
