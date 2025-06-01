@@ -22,6 +22,8 @@ export default function BeerAdder() {
     const formData = new FormData(e.currentTarget);
     const admin = formData.get("admin") as string;
     if (admin === process.env.NEXT_PUBLIC_ADMINPASS) {
+      setError("if Passed");
+
       const file = formData.get("image") as File;
       if (file.size > 0) {
         const image = await fileToB64(formData.get("image") as File);
@@ -52,7 +54,7 @@ export default function BeerAdder() {
         }
       }
     } else {
-      setError(formData.toString());
+      setError("if failed");
     }
   };
   return (
