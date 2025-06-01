@@ -36,7 +36,7 @@ export default function BeerAdder() {
           body: formData,
         });
 
-        setError(response.ok ? "true" : "false");
+        setError(response.ok ? "true" : await response.json());
         const data = await response.json();
 
         mutateBeer(data.newBeer);
