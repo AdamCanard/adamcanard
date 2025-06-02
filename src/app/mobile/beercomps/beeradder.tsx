@@ -10,7 +10,20 @@ export const fileToB64 = (file: File) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => {
+      console.log(reader.result.length);
+      const img = document.createElement("img");
+      img.src = reader.result as string;
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.height = 300;
+        canvas.width = 300;
+        ctx?.drawImage(img, 0, 0, 300, 300);
+        resolve(canvas.toDataURL());
+      };
+    };
     reader.onerror = reject;
   });
 
@@ -25,6 +38,7 @@ export default function BeerAdder() {
       const file = formData.get("image") as File;
       if (file.size > 0) {
         const image = await fileToB64(formData.get("image") as File);
+        console.log(image.length);
         formData.set("image", image as string);
       } else {
         formData.delete("image");
