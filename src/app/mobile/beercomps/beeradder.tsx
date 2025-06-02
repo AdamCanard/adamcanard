@@ -11,7 +11,6 @@ export const fileToB64 = (file: File) =>
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      console.log(reader.result.length);
       const img = document.createElement("img");
       img.src = reader.result as string;
 
@@ -38,7 +37,6 @@ export default function BeerAdder() {
       const file = formData.get("image") as File;
       if (file.size > 0) {
         const image = await fileToB64(formData.get("image") as File);
-        console.log(image.length);
         formData.set("image", image as string);
       } else {
         formData.delete("image");
