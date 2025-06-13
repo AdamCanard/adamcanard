@@ -32,14 +32,18 @@ export async function POST(req: Request) {
     beer.image.push(formData.get("image") as string);
   }
   try {
-    connectMongo().then(() => {
-      const newBeer = new Beer(beer);
-      newBeer.save();
-      return NextResponse.json(
-        { newBeer, message: "Your product has been created" },
-        { status: 201 },
-      );
-    });
+    connectMongo()
+      .then(() => {
+        const newBeer = new Beer(beer);
+        newBeer.save();
+        return NextResponse.json(
+          { newBeer, message: "Your product has been created" },
+          { status: 201 },
+        );
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: error }, { status: 400 });
