@@ -16,7 +16,6 @@ export async function GET() {
 }
 export async function POST(req: Request) {
   const formData = await req.formData();
-  console.log("POSTED");
   const beer: IBeer = {
     name: formData.get("name") as string,
     brewery: formData.get("brewery") as string,
@@ -32,7 +31,8 @@ export async function POST(req: Request) {
     beer.image.push(formData.get("image") as string);
   }
   try {
-    await connectMongo();
+    const connect = await connectMongo();
+    console.log(connect);
     const newBeer = new Beer(beer);
     newBeer.save();
     return NextResponse.json(
