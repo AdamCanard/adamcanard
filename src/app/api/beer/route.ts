@@ -31,10 +31,10 @@ export async function POST(req: Request) {
     beer.image.push(formData.get("image") as string);
   }
   try {
-    const connect = await connectMongo();
-    console.log(connect);
+    await connectMongo();
     const newBeer = new Beer(beer);
-    newBeer.save();
+    const log = await newBeer.save();
+    console.log(log);
     return NextResponse.json(
       { newBeer, message: "Your product has been created" },
       { status: 201 },
