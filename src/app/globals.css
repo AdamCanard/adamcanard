@@ -19,8 +19,8 @@ root {
   }
 
   #mobile {
-    width: 100svw;
-    height: 100svh;
+    width: 100dvw;
+    height: 100dvh;
     display: flex;
   }
   #desktop {
