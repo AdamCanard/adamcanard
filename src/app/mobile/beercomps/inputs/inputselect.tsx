@@ -19,11 +19,14 @@ export default function InputSelect(props: { name: string }) {
     const newSimilarList: string[] = [];
     const uniqueBeerValues: string[] = [];
 
-    beers.map((beer) => {
-      if (newSimilarList.includes(beer[props.name as keyof object] as string)) {
-        uniqueBeerValues.push(beer[props.name as keyof object] as string);
+    for (let i = 0; i < beers.length; i++) {
+      if (
+        !newSimilarList.includes(beers[i][props.name as keyof object] as string)
+      ) {
+        uniqueBeerValues.push(beers[i][props.name as keyof object] as string);
       }
-    });
+    }
+
     for (let i = 0; i < uniqueBeerValues.length; i++) {
       const beerValue = uniqueBeerValues[i];
 
