@@ -33,10 +33,10 @@ export async function POST(req: Request) {
   try {
     await connectMongo();
     const newBeer = new Beer(beer);
-    const log = await newBeer.save();
-    console.log(log);
+    const returnedBeer = await newBeer.save();
+
     return NextResponse.json(
-      { newBeer, message: "Your product has been created" },
+      { returnedBeer, message: "Your product has been created" },
       { status: 201 },
     );
   } catch (error) {
