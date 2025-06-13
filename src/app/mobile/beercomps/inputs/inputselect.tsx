@@ -21,7 +21,9 @@ export default function InputSelect(props: { name: string }) {
 
     for (let i = 0; i < beers.length; i++) {
       if (
-        !newSimilarList.includes(beers[i][props.name as keyof object] as string)
+        !uniqueBeerValues.includes(
+          beers[i][props.name as keyof object] as string,
+        )
       ) {
         uniqueBeerValues.push(beers[i][props.name as keyof object] as string);
       }
