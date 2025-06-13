@@ -5,6 +5,7 @@ import BeerImageInput from "./inputs/beerimageinput";
 import BeerRatingInput from "./inputs/beerratinginput";
 import LabeledBeerInput from "./inputs/labeledbeerinput";
 import AdminSubmit from "./inputs/adminsubmit";
+import InputSelect from "./inputs/inputselect";
 
 export const fileToB64 = (file: File) =>
   new Promise((resolve, reject) => {
@@ -87,7 +88,7 @@ export default function BeerAdder() {
             type="text"
             required={true}
           />
-          <BrewerySelect />
+          <InputSelect name="brewery" />
           <BeerRatingInput />
           <LabeledBeerInput label="Suggested" name="recommended" type="text" />
         </div>
@@ -223,7 +224,7 @@ function KeywordSelect() {
   );
 }
 
-function BrewerySelect() {
+export function BrewerySelect() {
   const { beers } = useContext(BeerContext);
   const [selected, setSelected] = useState("");
   const breweries = [...new Set(beers.map((beer) => beer.brewery))];

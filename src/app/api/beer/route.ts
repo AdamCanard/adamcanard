@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     await connectMongo();
     const newBeer = new Beer(beer);
     const returnedBeer = await newBeer.save();
-
+    console.log(returnedBeer);
     return NextResponse.json(
       { returnedBeer, message: "Your product has been created" },
       { status: 201 },
