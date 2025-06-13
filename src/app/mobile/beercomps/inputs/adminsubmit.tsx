@@ -1,4 +1,4 @@
-export default function AdminSubmit(props: { posting?: boolean }) {
+export default function AdminSubmit(props: { posting: boolean }) {
   return (
     <div className={"flex justify-around"}>
       <input type="password" name="admin" />
@@ -6,7 +6,7 @@ export default function AdminSubmit(props: { posting?: boolean }) {
         <button id="button">Add Beer</button>
       ) : (
         <button id="button" disabled>
-          Add Beer
+          Loading...
         </button>
       )}
     </div>

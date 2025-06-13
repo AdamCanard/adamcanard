@@ -30,7 +30,6 @@ export default function Beer() {
   const [render, setRender] = useState<JSX.Element>(beerScreens["list"]);
 
   const mutateBeer = (beer: IBeer) => {
-    console.log(beer);
     let update = false;
     const newBeers = [...beers].map((listBeer) => {
       if (listBeer._id === beer._id) {

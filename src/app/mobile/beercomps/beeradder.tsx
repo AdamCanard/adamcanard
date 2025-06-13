@@ -53,9 +53,7 @@ export default function BeerAdder() {
         setError((!response.ok && (await response.text())) || "");
 
         const data = await response.json();
-
-        mutateBeer(data.newBeer);
-        setPosting(false);
+        mutateBeer(data.returnedBeer);
         back();
       } catch (err: unknown) {
         if (err instanceof Error) {
