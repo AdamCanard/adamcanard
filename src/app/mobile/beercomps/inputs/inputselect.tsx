@@ -52,12 +52,14 @@ export default function InputSelect(props: { name: string }) {
           onChange={(e) => setValue(e.target.value)}
         />
         {similarList && similarList[0] !== value && value !== "" && (
-          <div className={"absolute Border w-full max-h-28 z-10 overflow-auto"}>
+          <div
+            className={"absolute w-full h-fit max-h-28 z-10 overflow-y-auto"}
+          >
             {similarList.map((similarWord) => {
               if (value !== similarWord) {
                 return (
                   <div
-                    className={" Border w-full"}
+                    className={"Border p-0 w-full"}
                     onClick={() => {
                       setValue(similarWord);
                     }}
