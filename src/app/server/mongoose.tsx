@@ -8,6 +8,6 @@ async function connectMongo() {
       "Please define the MONGO_URI environment variable inside .env.local",
     );
   }
-  mongoose.connect(MONGO_URI);
+  mongoose.connect(MONGO_URI).catch((err) => console.log(err));
 }
 export default connectMongo;
