@@ -28,8 +28,10 @@ export const fileToB64 = (file: File) =>
 
 export default function BeerAdder() {
   const [error, setError] = useState("");
+  const [posting, setPosting] = useState(false);
   const { back, mutateBeer } = useContext(BeerContext);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setPosting(true);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const admin = formData.get("admin") as string;
@@ -53,6 +55,7 @@ export default function BeerAdder() {
         const data = await response.json();
 
         mutateBeer(data.newBeer);
+        setPosting(false);
         back();
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -95,7 +98,7 @@ export default function BeerAdder() {
         <KeywordSelect />
         <BeerReviewInput />
         <BeerDesc />
-        <AdminSubmit />
+        <AdminSubmit posting={posting} />
       </form>
     </div>
   );

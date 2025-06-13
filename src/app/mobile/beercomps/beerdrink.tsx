@@ -9,7 +9,9 @@ import AdminSubmit from "./inputs/adminsubmit";
 
 export default function BeerDrink() {
   const { beer, back, mutateBeer } = useContext(BeerContext);
+  const [posting, setPosting] = useState(false);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setPosting(true);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const admin = formData.get("admin") as string;
@@ -29,6 +31,7 @@ export default function BeerDrink() {
         const data = await response.json();
         console.log(data);
         mutateBeer(data.newBeer);
+        setPosting(false);
         back();
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -57,7 +60,7 @@ export default function BeerDrink() {
         {beer.review === "" && <BeerReviewInput />}
 
         <BeerDescription />
-        <AdminSubmit />
+        <AdminSubmit posting={posting} />
       </form>
     </div>
   );
