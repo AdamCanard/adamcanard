@@ -43,6 +43,7 @@ export async function POST(req: Request) {
       })
       .catch((e) => {
         console.log(e);
+        return NextResponse.json({ e, message: "fail" }, { status: 400 });
       });
   } catch (error) {
     console.log(error);
