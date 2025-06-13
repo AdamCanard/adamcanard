@@ -17,15 +17,21 @@ export default function InputSelect(props: { name: string }) {
   );
   useEffect(() => {
     const newSimilarList: string[] = [];
-    for (let i = 0; i < beers.length; i++) {
-      const beer = beers[i];
-      const beerValue = beer[props.name as keyof object] as string;
+    const uniqueBeerValues: string[] = [];
+
+    beers.map((beer) => {
+      if (newSimilarList.includes(beer[props.name as keyof object] as string)) {
+        uniqueBeerValues.push(beer[props.name as keyof object] as string);
+      }
+    });
+    for (let i = 0; i < uniqueBeerValues.length; i++) {
+      const beerValue = uniqueBeerValues[i];
+
       if (value && isWordSimilarToValue(beerValue)) {
         newSimilarList.push(beerValue);
       }
     }
 
-    console.log(newSimilarList);
     setSimilarlist(newSimilarList);
   }, [beers, value, props.name, isWordSimilarToValue]);
   return (
