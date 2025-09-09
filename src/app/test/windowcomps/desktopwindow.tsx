@@ -13,10 +13,15 @@ interface IPoint {
   width: number;
   height: number;
 }
-interface IPointOffset {
+interface ILocationOffset {
   top: number;
   left: number;
 }
+interface ISizeOffset {
+  width: number;
+  height: number;
+}
+
 export default function DesktopWindow(props: {
   title: string;
   children: ReactElement;
@@ -25,57 +30,89 @@ export default function DesktopWindow(props: {
 }) {
   const { closeWindow } = useContext(WindowContext);
 
-  const [width] = useState<number>(props.startingWidth);
-  const [height] = useState<number>(props.startingHeight);
+  const [width, setWidth] = useState(props.startingWidth);
+  const [height, setHeight] = useState(props.startingHeight);
+
   const [point, setPoint] = useState<IPoint>({
     top: 0,
     left: 0,
-    width: width,
-    height: height,
+    width: props.startingWidth,
+    height: props.startingHeight,
   });
 
-  const [pointOffset, setPointOffset] = useState<IPointOffset>({
+  const [locationOffset, setLocationOffset] = useState<ILocationOffset>({
     top: 0,
     left: 0,
   });
+  const [sizeOffset, setSizeOffset] = useState<ISizeOffset>({
+    width: 0,
+    height: 0,
+  });
+
   const [cursor, setCursor] = useState<string>("grab");
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+  const handleMouseResize = (e: React.MouseEvent<HTMLElement>) => {
+    setSizeOffset({
+      width: e.clientX,
+      height: e.clientY,
+    });
+  };
+  const resizePoint = useCallback(
+    (e: MouseEvent) => {
+      setPoint({
+        top: point.top,
+        left: point.left,
+        width: width + (e.clientX - sizeOffset.width) / 16,
+        height: height + (e.clientY - sizeOffset.height) / 16,
+      });
+    },
+    [point, sizeOffset, width, height],
+  );
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     setCursor("grabbing");
-    setPointOffset({
+    setLocationOffset({
       top: e.nativeEvent.offsetY,
       left: e.nativeEvent.offsetX,
     });
     setPoint({
       top: e.pageY - e.nativeEvent.offsetY,
       left: e.pageX - e.nativeEvent.offsetX,
-      width: width,
-      height: height,
+      width: point.width,
+      height: point.height,
     });
   };
 
   const movePoint = useCallback(
     (e: MouseEvent) => {
       setPoint({
-        top: e.pageY - +pointOffset.top,
-        left: e.pageX - +pointOffset.left,
-        width: width,
-        height: height,
+        top: e.pageY - +locationOffset.top,
+        left: e.pageX - +locationOffset.left,
+        width: point.width,
+        height: point.height,
       });
     },
-    [pointOffset.left, pointOffset.top, height, width],
+    [locationOffset.left, locationOffset.top, point.width, point.height],
   );
 
   const resetPoint = useCallback(() => {
-    setPointOffset({
+    setLocationOffset({
       top: 0,
       left: 0,
     });
     setCursor("grab");
   }, []);
 
+  const confirmPoint = useCallback(() => {
+    setSizeOffset({
+      width: 0,
+      height: 0,
+    });
+    setWidth(point.width);
+    setHeight(point.height);
+  }, [point.width, point.height]);
+
   useEffect(() => {
-    if (+pointOffset.top != 0) {
+    if (+locationOffset.top != 0) {
       addEventListener("mousemove", movePoint);
       addEventListener("mouseup", resetPoint);
     }
@@ -83,7 +120,18 @@ export default function DesktopWindow(props: {
       removeEventListener("mousemove", movePoint);
       removeEventListener("mouseup", resetPoint);
     };
-  }, [movePoint, pointOffset, resetPoint]);
+  }, [movePoint, locationOffset, resetPoint]);
+
+  useEffect(() => {
+    if (+sizeOffset.width != 0) {
+      addEventListener("mousemove", resizePoint);
+      addEventListener("mouseup", confirmPoint);
+    }
+    return () => {
+      removeEventListener("mousemove", resizePoint);
+      removeEventListener("mouseup", confirmPoint);
+    };
+  }, [sizeOffset, resizePoint, confirmPoint]);
 
   return (
     <div
@@ -100,7 +148,7 @@ export default function DesktopWindow(props: {
         <h1
           className={"w-full h-8 bg-blue-500"}
           style={{ cursor: cursor }}
-          onMouseDown={handleMouseDown}
+          onMouseDown={handleMouseMove}
         >
           {props.title}
         </h1>
@@ -112,13 +160,18 @@ export default function DesktopWindow(props: {
       </div>
 
       <div
+        className={"flex flex-row"}
         style={{
           border: "2px black solid",
-          width: `${width}rem`,
-          height: `${height}rem`,
+          width: `${point.width}rem`,
+          height: `${point.height}rem`,
         }}
       >
         {props.children}
+        <div
+          className={"h-full w-2 bg-red-500"}
+          onMouseDown={handleMouseResize}
+        ></div>
       </div>
     </div>
   );
