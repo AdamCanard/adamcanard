@@ -96,13 +96,14 @@ export default function DesktopWindow(props: {
         height: `${point.height + 2}rem`,
       }}
     >
-      <div
-        className="flex justify-between w-full relative h-8 bg-blue-500"
-        style={{ cursor: cursor }}
-        onMouseDown={handleMouseDown}
-      >
-        <h1>{props.title}</h1>
-
+      <div className="flex justify-between w-full relative ">
+        <h1
+          className={"w-full h-8 bg-blue-500"}
+          style={{ cursor: cursor }}
+          onMouseDown={handleMouseDown}
+        >
+          {props.title}
+        </h1>
         <div
           id="close-dr"
           className="absolute"

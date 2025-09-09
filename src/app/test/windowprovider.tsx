@@ -12,15 +12,24 @@ export default function WindowProvider(props: { children: ReactNode }) {
   const [windows, setWindows] = useState<ReactElement[]>([
     <div key={"Apple"} className={"w-full h-full"}></div>,
   ]);
-
-  const openWindow = (newWindow: ReactElement) => {
-    const newWindows = [...windows];
-    newWindows.push(newWindow);
-    setWindows(newWindows);
+  //const isOpen = (name: string) => {
+  //  for (let i = 0; i < windows.length; i++) {
+  //    if (windows[i].key == name) {
+  //      return true;
+  //    }
+  //  }
+  //  return false;
+  //};
+  const closeWindow = (name: string) => {
+    for (let i = 0; i < windows.length; i++) {
+      if (windows[i].key == name) {
+        const newWindows = windows.toSpliced(i, 1);
+        setWindows(newWindows);
+      }
+    }
   };
-
-  const closeWindow = (windowKey: string) => {
-    console.log(windowKey);
+  const openWindow = (newWindow: ReactElement) => {
+    setWindows([...windows, newWindow]);
   };
 
   return (
