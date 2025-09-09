@@ -1,4 +1,11 @@
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { WindowContext } from "../windowprovider";
 
 interface IPoint {
   top: number;
@@ -16,6 +23,8 @@ export default function DesktopWindow(props: {
   startingWidth: number;
   startingHeight: number;
 }) {
+  const { closeWindow } = useContext(WindowContext);
+
   const [width] = useState<number>(props.startingWidth);
   const [height] = useState<number>(props.startingHeight);
   const [point, setPoint] = useState<IPoint>({
@@ -87,11 +96,20 @@ export default function DesktopWindow(props: {
         height: `${point.height + 2}rem`,
       }}
     >
-      <h1
-        className={"h-8 w-full bg-blue-500"}
+      <div
+        className="flex justify-between w-full relative h-8 bg-blue-500"
         style={{ cursor: cursor }}
         onMouseDown={handleMouseDown}
-      ></h1>
+      >
+        <h1>{props.title}</h1>
+
+        <div
+          id="close-dr"
+          className="absolute"
+          onClick={() => closeWindow(props.title)}
+        ></div>
+      </div>
+
       <div
         style={{
           border: "2px black solid",
