@@ -185,26 +185,6 @@ export default function DesktopWindow(props: {
       removeEventListener("mouseup", finishWidthResize);
     };
   }, [widthResizePoint, finishWidthResize, widthOffset]);
-  useEffect(() => {
-    if (+heightOffset != 0) {
-      addEventListener("mousemove", heightResizePoint);
-      addEventListener("mouseup", finishHeightResize);
-    }
-    return () => {
-      removeEventListener("mousemove", heightResizePoint);
-      removeEventListener("mouseup", finishHeightResize);
-    };
-  }, [heightResizePoint, finishHeightResize, heightOffset]);
-  useEffect(() => {
-    if (+widthOffset != 0) {
-      addEventListener("mousemove", widthResizePoint);
-      addEventListener("mouseup", finishWidthResize);
-    }
-    return () => {
-      removeEventListener("mousemove", widthResizePoint);
-      removeEventListener("mouseup", finishWidthResize);
-    };
-  }, [widthResizePoint, finishWidthResize, widthOffset]);
 
   return (
     <div
