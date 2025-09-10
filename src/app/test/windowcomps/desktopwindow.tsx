@@ -231,17 +231,27 @@ export default function DesktopWindow(props: {
         top: point.top,
         left: point.left,
         width: `${point.width + 0.5}rem`,
-        height: `${point.height + 2.25}rem`,
+        height: `${point.height + 2.5}rem`,
       }}
     >
-      <div
-        className={"h-full w-1 bg-red-500 cursor-ew-resize col-start-1"}
-        onMouseDown={handleLeftResize}
-      ></div>
-      <div className={"flex-col"}>
-        {" "}
+      <div className={"flex flex-col w-1 h-full"}>
         <div
-          className={"h-1 w-full bg-red-500 cursor-ns-resize col-start-1"}
+          className={"h-1 w-1 bg-black "}
+          onMouseDown={handleLeftResize}
+        ></div>
+        <div
+          className={"h-full w-1 bg-red-500 cursor-ew-resize"}
+          onMouseDown={handleLeftResize}
+        ></div>
+        <div
+          className={"h-1 w-1 bg-black "}
+          onMouseDown={handleLeftResize}
+        ></div>
+      </div>
+
+      <div className={"flex-col"}>
+        <div
+          className={"h-1 w-full bg-red-500 cursor-ns-resize "}
           onMouseDown={handleTopResize}
         ></div>
         <div className="flex justify-between w-full relative ">
@@ -268,14 +278,24 @@ export default function DesktopWindow(props: {
           {props.children}
         </div>
         <div
-          className={"h-1 w-full bg-red-500 cursor-ns-resize col-start-1"}
+          className={"h-1 w-full bg-red-500 cursor-ns-resize "}
           onMouseDown={handleBottomResize}
         ></div>
       </div>
-      <div
-        className={"h-full w-1 bg-red-500 cursor-ew-resize col-start-1"}
-        onMouseDown={handleRightResize}
-      ></div>
+      <div className={"flex flex-col w-1 h-full"}>
+        <div
+          className={"h-1 w-1 bg-black "}
+          onMouseDown={handleLeftResize}
+        ></div>
+        <div
+          className={"h-full w-1 bg-red-500 cursor-ew-resize "}
+          onMouseDown={handleRightResize}
+        ></div>
+        <div
+          className={"h-1 w-1 bg-black "}
+          onMouseDown={handleLeftResize}
+        ></div>
+      </div>
     </div>
   );
 }
