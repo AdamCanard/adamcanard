@@ -1,16 +1,18 @@
-import { createContext, ReactElement, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
+import { IWindow, windowRecord } from "./windowrecord";
+import MobilePage from "../mobile/mobilepage";
 
 interface IWindows {
-  windows: ReactElement[];
-  openWindow: (newWindow: ReactElement) => void;
+  windows: IWindow[];
+  openWindow: (windowKey: string) => void;
   closeWindow: (windowKey: string) => void;
 }
 
 export const WindowContext = createContext<IWindows>({} as IWindows);
 
 export default function WindowProvider(props: { children: ReactNode }) {
-  const [windows, setWindows] = useState<ReactElement[]>([
-    <div key={"Apple"} className={"w-full h-full"}></div>,
+  const [windows, setWindows] = useState<IWindow[]>([
+    { window: <MobilePage key={"Mobile"} />, width: 20, height: 46 },
   ]);
   //const isOpen = (name: string) => {
   //  for (let i = 0; i < windows.length; i++) {
@@ -22,16 +24,15 @@ export default function WindowProvider(props: { children: ReactNode }) {
   //};
   const closeWindow = (name: string) => {
     for (let i = 0; i < windows.length; i++) {
-      if (windows[i].key == name) {
+      if (windows[i].window.key == name) {
         const newWindows = windows.toSpliced(i, 1);
         setWindows(newWindows);
       }
     }
   };
-  const openWindow = (newWindow: ReactElement) => {
-    setWindows([...windows, newWindow]);
+  const openWindow = (windowKey: string) => {
+    setWindows([...windows, windowRecord[windowKey]]);
   };
-
   return (
     <WindowContext.Provider value={{ windows, openWindow, closeWindow }}>
       {props.children}

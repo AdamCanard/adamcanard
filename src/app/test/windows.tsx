@@ -1,22 +1,23 @@
 "use client";
 
-import { ReactElement, useContext } from "react";
+import { useContext } from "react";
 import { WindowContext } from "./windowprovider";
 import DesktopWindow from "./windowcomps/desktopwindow";
+import { IWindow } from "./windowrecord";
 
 export default function Windows() {
   const { windows } = useContext(WindowContext);
   return (
     <div className={"w-full h-full relative"}>
-      {windows.map((window: ReactElement) => {
+      {windows.map((window: IWindow) => {
         return (
           <DesktopWindow
-            title={window.key || ""}
-            startingWidth={16}
-            startingHeight={16}
-            key={window.key}
+            title={window.window.key || ""}
+            startingWidth={window.width}
+            startingHeight={window.height}
+            key={window.window.key}
           >
-            {window}
+            {window.window}
           </DesktopWindow>
         );
       })}
