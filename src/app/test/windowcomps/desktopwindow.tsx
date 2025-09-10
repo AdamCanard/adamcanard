@@ -121,19 +121,26 @@ export default function DesktopWindow(props: {
       const newPoint = { ...point };
 
       if (direction.horizontal === 1) {
-        newPoint.width = width + (e.clientX - sizeOffset.width) / 16;
+        if (width + (e.clientX - sizeOffset.width) / 16 >= 0)
+          newPoint.width = width + (e.clientX - sizeOffset.width) / 16;
       }
       if (direction.horizontal === -1) {
-        newPoint.left = left + (e.clientX - sizeOffset.width);
-        newPoint.width = width - (e.clientX - sizeOffset.width) / 16;
+        if (width - (e.clientX - sizeOffset.width) / 16 >= 0) {
+          newPoint.left = left + (e.clientX - sizeOffset.width);
+          newPoint.width = width - (e.clientX - sizeOffset.width) / 16;
+        }
       }
       if (direction.vertical === 1) {
-        newPoint.height = height + (e.clientY - sizeOffset.height) / 16;
+        if (height + (e.clientY - sizeOffset.height) / 16) {
+          newPoint.height = height + (e.clientY - sizeOffset.height) / 16;
+        }
       }
 
       if (direction.vertical === -1) {
-        newPoint.top = top + (e.clientY - sizeOffset.height);
-        newPoint.height = height - (e.clientY - sizeOffset.height) / 16;
+        if (height - (e.clientY - sizeOffset.height) / 16) {
+          newPoint.top = top + (e.clientY - sizeOffset.height);
+          newPoint.height = height - (e.clientY - sizeOffset.height) / 16;
+        }
       }
 
       setPoint(newPoint);
