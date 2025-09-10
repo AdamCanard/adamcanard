@@ -21,8 +21,10 @@ export function Renderer(props: { toRender: Record<string, JSX.Element> }) {
 
   return (
     <RenderContext.Provider value={{ window, setWindow, toRender }}>
-      <ScreenPicker />
-      <ScreenRenderer />
+      <div className={"flex flex-col"}>
+        <ScreenPicker />
+        <ScreenRenderer />
+      </div>
     </RenderContext.Provider>
   );
 }
