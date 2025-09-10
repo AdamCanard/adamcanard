@@ -17,6 +17,12 @@ interface ILocationOffset {
   top: number;
   left: number;
 }
+
+interface ISizeOffset {
+  width: number;
+  height: number;
+}
+
 interface IResizeDirection {
   horizontal: number;
   vertical: number;
@@ -30,10 +36,13 @@ export default function DesktopWindow(props: {
 }) {
   const { closeWindow } = useContext(WindowContext);
 
+  //Reference variables for changing size and location
   const [width, setWidth] = useState(props.startingWidth);
   const [height, setHeight] = useState(props.startingHeight);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
+
+  //Active size and Location of window
   const [point, setPoint] = useState<IPoint>({
     top: top,
     left: left,
@@ -41,76 +50,90 @@ export default function DesktopWindow(props: {
     height: props.startingHeight,
   });
 
+  //Difference in reference and active values
   const [locationOffset, setLocationOffset] = useState<ILocationOffset>({
     top: 0,
     left: 0,
   });
-  const [widthOffset, setWidthOffset] = useState<number>(0);
-  const [heightOffset, setHeightOffset] = useState<number>(0);
+  const [sizeOffset, setSizeOffset] = useState<ISizeOffset>({
+    width: 0,
+    height: 0,
+  });
 
+  const resetOffsets = () => {
+    setSizeOffset({ width: 0, height: 0 });
+    setLocationOffset({
+      top: 0,
+      left: 0,
+    });
+    setDirection({ horizontal: 0, vertical: 0 });
+  };
+
+  //Track the direction of size change
   const [direction, setDirection] = useState<IResizeDirection>({
     horizontal: 0,
     vertical: 0,
   });
 
+  //Easily update cursor display
   const [cursor, setCursor] = useState<string>("grab");
 
   const handleRightResize = (e: React.MouseEvent<HTMLElement>) => {
     setDirection({ horizontal: 1, vertical: 0 });
-    setWidthOffset(e.clientX);
+    setSizeOffset({ width: e.clientX, height: 0 });
   };
   const handleBottomResize = (e: React.MouseEvent<HTMLElement>) => {
     setDirection({ horizontal: 0, vertical: 1 });
-    setHeightOffset(e.clientY);
+    setSizeOffset({ width: 0, height: e.clientY });
   };
   const handleLeftResize = (e: React.MouseEvent<HTMLElement>) => {
     setDirection({ horizontal: -1, vertical: 0 });
-    setWidthOffset(e.clientX);
+    setSizeOffset({ width: e.clientX, height: 0 });
   };
   const handleTopResize = (e: React.MouseEvent<HTMLElement>) => {
     setDirection({ horizontal: 0, vertical: -1 });
-
-    setHeightOffset(e.clientY);
+    setSizeOffset({ width: 0, height: e.clientY });
   };
+
   const widthResizePoint = useCallback(
     (e: MouseEvent) => {
       if (direction.horizontal === -1) {
         setPoint({
           top: point.top,
-          left: left + (e.clientX - widthOffset),
-          width: width - (e.clientX - widthOffset) / 16,
+          left: left + (e.clientX - sizeOffset.width),
+          width: width - (e.clientX - sizeOffset.width) / 16,
           height: point.height,
         });
       } else {
         setPoint({
           top: point.top,
           left: point.left,
-          width: width + (e.clientX - widthOffset) / 16,
+          width: width + (e.clientX - sizeOffset.width) / 16,
           height: point.height,
         });
       }
     },
-    [point, widthOffset, width, direction.horizontal, left],
+    [point, sizeOffset, width, direction.horizontal, left],
   );
   const heightResizePoint = useCallback(
     (e: MouseEvent) => {
       if (direction.vertical === -1) {
         setPoint({
-          top: top + (e.clientY - heightOffset),
+          top: top + (e.clientY - sizeOffset.height),
           left: point.left,
           width: point.width,
-          height: height - (e.clientY - heightOffset) / 16,
+          height: height - (e.clientY - sizeOffset.height) / 16,
         });
       } else {
         setPoint({
           top: point.top,
           left: point.left,
           width: point.width,
-          height: height + (e.clientY - heightOffset) / 16,
+          height: height + (e.clientY - sizeOffset.height) / 16,
         });
       }
     },
-    [point, heightOffset, height, direction.vertical, top],
+    [point, sizeOffset.height, height, direction.vertical, top],
   );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -140,27 +163,23 @@ export default function DesktopWindow(props: {
   );
 
   const resetPoint = useCallback(() => {
-    setLocationOffset({
-      top: 0,
-      left: 0,
-    });
+    resetOffsets();
     setLeft(point.left);
     setTop(point.top);
+    resetOffsets();
     setCursor("grab");
   }, [point.top, point.left]);
 
   const finishWidthResize = useCallback(() => {
-    setWidthOffset(0);
     setWidth(point.width);
     setLeft(point.left);
-    setDirection({ horizontal: 0, vertical: 0 });
+    resetOffsets();
   }, [point.width, point.left]);
 
   const finishHeightResize = useCallback(() => {
-    setHeightOffset(0);
     setHeight(point.height);
     setTop(point.top);
-    setDirection({ horizontal: 0, vertical: 0 });
+    resetOffsets();
   }, [point.height, point.top]);
 
   useEffect(() => {
@@ -175,7 +194,7 @@ export default function DesktopWindow(props: {
   }, [movePoint, locationOffset, resetPoint]);
 
   useEffect(() => {
-    if (+heightOffset != 0) {
+    if (sizeOffset.height != 0) {
       addEventListener("mousemove", heightResizePoint);
       addEventListener("mouseup", finishHeightResize);
     }
@@ -183,10 +202,10 @@ export default function DesktopWindow(props: {
       removeEventListener("mousemove", heightResizePoint);
       removeEventListener("mouseup", finishHeightResize);
     };
-  }, [heightResizePoint, finishHeightResize, heightOffset]);
+  }, [heightResizePoint, finishHeightResize, sizeOffset.height]);
 
   useEffect(() => {
-    if (+widthOffset != 0) {
+    if (sizeOffset.width != 0) {
       addEventListener("mousemove", widthResizePoint);
       addEventListener("mouseup", finishWidthResize);
     }
@@ -194,7 +213,7 @@ export default function DesktopWindow(props: {
       removeEventListener("mousemove", widthResizePoint);
       removeEventListener("mouseup", finishWidthResize);
     };
-  }, [widthResizePoint, finishWidthResize, widthOffset]);
+  }, [widthResizePoint, finishWidthResize, sizeOffset.width]);
 
   return (
     <div
