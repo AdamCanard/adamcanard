@@ -96,6 +96,51 @@ export default function DesktopWindow(props: {
     setSizeOffset({ width: 0, height: e.clientY });
   };
 
+  //MouseDown for diagonal rezise
+  const handleTopRightResize = (e: React.MouseEvent<HTMLElement>) => {
+    setDirection({ horizontal: 1, vertical: -1 });
+    setSizeOffset({ width: e.clientX, height: e.clientY });
+  };
+  const handleBottomRightResize = (e: React.MouseEvent<HTMLElement>) => {
+    console.log("fire");
+    setDirection({ horizontal: 1, vertical: 1 });
+    setSizeOffset({ width: e.clientX, height: e.clientY });
+  };
+
+  const handleTopLeftResize = (e: React.MouseEvent<HTMLElement>) => {
+    setDirection({ horizontal: -1, vertical: -1 });
+    setSizeOffset({ width: e.clientX, height: e.clientY });
+  };
+  const handleBottomLeftResize = (e: React.MouseEvent<HTMLElement>) => {
+    setDirection({ horizontal: -1, vertical: 1 });
+    setSizeOffset({ width: e.clientX, height: e.clientY });
+  };
+
+  const resizePoint = useCallback(
+    (e: MouseEvent) => {
+      const newPoint = { ...point };
+
+      if (direction.horizontal === 1) {
+        newPoint.width = width + (e.clientX - sizeOffset.width) / 16;
+      }
+      if (direction.horizontal === -1) {
+        newPoint.left = left + (e.clientX - sizeOffset.width);
+        newPoint.width = width - (e.clientX - sizeOffset.width) / 16;
+      }
+      if (direction.vertical === 1) {
+        newPoint.height = height + (e.clientY - sizeOffset.height) / 16;
+      }
+
+      if (direction.vertical === -1) {
+        newPoint.top = top + (e.clientY - sizeOffset.height);
+        newPoint.height = height - (e.clientY - sizeOffset.height) / 16;
+      }
+
+      setPoint(newPoint);
+    },
+    [direction, height, width, left, top, point, sizeOffset],
+  );
+
   //MouseDown function for draggable div
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     setCursor("grabbing");
@@ -110,51 +155,6 @@ export default function DesktopWindow(props: {
       height: point.height,
     });
   };
-
-  //Runs continuously while user grabs either horizontal border || while sizeOffset.width != 0
-  const widthResizePoint = useCallback(
-    (e: MouseEvent) => {
-      if (direction.horizontal === -1) {
-        setPoint({
-          top: point.top,
-          left: left + (e.clientX - sizeOffset.width),
-          width: width - (e.clientX - sizeOffset.width) / 16,
-          height: point.height,
-        });
-      } else {
-        setPoint({
-          top: point.top,
-          left: point.left,
-          width: width + (e.clientX - sizeOffset.width) / 16,
-          height: point.height,
-        });
-      }
-    },
-    [point, sizeOffset, width, direction.horizontal, left],
-  );
-
-  //Runs continuously while user grabs either vertical border || while sizeOffset.height != 0
-  const heightResizePoint = useCallback(
-    (e: MouseEvent) => {
-      if (direction.vertical === -1) {
-        setPoint({
-          top: top + (e.clientY - sizeOffset.height),
-          left: point.left,
-          width: point.width,
-          height: height - (e.clientY - sizeOffset.height) / 16,
-        });
-      } else {
-        setPoint({
-          top: point.top,
-          left: point.left,
-          width: point.width,
-          height: height + (e.clientY - sizeOffset.height) / 16,
-        });
-      }
-    },
-    [point, sizeOffset.height, height, direction.vertical, top],
-  );
-
   //Runs continuously while user grabs draggable div || while locationOffset != 0
   const movePoint = useCallback(
     (e: MouseEvent) => {
@@ -177,17 +177,13 @@ export default function DesktopWindow(props: {
     setCursor("grab");
   }, [point.top, point.left]);
 
-  const finishWidthResize = useCallback(() => {
-    setWidth(point.width);
-    setLeft(point.left);
-    resetOffsets();
-  }, [point.width, point.left]);
-
-  const finishHeightResize = useCallback(() => {
-    setHeight(point.height);
+  const finishResize = useCallback(() => {
     setTop(point.top);
+    setLeft(point.left);
+    setWidth(point.width);
+    setHeight(point.height);
     resetOffsets();
-  }, [point.height, point.top]);
+  }, [point]);
 
   //useEffect watchers for move movement after mousedown
   useEffect(() => {
@@ -202,26 +198,15 @@ export default function DesktopWindow(props: {
   }, [movePoint, locationOffset, resetPoint]);
 
   useEffect(() => {
-    if (sizeOffset.height != 0) {
-      addEventListener("mousemove", heightResizePoint);
-      addEventListener("mouseup", finishHeightResize);
+    if (sizeOffset.height !== 0 || sizeOffset.width !== 0) {
+      addEventListener("mousemove", resizePoint);
+      addEventListener("mouseup", finishResize);
     }
     return () => {
-      removeEventListener("mousemove", heightResizePoint);
-      removeEventListener("mouseup", finishHeightResize);
+      removeEventListener("mousemove", resizePoint);
+      removeEventListener("mouseup", finishResize);
     };
-  }, [heightResizePoint, finishHeightResize, sizeOffset.height]);
-
-  useEffect(() => {
-    if (sizeOffset.width != 0) {
-      addEventListener("mousemove", widthResizePoint);
-      addEventListener("mouseup", finishWidthResize);
-    }
-    return () => {
-      removeEventListener("mousemove", widthResizePoint);
-      removeEventListener("mouseup", finishWidthResize);
-    };
-  }, [widthResizePoint, finishWidthResize, sizeOffset.width]);
+  }, [resizePoint, finishResize, sizeOffset]);
 
   return (
     <div
@@ -237,7 +222,7 @@ export default function DesktopWindow(props: {
       <div className={"flex flex-col w-1 h-full"}>
         <div
           className={"h-1 w-1 bg-black "}
-          onMouseDown={handleLeftResize}
+          onMouseDown={handleTopLeftResize}
         ></div>
         <div
           className={"h-full w-1 bg-red-500 cursor-ew-resize"}
@@ -245,7 +230,7 @@ export default function DesktopWindow(props: {
         ></div>
         <div
           className={"h-1 w-1 bg-black "}
-          onMouseDown={handleLeftResize}
+          onMouseDown={handleBottomLeftResize}
         ></div>
       </div>
 
@@ -285,7 +270,7 @@ export default function DesktopWindow(props: {
       <div className={"flex flex-col w-1 h-full"}>
         <div
           className={"h-1 w-1 bg-black "}
-          onMouseDown={handleLeftResize}
+          onMouseDown={handleTopRightResize}
         ></div>
         <div
           className={"h-full w-1 bg-red-500 cursor-ew-resize "}
@@ -293,7 +278,7 @@ export default function DesktopWindow(props: {
         ></div>
         <div
           className={"h-1 w-1 bg-black "}
-          onMouseDown={handleLeftResize}
+          onMouseDown={handleBottomRightResize}
         ></div>
       </div>
     </div>
