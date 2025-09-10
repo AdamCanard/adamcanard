@@ -17,6 +17,10 @@ interface ILocationOffset {
   top: number;
   left: number;
 }
+interface IResizeDirection {
+  horizontal: number;
+  vertical: number;
+}
 
 export default function DesktopWindow(props: {
   title: string;
@@ -43,29 +47,34 @@ export default function DesktopWindow(props: {
   });
   const [widthOffset, setWidthOffset] = useState<number>(0);
   const [heightOffset, setHeightOffset] = useState<number>(0);
-  //0 regular
-  //1 reverse
-  const [resizeDirection, setResizeDirection] = useState<number>(0);
+
+  const [direction, setDirection] = useState<IResizeDirection>({
+    horizontal: 0,
+    vertical: 0,
+  });
 
   const [cursor, setCursor] = useState<string>("grab");
 
-  const handleWidthResize = (e: React.MouseEvent<HTMLElement>) => {
+  const handleRightResize = (e: React.MouseEvent<HTMLElement>) => {
+    setDirection({ horizontal: 1, vertical: 0 });
     setWidthOffset(e.clientX);
   };
-  const handleHeightResize = (e: React.MouseEvent<HTMLElement>) => {
+  const handleBottomResize = (e: React.MouseEvent<HTMLElement>) => {
+    setDirection({ horizontal: 0, vertical: 1 });
     setHeightOffset(e.clientY);
   };
-  const reverseHandleWidthResize = (e: React.MouseEvent<HTMLElement>) => {
-    setResizeDirection(1);
+  const handleLeftResize = (e: React.MouseEvent<HTMLElement>) => {
+    setDirection({ horizontal: -1, vertical: 0 });
     setWidthOffset(e.clientX);
   };
-  const reverseHandleHeightResize = (e: React.MouseEvent<HTMLElement>) => {
-    setResizeDirection(1);
+  const handleTopResize = (e: React.MouseEvent<HTMLElement>) => {
+    setDirection({ horizontal: 0, vertical: -1 });
+
     setHeightOffset(e.clientY);
   };
   const widthResizePoint = useCallback(
     (e: MouseEvent) => {
-      if (resizeDirection === 1) {
+      if (direction.horizontal === -1) {
         setPoint({
           top: point.top,
           left: left + (e.clientX - widthOffset),
@@ -81,11 +90,11 @@ export default function DesktopWindow(props: {
         });
       }
     },
-    [point, widthOffset, width, resizeDirection, left],
+    [point, widthOffset, width, direction.horizontal, left],
   );
   const heightResizePoint = useCallback(
     (e: MouseEvent) => {
-      if (resizeDirection === 1) {
+      if (direction.vertical === -1) {
         setPoint({
           top: top + (e.clientY - heightOffset),
           left: point.left,
@@ -101,7 +110,7 @@ export default function DesktopWindow(props: {
         });
       }
     },
-    [point, heightOffset, height, resizeDirection, top],
+    [point, heightOffset, height, direction.vertical, top],
   );
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -144,14 +153,14 @@ export default function DesktopWindow(props: {
     setWidthOffset(0);
     setWidth(point.width);
     setLeft(point.left);
-    setResizeDirection(0);
+    setDirection({ horizontal: 0, vertical: 0 });
   }, [point.width, point.left]);
 
   const finishHeightResize = useCallback(() => {
     setHeightOffset(0);
     setHeight(point.height);
     setTop(point.top);
-    setResizeDirection(0);
+    setDirection({ horizontal: 0, vertical: 0 });
   }, [point.height, point.top]);
 
   useEffect(() => {
@@ -175,6 +184,7 @@ export default function DesktopWindow(props: {
       removeEventListener("mouseup", finishHeightResize);
     };
   }, [heightResizePoint, finishHeightResize, heightOffset]);
+
   useEffect(() => {
     if (+widthOffset != 0) {
       addEventListener("mousemove", widthResizePoint);
@@ -199,13 +209,13 @@ export default function DesktopWindow(props: {
     >
       <div
         className={"h-full w-1 bg-red-500 cursor-ew-resize col-start-1"}
-        onMouseDown={reverseHandleWidthResize}
+        onMouseDown={handleLeftResize}
       ></div>
       <div className={"flex-col"}>
         {" "}
         <div
           className={"h-1 w-full bg-red-500 cursor-ns-resize col-start-1"}
-          onMouseDown={reverseHandleHeightResize}
+          onMouseDown={handleTopResize}
         ></div>
         <div className="flex justify-between w-full relative ">
           <h1
@@ -232,12 +242,12 @@ export default function DesktopWindow(props: {
         </div>
         <div
           className={"h-1 w-full bg-red-500 cursor-ns-resize col-start-1"}
-          onMouseDown={handleHeightResize}
+          onMouseDown={handleBottomResize}
         ></div>
       </div>
       <div
         className={"h-full w-1 bg-red-500 cursor-ew-resize col-start-1"}
-        onMouseDown={handleWidthResize}
+        onMouseDown={handleRightResize}
       ></div>
     </div>
   );
