@@ -78,6 +78,7 @@ export default function DesktopWindow(props: {
   //Easily update cursor display
   const [cursor, setCursor] = useState<string>("grab");
 
+  //MouseDown functions for borders
   const handleRightResize = (e: React.MouseEvent<HTMLElement>) => {
     setDirection({ horizontal: 1, vertical: 0 });
     setSizeOffset({ width: e.clientX, height: 0 });
@@ -95,6 +96,22 @@ export default function DesktopWindow(props: {
     setSizeOffset({ width: 0, height: e.clientY });
   };
 
+  //MouseDown function for draggable div
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    setCursor("grabbing");
+    setLocationOffset({
+      top: e.nativeEvent.offsetY,
+      left: e.nativeEvent.offsetX,
+    });
+    setPoint({
+      top: e.pageY - e.nativeEvent.offsetY,
+      left: e.pageX - e.nativeEvent.offsetX,
+      width: point.width,
+      height: point.height,
+    });
+  };
+
+  //Runs continuously while user grabs either horizontal border || while sizeOffset.width != 0
   const widthResizePoint = useCallback(
     (e: MouseEvent) => {
       if (direction.horizontal === -1) {
@@ -115,6 +132,8 @@ export default function DesktopWindow(props: {
     },
     [point, sizeOffset, width, direction.horizontal, left],
   );
+
+  //Runs continuously while user grabs either vertical border || while sizeOffset.height != 0
   const heightResizePoint = useCallback(
     (e: MouseEvent) => {
       if (direction.vertical === -1) {
@@ -136,20 +155,7 @@ export default function DesktopWindow(props: {
     [point, sizeOffset.height, height, direction.vertical, top],
   );
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    setCursor("grabbing");
-    setLocationOffset({
-      top: e.nativeEvent.offsetY,
-      left: e.nativeEvent.offsetX,
-    });
-    setPoint({
-      top: e.pageY - e.nativeEvent.offsetY,
-      left: e.pageX - e.nativeEvent.offsetX,
-      width: point.width,
-      height: point.height,
-    });
-  };
-
+  //Runs continuously while user grabs draggable div || while locationOffset != 0
   const movePoint = useCallback(
     (e: MouseEvent) => {
       setPoint({
@@ -162,6 +168,7 @@ export default function DesktopWindow(props: {
     [locationOffset.left, locationOffset.top, point.width, point.height],
   );
 
+  //resets for each action
   const resetPoint = useCallback(() => {
     resetOffsets();
     setLeft(point.left);
@@ -182,6 +189,7 @@ export default function DesktopWindow(props: {
     resetOffsets();
   }, [point.height, point.top]);
 
+  //useEffect watchers for move movement after mousedown
   useEffect(() => {
     if (+locationOffset.top != 0) {
       addEventListener("mousemove", movePoint);
