@@ -221,15 +221,15 @@ export default function DesktopWindow(props: {
     >
       <div className={"flex flex-col w-1 h-full"}>
         <div
-          className={"h-1 w-1 bg-black "}
+          className={"h-1 w-1 bg-black cursor-nwse-resize"}
           onMouseDown={handleTopLeftResize}
         ></div>
         <div
-          className={"h-full w-1 bg-red-500 cursor-ew-resize"}
+          className={"h-full w-1 bg-red-500 cursor-nesw-resize"}
           onMouseDown={handleLeftResize}
         ></div>
         <div
-          className={"h-1 w-1 bg-black "}
+          className={"h-1 w-1 bg-black cursor-sw-resize"}
           onMouseDown={handleBottomLeftResize}
         ></div>
       </div>
@@ -269,7 +269,7 @@ export default function DesktopWindow(props: {
       </div>
       <div className={"flex flex-col w-1 h-full"}>
         <div
-          className={"h-1 w-1 bg-black "}
+          className={"h-1 w-1 bg-black cursor-nesw-resize"}
           onMouseDown={handleTopRightResize}
         ></div>
         <div
@@ -277,7 +277,7 @@ export default function DesktopWindow(props: {
           onMouseDown={handleRightResize}
         ></div>
         <div
-          className={"h-1 w-1 bg-black "}
+          className={"h-1 w-1 bg-black cursor-nwse-resize"}
           onMouseDown={handleBottomRightResize}
         ></div>
       </div>
