@@ -6,5 +6,5 @@ export interface IWindow {
   height: number;
 }
 export const windowRecord: Record<string, IWindow> = {
-  Mobile: { window: <MobilePage key={"Mobile"} />, width: 32, height: 32 },
+  Mobile: { window: <MobilePage key={"Mobile"} />, width: 24, height: 48 },
 };

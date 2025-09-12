@@ -1,6 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
 import { IWindow, windowRecord } from "./windowrecord";
-import MobilePage from "../mobile/mobilepage";
 
 interface IWindows {
   windows: IWindow[];
@@ -11,9 +10,7 @@ interface IWindows {
 export const WindowContext = createContext<IWindows>({} as IWindows);
 
 export default function WindowProvider(props: { children: ReactNode }) {
-  const [windows, setWindows] = useState<IWindow[]>([
-    { window: <MobilePage key={"Mobile"} />, width: 20, height: 46 },
-  ]);
+  const [windows, setWindows] = useState<IWindow[]>([windowRecord["Mobile"]]);
   //const isOpen = (name: string) => {
   //  for (let i = 0; i < windows.length; i++) {
   //    if (windows[i].key == name) {
