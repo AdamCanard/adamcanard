@@ -12,7 +12,7 @@ export default function Info() {
         </div>
       </div>
 
-      <div id="boxshadow" className={"flex flex-col w-full h-48"}>
+      <div id="boxshadow" className={"flex flex-col w-full min-h-48 h-1/2"}>
         <h1 id="title">Information</h1>
         <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
           <div className={"w-full h-full px-2 text-lg "}>
