@@ -2,14 +2,34 @@ import { useContext } from "react";
 import { WindowContext } from "./windowprovider";
 import { IWindow } from "./windowrecord";
 import Image from "next/image";
+import WindowsXP from "../../../public/Windows/Windows XP.png";
 
 export default function TaskBar() {
   const { windows } = useContext(WindowContext);
   return (
-    <div className={"w-full h-8 bg-blue-400"}>
+    <div className={"w-full h-8 bg-blue-400 "}>
+      <StartButton />
       {windows.map((window: IWindow) => {
         return <Tab window={window} key={window.window.key} />;
       })}
+    </div>
+  );
+}
+
+function StartButton() {
+  const { toggleStartMenu } = useContext(WindowContext);
+  return (
+    <div
+      className={
+        "flex flex-row w-24 h-full p-2 items-center bg-green-500 gap-2 cursor-pointer"
+      }
+      onClick={toggleStartMenu}
+    >
+      <div className={"relative h-full w-1/4"}>
+        <Image src={WindowsXP} alt={"Windows Icon"} fill={true} />
+      </div>
+
+      <p>Start</p>
     </div>
   );
 }
