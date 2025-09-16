@@ -3,7 +3,6 @@ import MobilePage from "../mobile/mobilepage";
 import Image, { StaticImageData } from "next/image";
 
 import MobileIcon from "../../../public/Windows/MobileIcon.png";
-
 export interface IWindow {
   window: ReactElement;
   width: number;
