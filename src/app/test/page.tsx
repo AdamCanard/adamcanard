@@ -4,7 +4,7 @@ import { useContext } from "react";
 import TaskBar from "./taskbar";
 import { WindowContext } from "./windowprovider";
 import Windows from "./windows";
-import { StartMenuRecord, WindowRecord } from "./windowrecord";
+import { StartMenuRecord, WindowRecord } from "./records";
 
 export default function Page() {
   return (

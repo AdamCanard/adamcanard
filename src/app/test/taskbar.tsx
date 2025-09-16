@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { WindowContext } from "./windowprovider";
-import { IWindow } from "./windowrecord";
+import { IWindow } from "./records";
 import Image from "next/image";
 import WindowsXP from "../../../public/Windows/Windows XP.png";
 

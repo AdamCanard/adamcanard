@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import { IWindow, WindowRecord } from "./windowrecord";
+import { IWindow, WindowRecord } from "./records";
 
 interface IWindows {
   windows: IWindow[];
