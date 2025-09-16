@@ -39,8 +39,15 @@ export default function WindowProvider(props: { children: ReactNode }) {
       }
     }
   };
+
   const openWindow = (windowKey: string) => {
     setWindows([...windows, TestRecord[windowKey]]);
+
+    if (activeWindows[windowKey]) {
+      const newActiveWindows = { ...activeWindows };
+      newActiveWindows[windowKey + "1"] = activeWindows[windowKey];
+      setActiveWindows(newActiveWindows);
+    }
   };
   return (
     <WindowContext.Provider
