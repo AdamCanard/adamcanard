@@ -10,15 +10,20 @@ export interface IWindow {
   height: number;
   icon: StaticImageData;
 }
-export const windowRecord: Record<string, IWindow> = {
+export const WindowRecord: Record<string, IWindow> = {
   Mobile: {
     window: <MobilePage key={"Mobile"} />,
     width: 24,
     height: 48,
     icon: MobileIcon,
   },
-  Test: {
-    window: <Image src={MobileIcon} alt={" Icon"} fill={true} key={"apple"} />,
+};
+
+export const StartMenuRecord: Record<string, IWindow> = {
+  PlaceHolderSettings: {
+    window: (
+      <Image src={MobileIcon} alt={" Icon"} fill={true} key={"Settings"} />
+    ),
     width: 16,
     height: 16,
     icon: MobileIcon,
