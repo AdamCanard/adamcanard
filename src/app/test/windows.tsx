@@ -6,10 +6,10 @@ import DesktopWindow from "./windowcomps/desktopwindow";
 import { IWindow } from "./records";
 
 export default function Windows() {
-  const { windows } = useContext(WindowContext);
+  const { activeWindows } = useContext(WindowContext);
   return (
     <div className={"w-full h-full relative"}>
-      {windows.map((window: IWindow) => {
+      {Object.values(activeWindows).map((window: IWindow) => {
         return (
           <DesktopWindow
             title={window.window.key || ""}

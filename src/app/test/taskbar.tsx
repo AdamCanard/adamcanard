@@ -5,11 +5,11 @@ import Image from "next/image";
 import WindowsXP from "../../../public/Windows/Windows XP.png";
 
 export default function TaskBar() {
-  const { windows } = useContext(WindowContext);
+  const { activeWindows } = useContext(WindowContext);
   return (
     <div className={"w-full h-8 bg-blue-400 "}>
       <StartButton />
-      {windows.map((window: IWindow) => {
+      {Object.values(activeWindows).map((window: IWindow) => {
         return <Tab window={window} key={window.window.key} />;
       })}
     </div>

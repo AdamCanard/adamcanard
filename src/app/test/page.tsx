@@ -4,7 +4,7 @@ import { useContext } from "react";
 import TaskBar from "./taskbar";
 import { WindowContext } from "./windowprovider";
 import Windows from "./windows";
-import { StartMenuRecord, WindowRecord } from "./records";
+import { StartMenuRecord, TestRecord } from "./records";
 
 export default function Page() {
   return (
@@ -24,7 +24,7 @@ function StartMenu() {
         <div className={"h-18 bg-black"}></div>
         <div className={"flex flex-row h-full w-full  relative"}>
           <div className={"flex flex-col h-full w-full gap-2 bg-white "}>
-            {Object.values(WindowRecord).map((window) => {
+            {Object.values(TestRecord).map((window) => {
               return (
                 <div
                   className={"w-full h-12 border-2 hover:bg-blue-500"}
