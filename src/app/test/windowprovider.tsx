@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { IWindow, TestRecord } from "./records";
+import { createMobile } from "./createapplication";
 
 interface IWindows {
   activeWindows: Record<string, IWindow>;
@@ -12,8 +13,9 @@ interface IWindows {
 export const WindowContext = createContext<IWindows>({} as IWindows);
 
 export default function WindowProvider(props: { children: ReactNode }) {
-  const [activeWindows, setActiveWindows] =
-    useState<Record<string, IWindow>>(TestRecord);
+  const [activeWindows, setActiveWindows] = useState<Record<string, IWindow>>(
+    {},
+  );
 
   const [windows, setWindows] = useState<IWindow[]>([TestRecord["Mobile"]]);
   const [startMenu, setStartMenu] = useState<boolean>(false);
@@ -41,13 +43,19 @@ export default function WindowProvider(props: { children: ReactNode }) {
   };
 
   const openWindow = (windowKey: string) => {
-    setWindows([...windows, TestRecord[windowKey]]);
-
+    const newActiveWindows = { ...activeWindows };
     if (activeWindows[windowKey]) {
-      const newActiveWindows = { ...activeWindows };
-      newActiveWindows[windowKey + "1"] = activeWindows[windowKey];
-      setActiveWindows(newActiveWindows);
+      const newWindowKey = "" + Object.values(activeWindows).length;
+      for (let i = 0; i < Object.keys(activeWindows).length; i++) {
+        console.log(Object.keys(activeWindows)[i]);
+      }
+
+      newActiveWindows[windowKey + newWindowKey] = createMobile(newWindowKey);
+    } else {
+      newActiveWindows[windowKey] = createMobile();
     }
+    console.log(newActiveWindows);
+    setActiveWindows(newActiveWindows);
   };
   return (
     <WindowContext.Provider
