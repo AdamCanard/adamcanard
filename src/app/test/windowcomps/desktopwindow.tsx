@@ -257,7 +257,7 @@ export default function DesktopWindow(props: {
           <div
             id="close-dr"
             className="absolute"
-            onClick={() => closeWindow(props.title)}
+            onClick={() => closeWindow(props.children.key || "")}
           ></div>
         </div>
         <div

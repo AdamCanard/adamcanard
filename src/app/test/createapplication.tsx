@@ -27,6 +27,7 @@ export const createAnotherApplication = (
 export const createMobile = (key: string) => {
   const newMobile: IWindow = {
     window: <MobilePage key={key} />,
+    title: "Mobile",
     width: 24,
     height: 48,
     icon: MobileIcon,

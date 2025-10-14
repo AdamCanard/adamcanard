@@ -12,7 +12,7 @@ export default function Windows() {
       {Object.values(activeWindows).map((window: IWindow) => {
         return (
           <DesktopWindow
-            title={window.window.key || ""}
+            title={window.title || ""}
             startingWidth={window.width}
             startingHeight={window.height}
             key={window.window.key}

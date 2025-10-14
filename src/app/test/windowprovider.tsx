@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
-import { IWindow, TestRecord } from "./records";
+import { IWindow } from "./records";
 import {
   applicationEnum,
   createAnotherApplication,
@@ -21,7 +21,6 @@ export default function WindowProvider(props: { children: ReactNode }) {
     {},
   );
 
-  const [windows, setWindows] = useState<IWindow[]>([TestRecord["Mobile"]]);
   const [startMenu, setStartMenu] = useState<boolean>(false);
   //const isOpen = (name: string) => {
   //  for (let i = 0; i < windows.length; i++) {
@@ -37,33 +36,32 @@ export default function WindowProvider(props: { children: ReactNode }) {
     setStartMenu(!startMenu);
   };
 
-  const closeWindow = (name: string) => {
-    for (let i = 0; i < windows.length; i++) {
-      if (windows[i].window.key == name) {
-        const newWindows = windows.toSpliced(i, 1);
-        setWindows(newWindows);
-      }
-    }
+  const closeWindow = (windowKey: string) => {
+    console.log(windowKey);
+    console.log(activeWindows);
+    const newActiveWindows = { ...activeWindows };
+    delete newActiveWindows[windowKey];
+    setActiveWindows(newActiveWindows);
   };
 
   const openWindow = (windowKey: string) => {
     const newActiveWindows = { ...activeWindows };
+
     if (activeWindows[windowKey]) {
-      const newWindowKey = "" + Object.values(activeWindows).length;
-      for (let i = 0; i < Object.keys(activeWindows).length; i++) {
-        console.log(Object.keys(activeWindows)[i]);
+      let keyedWindows = 0;
+      for (let i = 0; i < Object.values(activeWindows).length; i++) {
+        if (Object.values(activeWindows)[i].title === windowKey) {
+          keyedWindows += 1;
+        }
       }
 
-      newActiveWindows[windowKey + newWindowKey] = createAnotherApplication(
-        applicationEnum.Mobile,
-        1,
-      );
+      newActiveWindows[applicationEnum.Mobile + ` (${keyedWindows})`] =
+        createAnotherApplication(applicationEnum.Mobile, keyedWindows);
     } else {
       newActiveWindows[windowKey] = createNewApplication(
         applicationEnum.Mobile,
       );
     }
-    console.log(newActiveWindows);
     setActiveWindows(newActiveWindows);
   };
   return (
