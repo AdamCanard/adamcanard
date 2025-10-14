@@ -37,8 +37,6 @@ export default function WindowProvider(props: { children: ReactNode }) {
   };
 
   const closeWindow = (windowKey: string) => {
-    console.log(windowKey);
-    console.log(activeWindows);
     const newActiveWindows = { ...activeWindows };
     delete newActiveWindows[windowKey];
     setActiveWindows(newActiveWindows);
@@ -46,13 +44,11 @@ export default function WindowProvider(props: { children: ReactNode }) {
 
   const openWindow = (windowKey: string) => {
     const newActiveWindows = { ...activeWindows };
-
+    console.log(windowKey);
     if (activeWindows[windowKey]) {
-      let keyedWindows = 0;
-      for (let i = 0; i < Object.values(activeWindows).length; i++) {
-        if (Object.values(activeWindows)[i].title === windowKey) {
-          keyedWindows += 1;
-        }
+      let keyedWindows = 1;
+      while (activeWindows[windowKey + ` (${keyedWindows})`]) {
+        keyedWindows += 1;
       }
 
       newActiveWindows[applicationEnum.Mobile + ` (${keyedWindows})`] =
@@ -62,6 +58,7 @@ export default function WindowProvider(props: { children: ReactNode }) {
         applicationEnum.Mobile,
       );
     }
+    console.log(newActiveWindows);
     setActiveWindows(newActiveWindows);
   };
   return (
