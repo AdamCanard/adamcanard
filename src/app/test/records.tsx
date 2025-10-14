@@ -9,6 +9,7 @@ export interface IWindow {
   height: number;
   icon: StaticImageData;
 }
+
 export const TestRecord: Record<string, IWindow> = {
   Mobile: {
     window: <MobilePage key={"Mobile"} />,
