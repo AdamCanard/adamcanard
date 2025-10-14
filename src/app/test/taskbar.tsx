@@ -7,7 +7,7 @@ import WindowsXP from "../../../public/Windows/Windows XP.png";
 export default function TaskBar() {
   const { activeWindows } = useContext(WindowContext);
   return (
-    <div className={"w-full h-8 bg-blue-400 "}>
+    <div className={"w-full h-8 bg-blue-400 flex"}>
       <StartButton />
       {Object.values(activeWindows).map((window: IWindow) => {
         return <Tab window={window} key={window.window.key} />;
@@ -43,7 +43,6 @@ function Tab(props: { window: IWindow }) {
       className={"flex flex-row bg-blue-300 w-36 h-full p-2 gap-2 items-center"}
     >
       <div className={"relative h-full w-1/8"}>
-        {" "}
         <Image
           src={window.icon}
           alt={window.window.key + " Icon"}

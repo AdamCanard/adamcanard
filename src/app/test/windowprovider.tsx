@@ -44,7 +44,6 @@ export default function WindowProvider(props: { children: ReactNode }) {
 
   const openWindow = (windowKey: string) => {
     const newActiveWindows = { ...activeWindows };
-    console.log(windowKey);
     if (activeWindows[windowKey]) {
       let keyedWindows = 1;
       while (activeWindows[windowKey + ` (${keyedWindows})`]) {
