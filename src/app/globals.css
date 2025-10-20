@@ -11,10 +11,17 @@ root {
   }
 }
 
+@theme inline {
+  --font-trebuchet: var(--font-trebuchet);
+}
+
 /* NEW STYLES */
 
 .WindowTile {
   background: linear-gradient(#081bcb, #0062ea);
+  color: white;
+  padding: 3px 2px 3px 3px;
+  letter-spacing: 0;
 }
 
 @media (max-width: 1000px) {
@@ -31,11 +38,6 @@ root {
   }
   #desktop {
     display: none;
-  }
-  h1 {
-    color: white;
-    padding: 3px 2px 3px 3px;
-    letter-spacing: 0;
   }
 }
 @media (min-width: 1001px) {

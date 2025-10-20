@@ -248,7 +248,7 @@ export default function DesktopWindow(props: {
         ></div>
         <div className="WindowTile flex justify-between w-full relative ">
           <h1
-            className={"w-full h-8 "}
+            className={"w-full h-8 font-trebuchet "}
             style={{ cursor: cursor }}
             onMouseDown={handleMouseMove}
           >
