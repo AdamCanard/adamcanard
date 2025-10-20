@@ -260,18 +260,19 @@ export default function DesktopWindow(props: {
           </h1>
           <div className={"flex relative w-24 gap-1"}>
             <div
-              className="MinimizeTile rounded-sm relative flex justify-start items-end p-1"
+              className="MinimizeTile rounded-sm relative flex justify-start items-end p-1 cursor-pointer"
               onClick={() => closeWindow(props.children.key || "")}
             >
               <Image
                 src={MinimizeSrc}
                 width={9}
                 height={18}
-                alt="Maximize Button"
+                alt="Minimize Button"
+                draggable={false}
               />
             </div>{" "}
             <div
-              className="FullscreenTile rounded-sm relative flex justify-center items-center"
+              className="FullscreenTile rounded-sm relative flex justify-center items-center cursor-pointer"
               onClick={() => closeWindow(props.children.key || "")}
             >
               <Image
@@ -279,17 +280,19 @@ export default function DesktopWindow(props: {
                 width={18}
                 height={18}
                 alt="Maximize Button"
+                draggable={false}
               />
             </div>
             <div
-              className="CloseTile rounded-sm relative flex justify-center items-center"
+              className="CloseTile rounded-sm relative flex justify-center items-center cursor-pointer"
               onClick={() => closeWindow(props.children.key || "")}
             >
               <Image
                 src={CloseSrc}
                 width={18}
                 height={18}
-                alt="Maximize Button"
+                alt="Close Button"
+                draggable={false}
               />
             </div>
           </div>
