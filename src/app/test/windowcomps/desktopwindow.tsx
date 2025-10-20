@@ -246,22 +246,24 @@ export default function DesktopWindow(props: {
           className={"h-1 w-full cursor-ns-resize "}
           onMouseDown={handleTopResize}
         ></div>
-        <div className="flex justify-between w-full relative ">
+        <div className="WindowTile flex justify-between w-full relative ">
           <h1
-            className={"w-full h-8 bg-blue-500"}
+            className={"w-full h-8 "}
             style={{ cursor: cursor }}
             onMouseDown={handleMouseMove}
           >
             {props.title}
           </h1>
           <div
-            id="close-dr"
-            className="absolute"
+            className="absolute closeTile"
             onClick={() => closeWindow(props.children.key || "")}
           ></div>
           <div
-            id="minimize-dr"
-            className="absolute"
+            className="absolute fullscreenTile"
+            onClick={() => closeWindow(props.children.key || "")}
+          ></div>
+          <div
+            className="absolute minimizeTile"
             onClick={() => closeWindow(props.children.key || "")}
           ></div>
         </div>

@@ -11,6 +11,12 @@ root {
   }
 }
 
+/* NEW STYLES */
+
+.WindowTile {
+  background: linear-gradient(#081bcb, #0062ea);
+}
+
 @media (max-width: 1000px) {
   body {
     display: flex;
@@ -28,7 +34,6 @@ root {
   }
   h1 {
     color: white;
-    background: linear-gradient(90deg, #000080, #1084d0);
     padding: 3px 2px 3px 3px;
     letter-spacing: 0;
   }

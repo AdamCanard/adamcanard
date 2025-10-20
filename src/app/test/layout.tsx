@@ -8,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={"h-full flex-col"}>
+    <div className={"h-full w-full flex-col"}>
       <WindowProvider>{children}</WindowProvider>
     </div>
   );
