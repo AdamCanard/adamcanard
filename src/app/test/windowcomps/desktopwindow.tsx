@@ -7,9 +7,9 @@ import {
 } from "react";
 import { WindowContext } from "../windowprovider";
 import Image from "next/image";
-import CloseSrc from "../../../../public/Windows/xp/tile_close.png";
-import MaximizeSrc from "../../../../public/Windows/xp/tile_maximize.png";
-import MinimizeSrc from "../../../../public/Windows/xp/tile_minimize.png";
+import CloseSrc from "../../../../public/Windows/xp/tile_close_white.png";
+import MaximizeSrc from "../../../../public/Windows/xp/tile_maximize_white.png";
+import MinimizeSrc from "../../../../public/Windows/xp/tile_minimize_white.png";
 
 interface IPoint {
   top: number;
