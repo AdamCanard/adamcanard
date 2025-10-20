@@ -14,7 +14,25 @@ root {
 @theme inline {
   --font-trebuchet: var(--font-trebuchet);
 }
-
+#close-dr {
+  padding: 0;
+  display: block;
+  min-width: 16px;
+  min-height: 14px;
+  margin-right: 3px;
+  right: 5px;
+  top: 25%;
+  background-color: #c0c0c0;
+  background-image: url("../../public/Windows/close.svg");
+  background-repeat: no-repeat;
+  background-position: top 3px left 4px;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fafafa,
+    inset -2px -2px #808080,
+    inset 2px 2px #dfdfdf;
+  cursor: pointer;
+}
 /* NEW STYLES */
 
 .WindowTile {
@@ -22,6 +40,25 @@ root {
   color: white;
   padding: 3px 2px 3px 3px;
   letter-spacing: 0;
+}
+
+.CloseTile {
+  width: 24px;
+  height: 24px;
+  border: 1px solid lightgray;
+  background: linear-gradient(to left top, #ee0000, #ffdddd);
+}
+.MinimizeTile {
+  width: 24px;
+  height: 24px;
+  border: 1px solid lightgray;
+  background: linear-gradient(to left top, #081bcb, #bbbbff);
+}
+.FullscreenTile {
+  width: 24px;
+  height: 24px;
+  border: 1px solid lightgray;
+  background: linear-gradient(to left top, #081bcb, #bbbbff);
 }
 
 @media (max-width: 1000px) {

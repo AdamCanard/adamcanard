@@ -6,6 +6,10 @@ import {
   useState,
 } from "react";
 import { WindowContext } from "../windowprovider";
+import Image from "next/image";
+import CloseSrc from "../../../../public/Windows/xp/tile_close.png";
+import MaximizeSrc from "../../../../public/Windows/xp/tile_maximize.png";
+import MinimizeSrc from "../../../../public/Windows/xp/tile_minimize.png";
 
 interface IPoint {
   top: number;
@@ -248,24 +252,47 @@ export default function DesktopWindow(props: {
         ></div>
         <div className="WindowTile flex justify-between w-full relative ">
           <h1
-            className={"w-full h-8 font-trebuchet "}
+            className={"flex w-full h-6 font-trebuchet font-bold items-center"}
             style={{ cursor: cursor }}
             onMouseDown={handleMouseMove}
           >
             {props.title}
           </h1>
-          <div
-            className="absolute closeTile"
-            onClick={() => closeWindow(props.children.key || "")}
-          ></div>
-          <div
-            className="absolute fullscreenTile"
-            onClick={() => closeWindow(props.children.key || "")}
-          ></div>
-          <div
-            className="absolute minimizeTile"
-            onClick={() => closeWindow(props.children.key || "")}
-          ></div>
+          <div className={"flex relative w-24 gap-1"}>
+            <div
+              className="MinimizeTile rounded-sm relative flex justify-start items-end p-1"
+              onClick={() => closeWindow(props.children.key || "")}
+            >
+              <Image
+                src={MinimizeSrc}
+                width={9}
+                height={18}
+                alt="Maximize Button"
+              />
+            </div>{" "}
+            <div
+              className="FullscreenTile rounded-sm relative flex justify-center items-center"
+              onClick={() => closeWindow(props.children.key || "")}
+            >
+              <Image
+                src={MaximizeSrc}
+                width={18}
+                height={18}
+                alt="Maximize Button"
+              />
+            </div>
+            <div
+              className="CloseTile rounded-sm relative flex justify-center items-center"
+              onClick={() => closeWindow(props.children.key || "")}
+            >
+              <Image
+                src={CloseSrc}
+                width={18}
+                height={18}
+                alt="Maximize Button"
+              />
+            </div>
+          </div>
         </div>
         <div
           className={"flex flex-row border-2"}
