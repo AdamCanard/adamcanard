@@ -8,6 +8,7 @@ export interface IWindow {
   title: string;
   width: number;
   height: number;
+  minimized?: boolean;
   icon: StaticImageData;
 }
 

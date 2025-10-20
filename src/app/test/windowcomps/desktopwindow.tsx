@@ -243,7 +243,7 @@ export default function DesktopWindow(props: {
 
       <div className={"flex-col"}>
         <div
-          className={"h-1 w-full  cursor-ns-resize "}
+          className={"h-1 w-full cursor-ns-resize "}
           onMouseDown={handleTopResize}
         ></div>
         <div className="flex justify-between w-full relative ">
@@ -256,6 +256,11 @@ export default function DesktopWindow(props: {
           </h1>
           <div
             id="close-dr"
+            className="absolute"
+            onClick={() => closeWindow(props.children.key || "")}
+          ></div>
+          <div
+            id="minimize-dr"
             className="absolute"
             onClick={() => closeWindow(props.children.key || "")}
           ></div>
