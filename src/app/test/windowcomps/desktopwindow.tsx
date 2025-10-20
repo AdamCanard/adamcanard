@@ -226,8 +226,8 @@ export default function DesktopWindow(props: {
       style={{
         top: point.top,
         left: point.left,
-        width: `${point.width + 0.5}rem`,
-        height: `${point.height + 2.5}rem`,
+        width: `${point.width - 0.4}rem`,
+        height: `${point.height + 1.5}rem`,
       }}
     >
       <div className={"flex flex-col w-1 h-full"}>
