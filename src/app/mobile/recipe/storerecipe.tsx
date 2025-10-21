@@ -85,7 +85,7 @@ function RecipeForm(props: {
         />
       </div>{" "}
       <div id={"border"} className={"w-full flex justify-between items-center"}>
-        <label className={"pl-1 w-full"}>Recipe Name:</label>
+        <label className={"pl-1 w-full"}>Recipe URL:</label>
         <input
           className={"w-full bg-white"}
           name="url"
