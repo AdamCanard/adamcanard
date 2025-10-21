@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   const formData = await req.formData();
   const recipe: IRecipe = {
     name: formData.get("name") as string,
-    url: formData.get("recipe") as string,
+    url: formData.get("url") as string,
   };
 
   try {
