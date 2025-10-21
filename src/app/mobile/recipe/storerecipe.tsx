@@ -72,7 +72,15 @@ function RecipeForm(props: {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   return (
-    <form id="border" onSubmit={props.handleSubmit} className={"flex flex-col"}>
+    <form
+      id="border"
+      onSubmit={(e) => {
+        props.handleSubmit(e);
+        setName("");
+        setUrl("");
+      }}
+      className={"flex flex-col"}
+    >
       <div id={"border"} className={"w-full flex justify-between items-center"}>
         <label className={"pl-1 w-full"}>Recipe Name:</label>
         <input
@@ -82,10 +90,11 @@ function RecipeForm(props: {
           onChange={(e) => {
             setName(e.target.value);
           }}
+          required
         />
       </div>{" "}
       <div id={"border"} className={"w-full flex justify-between items-center"}>
-        <label className={"pl-1 w-full"}>Recipe Name:</label>
+        <label className={"pl-1 w-full"}>Recipe URL:</label>
         <input
           className={"w-full bg-white"}
           name="url"
@@ -94,6 +103,7 @@ function RecipeForm(props: {
           onChange={(e) => {
             setUrl(e.target.value);
           }}
+          required
         />
       </div>
       <button id="button" className={"cursor-pointer"}>
@@ -104,11 +114,16 @@ function RecipeForm(props: {
 }
 function RecipeList(props: { recipes: IRecipe[] }) {
   return (
-    <div id="border">
+    <div id="border" className={"flex flex-col"}>
       {props.recipes.map((recipe) => {
         console.log(recipe);
         return (
-          <Link id="border" key={recipe.url} href={recipe.url}>
+          <Link
+            id="border"
+            className={"w-full"}
+            key={recipe.url}
+            href={recipe.url}
+          >
             {recipe.name}
           </Link>
         );
