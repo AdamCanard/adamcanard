@@ -104,11 +104,16 @@ function RecipeForm(props: {
 }
 function RecipeList(props: { recipes: IRecipe[] }) {
   return (
-    <div id="border">
+    <div id="border" className={"flex flex-col"}>
       {props.recipes.map((recipe) => {
         console.log(recipe);
         return (
-          <Link id="border" key={recipe.url} href={recipe.url}>
+          <Link
+            id="border"
+            className={"w-full"}
+            key={recipe.url}
+            href={recipe.url}
+          >
             {recipe.name}
           </Link>
         );
