@@ -1,7 +1,8 @@
 "use client";
-import GameContainer from "../testcomps/gamecontainer";
+//import GameContainer from "../testcomps/gamecontainer";
 import Beer from "./beer";
 import Info from "./info";
+import StoreRecipe from "./recipe/storerecipe";
 import { Renderer } from "./renderer/renderer";
 
 export default function MobilePage() {
@@ -10,7 +11,7 @@ export default function MobilePage() {
       toRender={{
         Info: <Info key={"Info"} />,
         Beer: <Beer key={"Beer"} />,
-        WIP: <GameContainer key={"WIP"} />,
+        Recipe: <StoreRecipe key={"Recipe"} />,
       }}
     />
   );
