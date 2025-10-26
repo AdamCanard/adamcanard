@@ -13,6 +13,7 @@ interface IWindows {
   openWindow: (windowKey: string) => void;
   closeWindow: (windowKey: string) => void;
   toggleMinimize: (windowKey: string) => void;
+  updateWindow: (windowKey: string, newWindow: IWindow) => void;
 }
 
 export const WindowContext = createContext<IWindows>({} as IWindows);
@@ -68,6 +69,15 @@ export default function WindowProvider(props: { children: ReactNode }) {
     }
     setActiveWindows(newActiveWindows);
   };
+
+  const updateWindow = (windowKey: string, newWindow: IWindow) => {
+    const newActiveWindows = { ...activeWindows };
+
+    console.log(newActiveWindows[windowKey]);
+    console.log(newWindow);
+    newActiveWindows[windowKey] = newWindow;
+    setActiveWindows(newActiveWindows);
+  };
   return (
     <WindowContext.Provider
       value={{
@@ -77,6 +87,7 @@ export default function WindowProvider(props: { children: ReactNode }) {
         closeWindow,
         toggleMinimize,
         toggleStartMenu,
+        updateWindow,
       }}
     >
       {props.children}

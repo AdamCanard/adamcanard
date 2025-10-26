@@ -37,7 +37,8 @@ export default function DesktopWindow(props: {
   window: IWindow;
   children: ReactElement;
 }) {
-  const { closeWindow, toggleMinimize } = useContext(WindowContext);
+  const { closeWindow, toggleMinimize, updateWindow } =
+    useContext(WindowContext);
   const { window } = props;
   //Reference variables for changing size and location
   const [width, setWidth] = useState(window.width);
@@ -189,20 +190,31 @@ export default function DesktopWindow(props: {
 
   //resets for each action
   const resetPoint = useCallback(() => {
-    resetOffsets();
     setLeft(point.left);
     setTop(point.top);
-    resetOffsets();
     setCursor("grab");
-  }, [point.top, point.left]);
+    const newWindow = { ...window };
+    newWindow.top = point.top;
+    newWindow.left = point.left;
+    updateWindow(window.window.key || "", newWindow);
+    resetOffsets();
+  }, [point.top, point.left, updateWindow, window]);
 
   const finishResize = useCallback(() => {
     setTop(point.top);
     setLeft(point.left);
     setWidth(point.width);
     setHeight(point.height);
+
+    const newWindow = { ...window };
+    newWindow.width = point.width;
+    newWindow.height = point.height;
+    newWindow.top = point.top;
+    newWindow.left = point.left;
+    updateWindow(window.window.key || "", newWindow);
+
     resetOffsets();
-  }, [point]);
+  }, [point, updateWindow, window]);
 
   //useEffect watchers for move movement after mousedown
   useEffect(() => {
