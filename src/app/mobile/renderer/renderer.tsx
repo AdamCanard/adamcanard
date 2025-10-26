@@ -38,7 +38,6 @@ export function Renderer(props: { toRender: Record<string, JSX.Element> }) {
       if (tab !== window.key) {
         setWindow(toRender[tab || ""]);
       }
-      console.log(window.key, tab);
     } else {
       router.push(pathname + "?" + "tab=" + (window.key || ""));
     }
