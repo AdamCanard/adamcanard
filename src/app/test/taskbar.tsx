@@ -35,11 +35,11 @@ function StartButton() {
 }
 
 function Tab(props: { window: IWindow }) {
-  const { closeWindow } = useContext(WindowContext);
+  //const { closeWindow } = useContext(WindowContext);
   const { window } = props;
   return (
     <div
-      onClick={() => closeWindow(window.window.key || "")}
+      onClick={() => console.log(window)}
       className={"flex flex-row bg-blue-300 w-36 h-full p-2 gap-2 items-center"}
     >
       <div className={"relative h-full w-1/8"}>

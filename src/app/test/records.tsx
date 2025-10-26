@@ -8,7 +8,7 @@ export interface IWindow {
   title: string;
   width: number;
   height: number;
-  minimized?: boolean;
+  minimized: boolean;
   icon: StaticImageData;
 }
 
@@ -19,6 +19,7 @@ export const TestRecord: Record<string, IWindow> = {
     width: 24,
     height: 48,
     icon: MobileIcon,
+    minimized: false,
   },
 };
 
@@ -31,5 +32,6 @@ export const StartMenuRecord: Record<string, IWindow> = {
     width: 16,
     height: 16,
     icon: MobileIcon,
+    minimized: false,
   },
 };

@@ -38,7 +38,7 @@ export default function DesktopWindow(props: {
   startingWidth: number;
   startingHeight: number;
 }) {
-  const { closeWindow } = useContext(WindowContext);
+  const { closeWindow, toggleMinimize } = useContext(WindowContext);
 
   //Reference variables for changing size and location
   const [width, setWidth] = useState(props.startingWidth);
@@ -282,7 +282,7 @@ export default function DesktopWindow(props: {
             <div className={"flex relative w-24 gap-1"}>
               <div
                 className="MinimizeTile rounded-sm relative flex justify-start items-end p-1 cursor-pointer"
-                onClick={() => closeWindow(props.children.key || "")}
+                onClick={() => toggleMinimize(props.children.key || "")}
               >
                 <Image
                   src={MinimizeSrc}

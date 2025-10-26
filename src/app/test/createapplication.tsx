@@ -31,6 +31,7 @@ export const createMobile = (key: string) => {
     width: 24,
     height: 48,
     icon: MobileIcon,
+    minimized: false,
   };
   return newMobile;
 };

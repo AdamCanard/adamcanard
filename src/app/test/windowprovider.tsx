@@ -12,6 +12,7 @@ interface IWindows {
   toggleStartMenu: () => void;
   openWindow: (windowKey: string) => void;
   closeWindow: (windowKey: string) => void;
+  toggleMinimize: (windowKey: string) => void;
 }
 
 export const WindowContext = createContext<IWindows>({} as IWindows);
@@ -42,6 +43,14 @@ export default function WindowProvider(props: { children: ReactNode }) {
     setActiveWindows(newActiveWindows);
   };
 
+  const toggleMinimize = (windowKey: string) => {
+    const newActiveWindows = { ...activeWindows };
+    const newWindow = newActiveWindows[windowKey];
+    newWindow.minimized = !newWindow.minimized;
+    newActiveWindows[windowKey] = newWindow;
+    setActiveWindows(newActiveWindows);
+  };
+
   const openWindow = (windowKey: string) => {
     const newActiveWindows = { ...activeWindows };
     if (activeWindows[windowKey]) {
@@ -57,7 +66,6 @@ export default function WindowProvider(props: { children: ReactNode }) {
         applicationEnum.Mobile,
       );
     }
-    console.log(newActiveWindows);
     setActiveWindows(newActiveWindows);
   };
   return (
@@ -67,6 +75,7 @@ export default function WindowProvider(props: { children: ReactNode }) {
         startMenu,
         openWindow,
         closeWindow,
+        toggleMinimize,
         toggleStartMenu,
       }}
     >
