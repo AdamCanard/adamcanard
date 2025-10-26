@@ -30,6 +30,8 @@ export const createMobile = (key: string) => {
     title: "Mobile",
     width: 24,
     height: 48,
+    top: 0,
+    left: 0,
     icon: MobileIcon,
     minimized: false,
   };

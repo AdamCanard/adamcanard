@@ -10,6 +10,7 @@ import Image from "next/image";
 import CloseSrc from "../../../../public/Windows/xp/tile_close_white.png";
 import MaximizeSrc from "../../../../public/Windows/xp/tile_maximize_white.png";
 import MinimizeSrc from "../../../../public/Windows/xp/tile_minimize_white.png";
+import { IWindow } from "../records";
 
 interface IPoint {
   top: number;
@@ -33,25 +34,23 @@ interface IResizeDirection {
 }
 
 export default function DesktopWindow(props: {
-  title: string;
+  window: IWindow;
   children: ReactElement;
-  startingWidth: number;
-  startingHeight: number;
 }) {
   const { closeWindow, toggleMinimize } = useContext(WindowContext);
-
+  const { window } = props;
   //Reference variables for changing size and location
-  const [width, setWidth] = useState(props.startingWidth);
-  const [height, setHeight] = useState(props.startingHeight);
-  const [top, setTop] = useState(0);
-  const [left, setLeft] = useState(0);
+  const [width, setWidth] = useState(window.width);
+  const [height, setHeight] = useState(window.height);
+  const [top, setTop] = useState(window.top);
+  const [left, setLeft] = useState(window.left);
 
   //Active size and Location of window
   const [point, setPoint] = useState<IPoint>({
     top: top,
     left: left,
-    width: props.startingWidth,
-    height: props.startingHeight,
+    width: width,
+    height: height,
   });
 
   //Difference in reference and active values
@@ -124,32 +123,23 @@ export default function DesktopWindow(props: {
       const newPoint = { ...point };
 
       if (direction.horizontal === 1) {
-        if (width + (e.clientX - sizeOffset.width) / 16 >= props.startingWidth)
+        if (width + (e.clientX - sizeOffset.width) / 16 >= window.width)
           newPoint.width = width + (e.clientX - sizeOffset.width) / 16;
       }
       if (direction.horizontal === -1) {
-        if (
-          width - (e.clientX - sizeOffset.width) / 16 >=
-          props.startingWidth
-        ) {
+        if (width - (e.clientX - sizeOffset.width) / 16 >= window.width) {
           newPoint.left = left + (e.clientX - sizeOffset.width);
           newPoint.width = width - (e.clientX - sizeOffset.width) / 16;
         }
       }
       if (direction.vertical === 1) {
-        if (
-          height + (e.clientY - sizeOffset.height) / 16 >=
-          props.startingHeight
-        ) {
+        if (height + (e.clientY - sizeOffset.height) / 16 >= window.height) {
           newPoint.height = height + (e.clientY - sizeOffset.height) / 16;
         }
       }
 
       if (direction.vertical === -1) {
-        if (
-          height - (e.clientY - sizeOffset.height) / 16 >=
-          props.startingHeight
-        ) {
+        if (height - (e.clientY - sizeOffset.height) / 16 >= window.height) {
           newPoint.top = top + (e.clientY - sizeOffset.height);
           newPoint.height = height - (e.clientY - sizeOffset.height) / 16;
         }
@@ -165,8 +155,8 @@ export default function DesktopWindow(props: {
       top,
       point,
       sizeOffset,
-      props.startingHeight,
-      props.startingWidth,
+      window.width,
+      window.height,
     ],
   );
 
@@ -277,7 +267,7 @@ export default function DesktopWindow(props: {
               style={{ cursor: cursor }}
               onMouseDown={handleMouseMove}
             >
-              {props.title}
+              {window.title}
             </h1>
             <div className={"flex relative w-24 gap-1"}>
               <div

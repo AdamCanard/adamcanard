@@ -12,12 +12,7 @@ export default function Windows() {
       {Object.values(activeWindows).map((window: IWindow) => {
         if (!window.minimized)
           return (
-            <DesktopWindow
-              title={window.title || ""}
-              startingWidth={window.width}
-              startingHeight={window.height}
-              key={window.window.key}
-            >
+            <DesktopWindow window={window} key={window.window.key}>
               {window.window}
             </DesktopWindow>
           );
