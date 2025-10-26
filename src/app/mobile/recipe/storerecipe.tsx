@@ -116,7 +116,6 @@ function RecipeList(props: { recipes: IRecipe[] }) {
   return (
     <div id="border" className={"flex flex-col"}>
       {props.recipes.map((recipe) => {
-        console.log(recipe);
         return (
           <Link
             id="border"
