@@ -24,15 +24,6 @@ export default function WindowProvider(props: { children: ReactNode }) {
   );
 
   const [startMenu, setStartMenu] = useState<boolean>(false);
-  //const isOpen = (name: string) => {
-  //  for (let i = 0; i < windows.length; i++) {
-  //    if (windows[i].key == name) {
-  //      return true;
-  //    }
-  //  }
-  //  return false;
-  //};
-  //
 
   const toggleStartMenu = () => {
     setStartMenu(!startMenu);
@@ -72,9 +63,6 @@ export default function WindowProvider(props: { children: ReactNode }) {
 
   const updateWindow = (windowKey: string, newWindow: IWindow) => {
     const newActiveWindows = { ...activeWindows };
-
-    console.log(newActiveWindows[windowKey]);
-    console.log(newWindow);
     newActiveWindows[windowKey] = newWindow;
     setActiveWindows(newActiveWindows);
   };

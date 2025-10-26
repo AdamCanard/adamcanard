@@ -124,23 +124,32 @@ export default function DesktopWindow(props: {
       const newPoint = { ...point };
 
       if (direction.horizontal === 1) {
-        if (width + (e.clientX - sizeOffset.width) / 16 >= window.width)
+        if (width + (e.clientX - sizeOffset.width) / 16 >= window.defaultWidth)
           newPoint.width = width + (e.clientX - sizeOffset.width) / 16;
       }
       if (direction.horizontal === -1) {
-        if (width - (e.clientX - sizeOffset.width) / 16 >= window.width) {
+        if (
+          width - (e.clientX - sizeOffset.width) / 16 >=
+          window.defaultWidth
+        ) {
           newPoint.left = left + (e.clientX - sizeOffset.width);
           newPoint.width = width - (e.clientX - sizeOffset.width) / 16;
         }
       }
       if (direction.vertical === 1) {
-        if (height + (e.clientY - sizeOffset.height) / 16 >= window.height) {
+        if (
+          height + (e.clientY - sizeOffset.height) / 16 >=
+          window.defaultHeight
+        ) {
           newPoint.height = height + (e.clientY - sizeOffset.height) / 16;
         }
       }
 
       if (direction.vertical === -1) {
-        if (height - (e.clientY - sizeOffset.height) / 16 >= window.height) {
+        if (
+          height - (e.clientY - sizeOffset.height) / 16 >=
+          window.defaultHeight
+        ) {
           newPoint.top = top + (e.clientY - sizeOffset.height);
           newPoint.height = height - (e.clientY - sizeOffset.height) / 16;
         }
@@ -156,8 +165,8 @@ export default function DesktopWindow(props: {
       top,
       point,
       sizeOffset,
-      window.width,
-      window.height,
+      window.defaultHeight,
+      window.defaultWidth,
     ],
   );
 

@@ -8,6 +8,8 @@ export interface IWindow {
   title: string;
   width: number;
   height: number;
+  defaultWidth: number;
+  defaultHeight: number;
   top: number;
   left: number;
   minimized: boolean;
@@ -20,6 +22,8 @@ export const TestRecord: Record<string, IWindow> = {
     title: "Mobile",
     width: 24,
     height: 48,
+    defaultWidth: 24,
+    defaultHeight: 48,
     top: 0,
     left: 0,
     icon: MobileIcon,
@@ -35,6 +39,8 @@ export const StartMenuRecord: Record<string, IWindow> = {
     title: "placeholder",
     width: 16,
     height: 16,
+    defaultWidth: 16,
+    defaultHeight: 16,
     top: 0,
     left: 0,
     icon: MobileIcon,
