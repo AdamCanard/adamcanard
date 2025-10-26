@@ -230,81 +230,85 @@ export default function DesktopWindow(props: {
         height: `${point.height + 1.5}rem`,
       }}
     >
-      <div className={"flex flex-col w-1 h-full"}>
+      <div className={"flex flex-col w-1 h-full "}>
         <div
-          className={"h-1 w-1  cursor-nwse-resize"}
+          className={"h-2 w-2 cursor-nwse-resize"}
           onMouseDown={handleTopLeftResize}
         ></div>
         <div
-          className={"h-full w-1  cursor-nesw-resize"}
+          className={"h-full w-1 cursor-ew-resize"}
           onMouseDown={handleLeftResize}
         ></div>
         <div
-          className={"h-1 w-1  cursor-sw-resize"}
+          className={"h-2 w-2 cursor-sw-resize"}
           onMouseDown={handleBottomLeftResize}
         ></div>
       </div>
 
-      <div className={"flex-col"}>
+      <div className={"flex-col "}>
         <div
           className={"h-1 w-full cursor-ns-resize "}
           onMouseDown={handleTopResize}
         ></div>
-        <div className="WindowTile flex justify-between w-full relative ">
-          <h1
-            className={"flex w-full h-6 font-trebuchet font-bold items-center"}
-            style={{ cursor: cursor }}
-            onMouseDown={handleMouseMove}
-          >
-            {props.title}
-          </h1>
-          <div className={"flex relative w-24 gap-1"}>
-            <div
-              className="MinimizeTile rounded-sm relative flex justify-start items-end p-1 cursor-pointer"
-              onClick={() => closeWindow(props.children.key || "")}
+        <div className={"flex flex-col rounded-t-md contain-paint"}>
+          <div className="WindowTile flex justify-between w-full relative ">
+            <h1
+              className={
+                "flex w-full h-6 font-trebuchet font-bold items-center"
+              }
+              style={{ cursor: cursor }}
+              onMouseDown={handleMouseMove}
             >
-              <Image
-                src={MinimizeSrc}
-                width={9}
-                height={18}
-                alt="Minimize Button"
-                draggable={false}
-              />
-            </div>{" "}
-            <div
-              className="FullscreenTile rounded-sm relative flex justify-center items-center cursor-pointer"
-              onClick={() => closeWindow(props.children.key || "")}
-            >
-              <Image
-                src={MaximizeSrc}
-                width={18}
-                height={18}
-                alt="Maximize Button"
-                draggable={false}
-              />
-            </div>
-            <div
-              className="CloseTile rounded-sm relative flex justify-center items-center cursor-pointer"
-              onClick={() => closeWindow(props.children.key || "")}
-            >
-              <Image
-                src={CloseSrc}
-                width={18}
-                height={18}
-                alt="Close Button"
-                draggable={false}
-              />
+              {props.title}
+            </h1>
+            <div className={"flex relative w-24 gap-1"}>
+              <div
+                className="MinimizeTile rounded-sm relative flex justify-start items-end p-1 cursor-pointer"
+                onClick={() => closeWindow(props.children.key || "")}
+              >
+                <Image
+                  src={MinimizeSrc}
+                  width={9}
+                  height={18}
+                  alt="Minimize Button"
+                  draggable={false}
+                />
+              </div>{" "}
+              <div
+                className="FullscreenTile rounded-sm relative flex justify-center items-center cursor-pointer"
+                onClick={() => closeWindow(props.children.key || "")}
+              >
+                <Image
+                  src={MaximizeSrc}
+                  width={18}
+                  height={18}
+                  alt="Maximize Button"
+                  draggable={false}
+                />
+              </div>
+              <div
+                className="CloseTile rounded-sm relative flex justify-center items-center cursor-pointer"
+                onClick={() => closeWindow(props.children.key || "")}
+              >
+                <Image
+                  src={CloseSrc}
+                  width={18}
+                  height={18}
+                  alt="Close Button"
+                  draggable={false}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className={"flex flex-col border-2"}
-          style={{
-            width: `${point.width}rem`,
-            height: `${point.height}rem`,
-          }}
-        >
-          {props.children}
+          <div
+            className={"flex flex-col "}
+            style={{
+              width: `${point.width}rem`,
+              height: `${point.height}rem`,
+            }}
+          >
+            {props.children}
+          </div>
         </div>
         <div
           className={"h-1 w-full  cursor-ns-resize "}
@@ -313,7 +317,7 @@ export default function DesktopWindow(props: {
       </div>
       <div className={"flex flex-col w-1 h-full"}>
         <div
-          className={"h-1 w-1  cursor-nesw-resize"}
+          className={"h-2 w-2  cursor-nesw-resize"}
           onMouseDown={handleTopRightResize}
         ></div>
         <div
@@ -321,7 +325,7 @@ export default function DesktopWindow(props: {
           onMouseDown={handleRightResize}
         ></div>
         <div
-          className={"h-1 w-1  cursor-nwse-resize"}
+          className={"h-2 w-2  cursor-nwse-resize"}
           onMouseDown={handleBottomRightResize}
         ></div>
       </div>
