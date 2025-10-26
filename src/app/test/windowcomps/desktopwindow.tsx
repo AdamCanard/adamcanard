@@ -298,7 +298,7 @@ export default function DesktopWindow(props: {
           </div>
         </div>
         <div
-          className={"flex flex-row border-2"}
+          className={"flex flex-col border-2"}
           style={{
             width: `${point.width}rem`,
             height: `${point.height}rem`,
