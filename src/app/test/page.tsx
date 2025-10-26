@@ -17,7 +17,11 @@ export default function Page() {
 }
 
 function StartMenu() {
-  const { startMenu, openWindow } = useContext(WindowContext);
+  const { startMenu, openWindow, toggleStartMenu } = useContext(WindowContext);
+  const openWindowFromStart = (windowKey: string) => {
+    openWindow(windowKey);
+    toggleStartMenu();
+  };
   if (startMenu)
     return (
       <div className={"flex flex-col absolute w-96 h-1/2 bg-blue-500 bottom-8"}>
@@ -29,7 +33,7 @@ function StartMenu() {
                 <div
                   className={"w-full h-12 border-2 hover:bg-blue-500"}
                   key={window.window.key}
-                  onClick={() => openWindow(window.window.key || "")}
+                  onClick={() => openWindowFromStart(window.window.key || "")}
                 >
                   {window.window.key}
                 </div>
