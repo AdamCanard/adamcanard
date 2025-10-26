@@ -157,7 +157,17 @@ export default function DesktopWindow(props: {
 
       setPoint(newPoint);
     },
-    [direction, height, width, left, top, point, sizeOffset],
+    [
+      direction,
+      height,
+      width,
+      left,
+      top,
+      point,
+      sizeOffset,
+      props.startingHeight,
+      props.startingWidth,
+    ],
   );
 
   //MouseDown function for draggable div
