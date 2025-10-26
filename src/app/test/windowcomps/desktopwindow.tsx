@@ -106,7 +106,6 @@ export default function DesktopWindow(props: {
     setSizeOffset({ width: e.clientX, height: e.clientY });
   };
   const handleBottomRightResize = (e: React.MouseEvent<HTMLElement>) => {
-    console.log("fire");
     setDirection({ horizontal: 1, vertical: 1 });
     setSizeOffset({ width: e.clientX, height: e.clientY });
   };
@@ -125,23 +124,32 @@ export default function DesktopWindow(props: {
       const newPoint = { ...point };
 
       if (direction.horizontal === 1) {
-        if (width + (e.clientX - sizeOffset.width) / 16 >= 0)
+        if (width + (e.clientX - sizeOffset.width) / 16 >= props.startingWidth)
           newPoint.width = width + (e.clientX - sizeOffset.width) / 16;
       }
       if (direction.horizontal === -1) {
-        if (width - (e.clientX - sizeOffset.width) / 16 >= 0) {
+        if (
+          width - (e.clientX - sizeOffset.width) / 16 >=
+          props.startingWidth
+        ) {
           newPoint.left = left + (e.clientX - sizeOffset.width);
           newPoint.width = width - (e.clientX - sizeOffset.width) / 16;
         }
       }
       if (direction.vertical === 1) {
-        if (height + (e.clientY - sizeOffset.height) / 16) {
+        if (
+          height + (e.clientY - sizeOffset.height) / 16 >=
+          props.startingHeight
+        ) {
           newPoint.height = height + (e.clientY - sizeOffset.height) / 16;
         }
       }
 
       if (direction.vertical === -1) {
-        if (height - (e.clientY - sizeOffset.height) / 16) {
+        if (
+          height - (e.clientY - sizeOffset.height) / 16 >=
+          props.startingHeight
+        ) {
           newPoint.top = top + (e.clientY - sizeOffset.height);
           newPoint.height = height - (e.clientY - sizeOffset.height) / 16;
         }
