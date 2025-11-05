@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Photo from "../../../public/AdamBeer1.jpg";
 import MBlackJackGame from "./mobilegames/mobileblackjack";
+import { ChangeEvent, useState } from "react";
 
 export default function Info() {
   return (
@@ -12,14 +13,16 @@ export default function Info() {
         </div>
       </div>
 
-      <div id="boxshadow" className={"flex flex-col w-full h-48"}>
+      <div id="boxshadow" className={"flex flex-col w-full h-36"}>
         <h1 id="title">Information</h1>
         <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
           <div className={"w-full h-full px-2 text-lg "}>
-            If you want to see what im really capable of, visit this site on
-            desktop! In the meantime, play some BlackJack or check out my links
+            Secret Code Entry:
+            <SecretCodeInput />
           </div>
-          <div className={"flex w-full gap-2 justify-end items-end pb-1 pr-1"}>
+          <div
+            className={"flex w-full gap-2 justify-around items-end pb-1 pr-1"}
+          >
             <a href="https://www.instagram.com/adam_cunard/" id="button">
               Instagram
             </a>
@@ -39,6 +42,29 @@ export default function Info() {
         <h1 id="title"> BlackJack</h1>
         <MBlackJackGame />
       </div>
+    </div>
+  );
+}
+
+function SecretCodeInput() {
+  const [secretCode, setSecretCode] = useState("");
+
+  const updateSecretCode = (e: ChangeEvent<HTMLInputElement>) => {
+    setSecretCode(e.target.value);
+  };
+
+  const handleSecretCode = () => {
+    console.log(secretCode);
+  };
+  return (
+    <div className={"flex flex-row gap-2"}>
+      <input
+        type="text"
+        className={"w-full"}
+        value={secretCode}
+        onChange={updateSecretCode}
+      />
+      <button id="button" className={"self-end"} onClick={handleSecretCode} />
     </div>
   );
 }
