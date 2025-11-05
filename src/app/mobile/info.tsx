@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Photo from "../../../public/AdamBeer1.jpg";
 import MBlackJackGame from "./mobilegames/mobileblackjack";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
+import { RenderContext } from "./renderer/renderer";
 
 export default function Info() {
   return (
@@ -47,6 +48,7 @@ export default function Info() {
 }
 
 function SecretCodeInput() {
+  const { secretCodeInput } = useContext(RenderContext);
   const [secretCode, setSecretCode] = useState("");
 
   const updateSecretCode = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +56,7 @@ function SecretCodeInput() {
   };
 
   const handleSecretCode = () => {
-    console.log(secretCode);
+    console.log(secretCodeInput(secretCode));
   };
   return (
     <div className={"flex flex-row gap-2"}>

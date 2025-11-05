@@ -10,13 +10,13 @@ import Loading from "../desktop/sitecomps/loading";
 export default function MobilePage() {
   return (
     <Suspense fallback={<Loading />}>
-      <Renderer
-        toRender={{
-          Info: <Info key={"Info"} />,
-          Beer: <Beer key={"Beer"} />,
-          Recipe: <StoreRecipe key={"Recipe"} />,
-        }}
-      />
+      <Renderer />
     </Suspense>
   );
 }
+
+export const library: Record<string, JSX.Element> = {
+  Info: <Info key={"Info"} />,
+  Adam: <Beer key={"Adam"} />,
+  Recipe: <StoreRecipe key={"Recipe"} />,
+};
