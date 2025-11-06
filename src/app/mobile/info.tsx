@@ -6,16 +6,11 @@ import { RenderContext } from "./renderer/renderer";
 
 export default function Info() {
   const { resetTabs } = useContext(RenderContext);
-  return (
-    <div className={"flex flex-col w-full h-full"}>
-      <div id="boxshadow" className={"flex flex-col h-full max-h-1/2"}>
-        <h1 id="title">Adam Cunard Website. Thats Me!</h1>
-        <div className={"relative w-full h-full"}>
-          <Image src={Photo} alt="Photo of me" fill={true} />
-        </div>
-      </div>
-
-      <div id="boxshadow" className={"flex flex-col w-full h-36"}>
+  const shuffle = () => {
+    const newWindows = [...windows];
+    newWindows.splice(1, 1);
+    newWindows.push(
+      <div id="boxshadow" className={"flex flex-col w-full h-36"} key={"Code"}>
         <h1 id="title">Information</h1>
         <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
           <div className={"w-full h-full px-2 text-lg "}>
@@ -37,16 +32,64 @@ export default function Info() {
             <a href="https://github.com/AdamCanard" id="button">
               GitHub
             </a>
-            <button onClick={resetTabs} id="button">
+            <button onClick={shuffle} id="button">
               Reset
             </button>
           </div>
         </div>
+      </div>,
+    );
+    setWindows(newWindows);
+  };
+
+  const [windows, setWindows] = useState<JSX.Element[]>([
+    <div
+      id="boxshadow"
+      className={"flex flex-col h-full max-h-1/2"}
+      key={"Photo"}
+    >
+      <h1 id="title">Adam Cunard Website. Thats Me!</h1>
+      <div className={"relative w-full h-full"}>
+        <Image src={Photo} alt="Photo of me" fill={true} />
       </div>
-      <div id="boxshadow" className={"w-full flex flex-col"}>
-        <h1 id="title"> BlackJack</h1>
-        <MBlackJackGame />
+    </div>,
+    <div id="boxshadow" className={"flex flex-col w-full h-36"} key={"Code"}>
+      <h1 id="title">Information</h1>
+      <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
+        <div className={"w-full h-full px-2 text-lg "}>
+          Enter Secret Code:
+          <SecretCodeInput />
+        </div>
+        <div className={"flex w-full gap-2 justify-around items-end pb-1 pr-1"}>
+          <a href="https://www.instagram.com/adam_cunard/" id="button">
+            Instagram
+          </a>
+          <a
+            href="https://ca.linkedin.com/in/adam-cunard-3a4644287?trk=people-guest_people_search-card"
+            id="button"
+          >
+            LinkedIn
+          </a>
+          <a href="https://github.com/AdamCanard" id="button">
+            GitHub
+          </a>
+          <button onClick={shuffle} id="button">
+            Reset
+          </button>
+        </div>
       </div>
+    </div>,
+    <div id="boxshadow" className={"w-full flex flex-col"} key={"BlackJack"}>
+      <h1 id="title"> BlackJack</h1>
+      <MBlackJackGame />
+    </div>,
+  ]);
+
+  return (
+    <div className={"flex flex-col w-full h-full"}>
+      {windows.map((window: JSX.Element) => {
+        return window;
+      })}
     </div>
   );
 }
@@ -73,6 +116,9 @@ function SecretCodeInput() {
   };
   return (
     <form
+      onFocus={() => {
+        console.log("fire");
+      }}
       className={"flex flex-row gap-2 justify-between items-end"}
       onSubmit={(e) => {
         e.preventDefault();
