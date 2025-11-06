@@ -1,46 +1,11 @@
 import Image from "next/image";
 import Photo from "../../../public/AdamBeer1.jpg";
 import MBlackJackGame from "./mobilegames/mobileblackjack";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useCallback, useContext, useState } from "react";
 import { RenderContext } from "./renderer/renderer";
 
 export default function Info() {
   const { resetTabs } = useContext(RenderContext);
-  const shuffle = () => {
-    const newWindows = [...windows];
-    newWindows.splice(1, 1);
-    newWindows.push(
-      <div id="boxshadow" className={"flex flex-col w-full h-36"} key={"Code"}>
-        <h1 id="title">Information</h1>
-        <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
-          <div className={"w-full h-full px-2 text-lg "}>
-            Enter Secret Code:
-            <SecretCodeInput />
-          </div>
-          <div
-            className={"flex w-full gap-2 justify-around items-end pb-1 pr-1"}
-          >
-            <a href="https://www.instagram.com/adam_cunard/" id="button">
-              Instagram
-            </a>
-            <a
-              href="https://ca.linkedin.com/in/adam-cunard-3a4644287?trk=people-guest_people_search-card"
-              id="button"
-            >
-              LinkedIn
-            </a>
-            <a href="https://github.com/AdamCanard" id="button">
-              GitHub
-            </a>
-            <button onClick={shuffle} id="button">
-              Reset
-            </button>
-          </div>
-        </div>
-      </div>,
-    );
-    setWindows(newWindows);
-  };
 
   const [windows, setWindows] = useState<JSX.Element[]>([
     <div
@@ -73,7 +38,7 @@ export default function Info() {
           <a href="https://github.com/AdamCanard" id="button">
             GitHub
           </a>
-          <button onClick={shuffle} id="button">
+          <button onClick={resetTabs} id="button">
             Reset
           </button>
         </div>
@@ -84,12 +49,22 @@ export default function Info() {
       <MBlackJackGame />
     </div>,
   ]);
+  const shuffle = useCallback(() => {
+    const newWindows = [...windows];
+    console.log(windows);
+    const popped = newWindows.pop();
+    newWindows.unshift(popped || <></>);
 
+    setWindows(newWindows);
+  }, [windows]);
   return (
     <div className={"flex flex-col w-full h-full"}>
       {windows.map((window: JSX.Element) => {
         return window;
       })}
+      <button onClick={shuffle} id="button">
+        shuffle
+      </button>
     </div>
   );
 }
