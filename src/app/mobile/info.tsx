@@ -92,7 +92,6 @@ function SecretCodeInput() {
             className={"w-full h-6"}
             value={secretCode}
             onChange={updateSecretCode}
-            autoFocus
           />
           <button id="button" className={"w-full"} onClick={handleSecretCode}>
             Submit
