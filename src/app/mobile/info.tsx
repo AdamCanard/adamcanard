@@ -18,7 +18,7 @@ export default function Info() {
         <h1 id="title">Information</h1>
         <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
           <div className={"w-full h-full px-2 text-lg "}>
-            Secret Code Entry:
+            Enter Secret Code:
             <SecretCodeInput />
           </div>
           <div
@@ -50,23 +50,45 @@ export default function Info() {
 function SecretCodeInput() {
   const { secretCodeInput } = useContext(RenderContext);
   const [secretCode, setSecretCode] = useState("");
+  const [request, setRequest] = useState(false);
 
   const updateSecretCode = (e: ChangeEvent<HTMLInputElement>) => {
     setSecretCode(e.target.value);
   };
 
+  const toggleRequest = () => {
+    setSecretCode("");
+    const newRequest = !request;
+    setRequest(newRequest);
+  };
+
   const handleSecretCode = () => {
-    console.log(secretCodeInput(secretCode));
+    if (!secretCodeInput(secretCode)) {
+      toggleRequest();
+    }
   };
   return (
-    <div className={"flex flex-row gap-2"}>
-      <input
-        type="text"
-        className={"w-full"}
-        value={secretCode}
-        onChange={updateSecretCode}
-      />
-      <button id="button" className={"self-end"} onClick={handleSecretCode} />
+    <div className={"flex flex-row gap-2 justify-between items-end"}>
+      {request ? (
+        <>
+          <p className={"text-center w-full"}>{"Invaild Code"}</p>
+          <button id="button" className={"w-full"} onClick={toggleRequest}>
+            Try Again
+          </button>
+        </>
+      ) : (
+        <>
+          <input
+            type="text"
+            className={"w-full h-6"}
+            value={secretCode}
+            onChange={updateSecretCode}
+          />
+          <button id="button" className={"w-full"} onClick={handleSecretCode}>
+            Submit
+          </button>
+        </>
+      )}
     </div>
   );
 }
