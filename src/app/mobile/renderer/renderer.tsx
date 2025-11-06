@@ -1,9 +1,9 @@
 "use client";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { ScreenPicker } from "./screenpicker";
 import { ScreenRenderer } from "./screenrenderer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { library } from "../mobilepage";
+import { tabLibrary } from "../mobilepage";
 
 interface RenderContextType {
   window: JSX.Element;
@@ -17,20 +17,33 @@ export const RenderContext = createContext<RenderContextType>(
   {} as RenderContextType,
 );
 
-export function Renderer() {
+export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  const [tabs, setTabs] = useState<Record<string, JSX.Element>>({
-    Info: library["Info"],
-  });
+  const [tabs, setTabs] = useState<Record<string, JSX.Element>>(
+    props.startingTabs,
+  );
   const renderValues = Object.values(tabs);
+
+  const addTabToTabs = useCallback(
+    (newTab: string) => {
+      const newTabs = { ...tabs };
+      newTabs[newTab] = tabLibrary[newTab];
+      setTabs(newTabs);
+    },
+    [tabs],
+  );
 
   const [window, setWindow] = useState<JSX.Element>(() => {
     if (searchParams.has("tab")) {
       const tab = searchParams.get("tab");
-      return tabs[tab || ""];
+      if (tabs[tab || ""]) {
+        return tabs[tab || ""];
+      } else {
+        addTabToTabs(tab || "");
+        return <></>;
+      }
     } else {
       return renderValues[0];
     }
@@ -52,10 +65,22 @@ export function Renderer() {
     setWindow(newWindow);
   };
 
+  const addLocalTab = (tab: string) => {
+    const localTabs = localStorage.getItem("tabs");
+    if (localTabs === null) {
+      localStorage.setItem("tabs", JSON.stringify([tab]));
+    } else {
+      const tabArray = JSON.parse(localTabs);
+      tabArray.push(tab);
+      localStorage.setItem("tabs", JSON.stringify(tabArray));
+    }
+  };
+
   const secretCodeInput = (secretCode: string) => {
-    if (library[secretCode]) {
+    if (tabLibrary[secretCode]) {
+      addLocalTab(secretCode);
       const newTabs = { ...tabs };
-      newTabs[secretCode] = library[secretCode];
+      newTabs[secretCode] = tabLibrary[secretCode];
       setTabs(newTabs);
       router.push(pathname + "?" + "tab=" + (secretCode || ""));
       return true;
