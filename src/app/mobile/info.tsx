@@ -5,6 +5,7 @@ import { ChangeEvent, useContext, useState } from "react";
 import { RenderContext } from "./renderer/renderer";
 
 export default function Info() {
+  const { resetTabs } = useContext(RenderContext);
   return (
     <div className={"flex flex-col w-full h-full"}>
       <div id="boxshadow" className={"flex flex-col h-full max-h-1/2"}>
@@ -36,6 +37,9 @@ export default function Info() {
             <a href="https://github.com/AdamCanard" id="button">
               GitHub
             </a>
+            <button onClick={resetTabs} id="button">
+              Reset
+            </button>
           </div>
         </div>
       </div>

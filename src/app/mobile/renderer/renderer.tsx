@@ -3,13 +3,14 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { ScreenPicker } from "./screenpicker";
 import { ScreenRenderer } from "./screenrenderer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { tabLibrary } from "../mobilepage";
+import { startingTab, tabLibrary } from "../mobilepage";
 
 interface RenderContextType {
   window: JSX.Element;
   changeWindow: (newWindow: JSX.Element) => void;
   tabs: Record<string, JSX.Element>;
   secretCodeInput: (secretCode: string) => boolean;
+  resetTabs: () => void;
 }
 
 //cast empty object to contexttype
@@ -24,6 +25,12 @@ export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
   const [tabs, setTabs] = useState<Record<string, JSX.Element>>(
     props.startingTabs,
   );
+
+  const resetTabs = () => {
+    localStorage.removeItem("tabs");
+    setTabs(startingTab);
+  };
+
   const renderValues = Object.values(tabs);
 
   const addLocalTab = (tab: string) => {
@@ -95,7 +102,7 @@ export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
 
   return (
     <RenderContext.Provider
-      value={{ window, changeWindow, tabs, secretCodeInput }}
+      value={{ window, changeWindow, tabs, secretCodeInput, resetTabs }}
     >
       <ScreenPicker />
       <ScreenRenderer />
