@@ -72,7 +72,12 @@ function SecretCodeInput() {
     }
   };
   return (
-    <div className={"flex flex-row gap-2 justify-between items-end"}>
+    <form
+      className={"flex flex-row gap-2 justify-between items-end"}
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       {request ? (
         <>
           <p className={"text-center w-full"}>{"Invaild Code"}</p>
@@ -87,12 +92,13 @@ function SecretCodeInput() {
             className={"w-full h-6"}
             value={secretCode}
             onChange={updateSecretCode}
+            autoFocus
           />
           <button id="button" className={"w-full"} onClick={handleSecretCode}>
             Submit
           </button>
         </>
       )}
-    </div>
+    </form>
   );
 }
