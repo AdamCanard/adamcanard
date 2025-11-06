@@ -31,9 +31,11 @@ export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
     if (localTabs === null) {
       localStorage.setItem("tabs", JSON.stringify([tab]));
     } else {
-      const tabArray = JSON.parse(localTabs);
-      tabArray.push(tab);
-      localStorage.setItem("tabs", JSON.stringify(tabArray));
+      const tabArray: string[] = JSON.parse(localTabs);
+      if (!tabArray.includes(tab)) {
+        tabArray.push(tab);
+        localStorage.setItem("tabs", JSON.stringify(tabArray));
+      }
     }
   };
 
@@ -70,6 +72,7 @@ export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
     } else {
       router.push(pathname + "?" + "tab=" + (window.key || ""));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, router, searchParams, tabs]);
 
   const changeWindow = (newWindow: JSX.Element) => {
