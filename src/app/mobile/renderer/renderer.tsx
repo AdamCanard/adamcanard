@@ -26,11 +26,23 @@ export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
   );
   const renderValues = Object.values(tabs);
 
+  const addLocalTab = (tab: string) => {
+    const localTabs = localStorage.getItem("tabs");
+    if (localTabs === null) {
+      localStorage.setItem("tabs", JSON.stringify([tab]));
+    } else {
+      const tabArray = JSON.parse(localTabs);
+      tabArray.push(tab);
+      localStorage.setItem("tabs", JSON.stringify(tabArray));
+    }
+  };
+
   const addTabToTabs = useCallback(
     (newTab: string) => {
       const newTabs = { ...tabs };
       newTabs[newTab] = tabLibrary[newTab];
       setTabs(newTabs);
+      addLocalTab(newTab);
     },
     [tabs],
   );
@@ -63,17 +75,6 @@ export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
   const changeWindow = (newWindow: JSX.Element) => {
     router.push(pathname + "?" + "tab=" + (newWindow.key || ""));
     setWindow(newWindow);
-  };
-
-  const addLocalTab = (tab: string) => {
-    const localTabs = localStorage.getItem("tabs");
-    if (localTabs === null) {
-      localStorage.setItem("tabs", JSON.stringify([tab]));
-    } else {
-      const tabArray = JSON.parse(localTabs);
-      tabArray.push(tab);
-      localStorage.setItem("tabs", JSON.stringify(tabArray));
-    }
   };
 
   const secretCodeInput = (secretCode: string) => {
