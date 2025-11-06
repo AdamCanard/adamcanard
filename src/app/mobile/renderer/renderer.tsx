@@ -70,7 +70,7 @@ export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
     } else {
       router.push(pathname + "?" + "tab=" + (window.key || ""));
     }
-  }, [pathname, router, searchParams, tabs, window.key]);
+  }, [pathname, router, searchParams, tabs]);
 
   const changeWindow = (newWindow: JSX.Element) => {
     router.push(pathname + "?" + "tab=" + (newWindow.key || ""));
