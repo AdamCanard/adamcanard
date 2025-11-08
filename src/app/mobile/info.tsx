@@ -1,30 +1,33 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import SecretCode from "./infocomps/secretcode";
 import BeerImage from "./infocomps/beerimage";
 import BlackJack from "./infocomps/blackjack";
 
 export default function Info() {
-  const [windows, setWindows] = useState<JSX.Element[]>([
-    <BeerImage key={"BeerImage"} />,
-    <SecretCode key={"SecretCode"} />,
-    <BlackJack key={"BlackJack"} />,
-  ]);
-  const shuffle = useCallback(() => {
-    const newWindows = [...windows];
-    console.log(windows);
-    const popped = newWindows.pop();
-    newWindows.unshift(popped || <></>);
+  const [windows, setWindows] = useState<JSX.Element[]>(() => {
+    const onFocus = () => {
+      const newWindows = [...windows];
 
-    setWindows(newWindows);
-  }, [windows]);
+      const secretCodeWindowIndex = newWindows.findIndex(
+        (window) => window.key === "SecretCode",
+      );
+      const secretCodeWindow = newWindows.splice(secretCodeWindowIndex, 1)[0];
+      newWindows.unshift(secretCodeWindow);
+
+      setWindows(newWindows);
+    };
+    return [
+      <BeerImage key={"BeerImage"} />,
+      <SecretCode key={"SecretCode"} onFocus={onFocus} />,
+      <BlackJack key={"BlackJack"} />,
+    ];
+  });
+
   return (
     <div className={"flex flex-col w-full h-full"}>
       {windows.map((window: JSX.Element) => {
         return window;
       })}
-      <button onClick={shuffle} id="button">
-        shuffle
-      </button>
     </div>
   );
 }

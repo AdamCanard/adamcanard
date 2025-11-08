@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { RenderContext } from "../renderer/renderer";
 
-export default function SecretCode() {
+export default function SecretCode(props: { onFocus: () => void }) {
   const { resetTabs } = useContext(RenderContext);
   return (
     <div id="boxshadow" className={"flex flex-col w-full h-36"}>
@@ -9,7 +9,7 @@ export default function SecretCode() {
       <div id="boxshadowNP" className={"flex flex-col w-full h-full"}>
         <div className={"w-full h-full px-2 text-lg "}>
           Enter Secret Code:
-          <SecretCodeInput />
+          <SecretCodeInput onFocus={props.onFocus} />
         </div>
         <div className={"flex w-full gap-2 justify-around items-end pb-1 pr-1"}>
           <a href="https://www.instagram.com/adam_cunard/" id="button">
@@ -33,7 +33,7 @@ export default function SecretCode() {
   );
 }
 
-function SecretCodeInput() {
+function SecretCodeInput(props: { onFocus: () => void }) {
   const { secretCodeInput } = useContext(RenderContext);
   const [secretCode, setSecretCode] = useState("");
   const [request, setRequest] = useState(false);
@@ -55,9 +55,7 @@ function SecretCodeInput() {
   };
   return (
     <form
-      onFocus={() => {
-        console.log("fire");
-      }}
+      onFocus={props.onFocus}
       className={"flex flex-row gap-2 justify-between items-end"}
       onSubmit={(e) => {
         e.preventDefault();
