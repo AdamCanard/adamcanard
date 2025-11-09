@@ -1,13 +1,16 @@
 "use client";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { ScreenPicker } from "./screenpicker";
 import { ScreenRenderer } from "./screenrenderer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { startingTab, tabLibrary } from "../mobilepage";
 
 interface RenderContextType {
   window: JSX.Element;
   changeWindow: (newWindow: JSX.Element) => void;
-  toRender: Record<string, JSX.Element>;
+  tabs: Record<string, JSX.Element>;
+  secretCodeInput: (secretCode: string) => boolean;
+  resetTabs: () => void;
 }
 
 //cast empty object to contexttype
@@ -15,18 +18,53 @@ export const RenderContext = createContext<RenderContextType>(
   {} as RenderContextType,
 );
 
-export function Renderer(props: { toRender: Record<string, JSX.Element> }) {
+export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [tabs, setTabs] = useState<Record<string, JSX.Element>>(
+    props.startingTabs,
+  );
 
-  const { toRender } = props;
-  const renderValues = Object.values(props.toRender);
+  const resetTabs = () => {
+    localStorage.removeItem("tabs");
+    setTabs(startingTab);
+  };
+
+  const renderValues = Object.values(tabs);
+
+  const addLocalTab = (tab: string) => {
+    const localTabs = localStorage.getItem("tabs");
+    if (localTabs === null) {
+      localStorage.setItem("tabs", JSON.stringify([tab]));
+    } else {
+      const tabArray: string[] = JSON.parse(localTabs);
+      if (!tabArray.includes(tab)) {
+        tabArray.push(tab);
+        localStorage.setItem("tabs", JSON.stringify(tabArray));
+      }
+    }
+  };
+
+  const addTabToTabs = useCallback(
+    (newTab: string) => {
+      const newTabs = { ...tabs };
+      newTabs[newTab] = tabLibrary[newTab];
+      setTabs(newTabs);
+      addLocalTab(newTab);
+    },
+    [tabs],
+  );
 
   const [window, setWindow] = useState<JSX.Element>(() => {
     if (searchParams.has("tab")) {
       const tab = searchParams.get("tab");
-      return toRender[tab || ""];
+      if (tabs[tab || ""]) {
+        return tabs[tab || ""];
+      } else {
+        addTabToTabs(tab || "");
+        return <></>;
+      }
     } else {
       return renderValues[0];
     }
@@ -36,19 +74,37 @@ export function Renderer(props: { toRender: Record<string, JSX.Element> }) {
     if (searchParams.has("tab")) {
       const tab = searchParams.get("tab");
       if (tab !== window.key) {
-        setWindow(toRender[tab || ""]);
+        setWindow(tabs[tab || ""]);
       }
     } else {
       router.push(pathname + "?" + "tab=" + (window.key || ""));
     }
-  }, [pathname, router, searchParams, toRender, window.key]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, router, searchParams, tabs]);
 
   const changeWindow = (newWindow: JSX.Element) => {
     router.push(pathname + "?" + "tab=" + (newWindow.key || ""));
     setWindow(newWindow);
   };
+
+  const secretCodeInput = (secretCode: string) => {
+    if (tabs[secretCode]) return false;
+    if (tabLibrary[secretCode]) {
+      addLocalTab(secretCode);
+      const newTabs = { ...tabs };
+      newTabs[secretCode] = tabLibrary[secretCode];
+      setTabs(newTabs);
+      router.push(pathname + "?" + "tab=" + (secretCode || ""));
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
-    <RenderContext.Provider value={{ window, changeWindow, toRender }}>
+    <RenderContext.Provider
+      value={{ window, changeWindow, tabs, secretCodeInput, resetTabs }}
+    >
       <ScreenPicker />
       <ScreenRenderer />
     </RenderContext.Provider>
