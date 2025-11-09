@@ -26,7 +26,7 @@ export default function Minesweeper() {
   const [bombArray, setBombArray] = useState<string[]>([]);
 
   return (
-    <div id="border" className={"flex justify-center"}>
+    <div id="border" className={"flex justify-center h-full"}>
       <MinesweeperContext.Provider
         value={{ gameState, setGameState, rows, cols, bombs, bombArray }}
       >
