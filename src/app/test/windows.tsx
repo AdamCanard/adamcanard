@@ -10,12 +10,11 @@ export default function Windows() {
   return (
     <div className={"w-full h-full relative"}>
       {Object.values(activeWindows).map((window: IWindow) => {
-        if (!window.minimized)
-          return (
-            <DesktopWindow window={window} key={window.window.key}>
-              {window.window}
-            </DesktopWindow>
-          );
+        return (
+          <DesktopWindow window={window} key={window.window.key}>
+            {window.window}
+          </DesktopWindow>
+        );
       })}
     </div>
   );

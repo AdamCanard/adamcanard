@@ -251,7 +251,7 @@ export default function DesktopWindow(props: {
   return (
     <div
       unselectable="on"
-      className="flex flex-row justify-center items-center absolute"
+      className={`flex flex-row justify-center items-center absolute ${window.minimized && "hidden"}`}
       style={{
         top: point.top,
         left: point.left,
