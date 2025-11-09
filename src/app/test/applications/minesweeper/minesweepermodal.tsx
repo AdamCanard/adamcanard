@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { MinesweeperContext } from "./minesweeper";
+import { MinesweeperContext } from "./minesweeperstart";
 
 export default function MinesweeperModal(props: { message: string }) {
   const { setGameState } = useContext(MinesweeperContext);

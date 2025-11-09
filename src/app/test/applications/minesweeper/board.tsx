@@ -7,7 +7,7 @@ import {
 } from "./minesweeperfunctions";
 import Cell from "./cell";
 import MinesweeperHeader from "./minesweeperheader";
-import { MinesweeperContext } from "./minesweeper";
+import { MinesweeperContext } from "./minesweeperstart";
 export default function Board() {
   const { rows, cols, bombArray, setGameState, bombs } =
     useContext(MinesweeperContext);

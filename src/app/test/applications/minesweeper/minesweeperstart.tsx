@@ -18,7 +18,7 @@ export const MinesweeperContext = createContext<MinesweeperContextType>(
   {} as MinesweeperContextType,
 );
 
-export default function Minesweeper() {
+export default function MinesweeperStart() {
   const [gameState, setGameState] = useState("starting");
   const [rows, setRows] = useState(0);
   const [cols, setCols] = useState(0);

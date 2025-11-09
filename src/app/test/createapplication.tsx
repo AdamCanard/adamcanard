@@ -2,7 +2,7 @@ import MobilePage from "../mobile/mobilepage";
 import { IWindow } from "./records";
 
 import MobileIcon from "../../../public/Windows/MobileIcon.png";
-import Minesweeper from "./applications/minesweeper/minesweeper";
+import Minesweeper from "./applications/minesweeper/minesweeperstart";
 export const createMobile = (key: string) => {
   const newMobile: IWindow = {
     window: <MobilePage key={key} />,
