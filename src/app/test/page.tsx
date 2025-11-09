@@ -1,10 +1,8 @@
 "use client";
 
-import { useContext } from "react";
+import StartMenu from "./startmenu";
 import TaskBar from "./taskbar";
-import { WindowContext } from "./windowprovider";
 import Windows from "./windows";
-import { StartMenuRecord, TestRecord } from "./records";
 
 export default function Page() {
   return (
@@ -14,53 +12,4 @@ export default function Page() {
       <TaskBar />
     </div>
   );
-}
-
-function StartMenu() {
-  const { startMenu, openWindow, toggleStartMenu } = useContext(WindowContext);
-  const openWindowFromStart = (windowKey: string) => {
-    openWindow(windowKey);
-    toggleStartMenu();
-  };
-  if (startMenu)
-    return (
-      <div className={"flex flex-col absolute w-96 h-1/2 bg-blue-500 bottom-8"}>
-        <div className={"h-18 bg-black"}></div>
-        <div className={"flex flex-row h-full w-full  relative"}>
-          <div className={"flex flex-col h-full w-full gap-2 bg-white "}>
-            {Object.values(TestRecord).map((window) => {
-              return (
-                <div
-                  className={"w-full h-12 border-2 hover:bg-blue-500"}
-                  key={window.window.key}
-                  onClick={() => openWindowFromStart(window.window.key || "")}
-                >
-                  {window.window.key}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className={"h-full w-full"}>
-            <div
-              className={
-                "flex flex-col h-full w-full gap-2 justify-end bg-blue-200"
-              }
-            >
-              {Object.values(StartMenuRecord).map((window) => {
-                return (
-                  <div
-                    className={"w-full h-12 border-2 hover:bg-blue-500"}
-                    key={window.window.key}
-                  >
-                    {window.window.key}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        <div className={"h-12 bg-black"}></div>
-      </div>
-    );
 }
