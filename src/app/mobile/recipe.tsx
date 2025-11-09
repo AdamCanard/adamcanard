@@ -2,7 +2,7 @@ import { IRecipe } from "@/app/server/models/recipe";
 import Link from "next/link";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 
-export default function StoreRecipe() {
+export default function Recipe() {
   const [recipes, setRecipes] = useState<IRecipe[]>([]);
   const getRecipes = useCallback(async () => {
     try {

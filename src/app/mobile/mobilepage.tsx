@@ -1,11 +1,9 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
-//import GameContainer from "../testcomps/gamecontainer";
-import Beer from "./beer";
 import Info from "./info";
-import StoreRecipe from "./recipe/storerecipe";
 import { Renderer } from "./renderer/renderer";
 import Loading from "../desktop/sitecomps/loading";
+import { tabLibrary } from "./library";
 
 export default function MobilePage() {
   const [loading, setLoading] = useState(true);
@@ -34,11 +32,6 @@ export default function MobilePage() {
   );
 }
 
-export const tabLibrary: Record<string, JSX.Element> = {
-  Info: <Info key={"Info"} />,
-  Adam: <Beer key={"Adam"} />,
-  Recipe: <StoreRecipe key={"Recipe"} />,
-};
 export const startingTab: Record<string, JSX.Element> = {
   Info: <Info key={"Info"} />,
 };
