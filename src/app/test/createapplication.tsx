@@ -7,19 +7,15 @@ export enum applicationEnum {
   "Mobile" = "Mobile",
 }
 
-export const createNewApplication = (application: applicationEnum) => {
-  switch (application) {
-    case applicationEnum.Mobile:
-      return createMobile("Mobile");
-  }
-};
-
-export const createAnotherApplication = (
+export const createApplication = (
   application: applicationEnum,
   index: number,
 ) => {
   switch (application) {
     case applicationEnum.Mobile:
+      if (index === 0) {
+        return createMobile("Mobile");
+      }
       return createMobile(`Mobile (${index})`);
   }
 };

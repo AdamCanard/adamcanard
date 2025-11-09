@@ -1,10 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { IWindow } from "./records";
-import {
-  applicationEnum,
-  createAnotherApplication,
-  createNewApplication,
-} from "./createapplication";
+import { applicationEnum, createApplication } from "./createapplication";
 
 interface IWindows {
   activeWindows: Record<string, IWindow>;
@@ -52,10 +48,11 @@ export default function WindowProvider(props: { children: ReactNode }) {
       }
 
       newActiveWindows[applicationEnum.Mobile + ` (${keyedWindows})`] =
-        createAnotherApplication(applicationEnum.Mobile, keyedWindows);
+        createApplication(applicationEnum.Mobile, keyedWindows);
     } else {
-      newActiveWindows[windowKey] = createNewApplication(
+      newActiveWindows[windowKey] = createApplication(
         applicationEnum.Mobile,
+        0,
       );
     }
     setActiveWindows(newActiveWindows);
