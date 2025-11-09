@@ -88,6 +88,7 @@ export function Renderer(props: { startingTabs: Record<string, JSX.Element> }) {
   };
 
   const secretCodeInput = (secretCode: string) => {
+    if (tabs[secretCode]) return false;
     if (tabLibrary[secretCode]) {
       addLocalTab(secretCode);
       const newTabs = { ...tabs };
