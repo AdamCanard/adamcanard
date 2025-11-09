@@ -3,7 +3,8 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { ScreenPicker } from "./screenpicker";
 import { ScreenRenderer } from "./screenrenderer";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { startingTab, tabLibrary } from "../mobilepage";
+import { startingTab } from "../mobilepage";
+import { tabLibrary } from "../library";
 
 interface RenderContextType {
   window: JSX.Element;
