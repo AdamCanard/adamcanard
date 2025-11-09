@@ -2,14 +2,17 @@ import Image from "next/image";
 import { timerListImages } from "./minesweeperimages";
 import Smile from "../../../../../public/minesweeper/Minesweeper_Smile.png";
 import Dead from "../../../../../public/minesweeper/Minesweeper_Dead.png";
-import { useContext, useEffect, useState } from "react";
-import { MinesweeperContext } from "./minesweeperstart";
+import { useEffect, useState } from "react";
 
-export default function MinesweeperHeader(props: { flags: number }) {
-  const { gameState, bombs } = useContext(MinesweeperContext);
+export default function MinesweeperHeader(props: {
+  gameState: string;
+  bombs: number;
+  flags: number;
+}) {
+  const { gameState, bombs, flags } = props;
   return (
     <div className={" w-full flex flex-row justify-between items-center "}>
-      <FlagCounter bombs={bombs} flags={props.flags} />
+      <FlagCounter bombs={bombs} flags={flags} />
       <div className={"w-full flex items-center justify-center"}>
         <div id="border">
           <Image
@@ -21,7 +24,7 @@ export default function MinesweeperHeader(props: { flags: number }) {
         </div>
       </div>
 
-      <MinesweeperTimer />
+      <MinesweeperTimer gameState={gameState} />
     </div>
   );
 }
@@ -61,11 +64,10 @@ export function FlagCounter(props: { bombs: number; flags: number }) {
   );
 }
 
-export function MinesweeperTimer() {
+export function MinesweeperTimer(props: { gameState: string }) {
   const [startTime, setStartTime] = useState<number>(Date.now());
   const [nowTime, setNowTime] = useState(Date.now());
-
-  const { gameState } = useContext(MinesweeperContext);
+  const { gameState } = props;
   useEffect(() => {
     if (gameState === "playing") {
       setStartTime(Date.now());

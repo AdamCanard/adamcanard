@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
   boardGen,
   checkWin,
@@ -7,10 +7,15 @@ import {
 } from "./minesweeperfunctions";
 import Cell from "./cell";
 import MinesweeperHeader from "./minesweeperheader";
-import { MinesweeperContext } from "./minesweeperstart";
-export default function Board() {
-  const { rows, cols, bombArray, setGameState, bombs } =
-    useContext(MinesweeperContext);
+export default function Board(props: {
+  rows: number;
+  cols: number;
+  bombs: number;
+  bombArray: string[];
+  gameState: string;
+  changeGameState: (newGameState: string) => void;
+}) {
+  const { rows, cols, bombArray, changeGameState, bombs, gameState } = props;
   const [grid, setGrid] = useState<ICellObject[][]>(
     boardGen(rows, cols, bombArray),
   );
@@ -30,10 +35,10 @@ export default function Board() {
 
     setGrid(temp);
     if (isBomb(row, col, bombArray)) {
-      setGameState("lost");
+      changeGameState("lost");
     }
     if (checkWin(temp, bombs)) {
-      setGameState("won");
+      changeGameState("won");
     }
   };
 
@@ -111,7 +116,7 @@ export default function Board() {
         if (col != 0 && temp[row - 1][col - 1].state === "closed") {
           temp[row - 1][col - 1].state = "open";
           if (isBomb(row - 1, col - 1, bombArray)) {
-            setGameState("lost");
+            changeGameState("lost");
           }
           if (temp[row - 1][col - 1].value === "0") {
             openZeros(row - 1, col - 1, temp);
@@ -120,7 +125,7 @@ export default function Board() {
         if (temp[row - 1][col].state === "closed") {
           temp[row - 1][col].state = "open";
           if (isBomb(row - 1, col, bombArray)) {
-            setGameState("lost");
+            changeGameState("lost");
           }
           if (temp[row - 1][col].value === "0") {
             openZeros(row - 1, col, temp);
@@ -129,7 +134,7 @@ export default function Board() {
         if (col != cols - 1 && temp[row - 1][col + 1].state === "closed") {
           temp[row - 1][col + 1].state = "open";
           if (isBomb(row - 1, col + 1, bombArray)) {
-            setGameState("lost");
+            changeGameState("lost");
           }
           if (temp[row - 1][col + 1].value === "0") {
             openZeros(row - 1, col + 1, temp);
@@ -140,7 +145,7 @@ export default function Board() {
       if (col != 0 && temp[row][col - 1].state === "closed") {
         temp[row][col - 1].state = "open";
         if (isBomb(row, col - 1, bombArray)) {
-          setGameState("lost");
+          changeGameState("lost");
         }
         if (temp[row][col - 1].value === "0") {
           openZeros(row, col - 1, temp);
@@ -149,7 +154,7 @@ export default function Board() {
       if (col != cols - 1 && temp[row][col + 1].state === "closed") {
         temp[row][col + 1].state = "open";
         if (isBomb(row, col + 1, bombArray)) {
-          setGameState("lost");
+          changeGameState("lost");
         }
         if (temp[row][col + 1].value === "0") {
           openZeros(row, col + 1, temp);
@@ -160,7 +165,7 @@ export default function Board() {
         if (col != 0 && temp[row + 1][col - 1].state === "closed") {
           temp[row + 1][col - 1].state = "open";
           if (isBomb(row + 1, col - 1, bombArray)) {
-            setGameState("lost");
+            changeGameState("lost");
           }
           if (temp[row + 1][col - 1].value === "0") {
             openZeros(row + 1, col - 1, temp);
@@ -169,7 +174,7 @@ export default function Board() {
         if (temp[row + 1][col].state === "closed") {
           temp[row + 1][col].state = "open";
           if (isBomb(row + 1, col, bombArray)) {
-            setGameState("lost");
+            changeGameState("lost");
           }
           if (temp[row + 1][col].value === "0") {
             openZeros(row + 1, col, temp);
@@ -178,7 +183,7 @@ export default function Board() {
         if (col != cols - 1 && temp[row + 1][col + 1].state === "closed") {
           temp[row + 1][col + 1].state = "open";
           if (isBomb(row + 1, col + 1, bombArray)) {
-            setGameState("lost");
+            changeGameState("lost");
           }
           if (temp[row + 1][col + 1].value === "0") {
             openZeros(row + 1, col + 1, temp);
@@ -188,7 +193,7 @@ export default function Board() {
 
       setGrid(temp);
       if (checkWin(temp, bombs)) {
-        setGameState("won");
+        changeGameState("won");
       }
     }
   };
@@ -268,7 +273,7 @@ export default function Board() {
 
   return (
     <div className={"flex flex-col h-full w-full"}>
-      <MinesweeperHeader flags={flags} />
+      <MinesweeperHeader bombs={bombs} flags={flags} gameState={gameState} />
       <div
         style={{
           display: "grid",
