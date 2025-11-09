@@ -11,7 +11,7 @@ export default function MinesweeperHeader(props: {
 }) {
   const { gameState, bombs, flags } = props;
   return (
-    <div className={" w-full flex flex-row justify-between items-center "}>
+    <div className={"w-full flex flex-row justify-between items-center h-14"}>
       <FlagCounter bombs={bombs} flags={flags} />
       <div className={"w-full flex items-center justify-center"}>
         <div id="border">
