@@ -40,7 +40,7 @@ function Tab(props: { window: IWindow }) {
   return (
     <div
       onClick={() => toggleMinimize(window.window.key || "")}
-      className={"flex flex-row bg-blue-300 w-36 h-full p-2 gap-2 items-center"}
+      className={`flex flex-row ${window.minimized ? "bg-blue-500" : "bg-blue-300"} w-36 h-full p-2 gap-2 items-center`}
     >
       <div className={"relative h-full w-1/8"}>
         <Image
