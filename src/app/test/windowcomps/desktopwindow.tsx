@@ -1,4 +1,5 @@
 import {
+  createContext,
   ReactElement,
   useCallback,
   useContext,
@@ -32,7 +33,15 @@ interface IResizeDirection {
   horizontal: number;
   vertical: number;
 }
+interface DesktopWindowContextType {
+  window: IWindow;
+  resizeWindow: (newWidth: number, newHeight: number) => void;
+}
 
+//cast empty object to contexttype
+export const DesktopWindowContext = createContext<DesktopWindowContextType>(
+  {} as DesktopWindowContextType,
+);
 export default function DesktopWindow(props: {
   window: IWindow;
   children: ReactElement;
@@ -63,6 +72,15 @@ export default function DesktopWindow(props: {
     width: 0,
     height: 0,
   });
+
+  const resizeWindow = (newWidth: number, newHeight: number) => {
+    const newPoint = { ...point };
+    newPoint.width = newWidth;
+    newPoint.height = newHeight;
+    setWidth(newWidth);
+    setHeight(newHeight);
+    setPoint(newPoint);
+  };
 
   const resetOffsets = () => {
     setSizeOffset({ width: 0, height: 0 });
@@ -249,115 +267,117 @@ export default function DesktopWindow(props: {
   }, [resizePoint, finishResize, sizeOffset]);
 
   return (
-    <div
-      unselectable="on"
-      className={`flex flex-row justify-center items-center absolute ${window.minimized && "hidden"}`}
-      style={{
-        top: point.top,
-        left: point.left,
-        width: `${point.width - 0.4}rem`,
-        height: `${point.height + 1.5}rem`,
-      }}
-    >
-      <div className={"flex flex-col w-1 h-full "}>
-        <div
-          className={"h-2 w-2 cursor-nwse-resize"}
-          onMouseDown={handleTopLeftResize}
-        ></div>
-        <div
-          className={"h-full w-1 cursor-ew-resize"}
-          onMouseDown={handleLeftResize}
-        ></div>
-        <div
-          className={"h-2 w-2 cursor-sw-resize"}
-          onMouseDown={handleBottomLeftResize}
-        ></div>
-      </div>
+    <DesktopWindowContext.Provider value={{ window, resizeWindow }}>
+      <div
+        unselectable="on"
+        className={`flex flex-row justify-center items-center absolute ${window.minimized && "hidden"}`}
+        style={{
+          top: point.top,
+          left: point.left,
+          width: `${point.width - 0.4}rem`,
+          height: `${point.height + 1.5}rem`,
+        }}
+      >
+        <div className={"flex flex-col w-1 h-full "}>
+          <div
+            className={"h-2 w-2 cursor-nwse-resize"}
+            onMouseDown={handleTopLeftResize}
+          ></div>
+          <div
+            className={"h-full w-1 cursor-ew-resize"}
+            onMouseDown={handleLeftResize}
+          ></div>
+          <div
+            className={"h-2 w-2 cursor-sw-resize"}
+            onMouseDown={handleBottomLeftResize}
+          ></div>
+        </div>
 
-      <div className={"flex-col "}>
-        <div
-          className={"h-1 w-full cursor-ns-resize "}
-          onMouseDown={handleTopResize}
-        ></div>
-        <div className={"flex flex-col rounded-t-md contain-paint"}>
-          <div className="WindowTile flex justify-between w-full relative ">
-            <h1
-              className={
-                "flex w-full h-6 font-trebuchet font-bold items-center"
-              }
-              style={{ cursor: cursor }}
-              onMouseDown={handleMouseMove}
+        <div className={"flex-col "}>
+          <div
+            className={"h-1 w-full cursor-ns-resize "}
+            onMouseDown={handleTopResize}
+          ></div>
+          <div className={"flex flex-col rounded-t-md contain-paint"}>
+            <div className="WindowTile flex justify-between w-full relative ">
+              <h1
+                className={
+                  "flex w-full h-6 font-trebuchet font-bold items-center"
+                }
+                style={{ cursor: cursor }}
+                onMouseDown={handleMouseMove}
+              >
+                {window.title}
+              </h1>
+              <div className={"flex relative w-24 gap-1"}>
+                <div
+                  className="MinimizeTile rounded-sm relative flex justify-start items-end p-1 cursor-pointer"
+                  onClick={() => toggleMinimize(props.children.key || "")}
+                >
+                  <Image
+                    src={MinimizeSrc}
+                    width={9}
+                    height={18}
+                    alt="Minimize Button"
+                    draggable={false}
+                  />
+                </div>{" "}
+                <div
+                  className="FullscreenTile rounded-sm relative flex justify-center items-center cursor-pointer"
+                  onClick={() => closeWindow(props.children.key || "")}
+                >
+                  <Image
+                    src={MaximizeSrc}
+                    width={18}
+                    height={18}
+                    alt="Maximize Button"
+                    draggable={false}
+                  />
+                </div>
+                <div
+                  className="CloseTile rounded-sm relative flex justify-center items-center cursor-pointer"
+                  onClick={() => closeWindow(props.children.key || "")}
+                >
+                  <Image
+                    src={CloseSrc}
+                    width={18}
+                    height={18}
+                    alt="Close Button"
+                    draggable={false}
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              className={"flex flex-col "}
+              style={{
+                width: `${point.width}rem`,
+                height: `${point.height}rem`,
+              }}
             >
-              {window.title}
-            </h1>
-            <div className={"flex relative w-24 gap-1"}>
-              <div
-                className="MinimizeTile rounded-sm relative flex justify-start items-end p-1 cursor-pointer"
-                onClick={() => toggleMinimize(props.children.key || "")}
-              >
-                <Image
-                  src={MinimizeSrc}
-                  width={9}
-                  height={18}
-                  alt="Minimize Button"
-                  draggable={false}
-                />
-              </div>{" "}
-              <div
-                className="FullscreenTile rounded-sm relative flex justify-center items-center cursor-pointer"
-                onClick={() => closeWindow(props.children.key || "")}
-              >
-                <Image
-                  src={MaximizeSrc}
-                  width={18}
-                  height={18}
-                  alt="Maximize Button"
-                  draggable={false}
-                />
-              </div>
-              <div
-                className="CloseTile rounded-sm relative flex justify-center items-center cursor-pointer"
-                onClick={() => closeWindow(props.children.key || "")}
-              >
-                <Image
-                  src={CloseSrc}
-                  width={18}
-                  height={18}
-                  alt="Close Button"
-                  draggable={false}
-                />
-              </div>
+              {props.children}
             </div>
           </div>
           <div
-            className={"flex flex-col "}
-            style={{
-              width: `${point.width}rem`,
-              height: `${point.height}rem`,
-            }}
-          >
-            {props.children}
-          </div>
+            className={"h-1 w-full  cursor-ns-resize "}
+            onMouseDown={handleBottomResize}
+          ></div>
         </div>
-        <div
-          className={"h-1 w-full  cursor-ns-resize "}
-          onMouseDown={handleBottomResize}
-        ></div>
+        <div className={"flex flex-col w-1 h-full"}>
+          <div
+            className={"h-2 w-2  cursor-nesw-resize"}
+            onMouseDown={handleTopRightResize}
+          ></div>
+          <div
+            className={"h-full w-1  cursor-ew-resize "}
+            onMouseDown={handleRightResize}
+          ></div>
+          <div
+            className={"h-2 w-2  cursor-nwse-resize"}
+            onMouseDown={handleBottomRightResize}
+          ></div>
+        </div>
       </div>
-      <div className={"flex flex-col w-1 h-full"}>
-        <div
-          className={"h-2 w-2  cursor-nesw-resize"}
-          onMouseDown={handleTopRightResize}
-        ></div>
-        <div
-          className={"h-full w-1  cursor-ew-resize "}
-          onMouseDown={handleRightResize}
-        ></div>
-        <div
-          className={"h-2 w-2  cursor-nwse-resize"}
-          onMouseDown={handleBottomRightResize}
-        ></div>
-      </div>
-    </div>
+    </DesktopWindowContext.Provider>
   );
 }

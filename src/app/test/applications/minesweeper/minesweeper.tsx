@@ -1,8 +1,15 @@
 "use client";
 import { randomArray } from "./minesweeperfunctions";
 import Board from "./board";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import MinesweeperModal from "./minesweepermodal";
+import { DesktopWindowContext } from "../../windowcomps/desktopwindow";
 
 interface MinesweeperContextType {
   gameState: string;
@@ -19,6 +26,7 @@ export const MinesweeperContext = createContext<MinesweeperContextType>(
 );
 
 export default function Minesweeper() {
+  const { resizeWindow } = useContext(DesktopWindowContext);
   const [gameState, setGameState] = useState("starting");
   const [rows, setRows] = useState(0);
   const [cols, setCols] = useState(0);
@@ -39,6 +47,7 @@ export default function Minesweeper() {
                 setBombs(10);
                 setBombArray(randomArray(10, 9, 9));
                 setGameState("playing");
+                resizeWindow(18, 22.5);
               }}
               id="button"
             >
