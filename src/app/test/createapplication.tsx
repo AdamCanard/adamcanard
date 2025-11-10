@@ -3,6 +3,7 @@ import { IWindow } from "./records";
 
 import MobileIcon from "../../../public/Windows/MobileIcon.png";
 import Minesweeper from "./applications/minesweeper/minesweeper";
+import WindowManager from "./applications/windowmanager/windowmanager";
 export const createMobile = (key: string) => {
   const newMobile: IWindow = {
     window: <MobilePage key={key} />,
@@ -33,10 +34,26 @@ export const createMinesweeper = (key: string) => {
   };
   return newMinesweeper;
 };
+export const createWindowManager = (key: string) => {
+  const newWindowManager: IWindow = {
+    window: <WindowManager key={key} />,
+    title: "WindowManager",
+    width: 20,
+    height: 20,
+    defaultWidth: 20,
+    defaultHeight: 20,
+    top: 0,
+    left: 0,
+    icon: MobileIcon,
+    minimized: false,
+  };
+  return newWindowManager;
+};
 
 export const applicationRecord: Record<string, (key: string) => IWindow> = {
   Mobile: createMobile,
   Minesweeper: createMinesweeper,
+  WindowManager: createWindowManager,
 };
 export const createApplication = (application: string, index: number) => {
   const createApp = applicationRecord[application];
