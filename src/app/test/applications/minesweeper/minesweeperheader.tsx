@@ -4,9 +4,12 @@ import Smile from "../../../../../public/minesweeper/Minesweeper_Smile.png";
 import Dead from "../../../../../public/minesweeper/Minesweeper_Dead.png";
 import { useContext, useEffect, useState } from "react";
 import { MinesweeperContext } from "./minesweeper";
+import { DesktopWindowContext } from "../../windowcomps/desktopwindow";
 
 export default function MinesweeperHeader(props: { flags: number }) {
-  const { gameState, bombs, cols } = useContext(MinesweeperContext);
+  const { gameState, bombs, cols, setGameState } =
+    useContext(MinesweeperContext);
+  const { resetSize } = useContext(DesktopWindowContext);
   return (
     <div
       style={{ width: `${2 * cols}rem` }}
@@ -14,7 +17,13 @@ export default function MinesweeperHeader(props: { flags: number }) {
     >
       <FlagCounter bombs={bombs} flags={props.flags} />
       <div className={"w-full flex items-center justify-center"}>
-        <div id="border">
+        <div
+          id="border"
+          onClick={() => {
+            setGameState("starting");
+            resetSize();
+          }}
+        >
           <Image
             src={gameState === "lost" ? Dead : Smile}
             alt="bomb"
