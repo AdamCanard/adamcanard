@@ -34,60 +34,58 @@ export default function Minesweeper() {
   const [bombArray, setBombArray] = useState<string[]>([]);
 
   return (
-    <div id="border" className={"flex justify-center h-full"}>
-      <MinesweeperContext.Provider
-        value={{ gameState, setGameState, rows, cols, bombs, bombArray }}
-      >
-        {gameState === "starting" ? (
-          <div>
-            <button
-              onClick={() => {
-                setRows(9);
-                setCols(9);
-                setBombs(10);
-                setBombArray(randomArray(10, 9, 9));
-                setGameState("playing");
-                resizeWindow(18, 18 + 4.25);
-              }}
-              id="button"
-            >
-              Easy
-            </button>
-            <button
-              onClick={() => {
-                setRows(16);
-                setCols(16);
-                setBombs(40);
-                setBombArray(randomArray(40, 16, 16));
-                setGameState("playing");
-                resizeWindow(32, 32 + 4.25);
-              }}
-              id="button"
-            >
-              Medium
-            </button>
-            <button
-              onClick={() => {
-                setRows(16);
-                setCols(30);
-                setBombs(99);
-                setBombArray(randomArray(99, 16, 30));
-                setGameState("playing");
-                resizeWindow(60, 32 + 4.25);
-              }}
-              id="button"
-            >
-              Hard
-            </button>
-          </div>
-        ) : (
-          <>
-            {gameState === "lost" && <MinesweeperModal message="Try Again?" />}
-            {gameState === "won" && <MinesweeperModal message="Awesome Job!" />}
-            <Board />
-          </>
-        )}
-      </MinesweeperContext.Provider>
-    </div>
+    <MinesweeperContext.Provider
+      value={{ gameState, setGameState, rows, cols, bombs, bombArray }}
+    >
+      {gameState === "starting" ? (
+        <div id="border" className={"flex w-full justify-center h-full "}>
+          <button
+            onClick={() => {
+              setRows(9);
+              setCols(9);
+              setBombs(10);
+              setBombArray(randomArray(10, 9, 9));
+              setGameState("playing");
+              resizeWindow(18 + 1, 18 + 4);
+            }}
+            id="button"
+          >
+            Easy
+          </button>
+          <button
+            onClick={() => {
+              setRows(16);
+              setCols(16);
+              setBombs(40);
+              setBombArray(randomArray(40, 16, 16));
+              setGameState("playing");
+              resizeWindow(32 + 1, 32 + 4);
+            }}
+            id="button"
+          >
+            Medium
+          </button>
+          <button
+            onClick={() => {
+              setRows(16);
+              setCols(30);
+              setBombs(99);
+              setBombArray(randomArray(99, 16, 30));
+              setGameState("playing");
+              resizeWindow(60 + 1, 32 + 4);
+            }}
+            id="button"
+          >
+            Hard
+          </button>
+        </div>
+      ) : (
+        <>
+          {gameState === "lost" && <MinesweeperModal message="Try Again?" />}
+          {gameState === "won" && <MinesweeperModal message="Awesome Job!" />}
+          <Board />
+        </>
+      )}
+    </MinesweeperContext.Provider>
   );
 }

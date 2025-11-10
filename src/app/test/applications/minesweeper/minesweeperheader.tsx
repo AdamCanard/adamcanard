@@ -6,9 +6,12 @@ import { useContext, useEffect, useState } from "react";
 import { MinesweeperContext } from "./minesweeper";
 
 export default function MinesweeperHeader(props: { flags: number }) {
-  const { gameState, bombs } = useContext(MinesweeperContext);
+  const { gameState, bombs, cols } = useContext(MinesweeperContext);
   return (
-    <div className={" w-full flex flex-row justify-between items-center "}>
+    <div
+      style={{ width: `${2 * cols}rem` }}
+      className={"flex flex-row justify-between items-center h-12"}
+    >
       <FlagCounter bombs={bombs} flags={props.flags} />
       <div className={"w-full flex items-center justify-center"}>
         <div id="border">

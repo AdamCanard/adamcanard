@@ -267,13 +267,13 @@ export default function Board() {
   };
 
   return (
-    <div className={"flex flex-col h-full w-full"}>
+    <div id="border" className={"flex flex-col h-full w-full  items-center "}>
       <MinesweeperHeader flags={flags} />
       <div
         style={{
           display: "grid",
-          width: "100%",
-          height: "100%",
+          width: `${2 * cols}rem`,
+          height: `${2 * rows}rem`,
           gridTemplateColumns: `repeat(${cols}, minmax(0,1fr))`,
           gridTemplateRows: `repeat(${rows}, minmax(0,1fr))`,
         }}
