@@ -5,7 +5,7 @@ export default function WindowManager() {
   const { activeWindows, closeWindow } = useContext(WindowContext);
   return (
     <div id="border">
-      {Object.entries(activeWindows).map(([key, value]) => {
+      {Object.entries(activeWindows).map(([key]) => {
         return (
           <div
             id="border"
