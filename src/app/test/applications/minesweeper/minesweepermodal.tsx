@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import { MinesweeperContext } from "./minesweeper";
+import { DesktopWindowContext } from "../../windowcomps/desktopwindow";
 
 export default function MinesweeperModal(props: { message: string }) {
+  const { resetSize } = useContext(DesktopWindowContext);
   const { setGameState } = useContext(MinesweeperContext);
   return (
     <div
@@ -11,6 +13,7 @@ export default function MinesweeperModal(props: { message: string }) {
       }
       onClick={() => {
         setGameState("starting");
+        resetSize();
       }}
     >
       <div>

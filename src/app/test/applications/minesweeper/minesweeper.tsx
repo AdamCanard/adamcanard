@@ -47,7 +47,7 @@ export default function Minesweeper() {
                 setBombs(10);
                 setBombArray(randomArray(10, 9, 9));
                 setGameState("playing");
-                resizeWindow(18, 22.5);
+                resizeWindow(18, 18 + 4.25);
               }}
               id="button"
             >
@@ -60,6 +60,7 @@ export default function Minesweeper() {
                 setBombs(40);
                 setBombArray(randomArray(40, 16, 16));
                 setGameState("playing");
+                resizeWindow(32, 32 + 4.25);
               }}
               id="button"
             >
@@ -72,6 +73,7 @@ export default function Minesweeper() {
                 setBombs(99);
                 setBombArray(randomArray(99, 16, 30));
                 setGameState("playing");
+                resizeWindow(60, 32 + 4.25);
               }}
               id="button"
             >

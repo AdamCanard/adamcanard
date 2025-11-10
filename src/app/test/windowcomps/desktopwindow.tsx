@@ -36,6 +36,7 @@ interface IResizeDirection {
 interface DesktopWindowContextType {
   window: IWindow;
   resizeWindow: (newWidth: number, newHeight: number) => void;
+  resetSize: () => void;
 }
 
 //cast empty object to contexttype
@@ -73,6 +74,14 @@ export default function DesktopWindow(props: {
     height: 0,
   });
 
+  const resetSize = () => {
+    const newPoint = { ...point };
+    newPoint.width = window.defaultWidth;
+    newPoint.height = window.defaultHeight;
+    setWidth(window.defaultWidth);
+    setHeight(window.defaultHeight);
+    setPoint(newPoint);
+  };
   const resizeWindow = (newWidth: number, newHeight: number) => {
     const newPoint = { ...point };
     newPoint.width = newWidth;
@@ -267,7 +276,7 @@ export default function DesktopWindow(props: {
   }, [resizePoint, finishResize, sizeOffset]);
 
   return (
-    <DesktopWindowContext.Provider value={{ window, resizeWindow }}>
+    <DesktopWindowContext.Provider value={{ window, resizeWindow, resetSize }}>
       <div
         unselectable="on"
         className={`flex flex-row justify-center items-center absolute ${window.minimized && "hidden"}`}
