@@ -1,24 +1,51 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { WindowContext } from "../../windowprovider";
+import { IWindow } from "../../records";
 
 export default function WindowManager() {
-  const { activeWindows, closeWindow } = useContext(WindowContext);
+  const { activeWindows } = useContext(WindowContext);
   return (
     <div id="border">
-      {Object.entries(activeWindows).map(([key]) => {
+      {Object.entries(activeWindows).map(([key, value]) => {
         return (
-          <div
-            id="border"
+          <WindowToManage
+            windowKey={key}
+            window={value}
             key={key + " Manager"}
-            className={"flex flex-row justify-between"}
-          >
-            <div>{key}</div>
-            <button id="button" onClick={() => closeWindow(key)}>
-              close
-            </button>
-          </div>
+          />
         );
       })}
     </div>
   );
 }
+
+function WindowToManage(props: { windowKey: string; window: IWindow }) {
+  const { windowKey } = props;
+  const [open, setOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setOpen(!open);
+    console.log(!open);
+  };
+
+  return (
+    <div
+      id="border"
+      className={`flex flex-row justify-between items-start ${open ? "animate-windowManageOpen h-24" : "animate-windowManageClose h-12"}`}
+    >
+      <div>{windowKey}</div>
+
+      <button
+        className={"w-8 h-8 border-1 border-black"}
+        onClick={toggleOpen}
+      ></button>
+    </div>
+  );
+}
+
+//<label>
+//  location:
+//  <div>
+//    ({value.top}, {value.left})
+//  </div>
+//</label>;
