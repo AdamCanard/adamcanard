@@ -6,7 +6,7 @@ import { animationHandler } from "../../utils/animationhandler";
 export default function WindowManager() {
   const { activeWindows } = useContext(WindowContext);
   return (
-    <div id="border">
+    <div id="border" className={"w-full h-full overflow-auto"}>
       {Object.entries(activeWindows).map(([key, value]) => {
         return (
           <WindowToManage
@@ -21,7 +21,7 @@ export default function WindowManager() {
 }
 
 function WindowToManage(props: { windowKey: string; window: IWindow }) {
-  const { windowKey } = props;
+  const { windowKey, window } = props;
   const [open, setOpen] = useState<boolean>();
 
   const animationString = animationHandler(
@@ -40,7 +40,7 @@ function WindowToManage(props: { windowKey: string; window: IWindow }) {
   return (
     <div
       id="border"
-      className={`flex flex-col contain-paint ${animationString}`}
+      className={`flex flex-col contain-paint ${animationString} gap-1`}
     >
       <div className={"flex flex-row justify-between items-start"}>
         <div>{windowKey}</div>
@@ -50,7 +50,18 @@ function WindowToManage(props: { windowKey: string; window: IWindow }) {
           onClick={toggleOpen}
         ></button>
       </div>
-      {open && <div>info</div>}
+      {open && (
+        <>
+          <div className={"flex flex-row justify-between"}>
+            Location:
+            <div>{`(${window.left},${window.top})`}</div>
+          </div>
+          <div className={"flex flex-row justify-between"}>
+            Size:
+            <div>{`(${window.width},${window.height})`}</div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
