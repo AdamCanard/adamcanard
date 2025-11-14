@@ -22,16 +22,25 @@ export default function WindowManager() {
 function WindowToManage(props: { windowKey: string; window: IWindow }) {
   const { windowKey } = props;
   const [open, setOpen] = useState(false);
+  const [animationString, setAnimationString] = useState("");
 
+  const animationRecord = {
+    false: "animate-windowManageClose",
+    true: "animate-windowManageOpen",
+  };
   const toggleOpen = () => {
     setOpen(!open);
-    console.log(!open);
+    if (!open) {
+      setAnimationString(animationRecord.true);
+    } else {
+      setAnimationString(animationRecord.false);
+    }
   };
-
+  //${open ? "animate-windowManageOpen h-24" : "animate-windowManageClose h-12"}
   return (
     <div
       id="border"
-      className={`flex flex-row justify-between items-start ${open ? "animate-windowManageOpen h-24" : "animate-windowManageClose h-12"}`}
+      className={`flex flex-row justify-between items-start ${animationString}`}
     >
       <div>{windowKey}</div>
 

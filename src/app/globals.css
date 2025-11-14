@@ -14,8 +14,8 @@ root {
 @theme inline {
   --font-trebuchet: var(--font-trebuchet);
 
-  --animate-windowManageOpen: windowManageOpen 1s ease-in 1 normal;
-  --animate-windowManageClose: windowManageClose 1s ease-in 1 normal;
+  --animate-windowManageOpen: windowManageOpen 1s ease 1 normal;
+  --animate-windowManageClose: windowManageClose 1s ease 1 normal;
   @keyframes windowManageOpen {
     0% {
       height: 3rem;
