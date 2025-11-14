@@ -40,14 +40,17 @@ function WindowToManage(props: { windowKey: string; window: IWindow }) {
   return (
     <div
       id="border"
-      className={`flex flex-row justify-between items-start ${animationString}`}
+      className={`flex flex-col contain-paint ${animationString}`}
     >
-      <div>{windowKey}</div>
+      <div className={"flex flex-row justify-between items-start"}>
+        <div>{windowKey}</div>
 
-      <button
-        className={"w-8 h-8 border-1 border-black"}
-        onClick={toggleOpen}
-      ></button>
+        <button
+          className={"w-8 h-8 border-1 border-black"}
+          onClick={toggleOpen}
+        ></button>
+      </div>
+      {open && <div>info</div>}
     </div>
   );
 }

@@ -15,7 +15,7 @@ root {
   --font-trebuchet: var(--font-trebuchet);
 
   --animate-windowManageOpen: windowManageOpen 1s ease 1 normal;
-  --animate-windowManageClose: windowManageClose 1s ease 1 normal;
+  --animate-windowManageClose: windowManageClose 0.5s ease 1 normal;
   @keyframes windowManageOpen {
     0% {
       height: 3rem;
