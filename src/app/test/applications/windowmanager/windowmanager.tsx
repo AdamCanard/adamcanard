@@ -21,22 +21,21 @@ export default function WindowManager() {
 
 function WindowToManage(props: { windowKey: string; window: IWindow }) {
   const { windowKey } = props;
-  const [open, setOpen] = useState(false);
-  const [animationString, setAnimationString] = useState("h-12");
+  const [open, setOpen] = useState<boolean>();
 
-  const animationRecord = {
-    false: "animate-windowManageClose h-12",
-    true: "animate-windowManageOpen h-24",
-  };
+  const animationString = animationHandler(
+    "h-12",
+    "animate-windowManageOpen h-24",
+    "animate-windowManageClose h-12",
+    open,
+  );
   const toggleOpen = () => {
-    setOpen(!open);
-    if (!open) {
-      setAnimationString(animationRecord.true);
+    if (open === undefined) {
+      setOpen(true);
     } else {
-      setAnimationString(animationRecord.false);
+      setOpen(!open);
     }
   };
-  //${open ? "animate-windowManageOpen h-24" : "animate-windowManageClose h-12"}
   return (
     <div
       id="border"
@@ -52,9 +51,16 @@ function WindowToManage(props: { windowKey: string; window: IWindow }) {
   );
 }
 
-//<label>
-//  location:
-//  <div>
-//    ({value.top}, {value.left})
-//  </div>
-//</label>;
+const animationHandler = (
+  initStyle: string,
+  trueStyle: string,
+  falseStyle: string,
+  booleanState: boolean | undefined,
+) => {
+  if (booleanState === undefined) return initStyle;
+  if (booleanState) {
+    return trueStyle;
+  } else {
+    return falseStyle;
+  }
+};
