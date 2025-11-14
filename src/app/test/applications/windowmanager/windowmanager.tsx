@@ -22,11 +22,11 @@ export default function WindowManager() {
 function WindowToManage(props: { windowKey: string; window: IWindow }) {
   const { windowKey } = props;
   const [open, setOpen] = useState(false);
-  const [animationString, setAnimationString] = useState("");
+  const [animationString, setAnimationString] = useState("h-12");
 
   const animationRecord = {
-    false: "animate-windowManageClose",
-    true: "animate-windowManageOpen",
+    false: "animate-windowManageClose h-12",
+    true: "animate-windowManageOpen h-24",
   };
   const toggleOpen = () => {
     setOpen(!open);
