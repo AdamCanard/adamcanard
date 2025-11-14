@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { WindowContext } from "../../windowprovider";
 import { IWindow } from "../../records";
+import { animationHandler } from "../../utils/animationhandler";
 
 export default function WindowManager() {
   const { activeWindows } = useContext(WindowContext);
@@ -50,17 +51,3 @@ function WindowToManage(props: { windowKey: string; window: IWindow }) {
     </div>
   );
 }
-
-const animationHandler = (
-  initStyle: string,
-  trueStyle: string,
-  falseStyle: string,
-  booleanState: boolean | undefined,
-) => {
-  if (booleanState === undefined) return initStyle;
-  if (booleanState) {
-    return trueStyle;
-  } else {
-    return falseStyle;
-  }
-};
