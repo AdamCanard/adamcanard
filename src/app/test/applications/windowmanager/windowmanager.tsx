@@ -6,7 +6,10 @@ import { animationHandler } from "../../utils/animationhandler";
 export default function WindowManager() {
   const { activeWindows } = useContext(WindowContext);
   return (
-    <div id="border" className={"w-full h-full overflow-auto"}>
+    <div
+      id="border"
+      className={"flex flex-col w-full h-full overflow-auto contain-paint"}
+    >
       {Object.entries(activeWindows).map(([key, value]) => {
         return (
           <WindowToManage
