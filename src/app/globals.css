@@ -11,38 +11,6 @@ root {
   }
 }
 
-@media (max-width: 1000px) {
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: start;
-  }
-
-  #mobile {
-    width: 100dvw;
-    height: 100dvh;
-    display: flex;
-  }
-  #desktop {
-    display: none;
-  }
-  h1 {
-    color: white;
-    background: linear-gradient(90deg, #000080, #1084d0);
-    padding: 3px 2px 3px 3px;
-    letter-spacing: 0;
-  }
-}
-@media (min-width: 1001px) {
-  #mobile {
-    display: none;
-  }
-  #desktop {
-    display: flex;
-    width: 100%;
-    height: calc(100% - 32px);
-  }
-}
 #listHeight {
   height: calc(100% - 125px);
 }

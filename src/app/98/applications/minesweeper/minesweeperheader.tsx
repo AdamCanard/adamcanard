@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { timerListImages } from "./minesweeperimages";
-import Smile from "../../../../../../public/minesweeper/Minesweeper_Smile.png";
-import Dead from "../../../../../../public/minesweeper/Minesweeper_Dead.png";
+import Smile from "../../../../../public/minesweeper/Minesweeper_Smile.png";
+import Dead from "../../../../../public/minesweeper/Minesweeper_Dead.png";
 import { useContext, useEffect, useState } from "react";
 import { MinesweeperContext } from "./minesweeper";
 

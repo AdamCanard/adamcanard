@@ -1,6 +1,6 @@
 "use client";
 
-import DesktopWindow from "./98/desktop/sitecomps/desktopwindow";
+import DesktopWindow from "./98/sitecomps/desktopwindow";
 import GameContainer from "./testcomps/gamecontainer";
 
 export default function Test() {

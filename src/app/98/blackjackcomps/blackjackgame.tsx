@@ -9,7 +9,7 @@ import {
 } from "react";
 
 import { Deck } from "./deck";
-import CardBack from "../../../../../public/Cards/CardBack.png";
+import CardBack from "../../../../public/Cards/CardBack.png";
 import Image from "next/image";
 import WindowButton from "../semanticcomps/windowbutton";
 import { BJEvaluateHand, Shuffle } from "./deckfunctions";

@@ -1,4 +1,4 @@
-import MobilePage from "../mobile/mobilepage";
+import MobilePage from "@/app/mobile/mobilepage";
 import DesktopWindow from "./sitecomps/desktopwindow";
 
 export default function WindowedMobile() {

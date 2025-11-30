@@ -1,5 +1,5 @@
 "use client";
-import Windows from "../../../../../public/Windows/Windows.png";
+import Windows from "../../../../public/Windows/Windows.png";
 import Image from "next/image";
 import TaskbarTabs from "./taskbartabs";
 import { useState } from "react";

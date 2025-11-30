@@ -1,16 +1,14 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Loading from "./desktop/sitecomps/loading";
-export default function Page() {
-  const router = useRouter();
-  useEffect(() => {
-    router.push("98/desktop");
-  }, [router]);
+import Desktop from "./sitecomps/desktop";
+import { Taskbar } from "./sitecomps/taskbar";
 
+export default function Page() {
   return (
-    <div className={"w-full h-full"}>
-      <Loading />
+    <div
+      unselectable="on"
+      className="h-full w-full flex flex-col justify-center items-center"
+    >
+      <Desktop />
+      <Taskbar />
     </div>
   );
 }

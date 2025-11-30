@@ -1,8 +1,8 @@
 "use client";
 import RecyclingBin from "../applications/recyclingbin";
 import Application from "./application";
-import RecyclingBinImg from "../../../../../public/Windows/RecyclingBin.png";
-import MinesweeperImage from "../../../../../public/minesweeper/MineSweeperDesktop.png";
+import RecyclingBinImg from "../../../../public/Windows/RecyclingBin.png";
+import MinesweeperImage from "../../../../public/minesweeper/MineSweeperDesktop.png";
 import { useContext } from "react";
 import { TaskbarContext } from "../taskbarcontext";
 import Minesweeper from "../applications/minesweeper/minesweeper";
