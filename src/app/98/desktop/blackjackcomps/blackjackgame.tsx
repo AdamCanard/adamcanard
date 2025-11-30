@@ -9,13 +9,11 @@ import {
 } from "react";
 
 import { Deck } from "./deck";
-import CardBack from "../../../../public/Cards/CardBack.png";
+import CardBack from "../../../../../public/Cards/CardBack.png";
 import Image from "next/image";
 import WindowButton from "../semanticcomps/windowbutton";
 import { BJEvaluateHand, Shuffle } from "./deckfunctions";
 import DesktopWindow from "../sitecomps/desktopwindow";
-import { LabeledInputNum } from "../labeledinputs";
-import { TaskbarContext } from "../taskbarcontext";
 
 export interface IBlackJackContext {
   DeckKeys: string[];
@@ -25,7 +23,6 @@ export interface IBlackJackContext {
   dealer: string[];
   setDealer: React.Dispatch<SetStateAction<string[]>>;
   setGameTrigger: React.Dispatch<SetStateAction<boolean>>;
-  wager: number;
 }
 
 //cast empty object to contexttype
@@ -39,7 +36,6 @@ export default function BlackJack() {
   const [dealer, setDealer] = useState<string[]>([]);
   const [player, setPlayer] = useState<string[]>([]);
   const [gameTrigger, setGameTrigger] = useState<boolean>(false);
-  const [wager, setWager] = useState<number>(10);
 
   function StartRound() {
     Shuffle(DeckKeys, setDeckKeys);
@@ -52,33 +48,21 @@ export default function BlackJack() {
   }
 
   const handleClick = () => {
-    if (wager >= 10) {
-      StartRound();
-    } else {
-      setWager(10);
-    }
+    StartRound();
   };
 
   return (
     <DesktopWindow title={"BlackJack"} width={"17rem"} height={""}>
       {!gameTrigger ? (
-        <>
-          <LabeledInputNum
-            title="wager"
-            required={true}
-            state={wager}
-            setState={setWager}
-          />
-          <WindowButton>
-            <button
-              id="button"
-              className="hover:cursor-pointer"
-              onClick={handleClick}
-            >
-              Start
-            </button>
-          </WindowButton>
-        </>
+        <WindowButton>
+          <button
+            id="button"
+            className="hover:cursor-pointer"
+            onClick={handleClick}
+          >
+            Start
+          </button>
+        </WindowButton>
       ) : (
         <BlackJackContext.Provider
           value={{
@@ -89,7 +73,6 @@ export default function BlackJack() {
             dealer,
             setDealer,
             setGameTrigger,
-            wager,
           }}
         >
           <BlackJackGame />
@@ -108,9 +91,7 @@ export function BlackJackGame() {
     DeckKeys,
     setDeckKeys,
     setGameTrigger,
-    wager,
   } = useContext(BlackJackContext);
-  const { user, setUser } = useContext(TaskbarContext);
   const [reveal, setReveal] = useState<boolean>(false);
   const [winner, setWinner] = useState<string>("");
 
@@ -126,36 +107,6 @@ export function BlackJackGame() {
     setDealer(newDealer);
     setDeckKeys(DeckKeys);
   }, [DeckKeys, dealer, setDealer, setDeckKeys]);
-
-  const postGame = useCallback(
-    async (wager: number) => {
-      const formData = new FormData();
-      formData.append("Losses", user.losses + wager + "");
-      const newUser = user;
-      newUser.losses = user.losses + wager;
-      setUser(newUser);
-      try {
-        const response = await fetch("/api/user/" + user.username, {
-          method: "PUT",
-          body: formData,
-        });
-        return response;
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          return new Response(
-            JSON.stringify({ error: err.message || err.toString() }),
-            {
-              status: 500,
-              headers: {},
-            },
-          );
-        } else {
-          console.log(err);
-        }
-      }
-    },
-    [user, setUser],
-  );
 
   const EndRound = useCallback(() => {
     //dealer hits on 16 and soft 17
@@ -202,7 +153,6 @@ export function BlackJackGame() {
     //WIN
     if (playervalue <= 21 && (playervalue > dealervalue || dealervalue > 21)) {
       setWinner("Player");
-      postGame(wager * 2);
     } else if (
       //PUSH
       playervalue === dealervalue ||
@@ -211,17 +161,8 @@ export function BlackJackGame() {
       setWinner("Nobody");
     } else {
       setWinner("Dealer");
-      postGame(wager * -1);
     }
-  }, [
-    DeckKeys.length,
-    dealer,
-    drawDealer,
-    player,
-    setDeckKeys,
-    wager,
-    postGame,
-  ]);
+  }, [DeckKeys.length, dealer, drawDealer, player, setDeckKeys]);
 
   const reset = () => {
     setPlayer([]);

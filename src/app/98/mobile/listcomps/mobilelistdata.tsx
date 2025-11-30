@@ -1,5 +1,5 @@
-import GroupedList from "@/app/desktop/listcomps/groupedList";
 import { Omit } from "@/app/omit";
+import GroupedList from "../../desktop/listcomps/groupedList";
 
 export default function MobileListData(props: {
   list: object[];

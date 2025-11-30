@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ICellObject } from "./minesweeperfunctions";
-import flag from "../../../../../public/flag.png";
+import flag from "../../../../../../public/flag.png";
 import { minesweeperImages } from "./minesweeperimages";
 export default function Cell(props: {
   obj: ICellObject;

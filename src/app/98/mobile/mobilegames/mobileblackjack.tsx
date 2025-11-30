@@ -1,14 +1,13 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 
-import CardBack from "../../../../public/Cards/CardBack.png";
+import CardBack from "../../../../../public/Cards/CardBack.png";
 import Image from "next/image";
+import { Deck } from "../../desktop/blackjackcomps/deck";
 import {
   BJEvaluateHand,
   Shuffle,
-} from "@/app/desktop/blackjackcomps/deckfunctions";
-import { Deck } from "@/app/desktop/blackjackcomps/deck";
-
+} from "../../desktop/blackjackcomps/deckfunctions";
 export default function MBlackJackGame() {
   const [reveal, setReveal] = useState<boolean>(false);
   const [winner, setWinner] = useState<string>("");

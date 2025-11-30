@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import Photo from "../../../../public/AdamBeer1.jpg";
+import Photo from "../../../../../public/AdamBeer1.jpg";
 export default function BeerImage() {
   return (
     <div id="boxshadow" className={"flex flex-col h-full"} key={"Photo"}>

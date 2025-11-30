@@ -1,8 +1,8 @@
 "use client";
+import { IError } from "@/app/types";
 import Window from "./semanticcomps/window";
 import WindowInternal from "./semanticcomps/windowinternal";
 
-import { IError } from "../types";
 import { createContext, useState } from "react";
 
 interface ErrorContextType {

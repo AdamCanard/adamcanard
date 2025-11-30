@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { IBeer } from "../server/models/beer";
 import { beerScreens } from "./beercomps/beerscreens";
+import { IBeer } from "@/app/server/models/beer";
 
 export interface BeerContextType {
   beers: IBeer[];
