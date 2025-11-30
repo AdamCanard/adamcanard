@@ -5,13 +5,12 @@ import AdminPanel from "../adminpanel";
 import Windows from "../windows";
 import Lister from "../listcomps/lister";
 import { TaskbarContext } from "../taskbarcontext";
-import UserPanel from "../userpanel";
 import Test from "@/app/test";
 import { TaskbarButton } from "./taskbarbutton";
 import WindowedMobile from "../windowedmobile";
 
 export default function TaskbarTabs() {
-  const { admin, user, setAdmin } = useContext(TaskbarContext);
+  const { admin, setAdmin } = useContext(TaskbarContext);
 
   return (
     <div className={"flex flex-row w-full justify-between"}>
@@ -37,7 +36,6 @@ export default function TaskbarTabs() {
         )}
 
         <TaskbarButton window={<WindowedMobile key="Mobile" />} />
-        <TaskbarButton window={<UserPanel key={user.username} />} />
         <TaskbarButton window={<AdminPanel key="Admin" />} />
       </div>
     </div>

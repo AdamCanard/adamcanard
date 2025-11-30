@@ -1,17 +1,7 @@
 "use client";
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import { IUser } from "../types";
-import { useRouter } from "next/navigation";
+import { createContext, SetStateAction, useEffect, useState } from "react";
 
 interface TaskbarContextType {
-  user: IUser;
-  setUser: Dispatch<SetStateAction<IUser>>;
   admin: boolean;
   setAdmin: React.Dispatch<SetStateAction<boolean>>;
   windows: JSX.Element[];
@@ -31,82 +21,6 @@ export default function TaskbarContextWrapper(props: {
 }) {
   const [windows, setWindows] = useState<JSX.Element[]>([]);
   const [admin, setAdmin] = useState(false);
-  const [user, setUser] = useState<IUser>({} as IUser);
-
-  const router = useRouter();
-
-  const getUsername = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("cookie", "username");
-      const response = await fetch("/api/getcookie/", {
-        method: "POST",
-        body: formData,
-      });
-      return await response.json();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
-  };
-  const getUser = async (username: string) => {
-    try {
-      const formData = new FormData();
-      formData.append("username", username);
-      const response = await fetch("/api/user/", {
-        method: "POST",
-        body: formData,
-      });
-      if (response.status === 200) {
-        return response.json();
-      } else {
-        router.push("/logout");
-      }
-      return await response.json();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
-  };
-
-  const loginUser = async () => {
-    try {
-      const data: Record<string, string> = await getUsername();
-      const username = data["username"];
-      const user = await getUser(username);
-      setUser(user);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        return new Response(
-          JSON.stringify({ error: err.message || err.toString() }),
-          {
-            status: 500,
-            headers: {},
-          },
-        );
-      } else {
-        console.log(err);
-      }
-    }
-  };
 
   const adminEnv = async () => {
     const email = process.env.NEXT_PUBLIC_EMAIL;
@@ -143,9 +57,7 @@ export default function TaskbarContextWrapper(props: {
   };
 
   useEffect(() => {
-    loginUser();
     adminEnv();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const openWindow = (window: JSX.Element) => {
@@ -179,7 +91,6 @@ export default function TaskbarContextWrapper(props: {
     <>
       <TaskbarContext.Provider
         value={{
-          user,
           admin,
           setAdmin,
           windows,
@@ -187,7 +98,6 @@ export default function TaskbarContextWrapper(props: {
           openWindow,
           isOpen,
           closeWindow,
-          setUser,
         }}
       >
         {props.children}
