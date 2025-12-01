@@ -10,7 +10,7 @@ export default function RootLayout({
 }>) {
   const queryClient = new QueryClient();
   return (
-    <div className={"h-full flex-col " + MSFont.className}>
+    <div className={"flex flex-col w-dvw h-dvh " + MSFont.className}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </div>
   );
