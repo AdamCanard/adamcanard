@@ -1,9 +1,23 @@
-import { IScreenActions, ScreenContext } from "@/app/testcomps/gamecontainer";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { IScreenActions, ScreenContext } from "@/app/gamecomps/gamecontainer";
+import Adam from "./adam";
+import Dominique from "./dominique";
+import Everest from "./everest";
+import Mieke from "./mieke";
+import Sebastian from "./sebastian";
 
-export default function Games() {
+export default function About() {
   const { setControls, changeScreen } = useContext(ScreenContext);
-  const buttons = useMemo(() => [], []);
+  const about = useMemo(
+    () => [
+      <Adam key={"Adam"} />,
+      <Dominique key={"Dominique"} />,
+      <Everest key={"Everest"} />,
+      <Mieke key={"Mieke"} />,
+      <Sebastian key={"Sebastian"} />,
+    ],
+    [],
+  );
 
   const [selected, setSelected] = useState(0);
   const left = useCallback(() => {
@@ -14,27 +28,23 @@ export default function Games() {
   }, [setSelected, selected]);
 
   const right = useCallback(() => {
-    if (selected !== 2) {
+    if (selected !== about.length - 1) {
       const newIndex = selected + 1;
       setSelected(newIndex);
     }
-  }, [selected, setSelected]);
+  }, [selected, setSelected, about.length]);
 
-  const a = useCallback(() => {
-    changeScreen(buttons[selected]);
-  }, [buttons, changeScreen, selected]);
   const b = useCallback(() => {
     changeScreen("skip");
   }, [changeScreen]);
 
   const gridControls: IScreenActions = useMemo(
     () => ({
-      a,
       b,
       left,
       right,
     }),
-    [left, right, a, b],
+    [left, right, b],
   );
 
   useEffect(() => {
@@ -42,5 +52,5 @@ export default function Games() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
-  return <div className={"GridSize bg-white "}></div>;
+  return <div className={"GridSize bg-white "}>{about[selected]}</div>;
 }

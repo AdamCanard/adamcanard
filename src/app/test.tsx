@@ -1,7 +1,7 @@
 "use client";
 
 import DesktopWindow from "./98/sitecomps/desktopwindow";
-import GameContainer from "./testcomps/gamecontainer";
+import GameContainer from "./gamecomps/gamecontainer";
 
 export default function Test() {
   return (
