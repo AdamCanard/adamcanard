@@ -3,16 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 
 import CardBack from "../../../../public/Cards/CardBack.png";
 import Image from "next/image";
-import {
-  BJEvaluateHand,
-  Shuffle,
-} from "@/app/desktop/blackjackcomps/deckfunctions";
-import { Deck } from "@/app/desktop/blackjackcomps/deck";
-
+import { Deck } from "@/app/98/blackjackcomps/deck";
+import { BJEvaluateHand, Shuffle } from "@/app/98/blackjackcomps/deckfunctions";
 export default function MBlackJackGame() {
   const [reveal, setReveal] = useState<boolean>(false);
   const [winner, setWinner] = useState<string>("");
   const [DeckKeys, setDeckKeys] = useState<string[]>(Object.keys(Deck));
+
   const [dealer, setDealer] = useState<string[]>([]);
   const [player, setPlayer] = useState<string[]>([]);
 

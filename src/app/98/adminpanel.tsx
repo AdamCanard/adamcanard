@@ -1,11 +1,11 @@
 "use client";
 
-import { LabeledInputStr } from "@/app/desktop/labeledinputs";
-import WindowButton from "@/app/desktop/semanticcomps/windowbutton";
-import WindowInternal from "@/app/desktop/semanticcomps/windowinternal";
 import { useContext, useState } from "react";
 import DesktopWindow from "./sitecomps/desktopwindow";
 import { TaskbarContext } from "./taskbarcontext";
+import { LabeledInputStr } from "./labeledinputs";
+import WindowInternal from "./semanticcomps/windowinternal";
+import WindowButton from "./semanticcomps/windowbutton";
 
 export default function AdminPanel() {
   const [email, setEmail] = useState("");

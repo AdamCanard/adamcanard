@@ -1,5 +1,5 @@
+import { Omit } from "@/app/omit";
 import { Dispatch, SetStateAction } from "react";
-import { Omit } from "../../omit";
 
 export default function ListToolBar(props: {
   list: object[];

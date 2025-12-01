@@ -2,8 +2,8 @@
 import { Suspense, useEffect, useState } from "react";
 import Info from "./info";
 import { Renderer } from "./renderer/renderer";
-import Loading from "../desktop/sitecomps/loading";
 import { tabLibrary } from "./library";
+import Loading from "../loading";
 
 export default function MobilePage() {
   const [loading, setLoading] = useState(true);
