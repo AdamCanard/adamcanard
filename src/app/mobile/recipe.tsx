@@ -79,7 +79,7 @@ function RecipeForm(props: {
         setName("");
         setUrl("");
       }}
-      className={"flex flex-col"}
+      className={"flex flex-col h-32"}
     >
       <div id={"border"} className={"w-full flex justify-between items-center"}>
         <label className={"pl-1 w-full"}>Recipe Name:</label>
@@ -114,12 +114,12 @@ function RecipeForm(props: {
 }
 function RecipeList(props: { recipes: IRecipe[] }) {
   return (
-    <div id="border" className={"flex flex-col overflow-y-auto"}>
+    <div id="border" className={"flex flex-col overflow-y-auto mb-6"}>
       {props.recipes.map((recipe) => {
         return (
           <Link
             id="border"
-            className={"w-full h-full"}
+            className={"flex w-full"}
             key={recipe.url}
             href={recipe.url}
           >
