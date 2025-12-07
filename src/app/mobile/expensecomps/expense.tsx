@@ -93,7 +93,7 @@ export function SharedExpenses(props: { expenses: IExpense[] }) {
     <>
       <div id="border">
         <div id="title" className={"flex justify-between"}>
-          <>Fixed Expenses:</>
+          <>Shared Expenses:</>
           <button
             id="border"
             onClick={toggleShow}
@@ -104,7 +104,7 @@ export function SharedExpenses(props: { expenses: IExpense[] }) {
         </div>
         {show && (
           <>
-            {" "}
+            Fixed:
             <div className={"flex flex-row"}>
               <div id="border" className={"w-1/2 text-center"}>
                 Title:
@@ -135,24 +135,8 @@ export function SharedExpenses(props: { expenses: IExpense[] }) {
                     ></input>
                   </div>
                 );
-              })}
-          </>
-        )}
-      </div>
-      <div id="border">
-        <div id="title" className={"flex justify-between"}>
-          <>Flex Expenses:</>
-          <button
-            id="border"
-            onClick={toggleShow}
-            className={"flex h-full w-6 pr-2 bg-black justify-start items-end"}
-          >
-            <div className={"bg-black w-1/2 h-1/8"}></div>
-          </button>
-        </div>
-        {show && (
-          <>
-            {" "}
+              })}{" "}
+            Flex:
             <div className={"flex flex-row"}>
               <div id="border" className={"w-1/2 text-center"}>
                 Title:
