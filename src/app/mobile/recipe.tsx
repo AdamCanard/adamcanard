@@ -60,7 +60,7 @@ export default function Recipe() {
     }
   };
   return (
-    <div className={"w-full h-full"}>
+    <div className={"flex flex-col w-full h-full"}>
       <RecipeForm handleSubmit={handleSubmit} />
       <RecipeList recipes={recipes} />
     </div>
@@ -119,7 +119,7 @@ function RecipeList(props: { recipes: IRecipe[] }) {
         return (
           <Link
             id="border"
-            className={"w-full"}
+            className={"w-full h-full"}
             key={recipe.url}
             href={recipe.url}
           >
