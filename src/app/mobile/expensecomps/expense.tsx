@@ -40,10 +40,7 @@ export function PartyAdder(props: { add: (newParty: IParty) => void }) {
           type="number"
           name="takeHome"
           value={takeHome === 0 ? "" : takeHome}
-          onChange={(e) => {
-            console.log(e.target.value);
-            setTakeHome(+e.target.value);
-          }}
+          onChange={(e) => setTakeHome(+e.target.value)}
         ></input>
       </div>
 
