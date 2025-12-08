@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface IParty {
   name: string;
@@ -15,18 +15,34 @@ interface ISharedExpense {
   fixed: boolean;
 }
 
+interface ExpenseContextType {
+  parties: IParty[];
+  sharedExpenses: ISharedExpense[];
+  addParty: (newParty: IParty) => void;
+  addSharedExpense: (newExpense: ISharedExpense) => void;
+  addExpenseToParty: (
+    partyIndex: number,
+    newExpense: IIndividualExpense,
+  ) => void;
+}
+
+//cast empty object to contexttype
+export const ExpenseContext = createContext<ExpenseContextType>(
+  {} as ExpenseContextType,
+);
+
 export default function Expense() {
   const [parties, setParties] = useState<IParty[]>([]);
-  const [expenses, setExpenses] = useState<ISharedExpense[]>([]);
+  const [sharedExpenses, setSharedExpenses] = useState<ISharedExpense[]>([]);
   const addParty = (newParty: IParty) => {
     const newParties = [...parties];
     newParties.push(newParty);
     setParties(newParties);
   };
   const addSharedExpense = (newExpense: ISharedExpense) => {
-    const newExpenses = [...expenses];
+    const newExpenses = [...sharedExpenses];
     newExpenses.push(newExpense);
-    setExpenses(newExpenses);
+    setSharedExpenses(newExpenses);
   };
   const addExpenseToParty = (
     partyIndex: number,
@@ -44,22 +60,30 @@ export default function Expense() {
     setParties(newParties);
   };
   return (
-    <div className={"flex flex-col w-full h-full"}>
-      <PartyAdder add={addParty} />
-      <SharedExpenseAdder add={addSharedExpense} />
-      <Parties parties={parties} />
-      <SharedExpenses expenses={expenses} />
-      <IndividualExpenses addExpense={addExpenseToParty} parties={parties} />
-    </div>
+    <ExpenseContext.Provider
+      value={{
+        parties,
+        sharedExpenses,
+        addParty,
+        addSharedExpense,
+        addExpenseToParty,
+      }}
+    >
+      {" "}
+      <div className={"flex flex-col w-full h-full"}>
+        <PartyAdder />
+        <SharedExpenseAdder />
+        <Parties />
+        <SharedExpenses />
+        <IndividualExpenses />
+      </div>
+    </ExpenseContext.Provider>
   );
 }
 
-export function IndividualExpenses(props: {
-  parties: IParty[];
-  addExpense: (partyIndex: number, newExpense: IIndividualExpense) => void;
-}) {
+export function IndividualExpenses() {
+  const { parties } = useContext(ExpenseContext);
   const [partyIndex, setPartyIndex] = useState(0);
-  const { parties } = props;
   const increment = () => {
     if (partyIndex + 1 !== parties.length) {
       setPartyIndex(partyIndex + 1);
@@ -95,10 +119,7 @@ export function IndividualExpenses(props: {
               {">"}
             </div>
           </h1>
-          <IndividualExpenseAdder
-            add={props.addExpense}
-            partyIndex={partyIndex}
-          />
+          <IndividualExpenseAdder partyIndex={partyIndex} />
 
           {parties[partyIndex].individualExpenses && (
             <div id="border" className={"h-full"}>
@@ -134,10 +155,8 @@ export function IndividualExpenses(props: {
     </div>
   );
 }
-export function IndividualExpenseAdder(props: {
-  add: (partyIndex: number, newExpense: IIndividualExpense) => void;
-  partyIndex: number;
-}) {
+export function IndividualExpenseAdder(props: { partyIndex: number }) {
+  const { addExpenseToParty } = useContext(ExpenseContext);
   const [title, setTitle] = useState("");
   const [cost, setCost] = useState(0);
 
@@ -165,7 +184,7 @@ export function IndividualExpenseAdder(props: {
         <button
           id="button"
           onClick={() => {
-            props.add(props.partyIndex, { title: title, cost: cost });
+            addExpenseToParty(props.partyIndex, { title: title, cost: cost });
             setTitle("");
             setCost(0);
           }}
@@ -177,7 +196,8 @@ export function IndividualExpenseAdder(props: {
   );
 }
 
-export function Parties(props: { parties: IParty[] }) {
+export function Parties() {
+  const { parties } = useContext(ExpenseContext);
   const [show, setShow] = useState(true);
   const toggleShow = () => {
     setShow(!show);
@@ -205,7 +225,7 @@ export function Parties(props: { parties: IParty[] }) {
               Monthly Take Home:
             </div>
           </div>
-          {props.parties.map((party) => {
+          {parties.map((party) => {
             return (
               <div className={"flex flex-row"} key={JSON.stringify(party)}>
                 <input
@@ -228,7 +248,8 @@ export function Parties(props: { parties: IParty[] }) {
     </div>
   );
 }
-export function SharedExpenses(props: { expenses: ISharedExpense[] }) {
+export function SharedExpenses() {
+  const { sharedExpenses } = useContext(ExpenseContext);
   const [show, setShow] = useState(true);
   const toggleShow = () => {
     setShow(!show);
@@ -257,7 +278,7 @@ export function SharedExpenses(props: { expenses: ISharedExpense[] }) {
                 Monthly Cost:
               </div>
             </div>
-            {props.expenses
+            {sharedExpenses
               .filter((expense) => expense.fixed)
               .map((expense) => {
                 return (
@@ -289,7 +310,7 @@ export function SharedExpenses(props: { expenses: ISharedExpense[] }) {
                 Monthly Cost:
               </div>
             </div>
-            {props.expenses
+            {sharedExpenses
               .filter((expense) => !expense.fixed)
               .map((expense) => {
                 return (
@@ -319,7 +340,8 @@ export function SharedExpenses(props: { expenses: ISharedExpense[] }) {
   );
 }
 
-export function PartyAdder(props: { add: (newParty: IParty) => void }) {
+export function PartyAdder() {
+  const { addParty } = useContext(ExpenseContext);
   const [show, setShow] = useState(true);
   const toggleShow = () => {
     setShow(!show);
@@ -362,7 +384,7 @@ export function PartyAdder(props: { add: (newParty: IParty) => void }) {
           <button
             id="button"
             onClick={() => {
-              props.add({ name: name, takeHome: takeHome });
+              addParty({ name: name, takeHome: takeHome });
               setName("");
               setTakeHome(0);
             }}
@@ -374,9 +396,8 @@ export function PartyAdder(props: { add: (newParty: IParty) => void }) {
     </div>
   );
 }
-export function SharedExpenseAdder(props: {
-  add: (newExpense: ISharedExpense) => void;
-}) {
+export function SharedExpenseAdder() {
+  const { addSharedExpense } = useContext(ExpenseContext);
   const [show, setShow] = useState(true);
   const toggleShow = () => {
     setShow(!show);
@@ -430,7 +451,7 @@ export function SharedExpenseAdder(props: {
           <button
             id="button"
             onClick={() => {
-              props.add({ title: title, cost: cost, fixed: fixed });
+              addSharedExpense({ title: title, cost: cost, fixed: fixed });
               setTitle("");
               setCost(0);
             }}
