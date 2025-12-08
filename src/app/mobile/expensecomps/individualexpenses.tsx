@@ -3,7 +3,7 @@ import { ExpenseContext, IIndividualExpense } from "./expense";
 import IndividualExpenseAdder from "./individualexpenseadder";
 
 export default function IndividualExpenses() {
-  const { parties } = useContext(ExpenseContext);
+  const { parties, individualCost } = useContext(ExpenseContext);
   const [partyIndex, setPartyIndex] = useState(0);
   const increment = () => {
     if (partyIndex + 1 !== parties.length) {
@@ -40,6 +40,15 @@ export default function IndividualExpenses() {
               {">"}
             </div>
           </h1>
+          <div className={"flex flex-row"}>
+            <>
+              {" "}
+              <div id="border">Income After Shared Expenses:</div>
+              <div id="border">
+                {parties[partyIndex].takeHome - individualCost()}
+              </div>
+            </>
+          </div>
           <IndividualExpenseAdder partyIndex={partyIndex} />
 
           {parties[partyIndex].individualExpenses && (

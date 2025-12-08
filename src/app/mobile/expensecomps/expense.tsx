@@ -3,6 +3,7 @@ import IndividualExpenses from "./individualexpenses";
 import PartyAdder from "./partyadder";
 import SharedExpenseAdder from "./sharedexpenseadder";
 import Parties from "./parties";
+import SharedExpenses from "./sharedexpenses";
 
 export interface IParty {
   name: string;
@@ -28,6 +29,7 @@ interface ExpenseContextType {
     partyIndex: number,
     newExpense: IIndividualExpense,
   ) => void;
+  individualCost: () => number;
 }
 
 //cast empty object to contexttype
@@ -38,6 +40,13 @@ export const ExpenseContext = createContext<ExpenseContextType>(
 export default function Expense() {
   const [parties, setParties] = useState<IParty[]>([]);
   const [sharedExpenses, setSharedExpenses] = useState<ISharedExpense[]>([]);
+  const individualCost = () => {
+    let totalSharedCost = 0;
+    for (let i = 0; i < sharedExpenses.length; i++) {
+      totalSharedCost += sharedExpenses[i].cost;
+    }
+    return totalSharedCost / parties.length;
+  };
   const addParty = (newParty: IParty) => {
     const newParties = [...parties];
     newParties.push(newParty);
@@ -71,14 +80,14 @@ export default function Expense() {
         addParty,
         addSharedExpense,
         addExpenseToParty,
+        individualCost,
       }}
     >
-      {" "}
       <div className={"flex flex-col w-full h-full"}>
         <PartyAdder />
         <SharedExpenseAdder />
         <Parties />
-        <SharedExpenseAdder />
+        <SharedExpenses />
         <IndividualExpenses />
       </div>
     </ExpenseContext.Provider>
