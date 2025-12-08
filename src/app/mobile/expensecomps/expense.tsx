@@ -38,8 +38,23 @@ export const ExpenseContext = createContext<ExpenseContextType>(
 );
 
 export default function Expense() {
-  const [parties, setParties] = useState<IParty[]>([]);
-  const [sharedExpenses, setSharedExpenses] = useState<ISharedExpense[]>([]);
+  const [parties, setParties] = useState<IParty[]>(() => {
+    const storedParties = localStorage.getItem("parties");
+    if (storedParties === null) {
+      return [];
+    } else {
+      return JSON.parse(storedParties);
+    }
+  });
+  const [sharedExpenses, setSharedExpenses] = useState<ISharedExpense[]>(() => {
+    const sharedExpenses = localStorage.getItem("sharedExpenses");
+    if (sharedExpenses === null) {
+      return [];
+    } else {
+      return JSON.parse(sharedExpenses);
+    }
+  });
+
   const sharedCost = () => {
     let totalSharedCost = 0;
     for (let i = 0; i < sharedExpenses.length; i++) {
@@ -47,16 +62,19 @@ export default function Expense() {
     }
     return totalSharedCost / parties.length;
   };
+
   const addParty = (newParty: IParty) => {
     const newParties = [...parties];
     newParties.push(newParty);
     setParties(newParties);
   };
+
   const addSharedExpense = (newExpense: ISharedExpense) => {
     const newExpenses = [...sharedExpenses];
     newExpenses.push(newExpense);
     setSharedExpenses(newExpenses);
   };
+
   const addExpenseToParty = (
     partyIndex: number,
     newExpense: IIndividualExpense,
@@ -71,6 +89,11 @@ export default function Expense() {
     newParties[partyIndex] = newParty;
     console.log(newParties);
     setParties(newParties);
+  };
+
+  const saveExpense = () => {
+    localStorage.setItem("parties", JSON.stringify(parties));
+    localStorage.setItem("sharedExpenses", JSON.stringify(sharedExpenses));
   };
   return (
     <ExpenseContext.Provider
@@ -89,6 +112,13 @@ export default function Expense() {
         <Parties />
         <SharedExpenses />
         <IndividualExpenses />
+        <div
+          id="button"
+          className={"absolute bottom-3 right-3"}
+          onClick={saveExpense}
+        >
+          Save
+        </div>
       </div>
     </ExpenseContext.Provider>
   );
