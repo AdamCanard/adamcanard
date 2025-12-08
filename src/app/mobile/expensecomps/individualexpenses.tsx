@@ -3,7 +3,7 @@ import { ExpenseContext, IIndividualExpense } from "./expense";
 import IndividualExpenseAdder from "./individualexpenseadder";
 
 export default function IndividualExpenses() {
-  const { parties, individualCost } = useContext(ExpenseContext);
+  const { parties, sharedCost } = useContext(ExpenseContext);
   const [partyIndex, setPartyIndex] = useState(0);
   const increment = () => {
     if (partyIndex + 1 !== parties.length) {
@@ -19,6 +19,17 @@ export default function IndividualExpenses() {
       setPartyIndex(parties.length - 1);
     }
   };
+
+  const individualCost = () => {
+    let totalIndividualCost = 0;
+    if (parties[partyIndex].individualExpenses) {
+      for (let i = 0; i < parties[partyIndex].individualExpenses.length; i++) {
+        totalIndividualCost += parties[partyIndex].individualExpenses[i].cost;
+      }
+    }
+    return totalIndividualCost;
+  };
+
   return (
     <div id="border" className={"flex flex-col h-full"}>
       {parties.length > 0 ? (
@@ -45,38 +56,51 @@ export default function IndividualExpenses() {
               {" "}
               <div id="border">Income After Shared Expenses:</div>
               <div id="border">
-                {parties[partyIndex].takeHome - individualCost()}
+                {parties[partyIndex].takeHome - sharedCost()}
               </div>
             </>
           </div>
           <IndividualExpenseAdder partyIndex={partyIndex} />
 
           {parties[partyIndex].individualExpenses && (
-            <div id="border" className={"h-full"}>
-              {parties[partyIndex].individualExpenses.map(
-                (expense: IIndividualExpense) => {
-                  return (
-                    <div
-                      className={"flex flex-row"}
-                      key={JSON.stringify(expense)}
-                    >
-                      <input
-                        disabled
-                        className={"w-1/2"}
-                        type="text"
-                        value={expense.title}
-                      ></input>
-                      <input
-                        disabled
-                        className={"w-1/2"}
-                        type="number"
-                        value={expense.cost}
-                      ></input>
-                    </div>
-                  );
-                },
-              )}
-            </div>
+            <>
+              <div id="border">
+                {parties[partyIndex].individualExpenses.map(
+                  (expense: IIndividualExpense) => {
+                    return (
+                      <div
+                        className={"flex flex-row"}
+                        key={JSON.stringify(expense)}
+                      >
+                        <input
+                          disabled
+                          className={"w-1/2"}
+                          type="text"
+                          value={expense.title}
+                        ></input>
+                        <input
+                          disabled
+                          className={"w-1/2"}
+                          type="number"
+                          value={expense.cost}
+                        ></input>
+                      </div>
+                    );
+                  },
+                )}
+              </div>
+              <div className={"flex flex-row"}>
+                <>
+                  {" "}
+                  <div id="border">Income After All Expenses:</div>
+                  <div id="border">
+                    {parties[partyIndex].takeHome -
+                      sharedCost() -
+                      individualCost()}
+                  </div>
+                </>
+              </div>
+            </>
           )}
         </>
       ) : (
