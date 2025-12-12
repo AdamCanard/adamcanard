@@ -8,27 +8,19 @@ import SharedExpenses from "./sharedexpenses";
 export interface IParty {
   name: string;
   takeHome: number;
-  individualExpenses?: IIndividualExpense[];
+  individualExpenses?: IExpense[];
 }
-export interface IIndividualExpense {
+export interface IExpense {
   title: string;
   cost: number;
-}
-export interface ISharedExpense {
-  title: string;
-  cost: number;
-  fixed: boolean;
 }
 
 interface ExpenseContextType {
   parties: IParty[];
-  sharedExpenses: ISharedExpense[];
+  sharedExpenses: IExpense[];
   addParty: (newParty: IParty) => void;
-  addSharedExpense: (newExpense: ISharedExpense) => void;
-  addExpenseToParty: (
-    partyIndex: number,
-    newExpense: IIndividualExpense,
-  ) => void;
+  addSharedExpense: (newExpense: IExpense) => void;
+  addExpenseToParty: (partyIndex: number, newExpense: IExpense) => void;
   sharedCost: () => number;
 }
 
@@ -46,7 +38,7 @@ export default function Expense() {
       return JSON.parse(storedParties);
     }
   });
-  const [sharedExpenses, setSharedExpenses] = useState<ISharedExpense[]>(() => {
+  const [sharedExpenses, setSharedExpenses] = useState<IExpense[]>(() => {
     const sharedExpenses = localStorage.getItem("sharedExpenses");
     if (sharedExpenses === null) {
       return [];
@@ -69,16 +61,13 @@ export default function Expense() {
     setParties(newParties);
   };
 
-  const addSharedExpense = (newExpense: ISharedExpense) => {
+  const addSharedExpense = (newExpense: IExpense) => {
     const newExpenses = [...sharedExpenses];
     newExpenses.push(newExpense);
     setSharedExpenses(newExpenses);
   };
 
-  const addExpenseToParty = (
-    partyIndex: number,
-    newExpense: IIndividualExpense,
-  ) => {
+  const addExpenseToParty = (partyIndex: number, newExpense: IExpense) => {
     const newParties = [...parties];
     const newParty = newParties[partyIndex];
     if (newParty.individualExpenses) {

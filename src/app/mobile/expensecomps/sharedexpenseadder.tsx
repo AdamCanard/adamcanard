@@ -9,11 +9,6 @@ export default function SharedExpenseAdder() {
   };
   const [title, setTitle] = useState("");
   const [cost, setCost] = useState(0);
-  const [fixed, setFixed] = useState(true);
-
-  const toggleFixed = () => {
-    setFixed(!fixed);
-  };
 
   return (
     <div id="border" className={"flex flex-col w-full "}>
@@ -46,17 +41,11 @@ export default function SharedExpenseAdder() {
               value={cost === 0 ? "" : cost}
               onChange={(e) => setCost(+e.target.value)}
             ></input>
-            <Radio
-              true="Fixed"
-              false="Flex"
-              bool={fixed}
-              toggle={toggleFixed}
-            />
           </div>
           <button
             id="button"
             onClick={() => {
-              addSharedExpense({ title: title, cost: cost, fixed: fixed });
+              addSharedExpense({ title: title, cost: cost });
               setTitle("");
               setCost(0);
             }}
