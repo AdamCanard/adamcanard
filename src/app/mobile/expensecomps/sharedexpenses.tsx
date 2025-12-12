@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./expense";
+import ExpenseDisplay from "./expensedisplay";
 
 export default function SharedExpenses() {
   const { sharedExpenses } = useContext(ExpenseContext);
@@ -32,20 +33,10 @@ export default function SharedExpenses() {
             </div>
             {sharedExpenses.map((expense) => {
               return (
-                <div className={"flex flex-row"} key={JSON.stringify(expense)}>
-                  <input
-                    disabled
-                    className={"w-1/2"}
-                    type="text"
-                    value={expense.title}
-                  ></input>
-                  <input
-                    disabled
-                    className={"w-1/2"}
-                    type="number"
-                    value={expense.cost}
-                  ></input>
-                </div>
+                <ExpenseDisplay
+                  key={JSON.stringify(expense)}
+                  expense={expense}
+                />
               );
             })}
           </>

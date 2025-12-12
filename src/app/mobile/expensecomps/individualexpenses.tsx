@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { ExpenseContext, IExpense } from "./expense";
 import IndividualExpenseAdder from "./individualexpenseadder";
+import ExpenseDisplay from "./expensedisplay";
 
 export default function IndividualExpenses() {
   const { parties, sharedCost } = useContext(ExpenseContext);
@@ -68,23 +69,10 @@ export default function IndividualExpenses() {
                 {parties[partyIndex].individualExpenses.map(
                   (expense: IExpense) => {
                     return (
-                      <div
-                        className={"flex flex-row"}
+                      <ExpenseDisplay
                         key={JSON.stringify(expense)}
-                      >
-                        <input
-                          disabled
-                          className={"w-1/2"}
-                          type="text"
-                          value={expense.title}
-                        ></input>
-                        <input
-                          disabled
-                          className={"w-1/2"}
-                          type="number"
-                          value={expense.cost}
-                        ></input>
-                      </div>
+                        expense={expense}
+                      />
                     );
                   },
                 )}
