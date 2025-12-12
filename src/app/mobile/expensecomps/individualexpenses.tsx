@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { ExpenseContext, IIndividualExpense } from "./expense";
+import { ExpenseContext, IExpense } from "./expense";
 import IndividualExpenseAdder from "./individualexpenseadder";
 
 export default function IndividualExpenses() {
@@ -66,7 +66,7 @@ export default function IndividualExpenses() {
             <>
               <div id="border">
                 {parties[partyIndex].individualExpenses.map(
-                  (expense: IIndividualExpense) => {
+                  (expense: IExpense) => {
                     return (
                       <div
                         className={"flex flex-row"}

@@ -22,7 +22,6 @@ export default function SharedExpenses() {
         </div>
         {show && (
           <>
-            Fixed:
             <div className={"flex flex-row"}>
               <div id="border" className={"w-1/2 text-center"}>
                 Title:
@@ -31,61 +30,24 @@ export default function SharedExpenses() {
                 Monthly Cost:
               </div>
             </div>
-            {sharedExpenses
-              .filter((expense) => expense.fixed)
-              .map((expense) => {
-                return (
-                  <div
-                    className={"flex flex-row"}
-                    key={JSON.stringify(expense)}
-                  >
-                    <input
-                      disabled
-                      className={"w-1/2"}
-                      type="text"
-                      value={expense.title}
-                    ></input>
-                    <input
-                      disabled
-                      className={"w-1/2"}
-                      type="number"
-                      value={expense.cost}
-                    ></input>
-                  </div>
-                );
-              })}{" "}
-            Flex:
-            <div className={"flex flex-row"}>
-              <div id="border" className={"w-1/2 text-center"}>
-                Title:
-              </div>
-              <div id="border" className={"w-1/2 text-center"}>
-                Monthly Cost:
-              </div>
-            </div>
-            {sharedExpenses
-              .filter((expense) => !expense.fixed)
-              .map((expense) => {
-                return (
-                  <div
-                    className={"flex flex-row"}
-                    key={JSON.stringify(expense)}
-                  >
-                    <input
-                      disabled
-                      className={"w-1/2"}
-                      type="text"
-                      value={expense.title}
-                    ></input>
-                    <input
-                      disabled
-                      className={"w-1/2"}
-                      type="number"
-                      value={expense.cost}
-                    ></input>
-                  </div>
-                );
-              })}
+            {sharedExpenses.map((expense) => {
+              return (
+                <div className={"flex flex-row"} key={JSON.stringify(expense)}>
+                  <input
+                    disabled
+                    className={"w-1/2"}
+                    type="text"
+                    value={expense.title}
+                  ></input>
+                  <input
+                    disabled
+                    className={"w-1/2"}
+                    type="number"
+                    value={expense.cost}
+                  ></input>
+                </div>
+              );
+            })}
           </>
         )}
       </div>

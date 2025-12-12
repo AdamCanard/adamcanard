@@ -38,6 +38,7 @@ export default function Expense() {
       return JSON.parse(storedParties);
     }
   });
+
   const [sharedExpenses, setSharedExpenses] = useState<IExpense[]>(() => {
     const sharedExpenses = localStorage.getItem("sharedExpenses");
     if (sharedExpenses === null) {
@@ -76,7 +77,6 @@ export default function Expense() {
       newParty.individualExpenses = [newExpense];
     }
     newParties[partyIndex] = newParty;
-    console.log(newParties);
     setParties(newParties);
   };
 
