@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./expense";
 
-export default function PartyAdder() {
-  const { addParty } = useContext(ExpenseContext);
+export default function AddMember() {
+  const { addMember } = useContext(ExpenseContext);
   const [show, setShow] = useState(true);
   const toggleShow = () => {
     setShow(!show);
@@ -45,7 +45,7 @@ export default function PartyAdder() {
           <button
             id="button"
             onClick={() => {
-              addParty({ name: name, takeHome: takeHome });
+              addMember({ name: name, takeHome: takeHome });
               setName("");
               setTakeHome(0);
             }}

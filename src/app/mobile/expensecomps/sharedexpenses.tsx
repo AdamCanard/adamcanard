@@ -3,7 +3,7 @@ import { ExpenseContext } from "./expense";
 import ExpenseDisplay from "./expensedisplay";
 
 export default function SharedExpenses() {
-  const { sharedExpenses } = useContext(ExpenseContext);
+  const { party } = useContext(ExpenseContext);
   const [show, setShow] = useState(true);
   const toggleShow = () => {
     setShow(!show);
@@ -31,7 +31,7 @@ export default function SharedExpenses() {
                 Monthly Cost:
               </div>
             </div>
-            {sharedExpenses.map((expense) => {
+            {party.partyExpenses.map((expense) => {
               return (
                 <ExpenseDisplay
                   key={JSON.stringify(expense)}

@@ -1,0 +1,84 @@
+import { useContext, useState } from "react";
+import { ExpenseContext, IExpense } from "./expense";
+import ExpenseDisplay from "./expensedisplay";
+import AddMemberExpense from "./addmemberexpense";
+
+export default function MemberExpenses() {
+  const { party, sharedCost } = useContext(ExpenseContext);
+  const [member, setMember] = useState(party.members[0]);
+  const increment = () => {
+    if (party.members.indexOf(member) + 2 > party.members.length) {
+      setMember(party.members[0]);
+    } else {
+      setMember(party.members[party.members.indexOf(member) + 1]);
+    }
+  };
+  const decrement = () => {
+    if (party.members.indexOf(member) === 0) {
+      setMember(party.members[party.members.length - 1]);
+    } else {
+      setMember(party.members[party.members.indexOf(member) - 1]);
+    }
+  };
+
+  const individualCost = () => {
+    let totalIndividualCost = 0;
+    for (let i = 0; i < party.memberExpenses[member.name].length; i++) {
+      totalIndividualCost += party.memberExpenses[member.name][i].cost;
+    }
+    return totalIndividualCost;
+  };
+
+  return (
+    <div id="border" className={"flex flex-col h-full"}>
+      <h1 id="border" className={"text-center flex justify-between"}>
+        <div
+          id="border"
+          className={"w-6 h-6 flex items-center justify-center font-bold"}
+          onClick={decrement}
+        >
+          {"<"}
+        </div>
+        {member.name} Individual Expenses
+        <div
+          id="border"
+          className={"w-6 h-6 flex items-center justify-center font-bold"}
+          onClick={increment}
+        >
+          {">"}
+        </div>
+      </h1>
+      <div className={"flex flex-row"}>
+        <>
+          {" "}
+          <div id="border">Income After Shared Expenses:</div>
+          <div id="border">{member.takeHome - sharedCost()}</div>
+        </>
+      </div>
+      <AddMemberExpense member={member} />
+      {party.memberExpenses[member.name] && (
+        <>
+          <div id="border">
+            {party.memberExpenses[member.name].map((expense: IExpense) => {
+              return (
+                <ExpenseDisplay
+                  key={JSON.stringify(expense)}
+                  expense={expense}
+                />
+              );
+            })}
+          </div>
+          <div className={"flex flex-row"}>
+            <>
+              {" "}
+              <div id="border">Income After All Expenses:</div>
+              <div id="border">
+                {member.takeHome - sharedCost() - individualCost()}
+              </div>
+            </>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}

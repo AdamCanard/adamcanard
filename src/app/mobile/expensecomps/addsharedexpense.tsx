@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./expense";
 
-export default function SharedExpenseAdder() {
-  const { addSharedExpense } = useContext(ExpenseContext);
+export default function AddSharedExpense() {
+  const { addExpense } = useContext(ExpenseContext);
   const [show, setShow] = useState(true);
   const toggleShow = () => {
     setShow(!show);
@@ -45,7 +45,7 @@ export default function SharedExpenseAdder() {
           <button
             id="button"
             onClick={() => {
-              addSharedExpense({ title: title, cost: cost });
+              addExpense({ title: title, cost: cost });
               setTitle("");
               setCost(0);
             }}
@@ -58,24 +58,24 @@ export default function SharedExpenseAdder() {
   );
 }
 
-export function Radio(props: {
-  true: string;
-  false: string;
-  bool: boolean;
-  toggle: () => void;
-}) {
-  return (
-    <div id="border" className={`flex w-full h-full`} onClick={props.toggle}>
-      <div
-        className={`w-1/2 h-full text-center ${props.bool && "bg-blue-600 text-white"}`}
-      >
-        {props.true}
-      </div>
-      <div
-        className={`w-1/2 h-full  text-center ${!props.bool && "bg-blue-600 text-white"}`}
-      >
-        {props.false}
-      </div>
-    </div>
-  );
-}
+//export function Radio(props: {
+//  true: string;
+//  false: string;
+//  bool: boolean;
+//  toggle: () => void;
+//}) {
+//  return (
+//    <div id="border" className={`flex w-full h-full`} onClick={props.toggle}>
+//      <div
+//        className={`w-1/2 h-full text-center ${props.bool && "bg-blue-600 text-white"}`}
+//      >
+//        {props.true}
+//      </div>
+//      <div
+//        className={`w-1/2 h-full  text-center ${!props.bool && "bg-blue-600 text-white"}`}
+//      >
+//        {props.false}
+//      </div>
+//    </div>
+//  );
+//}

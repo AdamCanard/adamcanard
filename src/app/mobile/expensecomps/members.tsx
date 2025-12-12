@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./expense";
 
-export default function Parties() {
-  const { parties } = useContext(ExpenseContext);
+export default function Members() {
+  const { party } = useContext(ExpenseContext);
   const [show, setShow] = useState(true);
   const toggleShow = () => {
     setShow(!show);
@@ -30,20 +30,20 @@ export default function Parties() {
               Monthly Take Home:
             </div>
           </div>
-          {parties.map((party) => {
+          {party.members.map((member) => {
             return (
-              <div className={"flex flex-row"} key={JSON.stringify(party)}>
+              <div className={"flex flex-row"} key={JSON.stringify(member)}>
                 <input
                   disabled
                   className={"w-1/2"}
                   type="text"
-                  value={party.name}
+                  value={member.name}
                 ></input>
                 <input
                   disabled
                   className={"w-1/2"}
                   type="number"
-                  value={party.takeHome}
+                  value={member.takeHome}
                 ></input>
               </div>
             );

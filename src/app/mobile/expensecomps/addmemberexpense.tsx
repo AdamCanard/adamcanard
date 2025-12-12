@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import { ExpenseContext } from "./expense";
+import { ExpenseContext, IMember } from "./expense";
 
-export default function IndividualExpenseAdder(props: { partyIndex: number }) {
-  const { addExpenseToParty } = useContext(ExpenseContext);
+export default function AddMemberExpense(props: { member: IMember }) {
+  const { addExpense } = useContext(ExpenseContext);
   const [title, setTitle] = useState("");
   const [cost, setCost] = useState(0);
 
@@ -30,7 +30,7 @@ export default function IndividualExpenseAdder(props: { partyIndex: number }) {
         <button
           id="button"
           onClick={() => {
-            addExpenseToParty(props.partyIndex, { title: title, cost: cost });
+            addExpense({ title: title, cost: cost }, props.member);
             setTitle("");
             setCost(0);
           }}

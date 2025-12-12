@@ -1,14 +1,18 @@
 import { createContext, useState } from "react";
-import IndividualExpenses from "./individualexpenses";
-import PartyAdder from "./partyadder";
-import SharedExpenseAdder from "./sharedexpenseadder";
-import Parties from "./parties";
 import SharedExpenses from "./sharedexpenses";
+import AddMember from "./addmember";
+import Members from "./members";
+import AddSharedExpense from "./addsharedexpense";
+import MemberExpenses from "./memberexpenses";
 
 export interface IParty {
+  members: IMember[];
+  partyExpenses: IExpense[];
+  memberExpenses: Record<string, IExpense[]>;
+}
+export interface IMember {
   name: string;
   takeHome: number;
-  individualExpenses?: IExpense[];
 }
 export interface IExpense {
   title: string;
@@ -16,11 +20,9 @@ export interface IExpense {
 }
 
 interface ExpenseContextType {
-  parties: IParty[];
-  sharedExpenses: IExpense[];
-  addParty: (newParty: IParty) => void;
-  addSharedExpense: (newExpense: IExpense) => void;
-  addExpenseToParty: (partyIndex: number, newExpense: IExpense) => void;
+  party: IParty;
+  addMember: (newMember: IMember) => void;
+  addExpense: (newExpense: IExpense, member?: IMember) => void;
   sharedCost: () => number;
 }
 
@@ -30,77 +32,62 @@ export const ExpenseContext = createContext<ExpenseContextType>(
 );
 
 export default function Expense() {
-  const [parties, setParties] = useState<IParty[]>(() => {
-    const storedParties = localStorage.getItem("parties");
+  const [party, setParty] = useState<IParty>(() => {
+    const storedParties = localStorage.getItem("party");
     if (storedParties === null) {
-      return [];
+      return { members: [], partyExpenses: [], memberExpenses: {} };
     } else {
       return JSON.parse(storedParties);
     }
   });
 
-  const [sharedExpenses, setSharedExpenses] = useState<IExpense[]>(() => {
-    const sharedExpenses = localStorage.getItem("sharedExpenses");
-    if (sharedExpenses === null) {
-      return [];
-    } else {
-      return JSON.parse(sharedExpenses);
-    }
-  });
-
   const sharedCost = () => {
     let totalSharedCost = 0;
-    for (let i = 0; i < sharedExpenses.length; i++) {
-      totalSharedCost += sharedExpenses[i].cost;
+    for (let i = 0; i < party.partyExpenses.length; i++) {
+      totalSharedCost += party.partyExpenses[i].cost;
     }
-    return totalSharedCost / parties.length;
+    return totalSharedCost / party.members.length;
   };
 
-  const addParty = (newParty: IParty) => {
-    const newParties = [...parties];
-    newParties.push(newParty);
-    setParties(newParties);
+  const addMember = (newMember: IMember) => {
+    const newParty = { ...party };
+    newParty.members.push(newMember);
+    setParty(newParty);
   };
-
-  const addSharedExpense = (newExpense: IExpense) => {
-    const newExpenses = [...sharedExpenses];
-    newExpenses.push(newExpense);
-    setSharedExpenses(newExpenses);
-  };
-
-  const addExpenseToParty = (partyIndex: number, newExpense: IExpense) => {
-    const newParties = [...parties];
-    const newParty = newParties[partyIndex];
-    if (newParty.individualExpenses) {
-      newParty.individualExpenses?.push(newExpense);
+  const addExpense = (newExpense: IExpense, member?: IMember) => {
+    if (member) {
+      const newParty = { ...party };
+      const newMemberExpenses = newParty.memberExpenses[member.name] || [];
+      newMemberExpenses.push(newExpense);
+      newParty.memberExpenses[member.name] = newMemberExpenses;
+      setParty(newParty);
     } else {
-      newParty.individualExpenses = [newExpense];
+      const newParty = { ...party };
+      newParty.partyExpenses.push(newExpense);
+      setParty(newParty);
     }
-    newParties[partyIndex] = newParty;
-    setParties(newParties);
+  };
+  const saveExpense = () => {
+    localStorage.setItem("party", JSON.stringify(party));
   };
 
-  const saveExpense = () => {
-    localStorage.setItem("parties", JSON.stringify(parties));
-    localStorage.setItem("sharedExpenses", JSON.stringify(sharedExpenses));
-  };
   return (
     <ExpenseContext.Provider
       value={{
-        parties,
-        sharedExpenses,
-        addParty,
-        addSharedExpense,
-        addExpenseToParty,
+        party,
+        addMember,
+        addExpense,
         sharedCost,
       }}
     >
       <div className={"flex flex-col w-full h-full overflow-y-auto"}>
-        <PartyAdder />
-        <SharedExpenseAdder />
-        <Parties />
-        <SharedExpenses />
-        <IndividualExpenses />
+        <AddMember />
+        <AddSharedExpense />
+        {party.members.length > 0 && <Members />}
+
+        {party.partyExpenses.length > 0 && <SharedExpenses />}
+
+        {party.members.length > 0 && <MemberExpenses />}
         <div
           id="button"
           className={"absolute bottom-3 right-3"}
