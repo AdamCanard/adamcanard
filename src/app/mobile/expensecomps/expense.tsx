@@ -1,9 +1,8 @@
 import { createContext, useState } from "react";
 import SharedExpenses from "./sharedexpenses";
-import AddMember from "./addmember";
 import Members from "./members";
-import AddSharedExpense from "./addsharedexpense";
 import MemberExpenses from "./memberexpenses";
+import AddData from "./adddata";
 
 export interface IParty {
   members: IMember[];
@@ -81,8 +80,8 @@ export default function Expense() {
       }}
     >
       <div className={"flex flex-col w-full h-full overflow-y-auto"}>
-        <AddMember />
-        <AddSharedExpense />
+        <AddData />
+
         {party.members.length > 0 && <Members />}
         {party.partyExpenses.length > 0 && <SharedExpenses />}
         {party.members.length > 0 && <MemberExpenses />}

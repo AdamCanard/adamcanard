@@ -1,12 +1,9 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./expense";
 
-export default function AddSharedExpense() {
+export default function AddSharedExpense(props: { callback: () => void }) {
   const { addExpense } = useContext(ExpenseContext);
-  const [show, setShow] = useState(true);
-  const toggleShow = () => {
-    setShow(!show);
-  };
+
   const [title, setTitle] = useState("");
   const [cost, setCost] = useState(0);
 
@@ -14,46 +11,40 @@ export default function AddSharedExpense() {
     <div id="border" className={"flex flex-col w-full "}>
       <div id="title" className={"flex justify-between"}>
         <>New Shared Expense:</>
+
+        <button id="close" onClick={() => props.callback()}></button>
+      </div>
+      <div className={"flex flex-row justify-around "}>
+        <div className={"flex flex-row w-full gap-2"}>
+          <input
+            placeholder="Title"
+            className={"w-full"}
+            type="text"
+            name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          ></input>
+          <input
+            placeholder="Monthly Cost"
+            className={"w-full"}
+            type="number"
+            name="cost"
+            value={cost === 0 ? "" : cost}
+            onChange={(e) => setCost(+e.target.value)}
+          ></input>
+        </div>
         <button
-          id="border"
-          onClick={toggleShow}
-          className={"flex h-full w-6 pr-2 bg-black justify-start items-end"}
+          id="button"
+          onClick={() => {
+            addExpense({ title: title, cost: cost });
+            setTitle("");
+            setCost(0);
+            props.callback();
+          }}
         >
-          <div className={"bg-black w-1/2 h-1/8"}></div>
+          Add
         </button>
       </div>
-      {show && (
-        <div className={"flex flex-row justify-around "}>
-          <div className={"flex flex-row w-full gap-2"}>
-            <input
-              placeholder="Title"
-              className={"w-full"}
-              type="text"
-              name="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            ></input>
-            <input
-              placeholder="Monthly Cost"
-              className={"w-full"}
-              type="number"
-              name="cost"
-              value={cost === 0 ? "" : cost}
-              onChange={(e) => setCost(+e.target.value)}
-            ></input>
-          </div>
-          <button
-            id="button"
-            onClick={() => {
-              addExpense({ title: title, cost: cost });
-              setTitle("");
-              setCost(0);
-            }}
-          >
-            Add
-          </button>
-        </div>
-      )}
     </div>
   );
 }
