@@ -30,23 +30,27 @@ export default function MemberExpenses() {
   };
 
   return (
-    <div id="border" className={"flex flex-col h-full"}>
-      <h1 id="border" className={"text-center flex justify-between"}>
-        <div
+    <div id="border" className={"flex flex-col "}>
+      <h1 id="title" className={"text-center flex justify-between"}>
+        <button
           id="border"
-          className={"w-6 h-6 flex items-center justify-center font-bold"}
+          className={
+            "w-6 h-6 flex items-center justify-center font-bold text-black"
+          }
           onClick={decrement}
         >
           {"<"}
-        </div>
+        </button>
         {member.name} Individual Expenses
-        <div
+        <button
           id="border"
-          className={"w-6 h-6 flex items-center justify-center font-bold"}
+          className={
+            "w-6 h-6 flex items-center justify-center font-bold text-black"
+          }
           onClick={increment}
         >
           {">"}
-        </div>
+        </button>
       </h1>
       <div className={"flex flex-row"}>
         <>
