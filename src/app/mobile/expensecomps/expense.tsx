@@ -3,6 +3,7 @@ import SharedExpenses from "./sharedexpenses";
 
 import { SimpleRenderer } from "@/app/simplerenderer/simplerenderer";
 import Members from "./members";
+import MemberExpenses from "./memberexpenses";
 
 export interface IParty {
   members: IMember[];
@@ -92,7 +93,7 @@ export default function Expense() {
         tabs={{
           "Shared Expenses": <SharedExpenses key={"Shared Expenses"} />,
           Members: <Members key="Members" />,
-          Settings: <></>,
+          Individual: <MemberExpenses key={"Individual"} />,
         }}
       />
       <div
