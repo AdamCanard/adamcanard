@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ExpenseContext } from "./expense";
 import AddMember from "./addmember";
+import MemberDisplay from "./memberdisplay";
 
 export default function Members() {
   const { party } = useContext(ExpenseContext);
@@ -24,20 +25,7 @@ export default function Members() {
           </div>
           {party.members.map((member) => {
             return (
-              <div className={"flex flex-row"} key={JSON.stringify(member)}>
-                <input
-                  disabled
-                  className={"w-1/2"}
-                  type="text"
-                  value={member.name}
-                ></input>
-                <input
-                  disabled
-                  className={"w-1/2"}
-                  type="number"
-                  value={member.takeHome}
-                ></input>
-              </div>
+              <MemberDisplay key={JSON.stringify(member)} member={member} />
             );
           })}
         </>

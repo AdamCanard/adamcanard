@@ -32,6 +32,12 @@ interface ExpenseContextType {
   party: IParty;
   addMember: (newMember: IMember) => void;
   addExpense: (newExpense: IExpense, member?: IMember) => void;
+  editMember: (memberName: string, newMember: IMember) => void;
+  editExpense: (
+    expenseName: string,
+    newExpense: IExpense,
+    member?: IMember,
+  ) => void;
   sharedCost: () => number;
 }
 
@@ -76,6 +82,35 @@ export default function Expense() {
       setParty(newParty);
     }
   };
+
+  const editMember = (memberName: string, newMember: IMember) => {
+    const newParty: IParty = { ...party };
+    const oldMemberIndex = newParty.members.findIndex(
+      (member) => (member.name = memberName),
+    );
+    newParty.members[oldMemberIndex] = newMember;
+    setParty(newParty);
+  };
+  const editExpense = (
+    expenseName: string,
+    newExpense: IExpense,
+    member?: IMember,
+  ) => {
+    const newParty = { ...party };
+    if (member) {
+      const oldMemberExpenses = newParty.memberExpenses[member.name];
+      const oldMemberExpenseIndex = oldMemberExpenses.findIndex(
+        (memberExpense) => (memberExpense.title = expenseName),
+      );
+      newParty.memberExpenses[member.name][oldMemberExpenseIndex] = newExpense;
+    } else {
+      const oldExpenseIndex = newParty.partyExpenses.findIndex(
+        (partyExpense) => (partyExpense.title = expenseName),
+      );
+      newParty.partyExpenses[oldExpenseIndex] = newExpense;
+    }
+    setParty(newParty);
+  };
   const saveExpense = () => {
     localStorage.setItem("party", JSON.stringify(party));
   };
@@ -86,6 +121,8 @@ export default function Expense() {
         party,
         addMember,
         addExpense,
+        editMember,
+        editExpense,
         sharedCost,
       }}
     >
