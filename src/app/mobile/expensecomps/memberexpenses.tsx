@@ -64,6 +64,7 @@ export default function MemberExpenses() {
                 <ExpenseDisplay
                   key={JSON.stringify(expense)}
                   expense={expense}
+                  member={member}
                 />
               );
             })}

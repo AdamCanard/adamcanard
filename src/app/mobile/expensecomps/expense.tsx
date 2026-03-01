@@ -84,9 +84,7 @@ export default function Expense() {
         <AddMember />
         <AddSharedExpense />
         {party.members.length > 0 && <Members />}
-
         {party.partyExpenses.length > 0 && <SharedExpenses />}
-
         {party.members.length > 0 && <MemberExpenses />}
         <div
           id="button"

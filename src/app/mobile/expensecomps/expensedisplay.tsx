@@ -1,7 +1,11 @@
-import { useState } from "react";
-import { IExpense } from "./expense";
+import { useContext, useState } from "react";
+import { ExpenseContext, IExpense, IMember } from "./expense";
 
-export default function ExpenseDisplay(props: { expense: IExpense }) {
+export default function ExpenseDisplay(props: {
+  expense: IExpense;
+  member?: IMember;
+}) {
+  const {} = useContext(ExpenseContext);
   const { expense } = props;
   const [title, setTitle] = useState(expense.title);
   const [cost, setCost] = useState(expense.cost);
@@ -35,6 +39,8 @@ export default function ExpenseDisplay(props: { expense: IExpense }) {
           id="border-np"
           className={"w-12 flex justify-center items-center "}
           onClick={() => {
+            if (props.member) {
+            }
             setEdit(!edit);
           }}
         >
