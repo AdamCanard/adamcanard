@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./expense";
 import ExpenseDisplay from "./expensedisplay";
+import AddSharedExpense from "./addsharedexpense";
 
 export default function SharedExpenses() {
   const { party } = useContext(ExpenseContext);
@@ -10,6 +11,7 @@ export default function SharedExpenses() {
   };
   return (
     <>
+      <AddSharedExpense />
       <div id="border">
         <div id="title" className={"flex justify-between"}>
           <>Shared Expenses:</>

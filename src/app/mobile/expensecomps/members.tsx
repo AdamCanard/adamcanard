@@ -1,25 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ExpenseContext } from "./expense";
+import AddMember from "./addmember";
 
 export default function Members() {
   const { party } = useContext(ExpenseContext);
-  const [show, setShow] = useState(true);
-  const toggleShow = () => {
-    setShow(!show);
-  };
+
   return (
-    <div id="border">
-      <div id="title" className={"Utilitiesflex justify-between"}>
-        <>Parties Sharing Expenses:</>
-        <button
-          id="border"
-          onClick={toggleShow}
-          className={"flex h-full w-6 pr-2 bg-black justify-start items-end"}
-        >
-          <div className={"bg-black w-1/2 h-1/8"}></div>
-        </button>
-      </div>
-      {show && (
+    <>
+      <AddMember />
+      <div id="border">
+        <div id="title" className={"Utilitiesflex justify-between"}>
+          <>Members Sharing Expenses:</>
+        </div>
         <>
           {" "}
           <div className={"flex flex-row"}>
@@ -49,7 +41,7 @@ export default function Members() {
             );
           })}
         </>
-      )}
-    </div>
+      </div>
+    </>
   );
 }

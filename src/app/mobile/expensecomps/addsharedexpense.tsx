@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./expense";
 
-export default function AddSharedExpense(props: { callback: () => void }) {
+export default function AddSharedExpense() {
   const { addExpense } = useContext(ExpenseContext);
 
   const [title, setTitle] = useState("");
@@ -11,8 +11,6 @@ export default function AddSharedExpense(props: { callback: () => void }) {
     <div id="border" className={"flex flex-col w-full "}>
       <div id="title" className={"flex justify-between"}>
         <>New Shared Expense:</>
-
-        <button id="close" onClick={() => props.callback()}></button>
       </div>
       <div className={"flex flex-row justify-around "}>
         <div className={"flex flex-row w-full gap-2"}>
@@ -39,7 +37,6 @@ export default function AddSharedExpense(props: { callback: () => void }) {
             addExpense({ title: title, cost: cost });
             setTitle("");
             setCost(0);
-            props.callback();
           }}
         >
           Add

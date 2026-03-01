@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { ExpenseContext } from "./expense";
 
-export default function AddMember(props: { callback: () => void }) {
+export default function AddMember() {
   const { addMember } = useContext(ExpenseContext);
 
   const [name, setName] = useState("");
@@ -11,7 +11,6 @@ export default function AddMember(props: { callback: () => void }) {
     <div id="border" className={"flex flex-col w-full "}>
       <div id="title" className={"flex justify-between"}>
         <>New Party:</>
-        <button id="close" onClick={() => props.callback()}></button>
       </div>
       <div className={"flex flex-row justify-around "}>
         <div className={"flex flex-row w-full"}>
@@ -38,7 +37,6 @@ export default function AddMember(props: { callback: () => void }) {
             addMember({ name: name, takeHome: takeHome });
             setName("");
             setTakeHome(0);
-            props.callback();
           }}
         >
           Add

@@ -1,8 +1,8 @@
 import { createContext, useState } from "react";
 import SharedExpenses from "./sharedexpenses";
+
+import { SimpleRenderer } from "@/app/simplerenderer/simplerenderer";
 import Members from "./members";
-import MemberExpenses from "./memberexpenses";
-import AddData from "./adddata";
 
 export interface IParty {
   members: IMember[];
@@ -17,7 +17,16 @@ export interface IExpense {
   title: string;
   cost: number;
 }
+interface RenderContextType {
+  window: JSX.Element;
+  changeWindow: (newWindow: JSX.Element) => void;
+  tabs: Record<string, JSX.Element>;
+}
 
+//cast empty object to contexttype
+export const RenderContext = createContext<RenderContextType>(
+  {} as RenderContextType,
+);
 interface ExpenseContextType {
   party: IParty;
   addMember: (newMember: IMember) => void;
@@ -79,19 +88,19 @@ export default function Expense() {
         sharedCost,
       }}
     >
-      <div className={"flex flex-col w-full h-full overflow-y-auto"}>
-        <AddData />
-
-        {party.members.length > 0 && <Members />}
-        {party.partyExpenses.length > 0 && <SharedExpenses />}
-        {party.members.length > 0 && <MemberExpenses />}
-        <div
-          id="button"
-          className={"absolute bottom-3 right-3"}
-          onClick={saveExpense}
-        >
-          Save
-        </div>
+      <SimpleRenderer
+        tabs={{
+          "Shared Expenses": <SharedExpenses key={"Shared Expenses"} />,
+          Members: <Members key="Members" />,
+          Settings: <></>,
+        }}
+      />
+      <div
+        id="button"
+        className={"absolute bottom-3 right-3"}
+        onClick={saveExpense}
+      >
+        Save
       </div>
     </ExpenseContext.Provider>
   );
