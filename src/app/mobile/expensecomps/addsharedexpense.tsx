@@ -45,25 +45,3 @@ export default function AddSharedExpense() {
     </div>
   );
 }
-
-//export function Radio(props: {
-//  true: string;
-//  false: string;
-//  bool: boolean;
-//  toggle: () => void;
-//}) {
-//  return (
-//    <div id="border" className={`flex w-full h-full`} onClick={props.toggle}>
-//      <div
-//        className={`w-1/2 h-full text-center ${props.bool && "bg-blue-600 text-white"}`}
-//      >
-//        {props.true}
-//      </div>
-//      <div
-//        className={`w-1/2 h-full  text-center ${!props.bool && "bg-blue-600 text-white"}`}
-//      >
-//        {props.false}
-//      </div>
-//    </div>
-//  );
-//}
