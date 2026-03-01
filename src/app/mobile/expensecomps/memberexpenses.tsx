@@ -6,6 +6,16 @@ import AddMemberExpense from "./addmemberexpense";
 export default function MemberExpenses() {
   const { party, sharedCost } = useContext(ExpenseContext);
   const [member, setMember] = useState(party.members[0]);
+  if (party.members.length == 0) {
+    return (
+      <div
+        id="border"
+        className={"flex flex-col h-full justify-center items-center"}
+      >
+        <div id="border">Add Someone to your party first!</div>
+      </div>
+    );
+  }
   const increment = () => {
     if (party.members.indexOf(member) + 2 > party.members.length) {
       setMember(party.members[0]);
