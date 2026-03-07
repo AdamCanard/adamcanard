@@ -1,0 +1,101 @@
+unique link for a beer review
+
+On click view simplyfied beer review
+
+screen swipes like reels
+
+adamcanard.ca/mobile/beer/(NameOfBeer)
+_______________________________________
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|         image:                     |
+
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+______scoll left to right______
+_______________________________________
+|                                     |
+|  v          Score               ^    |
+_______________________________________
+|                                     |
+|    description:                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|  drank amount?         Avg Score?  |
+_______________________________________
+
+Eventually get it to post through API
+
+
+_______________________________________
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|         image:                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+______scoll left to right______
+_______________________________________
+|                                     |
+|  v          Score               ^   |
+_______________________________________
+|                                     |
+|    description:                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|  drank amount?         New Beer     |
+_______________________________________
+                         |
+
+_______________________________________
+|                                     |
+|           Enter Name:               |
+|                                     |
+|                                     |
+|         _______________             |
+|                                     |
+|                                     |
+|                                     |
+|          Enter Desc:                |
+|     ______________________          |
+|                                     |
+|    __________________________      |
+|                                     |
+|                                     |
+|                                     |
+|                                     |
+|          Grid For 1 - 10            |
+|                                     |
+|                                     |
+|           Image Button              |
+|          (images added:#)           |
+|                                     |
+|           Save Button __________v   |
+|                                     |
+_______________________________________
+Needs: (most -> least)
+Easy mobile upload
+    Chain Photo Uploads to server
+        Create the parts of the object, one-ish  at a time
+        Once its ready cast it to a full object
+Easy edits for just me
+
+
