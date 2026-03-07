@@ -1,19 +1,34 @@
 import { IBeer } from "@/app/server/models/beer";
 import Image from "next/image";
 import { useState } from "react";
+import BeerWindow from "./beerwindow";
 
 const beer: IBeer = { name: "", brewery: "", image: [], rating: 0 };
 export default function BeerScroller() {
   return (
+    <ScrollableBeer>
+      <BeerScreen />
+    </ScrollableBeer>
+  );
+}
+
+function BeerScreen() {
+  return (
     <div
       className={"bg-[#c6c6c6] flex flex-col w-full h-full  overflow-y-hidden"}
     >
-      <div className={"w-full h-full flex flex-col"}>
-        <BeerImage />
-        <BeerDescription />
-      </div>
+      <BeerWindow>
+        <div className={"w-full h-full flex flex-col"}>
+          <BeerImage />
+          <BeerDescription />
+        </div>
+      </BeerWindow>
     </div>
   );
+}
+
+function ScrollableBeer(props: { children: JSX.Element }) {
+  return <>{props.children}</>;
 }
 //function BeerReview() {
 //  return (
