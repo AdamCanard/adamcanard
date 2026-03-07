@@ -6,9 +6,7 @@ const beer: IBeer = { name: "", brewery: "", image: [], rating: 0 };
 export default function BeerScroller() {
   return (
     <div
-      className={
-        "bg-[#c6c6c6] flex flex-col w-full h-full relative overflow-y-hidden"
-      }
+      className={"bg-[#c6c6c6] flex flex-col w-full h-full  overflow-y-hidden"}
     >
       <div className={"w-full h-full flex flex-col"}>
         <BeerImage />
@@ -51,7 +49,7 @@ function BeerImage() {
     }
   };
   return (
-    <>
+    <div className={"Border h-2/3 relative"}>
       {beer.image.length > 0 && (
         <div
           id="border"
@@ -61,7 +59,8 @@ function BeerImage() {
           <Image src={beer.image[beerIndex]} alt="beer" fill />
         </div>
       )}
-    </>
+      <BeerScore />
+    </div>
   );
 }
 //function BasicBeerInfo() {
@@ -96,10 +95,21 @@ function BeerImage() {
 
 function BeerDescription() {
   return (
-    <div id="border" className={"w-full flex flex-col h-full"}>
-      <h1 id="title">Description</h1>
+    <div className={"Border w-full flex flex-col h-1/3 "}>
+      <h1 className={"Title"}>Description</h1>
 
-      {beer.desc === "" ? "No Description For This Beer" : beer.desc}
+      {"No Description For This Beer"}
+    </div>
+  );
+}
+function BeerScore() {
+  return (
+    <div
+      className={
+        "Border absolute w-16 flex flex-col bottom-2 right-2 text-7xl text-center items-center justify-center leading-18"
+      }
+    >
+      7
     </div>
   );
 }
