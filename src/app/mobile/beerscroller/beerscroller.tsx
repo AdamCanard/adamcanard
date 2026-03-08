@@ -15,7 +15,9 @@ export default function BeerScroller() {
 function BeerScreen() {
   return (
     <div
-      className={"bg-[#c6c6c6] flex flex-col w-full h-full  overflow-y-hidden"}
+      className={
+        "bg-[#c6c6c6] flex flex-col w-full h-full overflow-y-hidden relative"
+      }
     >
       <BeerWindow>
         <div className={"w-full h-full flex flex-col"}>
